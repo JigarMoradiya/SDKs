@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/color_primary_dark</item>
+        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
+        <item name="editTextStyle">@style/App_EditTextStyle</item>
+
+        <!-- Add these -->
+        <item name="materialCalendarStyle">@style/Widget.MaterialComponents.MaterialCalendar</item>
+        <item name="materialCalendarFullscreenTheme">
+            @style/CustomThemeOverlay_MaterialCalendar_Fullscreen
+        </item>
+        <item name="materialCalendarTheme">@style/ThemeOverlay.MaterialComponents.MaterialCalendar
+        </item>
+    </style>
+
+    <style name="DialogTheme" parent="@style/Base.Theme.AppCompat.Light.Dialog">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+
+    <style name="CustomThemeOverlay_MaterialCalendar_Fullscreen" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="materialCalendarStyle">@style/Custom_MaterialCalendar.Fullscreen</item>
+        <item name="daySelectedStyle">
+            @style/Widget.MaterialComponents.MaterialCalendar.Day.Selected
+        </item>
+
+        <item name="colorPrimary">@color/color_primary_dark</item>
+        <item name="colorSurface">@color/color_primary_dark</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+
+        <item name="buttonBarPositiveButtonStyle">@style/TextButton</item>
+        <item name="buttonBarNegativeButtonStyle">@style/TextButton</item>
+    </style>
+
+    <style name="Custom_MaterialCalendar.Fullscreen" parent="@style/Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="android:windowFullscreen">false</item>
+        <item name="rangeFillColor">@color/cal_date_range</item>
+    </style>
+
+    <style name="Widget.MaterialComponents.MaterialCalendar.Day.Selected">
+        <item name="itemFillColor">@color/cal_date_selected</item>
+        <item name="itemTextColor">@color/white</item>
+        <item name="itemStrokeWidth">0dp</item>
+    </style>
+
+    <style name="TextButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/cal_date_selected</item>
+        <item name="backgroundTint">@color/cal_date_selected</item>
+    </style>
+
+
+    <style name="InputText_Overlay">
+        <item name="colorPrimary">@color/color_primary_dark</item>
+    </style>
+
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomsheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomsheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_top_curved</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+    </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="BottomNavigationView">
+        <item name="itemTextAppearanceActive">@style/TextAppearance.BottomNavigationView.Active
+        </item>
+        <item name="itemTextAppearanceInactive">@style/TextAppearance.BottomNavigationView.Inactive
+        </item>
+    </style>
+
+    <!-- blank styles for better code readability-->
+    <style name="TextAppearance" />
+
+    <style name="TextAppearance.BottomNavigationView" />
+
+    <!-- inactive tab icon style -->
+    <style name="TextAppearance.BottomNavigationView.Inactive">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- active tab icon style -->
+    <style name="TextAppearance.BottomNavigationView.Active">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">14sp</item>
+        <!-- Icon Color -->
+        <item name="android:tint">@color/white</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textColorHint">#99FFFFFF</item>
+    </style>
+
+    <style name="SearchViewStyleWhite" parent="Widget.AppCompat.SearchView">
+        <item name="android:textSize">14sp</item>
+        <!-- Icon Color -->
+        <item name="android:fontFamily">@font/lato_regular</item>
+        <item name="android:editTextColor">#000000</item>
+        <item name="android:textColorHint">#80000000</item>
+
+    </style>
+
+    <style name="CustomTabText" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/lato_regular</item>
+    </style>
+
+    <style name="CustomTabTextPodcast" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">true</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/lato_bold</item>
+    </style>
+
+
+    <style name="Widget.App.ExposedDropdownMenu" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.ExposedDropdownMenu</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
+        <item name="endIconDrawable">@drawable/ic_drop_down</item>
+    </style>
+
+    <style name="ThemeOverlay.App.ExposedDropdownMenu" parent="">
+        <item name="colorPrimary">@color/color_primary_dark</item>
+        <item name="colorOnSurface">@color/color_primary_dark</item>
+        <item name="colorError">@color/color_primary_dark</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.App.Subtitle1</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
+        <item name="autoCompleteTextViewStyle">@style/Widget.App.ExposedDropdownMenu</item>
+    </style>
+
+    <style name="TextAppearance.App.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
+        <item name="fontFamily">@font/lato_medium</item>
+        <item name="android:fontFamily">@font/lato_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.App.Caption" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="fontFamily">@font/lato_medium</item>
+        <item name="android:fontFamily">@font/lato_medium</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="NavigationView">
+        <item name="android:textSize">16sp</item>
+        <item name="android:listDivider">@color/tranparent_white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="listPreferredItemHeightSmall">18dp</item>
+        <item name="android:scrollbarThumbVertical">@android:color/transparent</item>
+    </style>
+
+    <style name="mySwitchTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="android:colorForeground">#a6a6b2</item>
+    </style>
+
+    <style name="mySwitchThemeDeactivated" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorControlActivated">#6B825FFC</item>
+        <item name="android:colorForeground">#a6a6b2</item>
+    </style>
+
+    <style name="TextLabel" parent="TextAppearance.Design.Hint">
+        <item name="fontFamily">@font/lato_regular</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="ThinnerChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipCornerRadius">12dp</item>
+        <item name="chipMinHeight">20dp</item>
+        <item name="android:textAppearance">@style/SmallerText</item>
+    </style>
+
+    <style name="SmallerText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+    <style name="InputLayout" parent="TextAppearance.AppCompat">
+
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">#fff</item>
+        <item name="android:textSize">20sp</item>
+
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+
+        <item name="colorAccent">@color/error_text_color</item>
+        <item name="colorControlNormal">#e34b1c</item>
+        <item name="colorControlActivated">#e34b1c</item>
+    </style>
+
+
+    <style name="App_EditTextStyle" parent="@android:style/Widget.EditText">
+        <item name="android:background">@drawable/text_box_underline</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+    <style name="App_EditTextStyle_Dropdown" parent="@android:style/Widget.EditText"></style>
+
+
+    <style name="ArticleTolbarTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="TextAppearance.MyApp.Title.Collapsed" parent="android:TextAppearance">
+        <item name="android:fontFamily">@font/lato_medium</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="StripeBaseThemeLocal" parent="@style/Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorAccent">#825ffc</item>
+        <item name="colorControlNormal">#392f2f</item>
+        <item name="colorPrimary">@color/color_primary_dark</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="titleTextColor">#392f2f</item>
+        <item name="android:textColorSecondary">@color/browser_actions_title_color</item>
+        <!--        to change edittexy coor of cardmulti widget strippw-->
+        <item name="android:textColorPrimary">#825ffc</item>
+        <item name="hintTextColor">#392f2f</item>
+        <item name="helperTextTextColor">#825ffc</item>
+        <item name="errorTextColor">#825ffc</item>
+        <item name="android:textColorHint">#392f2f</item>
+        <item name="shouldShowPostalCode">false</item>
+        <item name="shouldRequirePostalCode">false</item>
+        <item name="shouldRequireUsZipCode">false</item>
+        <item name="fontFamily">@font/lato_medium</item>
+        <item name="android:fontFamily">@font/lato_medium</item>
+        <item name="android:editTextColor">#392f2f</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+
+
+    <style name="AppTheme.RoundedCornerMaterialButton" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:background">@drawable/chat_round_corner_rectangle</item>
+    </style>
+
+    <style name="RatingBarOrange" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#e2e2e2</item>
+        <item name="colorControlActivated">#e8845f</item>
+    </style>
+
+    <style name="RatingBarWhite" parent="Theme.AppCompat">
+        <item name="colorControlNormal">#ffffff</item>
+        <item name="colorControlActivated">#4bffffff</item>
+    </style>
+
+    <style name="ivStyle_Corners_Rounded">
+        <item name="cornerSize">12dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
+    <style name="CustomChipChoice" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/bg_chip_state_list</item>
+        <item name="android:textColor">@color/text_color_chip_state_list</item>
+        <item name="chipCornerRadius">20dp</item>
+        <item name="chipMinHeight">20dp</item>
+        <item name="android:textAppearance">@style/SmallerText</item>
+    </style>
+
+    <style name="CustomChipChoicePreference" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipStrokeColor">@color/bg_chip_state_list_prference</item>
+        <item name="chipBackgroundColor">@color/color_primary_dark</item>
+        <item name="android:textColor">@color/text_color_chip_state_list_preference</item>
+        <item name="chipCornerRadius">20dp</item>
+        <item name="chipMinHeight">20dp</item>
+        <item name="android:textAppearance">@style/SmallerText</item>
+    </style>
+
+    <style name="WideDialog" parent="Base.Theme.AppCompat.Dialog">
+        <item name="android:windowMinWidthMajor">90%</item>
+        <item name="android:windowMinWidthMinor">90%</item>
+    </style>
+
+    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#d6d6d6</item>
+        <item name="colorControlActivated">#e8845f</item>
+    </style>
+
+    <style name="Widget.AppTheme.MaterialDatePicker" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="materialCalendarHeaderToggleButton">
+            @style/Widget.AppTheme.MaterialCalendar.HeaderToggleButton
+        </item>
+    </style>
+
+    <style name="Widget.AppTheme.MaterialCalendar.HeaderToggleButton" parent="Widget.MaterialComponents.MaterialCalendar.HeaderToggleButton">
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="CustomPopUpStyle" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:itemBackground">#40445c</item>
+    </style>
+
+    <style name="CustomPopUpStyleWhile" parent="Widget.AppCompat.PopupMenu">
+        <item name="android:textColor">#40445c</item>
+        <item name="android:itemBackground">@android:color/white</item>
+    </style>
+
+    <style name="MyRadioButtonCurrency" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">#80FFFFFF</item>
+        <item name="colorControlActivated">@color/colorAccent</item>
+    </style>
+</resources>
