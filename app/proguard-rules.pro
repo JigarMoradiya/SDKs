@@ -66,9 +66,9 @@
 
 
 # ALSO REMEMBER KEEPING YOUR MODEL CLASSES
--keepclassmembers class  com.example.mentalhealthpatient.data.models.* { *; }
--keepclassmembers class  com.example.mentalhealthpatient.data.models.stripe_models.* { *; }
--keepclassmembers class  com.example.mentalhealthpatient.data.models.chat.* {*;}
+-keepclassmembers class  com.example.iiifa_fan_android.data.models.* { *; }
+-keepclassmembers class  com.example.iiifa_fan_android.data.models.stripe_models.* { *; }
+-keepclassmembers class  com.example.iiifa_fan_android.data.models.chat.* {*;}
 
 
 #json library
@@ -168,8 +168,8 @@
 #-keepnames class com.amazonaws.**
 #-keepnames class com.amazon.**
 
--keepclassmembers class com.example.mentalhealthpatient.fragment.** {*;}
--keepclassmembers class com.example.mentalhealthpatient.type.** {*;}
+-keepclassmembers class com.example.iiifa_fan_android.fragment.** {*;}
+-keepclassmembers class com.example.iiifa_fan_android.type.** {*;}
 #
 #
 

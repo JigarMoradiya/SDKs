@@ -16,4 +16,9 @@
     <color name="color_primary_dark">#000000</color>
     <color name="colorAccent">#F8D137</color>
 
+    <color name="selected_tab_podcast_bg">#c3f4ba</color>
+    <color name="text_color">#B0FFFFFF</color>
+    <color name="edit_text_color">#f52950</color>
+
+
 </resources>

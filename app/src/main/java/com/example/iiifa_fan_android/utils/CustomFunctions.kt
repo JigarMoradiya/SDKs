@@ -1,4 +1,4 @@
-package com.example.mentalhealthpatient.ui.view.commonviews.classes
+package com.example.iiifa_fan_android.ui.view.commonviews.classes
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -36,16 +36,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.developer.filepicker.view.FilePickerDialog
-import com.example.mentalhealthpatient.BuildConfig
-import com.example.mentalhealthpatient.R
-import com.example.mentalhealthpatient.data.api.DownloadFromS3ResponseInterface
-import com.example.mentalhealthpatient.data.models.ForceUpdate
-import com.example.mentalhealthpatient.data.models.chat.Message
-import com.example.mentalhealthpatient.ui.view.chat.ChatActivity
-import com.example.mentalhealthpatient.ui.view.chat.dialogues.MediaCaptionDialogue
-import com.example.mentalhealthpatient.ui.view.login.ForceUpdateActivity
-import com.example.mentalhealthpatient.ui.view.login.LoginActivity
-import com.example.mentalhealthpatient.utils.*
+import com.example.iiifa_fan_android.BuildConfig
+import com.example.iiifa_fan_android.R
+import com.example.iiifa_fan_android.data.models.ForceUpdate
+import com.example.iiifa_fan_android.ui.view.login.activities.ForceUpdateActivity
+import com.example.iiifa_fan_android.ui.view.login.activities.LoginActivity
+import com.example.iiifa_fan_android.utils.*
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -111,7 +107,6 @@ object CustomFunctions {
             GoogleSignIn.getClient(context, gso).signOut()
             prefManager.userEmail = null
             prefManager.user = null
-            prefManager.setIsMiUser(prefManager.userId, 0)
             prefManager.userId = null
             prefManager.userEmail = null
             prefManager.token = null
@@ -445,25 +440,6 @@ object CustomFunctions {
 
 
     @JvmStatic
-    fun getRandomColorCode(): Int {
-        val colors = ArrayList<Int>()
-        colors.add(R.color.one)
-        colors.add(R.color.two)
-        colors.add(R.color.three)
-        colors.add(R.color.four)
-        colors.add(R.color.five)
-        colors.add(R.color.six)
-        colors.add(R.color.seven)
-        colors.add(R.color.eight)
-        colors.add(R.color.nine)
-
-
-        val rnds = (0..8).random()
-        return colors[rnds]
-    }
-
-
-    @JvmStatic
     fun openInBrowser(context: Context, url: String) {
         val defaultBrowser =
             Intent.makeMainSelectorActivity(Intent.ACTION_MAIN, Intent.CATEGORY_APP_BROWSER)
@@ -517,102 +493,6 @@ object CustomFunctions {
         }
     }
 
-    @JvmStatic
-    fun getReviewsCount(
-        count_review: Int?,
-        context: Context
-    ): String {
-
-
-        var review_count_string = ""
-
-        if (count_review == null) {
-            review_count_string = context.getString(R.string._0_reviews)
-        } else {
-
-
-            when (count_review) {
-                0 -> {
-                    review_count_string = context.getString(R.string._0_reviews)
-                }
-                1 -> {
-                    review_count_string =
-                        (context.getString(R.string._1_reviews))
-                }
-                in 2..9 -> {
-                    review_count_string =
-                        (context.getString(R.string.reviews_without_plus, count_review.toString()))
-                }
-                else -> {
-
-                    val remainder = count_review % 10
-
-                    review_count_string = if (remainder == 0) {
-                        //this will return i.e "10 appointments" in case the count is exactly devided by 10
-                        count_review.toString()
-                            .plus(context.getString(R.string.reviews_without_plus))
-                    } else {
-                        //this will show how much more , like 10+ or 20+ etc
-                        context.getString(
-                            R.string.reviews_with_plus,
-                            (count_review - remainder).toString()
-                        )
-                    }
-
-                }
-            }
-        }
-
-
-
-        return review_count_string
-    }
-
-    @JvmStatic
-    fun getConsultantCount(
-        count_consultation: Int?,
-        context: Context
-    ): String {
-
-
-        var consultation_count_string = ""
-
-        if (count_consultation == null) {
-            consultation_count_string = context.getString(R.string._0_consultations)
-        } else {
-            when (count_consultation) {
-                0 -> {
-                    consultation_count_string = context.getString(R.string._0_consultations)
-                }
-                1 -> {
-                    consultation_count_string = (context.getString(R.string._1_consultations))
-                }
-                else -> {
-                    consultation_count_string = context.getString(
-                        R.string.consultations_without_plus,
-                        count_consultation.toString()
-                    )
-                }
-//                else -> {
-//
-//                    val remainder = count_consultation % 10
-//
-//                    consultation_count_string = if (remainder == 0) {
-//                        //this will return i.e "10 appointments" in case the count is exactly devided by 10
-//                        count_consultation.toString()
-//                                .plus(context.getString(R.string.consultations_without_plus))
-//                    } else {
-//                        //this will show how much more , like 10+ or 20+ etc
-//                        context.getString(R.string.consultations_with_plus, (count_consultation - remainder).toString())
-//                    }
-//
-//                }
-            }
-        }
-
-        return (consultation_count_string)
-    }
-
 
     //------------------Chat related
     //Decode chat string
@@ -653,86 +533,6 @@ object CustomFunctions {
 
 
     @JvmStatic
-    open fun openMedia(message: Message?, mContext: Context) {
-        when (message?.media?.get(0)?.type) {
-            com.example.mentalhealthpatient.appsynclib.Constants.DOCUMENT -> {
-                CustomViews.startButtonLoading(mContext, false)
-                // download document from S3 and then only move forward
-                message.media?.get(0)?.getPresigned_url(object : DownloadFromS3ResponseInterface {
-                    override fun onSuccess(url: kotlin.String?) {
-                        openUrl(url, mContext)
-                        CustomViews.hideButtonLoading()
-                    }
-
-                    override fun onFailure(e: String?) {
-                        CustomViews.hideButtonLoading()
-                        (mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?)?.let {
-                            CustomViews.showFailToast(
-                                it,
-                                mContext.getString(R.string.failed_to_show_media)
-                            )
-                        }
-                    }
-                })
-            }
-            Constants.IMAGE, Constants.AUDIO, Constants.VIDEO -> {
-                // download document from S3 and then only move forward
-                CustomViews.startButtonLoading(mContext, false)
-                message.media?.get(0)?.getPresigned_url(object : DownloadFromS3ResponseInterface {
-                    override fun onSuccess(url: kotlin.String?) {
-                        CustomViews.hideButtonLoading()
-                        val mediaCaptionDialogue: MediaCaptionDialogue = MediaCaptionDialogue()
-                        mediaCaptionDialogue.showDialog(
-                            mContext as Activity,
-                            message.media?.get(0)?.type!!,
-                            url,
-                            null,
-                            true
-                        )
-                    }
-
-                    override fun onFailure(e: String?) {
-                        CustomViews.hideButtonLoading()
-                        (mContext.getSystemService(android.content.Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater?)?.let {
-                            CustomViews.showFailToast(
-                                it,
-                                mContext.getString(R.string.failed_to_show_media)
-                            )
-                        }
-                    }
-                })
-            }
-        }
-    }
-
-    fun getFolderNameForChat(type: String?): String {
-        var default_folder = Constants.MEDIA_ATTACHMENT_FOLDER
-        when (type) {
-            Constants.IMAGE -> default_folder = default_folder + Constants.IMAGE_FOLDER
-            com.example.mentalhealthpatient.appsynclib.Constants.VIDEO -> default_folder =
-                default_folder + Constants.VIDEO_FOLDER
-            com.example.mentalhealthpatient.appsynclib.Constants.DOCUMENT -> default_folder =
-                default_folder + Constants.DOCUMENT_FOLDER
-            com.example.mentalhealthpatient.appsynclib.Constants.AUDIO -> default_folder =
-                default_folder + Constants.AUDIO_FOLDER
-            com.example.mentalhealthpatient.appsynclib.Constants.THUMBNAILS -> default_folder =
-                default_folder + Constants.THUMBNAIL_FOLDER
-        }
-        return default_folder
-    }
-
-
-    @JvmStatic
-    open fun setAPIToken(context: Context?) {
-        val prefManager = PrefManager(context)
-        val myjsonString =
-            "{\"user_id\":\"" + prefManager.userId.toString() + "\", \"channel\":\"" + Constants.ANDROID + "\"}"
-        val token: String = EncryptRequestData.getEncryptedData(myjsonString)
-        Constants.setApiToken(token)
-    }
-
-
-    @JvmStatic
     fun selectAudioForChat(context: Context, launcher: ActivityResultLauncher<Intent>) {
         val intent = Intent(Intent.ACTION_PICK, MediaStore.Audio.Media.EXTERNAL_CONTENT_URI)
         launcher.launch(intent)
@@ -748,16 +548,15 @@ object CustomFunctions {
         launcherResultLauncher: ActivityResultLauncher<Intent>,
         allowMultipleImagePicked: Boolean? = true,
         dialog: FilePickerDialog? = null,
-        fragment: ChatActivity? = null
     ) {
         var permission = true
         val listPermissionsNeeded = ArrayList<String>()
         when (type) {
             //these types are only for the AppSync Thing
-            com.example.mentalhealthpatient.appsynclib.Constants.DOCUMENT,
-            com.example.mentalhealthpatient.appsynclib.Constants.IMAGE,
-            com.example.mentalhealthpatient.appsynclib.Constants.VIDEO,
-            com.example.mentalhealthpatient.appsynclib.Constants.AUDIO -> {
+            Constants.DOCUMENT,
+            Constants.IMAGE,
+            Constants.VIDEO,
+            Constants.AUDIO -> {
                 val storagePermission = ContextCompat.checkSelfPermission(
                     context,
                     Manifest.permission.READ_EXTERNAL_STORAGE
@@ -831,7 +630,6 @@ object CustomFunctions {
                 launcherResultLauncher,
                 allowMultipleImagePicked,
                 dialog,
-                fragment
             )
     }
 
@@ -844,7 +642,6 @@ object CustomFunctions {
         layoutInflater: LayoutInflater,
         allowMultipleImagePicked: Boolean? = true,
         dialog: FilePickerDialog? = null,
-        fragment: ChatActivity? = null
     ) {
         var value = true
         permissions.entries.forEach {
@@ -862,8 +659,7 @@ object CustomFunctions {
                 context,
                 launcher,
                 allowMultipleImagePicked,
-                dialog,
-                fragment
+                dialog
             )
         } else {
             CustomViews.showFailToast(layoutInflater, context.getString(R.string.permission_denied))
@@ -876,11 +672,10 @@ object CustomFunctions {
         launcher: ActivityResultLauncher<Intent>,
         allowMultipleImagePicked: Boolean? = true,
         dialog: FilePickerDialog? = null,
-        fragment: ChatActivity? = null
     ) {
         when (checkCurrentRequest) {
             Constants.MY_PERMISSIONS_RECORD_AUDIO -> {
-                fragment?.recordAudio()
+                //  fragment?.recordAudio()
             }
             Constants.REQUEST_TAKE_GALLERY_VIDEO -> {
                 getVideo(context, launcher)

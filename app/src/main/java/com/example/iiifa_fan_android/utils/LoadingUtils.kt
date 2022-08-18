@@ -1,4 +1,4 @@
-package com.example.mentalhealthpatient.ui.view.commonviews.classes
+package com.example.iiifa_fan_android.ui.view.commonviews.classes
 
 import android.content.Context
 

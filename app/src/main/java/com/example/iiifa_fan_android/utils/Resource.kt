@@ -1,4 +1,4 @@
-package com.example.mentalhealthpatient.utils
+package com.example.iiifa_fan_android.utils
 
 import com.onesignal.OneSignal
 import okhttp3.ResponseBody

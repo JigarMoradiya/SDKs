@@ -1,4 +1,4 @@
-package com.example.mentalhealthpatient.utils
+package com.example.iiifa_fan_android.utils
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -20,7 +20,7 @@ import androidx.core.content.ContextCompat
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
 import com.example.iiifa_fan_android.utils.PrefManager
-import com.example.mentalhealthpatient.ui.view.commonviews.classes.LoadingUtils
+import com.example.iiifa_fan_android.ui.view.commonviews.classes.LoadingUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
@@ -69,7 +69,7 @@ object CustomViews {
         val tvSucces = layout.findViewById<TextView>(R.id.tv_success)
         tvSucces.text = text
         val toast =
-            Toast(com.example.mentalhealthpatient.utils.MyApplication.getInstance().applicationContext)
+            Toast(com.example.iiifa_fan_android.utils.MyApplication.getInstance().applicationContext)
         toast.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 20)
         toast.duration = Toast.LENGTH_LONG
         toast.view = layout
@@ -84,7 +84,7 @@ object CustomViews {
             val tvSucces = layout.findViewById<TextView>(R.id.tv_fail)
             tvSucces.text = text
             val toast =
-                Toast(com.example.mentalhealthpatient.utils.MyApplication.getInstance().applicationContext)
+                Toast(com.example.iiifa_fan_android.utils.MyApplication.getInstance().applicationContext)
             toast.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 20)
             toast.duration = Toast.LENGTH_LONG
             toast.view = layout

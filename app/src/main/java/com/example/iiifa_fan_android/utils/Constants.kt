@@ -1,6 +1,5 @@
-package com.example.mentalhealthpatient.utils
+package com.example.iiifa_fan_android.utils
 
-import android.text.TextUtils
 import java.util.*
 
 
@@ -155,6 +154,16 @@ object Constants {
 
     const val API_ERROR = "not getting error message from API"
     const val API_ERROR_TYPE = "no error type"
+
+    // message type
+    const val TYPE_TEXT = "text"
+
+    //select type
+    const val AUDIO = "audio"
+    const val VIDEO = "video"
+    const val IMAGE = "image"
+    const val DOCUMENT = "document"
+    const val MEDIA = "media"
 
 
 }

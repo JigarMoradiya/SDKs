@@ -1,4 +1,4 @@
-package com.example.mentalhealthpatient.utils
+package com.example.iiifa_fan_android.utils
 
 import android.app.DownloadManager
 import android.os.AsyncTask

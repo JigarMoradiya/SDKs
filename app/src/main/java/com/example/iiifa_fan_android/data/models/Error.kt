@@ -1,7 +1,7 @@
-package com.example.mentalhealthpatient.data.models
+package com.example.iiifa_fan_android.data.models
 
 import com.example.iiifa_fan_android.data.models.ErrorSession
-import com.example.mentalhealthpatient.utils.Constants
+import com.example.iiifa_fan_android.utils.Constants
 
 
 class Error(

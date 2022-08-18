@@ -6,9 +6,9 @@ import android.util.Log;
 
 
 import com.example.iiifa_fan_android.BuildConfig;
-import com.example.mentalhealthpatient.ui.view.commonviews.classes.CustomFunctions;
-import com.example.mentalhealthpatient.utils.CustomClasses;
-import com.example.mentalhealthpatient.utils.MyApplication;
+import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions;
+import com.example.iiifa_fan_android.utils.CustomClasses;
+import com.example.iiifa_fan_android.utils.MyApplication;
 
 import java.nio.charset.StandardCharsets;
 

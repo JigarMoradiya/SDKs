@@ -1,4 +1,4 @@
-package com.example.iiifa_fan_android.utils;//package com.example.mentalhealthpatient.utils;
+package com.example.iiifa_fan_android.utils;//package com.example.iiifa_fan_android.utils;
 //
 //import android.content.Context;
 //import android.net.Uri;
@@ -20,7 +20,7 @@ package com.example.iiifa_fan_android.utils;//package com.example.mentalhealthpa
 //import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 //import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 //import com.google.android.exoplayer2.util.Util;
-//import com.example.mentalhealthpatient.R;
+//import com.example.iiifa_fan_android.R;
 //
 //public class ExoPlayerClass {
 //

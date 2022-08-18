@@ -1,6 +1,6 @@
 package com.example.iiifa_fan_android.utils
 
-import com.example.mentalhealthpatient.data.models.Error
+import com.example.iiifa_fan_android.data.models.Error
 import com.google.gson.JsonObject
 import com.google.gson.annotations.SerializedName
 

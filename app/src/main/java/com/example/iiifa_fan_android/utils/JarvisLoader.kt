@@ -1,10 +1,10 @@
-package com.example.mentalhealthpatient.ui.view.commonviews.classes
+package com.example.iiifa_fan_android.ui.view.commonviews.classes
 
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.widget.LinearLayout
-import com.example.mentalhealthpatient.R
+import com.example.iiifa_fan_android.R
 
 class JarvisLoader(context: Context) : Dialog(context) {
     override fun onCreate(savedInstanceState: Bundle?) {

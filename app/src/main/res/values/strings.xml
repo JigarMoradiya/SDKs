@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">iiifa-fan-android</string>
+
+    <string name="permission_denied">Permission denied</string>
 </resources>

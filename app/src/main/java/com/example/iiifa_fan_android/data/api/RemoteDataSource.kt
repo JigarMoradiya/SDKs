@@ -10,11 +10,10 @@ import com.example.iiifa_fan_android.utils.EncryptRequestData
 import com.example.iiifa_fan_android.utils.Jwt
 import com.example.iiifa_fan_android.utils.PeerCertificateExtractor
 import com.example.iiifa_fan_android.utils.PrefManager
-import com.example.mentalhealthpatient.data.models.MainAPIResponse
-import com.example.mentalhealthpatient.ui.view.commonviews.classes.CustomFunctions
-import com.example.mentalhealthpatient.ui.view.commonviews.classes.CustomFunctions.handleForbiddenResponse
-import com.example.mentalhealthpatient.ui.view.commonviews.classes.CustomFunctions.keyThree
-import com.example.mentalhealthpatient.utils.*
+import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions
+import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions.handleForbiddenResponse
+import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions.keyThree
+import com.example.iiifa_fan_android.utils.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser
@@ -382,7 +381,7 @@ class RemoteDataSource @Inject constructor() {
                 if (MainAPIResponse.code == 500) {
                     if (MainAPIResponse.error == null) {
                         MainAPIResponse.error =
-                            com.example.mentalhealthpatient.data.models.Error(userMessage = MainAPIResponse.message)
+                            com.example.iiifa_fan_android.data.models.Error(userMessage = MainAPIResponse.message)
                     } else if (MainAPIResponse?.error?.userMessage == null) {
                         MainAPIResponse.error?.userMessage = MainAPIResponse.message
                     }
@@ -437,7 +436,7 @@ class RemoteDataSource @Inject constructor() {
     private fun createEmptyResponse(chain: Interceptor.Chain, errorMessage: String): Response? {
         val mediaType = "application/json".toMediaType()
 
-        val error = com.example.mentalhealthpatient.data.models.Error()
+        val error = com.example.iiifa_fan_android.data.models.Error()
         error.message = errorMessage
 
         val mainAPIResponse = MainAPIResponse(
