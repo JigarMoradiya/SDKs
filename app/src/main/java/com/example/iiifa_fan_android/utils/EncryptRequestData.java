@@ -4,11 +4,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 
-
 import com.example.iiifa_fan_android.BuildConfig;
-import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions;
-import com.example.iiifa_fan_android.utils.CustomClasses;
-import com.example.iiifa_fan_android.utils.MyApplication;
 
 import java.nio.charset.StandardCharsets;
 

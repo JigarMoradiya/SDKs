@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import com.example.iiifa_fan_android.ui.view.login.activities.SplashActivity
-import com.example.iiifa_fan_android.utils.PrefManager
 
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn

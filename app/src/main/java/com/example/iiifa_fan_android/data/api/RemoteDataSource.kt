@@ -10,10 +10,10 @@ import com.example.iiifa_fan_android.utils.EncryptRequestData
 import com.example.iiifa_fan_android.utils.Jwt
 import com.example.iiifa_fan_android.utils.PeerCertificateExtractor
 import com.example.iiifa_fan_android.utils.PrefManager
-import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions
-import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions.handleForbiddenResponse
-import com.example.iiifa_fan_android.ui.view.commonviews.classes.CustomFunctions.keyThree
+import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.*
+import com.example.iiifa_fan_android.utils.CustomFunctions.handleForbiddenResponse
+import com.example.iiifa_fan_android.utils.CustomFunctions.keyThree
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParser

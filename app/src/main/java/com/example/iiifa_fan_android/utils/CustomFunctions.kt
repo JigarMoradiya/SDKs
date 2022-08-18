@@ -1,4 +1,4 @@
-package com.example.iiifa_fan_android.ui.view.commonviews.classes
+package com.example.iiifa_fan_android.utils
 
 import android.Manifest
 import android.annotation.SuppressLint
