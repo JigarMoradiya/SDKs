@@ -12,6 +12,26 @@
         ¬
     </style>
 
+    <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomsheetStyleWrapper</item>
+    </style>
+
+    <style name="bottomsheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_top_curved</item>
+        <item name="android:backgroundTint">@color/white</item>
+    </style>
+
+    <style name="CustomChipChoicePreference" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipStrokeColor">@color/border_chip_state_list_prference</item>
+        <item name="chipBackgroundColor">@color/bg_chip_state_list_prference</item>
+        <item name="android:textColor">@color/text_color_chip_state_list_preference</item>
+        <item name="chipCornerRadius">12dp</item>
+        <item name="chipMinHeight">20dp</item>
+        <item name="android:textAppearance">@style/SmallerText</item>
+    </style>
+    <style name="SmallerText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
 
 
 

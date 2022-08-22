@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@color/white"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:buttonTint="#e8845f" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:drawablePadding="10dp"
+        android:drawableTint="#c7c9d3"
+        android:fontFamily="@font/lato_medium"
+        android:lineSpacingExtra="4sp"
+        android:paddingEnd="15dp"
+        android:textColor="#2c2c2c"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        tools:text="Psychologist" />
+</LinearLayout>

@@ -1,4 +1,53 @@
 <resources>
 
     <string name="permission_denied">Permission denied</string>
+    <string name="login">Login</string>
+    <string name="please_enter_your_email_address_to_login">Please enter your email address to login</string>
+    <string name="email_id">Email Id</string>
+    <string name="password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="or">Or</string>
+    <string name="don_t_have_an_account_signup">Don’t have an account?<font color="#F8D137"> Signup</font></string>
+    <string name="verification_code">Verify your account</string>
+    <string name="verify">Verify</string>
+    <string name="resend">Resend</string>
+    <string name="verify_your_account">Verify your account</string>
+    <string name="validation_no_OTP">Please enter a 6 digit verification code.</string>
+    <string name="signup">Signup</string>
+    <string name="please_enter_your_email_address_to_receive_a_one_time_password_or_sign_up_through_social_links">Please enter your email address to receive a one time password or sign up through social links</string>
+    <string name="or_through_social_links">Or through social links</string>
+    <string name="i_agree_to_the_terms_amp_conditions">By Continuing you agree to the  <b><u><font color="#F8D137">Terms &amp; Conditions</font></u></b> and <b><u><font color="#F8D137">Privacy Policy</font></u></b></string>
+    <string name="already_have_an_account_login">Already have an account?<font color="#F8D137"> Login</font></string>
+    <string name="next">Next</string>
+    <string name="personal_details">Now, let\'s complete\nyour profile</string>
+    <string name="please_enter_your_details">Please enter your details</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="optional">Email(Optional)</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="mobile_number">Phone Number</string>
+    <string name="referral_code_optional">Referral Code (if any)</string>
+    <string name="create_account">Create Account</string>
+    <string name="clear">Clear</string>
+    <string name="preview">Preview</string>
+    <string name="choose_your_gender">Choose your gender</string>
+    <string name="edit_profile_success">Successfully updated profile</string>
+    <string name="create_password">Create a password</string>
+    <string name="validation_no_current_password">Password is mandatory.</string>
+    <string name="new_password_current_password_validation_msg">New Password and Current Password can not be same</string>
+    <string name="successfully_password_changed">Successfully password changed</string>
+    <string name="_password">Password</string>
+    <string name="enter_password">Enter password</string>
+    <string name="use_atleast_8_characters_to_create_a_password">Use atleast 8 characters to create a password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="validation_invalid_password">Your password must contain a minimum of 8 characters including at least one upper case, one lower case and one digit.</string>
+    <string name="what_s_your_favourite_decade">What’s your favourite decade?</string>
+    <string name="skip">Skip</string>
+    <string name="what_genre_do_you_like">What genre do you like?</string>
+    <string name="are_you_interested_in_auditions">Are you interested in Auditions?</string>
+    <string name="which_genre_you_prefer">Which genre you prefer\nfor Auditions?</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="save">Save</string>
 </resources>

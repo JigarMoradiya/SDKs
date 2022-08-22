@@ -15,10 +15,20 @@
     <color name="color_primary">#242424</color>
     <color name="color_primary_dark">#000000</color>
     <color name="colorAccent">#F8D137</color>
+    <color name="chipSelected">#574A13</color>
 
     <color name="selected_tab_podcast_bg">#c3f4ba</color>
     <color name="text_color">#B0FFFFFF</color>
     <color name="edit_text_color">#f52950</color>
+
+    <color name="password_moderated">#ffe869</color>
+    <color name="password_weak">#ff8669</color>
+    <color name="password_strong">#31b918</color>
+
+    <color name="password_text_not_selected">#666e9d</color>
+    <color name="password_text_error">#fd5757</color>
+    <color name="password_text_selected">#35b11f</color>
+    <color name="currency_not_selected">#BEFFFFFF</color>
 
 
 </resources>

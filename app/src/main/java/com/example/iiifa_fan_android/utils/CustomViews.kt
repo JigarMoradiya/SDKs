@@ -69,7 +69,7 @@ object CustomViews {
         val tvSucces = layout.findViewById<TextView>(R.id.tv_success)
         tvSucces.text = text
         val toast =
-            Toast(com.example.iiifa_fan_android.utils.MyApplication.getInstance().applicationContext)
+            Toast(MyApplication.getInstance().applicationContext)
         toast.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 20)
         toast.duration = Toast.LENGTH_LONG
         toast.view = layout
@@ -83,8 +83,7 @@ object CustomViews {
             val layout = inflater.inflate(R.layout.toast_layout_fail, null)
             val tvSucces = layout.findViewById<TextView>(R.id.tv_fail)
             tvSucces.text = text
-            val toast =
-                Toast(com.example.iiifa_fan_android.utils.MyApplication.getInstance().applicationContext)
+            val toast = Toast(MyApplication.getInstance().applicationContext)
             toast.setGravity(Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, 20)
             toast.duration = Toast.LENGTH_LONG
             toast.view = layout
