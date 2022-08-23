@@ -70,7 +70,7 @@ class PersonalDetailFragment : Fragment() {
         val adapter = SingleSelectAdapter(list, null, false, false, object : SingleSelectClickListner {
                 override fun onClicked(selectedItem: MultiSelect) {
                     bottomSheetDialog.dismiss()
-                    CustomViews.removeError(requireContext(),binding.spinnerGender,binding.textInputLayoutGender,0,R.color.text_color,false)
+                    CustomViews.removeError(requireContext(),binding.spinnerGender,binding.textInputLayoutGender,0,R.color.text_color,true)
                     when (selectedItem.name) {
                         Constants.MALE -> {
                             binding.spinnerGender.setText(Constants.MALE)
