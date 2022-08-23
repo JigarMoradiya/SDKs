@@ -50,4 +50,33 @@
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="save">Save</string>
+    <string name="title_activity_main_dashboard">MainDashboardActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_my_profile">My Profile</string>
+    <string name="menu_edit_profile">Edit Profile</string>
+    <string name="menu_change_password">Change Password</string>
+    <string name="menu_my_shoutouts">My Shoutouts</string>
+    <string name="menu_my_auditions">My Auditions</string>
+    <string name="menu_account_management">Account Management</string>
+    <string name="menu_app_design_setting">App design settings</string>
+    <string name="menu_my_preference">My Preferences</string>
+    <string name="menu_payment">Payment</string>
+    <string name="menu_transaction_history">Transaction History</string>
+    <string name="menu_manage_payment_methods">Manage Payment Methods</string>
+    <string name="menu_notification_setting">Notification Settings</string>
+    <string name="menu_about_iifa_connect">About IIFA connect</string>
+    <string name="menu_pp">Privacy Policy</string>
+    <string name="menu_tc">Term &amp; Conditions</string>
+    <string name="menu_faq">FAQs</string>
+    <string name="menu_cancellation_refund">Cancellation &amp; Refund Policy</string>
+    <string name="menu_contact_us">Contact us</string>
+    <string name="menu_help_guide">Help Guide</string>
+    <string name="menu_rate_us">Rate us on the Play Store</string>
+    <string name="menu_logout">Logout</string>
 </resources>

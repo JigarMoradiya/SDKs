@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.databinding.ActivityLoginBinding
+import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
 import com.example.iiifa_fan_android.ui.view.registration.activities.RegistrationHolderActivity
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +41,8 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnLogin.onClick {
-
+            val intent = Intent(this@LoginActivity, MainDashboardActivity::class.java)
+            startActivity(intent)
         }
     }
 }

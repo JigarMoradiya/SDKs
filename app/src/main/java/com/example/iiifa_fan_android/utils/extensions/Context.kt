@@ -8,9 +8,6 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.widget.Toast
 
-val Context.downloadManager: DownloadManager
-    get() = getSystemServiceAs(Context.DOWNLOAD_SERVICE)
-
 val Context.layoutInflater: LayoutInflater
     get() = getSystemServiceAs(Context.LAYOUT_INFLATER_SERVICE)
 

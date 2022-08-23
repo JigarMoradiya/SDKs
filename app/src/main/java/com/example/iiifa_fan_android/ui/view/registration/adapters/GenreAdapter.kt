@@ -13,6 +13,7 @@ import com.example.iiifa_fan_android.data.models.PasswordMeterStatus
 import com.example.iiifa_fan_android.data.models.Preferences
 import com.example.iiifa_fan_android.databinding.LayoutGenreBinding
 import com.example.iiifa_fan_android.databinding.RvPasswordMeterBinding
+import com.example.iiifa_fan_android.utils.extensions.layoutInflater
 import com.example.iiifa_fan_android.utils.extensions.onClick
 
 
@@ -31,7 +32,7 @@ class GenreAdapter(
         viewType: Int
     ): ViewHolder {
         val binding = LayoutGenreBinding
-            .inflate(LayoutInflater.from(parent.context), parent, false)
+            .inflate(parent.context.layoutInflater, parent, false)
         return ViewHolder(binding)
     }
 
