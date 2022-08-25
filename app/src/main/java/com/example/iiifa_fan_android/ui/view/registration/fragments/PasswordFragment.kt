@@ -4,6 +4,7 @@ import android.animation.ValueAnimator
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -21,13 +22,17 @@ import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.CustomViews
 import com.example.iiifa_fan_android.utils.extensions.hide
 import com.example.iiifa_fan_android.utils.extensions.onClick
+import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.example.iiifa_fan_android.utils.extensions.show
+import java.util.*
 
 class PasswordFragment : Fragment() {
     private lateinit var binding: FragmentPasswordBinding
     private lateinit var navController: NavController
     private lateinit var passwordMeterClass: PasswordMeterClass
     private var type: String? = null
+    private var password: String = ""
+    private var confirm_password: String = ""
     private var lastProgress = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,12 +63,15 @@ class PasswordFragment : Fragment() {
     }
 
     private fun initListener() {
+        binding.progressHorizontal.setProgress(70, 95)
         binding.ibBack.onClick {
             onBack()
         }
         binding.btnNext.onClick {
-            val bundle = Bundle()
-            navController.navigate(R.id.action_passwordFragment_to_selectDecadeFragment, bundle)
+            if (validateFields()){
+                val bundle = Bundle()
+                navController.navigate(R.id.action_passwordFragment_to_selectDecadeFragment, bundle)
+            }
         }
         binding.etPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -75,12 +83,12 @@ class PasswordFragment : Fragment() {
 
                 //if user erase everything , then hide hint as well
                 if (len == 0) {
-                    binding.seekbar.hide()
+                    binding.seekbarPassword.hide()
                     binding.tvHintPassword.hide()
                     binding.tvPasswordType.hide()
                     passwordMeterClass.setResetAll()
                 } else {
-                    binding.seekbar.show()
+                    binding.seekbarPassword.show()
                     passwordMeterClass.atLeast8charSelected(s.toString().length >= 8)
                     passwordMeterClass.numericCharSelected(CustomFunctions.containsNumericCharacter(s.toString()))
                     passwordMeterClass.smallCharSelected(CustomFunctions.containsLowerCase(s.toString()))
@@ -122,6 +130,28 @@ class PasswordFragment : Fragment() {
         })
     }
 
+    private fun validateFields(): Boolean {
+        var validate = true
+        confirm_password = Objects.requireNonNull(binding.etConfirmPassword.text).toString()
+        password = Objects.requireNonNull(binding.etPassword.text).toString()
+        if (TextUtils.isEmpty(password)) {
+            validate = false
+            binding.tvHintPassword.hide()
+            binding.seekbarPassword.hide()
+            passwordMeterClass.setAllError()
+            CustomViews.setErrortoEditText(requireContext(), binding.etPassword, binding.textInputLayoutPassword, getString(R.string.validation_no_password))
+        } else if (!passwordMeterClass.setAllError()) {
+            validate = false
+        } else if (TextUtils.isEmpty(confirm_password)) {
+            validate = false
+            CustomViews.setErrortoEditText(requireContext(), binding.etConfirmPassword, binding.textInputLayoutConfirmPassword, getString(R.string.validation_no_confirmPassword))
+        } else if (password != confirm_password) {
+            validate = false
+            CustomViews.setErrortoEditText(requireContext(), binding.etConfirmPassword, binding.textInputLayoutConfirmPassword, getString(R.string.validation_match_password))
+        }
+        return validate
+    }
+
     fun changeSeekbar() {
         when (type) {
             Constants.WEAK -> {
@@ -134,7 +164,7 @@ class PasswordFragment : Fragment() {
                 animateSeekbar(100, R.color.password_strong, Constants.STRONG)
             }
             Constants.NOT_ACCEPTED -> {
-                binding.seekbar.hide()
+                binding.seekbarPassword.hide()
                 binding.tvPasswordType.hide()
                 binding.tvHintPassword.show()
             }
@@ -142,20 +172,14 @@ class PasswordFragment : Fragment() {
     }
 
     private fun animateSeekbar(progress: Int, color: Int, type: String?) {
-        binding.seekbar.progressTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
-        binding.seekbar.show()
+        binding.seekbarPassword.progressTintList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), color))
+        binding.seekbarPassword.show()
         binding.tvHintPassword.hide()
         binding.tvPasswordType.show()
         binding.tvPasswordType.text = type
         binding.tvPasswordType.setTextColor(ContextCompat.getColor(requireContext(), color))
         if (lastProgress != progress) {
-            val anim = ValueAnimator.ofInt(lastProgress, progress)
-            anim.duration = 1000
-            anim.addUpdateListener { animation ->
-                val animProgress = animation.animatedValue as Int
-                binding.seekbar.progress = animProgress
-            }
-            anim.start()
+            binding.seekbarPassword.setProgress(lastProgress, progress)
             lastProgress = progress
         }
     }

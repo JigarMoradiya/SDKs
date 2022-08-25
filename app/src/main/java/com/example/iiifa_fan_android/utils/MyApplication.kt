@@ -22,6 +22,7 @@ import com.onesignal.OSNotificationOpenedResult
 import com.onesignal.OneSignal.OSNotificationOpenedHandler
 import android.content.Intent
 import androidx.navigation.NavDeepLinkBuilder
+import com.google.firebase.FirebaseApp
 import com.google.gson.Gson
 import com.onesignal.OSNotification
 
@@ -56,8 +57,6 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT

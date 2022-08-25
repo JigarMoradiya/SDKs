@@ -101,16 +101,7 @@ object CustomViews {
         textInputLayout: NoChangingBackgroundTextInputLayout,
         validation_message: String?
     ) {
-        if (appCompatEditText.tag != null && !TextUtils.isEmpty(appCompatEditText.tag.toString())
-            && appCompatEditText.tag.toString()
-                .equals(Constants.DONT_DISPLAY_ERROR_ICON, ignoreCase = true)
-        ) {
-        } else {
-
-        }
-
-
-        appCompatEditText.setBackgroundResource(R.drawable.text_box_underline_error)
+//        appCompatEditText.setBackgroundResource(R.drawable.text_box_underline_error)
         textInputLayout.error = validation_message
         textInputLayout.requestFocus()
     }
@@ -132,8 +123,8 @@ object CustomViews {
 //            )
 //        )
 
-        if (!isDropDown)
-            appCompatEditText.setBackgroundResource(R.drawable.text_box_underline)
+//        if (!isDropDown)
+//            appCompatEditText.setBackgroundResource(R.drawable.text_box_underline)
         textInputLayout.error = null
         textInputLayout.isErrorEnabled = false
     }

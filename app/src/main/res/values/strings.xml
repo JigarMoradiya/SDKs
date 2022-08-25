@@ -1,5 +1,10 @@
 <resources>
 
+    <!--    Facebook Keys-->
+    <string name="facebook_app_id">717417239416064</string>
+    <string name="fb_login_protocol_scheme">fb717417239416064</string>
+    <string name="facebook_client_token">6bc4cd9edb8b89f0be29f603766280aa</string>
+
     <string name="permission_denied">Permission denied</string>
     <string name="login">Login</string>
     <string name="please_enter_your_email_address_to_login">Please enter your email address to login</string>
@@ -12,7 +17,6 @@
     <string name="verify">Verify</string>
     <string name="resend">Resend</string>
     <string name="verify_your_account">Verify your account</string>
-    <string name="validation_no_OTP">Please enter a 6 digit verification code.</string>
     <string name="signup">Signup</string>
     <string name="please_enter_your_email_address_to_receive_a_one_time_password_or_sign_up_through_social_links">Please enter your email address to receive a one time password or sign up through social links</string>
     <string name="or_through_social_links">Or through social links</string>
@@ -79,4 +83,35 @@
     <string name="menu_help_guide">Help Guide</string>
     <string name="menu_rate_us">Rate us on the Play Store</string>
     <string name="menu_logout">Logout</string>
+
+    <string name="validation_no_OTP">Please enter a 6 digit verification code.</string>
+    <string name="validation_invalid_OTP">Please enter a valid verification code.</string>
+    <string name="validation_no_mobile_no">Please enter a mobile number.</string>
+    <string name="validation_invalid_mobile_no">Please enter valid mobile number</string>
+    <string name="validation_no_email">Please enter your email address.</string>
+    <string name="validation_invalid_email">Please enter valid email address.</string>
+    <string name="validation_no_username">Please enter your email address</string>
+    <string name="validation_invalid_username">Please enter valid email address</string>
+    <string name="validation_invalid_email_or_phone">Please enter valid email address</string>
+    <string name="validation_no_password">Please enter your password</string>
+    <string name="validation_no_confirmPassword">Confirm password is mandatory.</string>
+    <string name="validation_no_old_password">Please enter your current password.</string>
+    <string name="validation_no_new_password">Password is mandatory.</string>
+    <string name="validation_no_new_confirmPassword">Please confirm new password</string>
+    <string name="validation_match_password">Password and confirm password does not match. Please try again</string>
+    <string name="validation_no_firstName">First name is mandatory</string>
+    <string name="validation_no_lastName">Last name is mandatory</string>
+    <string name="validation_invalid_first_name">Please enter valid first name</string>
+    <string name="validation_invalid_last_name">Please enter valid last name</string>
+    <string name="validation_password_regex_error">Your password contains invalid symbols</string>
+    <string name="validation_name_regex_error">Your name contains invalid symbols</string>
+    <string name="validation_first_name_length">First name length can\'t be greater than 40 characters.</string>
+    <string name="validation_last_name_length">Last name length can\'t be greater than 40 characters.</string>
+    <string name="validation_age_incorrect">Please enter valid age</string>
+    <string name="validation_no_age">Age is mandatory.</string>
+    <string name="validation_select_language">Please select language</string>
+    <string name="validation_select_country">Please select country</string>
+    <string name="age_number_validation">Age must be between 18 to 80</string>
+    <string name="validation_no_gender">Gender is mandatory.</string>
+
 </resources>

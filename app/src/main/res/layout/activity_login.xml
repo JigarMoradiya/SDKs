@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="80dp"
                 android:fontFamily="@font/lato_bold"
                 android:lineSpacingExtra="13sp"
                 android:text="@string/login"
@@ -146,54 +146,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btn_login" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/iv_google"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="@color/color_primary"
-                android:fontFamily="@font/lato_bold"
-                app:cornerRadius="8dp"
-                app:icon="@drawable/ic_google"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp"
-                app:layout_constraintEnd_toStartOf="@+id/iv_facebook"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtOr" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/iv_facebook"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_marginHorizontal="8dp"
-                android:backgroundTint="@color/color_primary"
-                android:fontFamily="@font/lato_bold"
-                app:cornerRadius="8dp"
-                app:icon="@drawable/ic_facebook"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp"
-                app:layout_constraintEnd_toStartOf="@+id/iv_apple"
-                app:layout_constraintStart_toEndOf="@+id/iv_google"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@+id/txtOr" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/iv_apple"
-                android:layout_width="40dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="8dp"
-                android:backgroundTint="@color/color_primary"
-                android:fontFamily="@font/lato_bold"
-                app:cornerRadius="8dp"
-                app:icon="@drawable/ic_apple"
-                app:iconGravity="textStart"
-                app:iconPadding="0dp"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:id="@+id/linSocialIcons"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@+id/iv_facebook"
-                app:layout_constraintTop_toBottomOf="@+id/txtOr" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtOr">
 
+                <com.example.iiifa_fan_android.ui.view.login.component.GoogleLoginComponent
+                    android:id="@+id/iv_google"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.example.iiifa_fan_android.ui.view.login.component.FaceBookLoginComponent
+                    android:id="@+id/iv_facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <com.example.iiifa_fan_android.ui.view.login.component.AppleLoginComponent
+                    android:id="@+id/iv_apple"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
             <com.google.android.material.textview.MaterialTextView
@@ -210,7 +187,7 @@
                 android:textStyle="normal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/iv_facebook" />
+                app:layout_constraintTop_toBottomOf="@+id/linSocialIcons" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

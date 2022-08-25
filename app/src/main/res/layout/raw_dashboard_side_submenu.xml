@@ -28,7 +28,7 @@
             android:includeFontPadding="false"
             android:text="@{dataModel.menuTitle}"
             android:textColor="@color/white"
-            android:alpha="0.8"
+            android:alpha="0.7"
             android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@+id/txtBadgeCount"
             app:layout_constraintStart_toStartOf="parent"

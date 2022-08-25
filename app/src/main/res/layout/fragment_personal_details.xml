@@ -2,12 +2,52 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:background="@android:color/transparent"
+        android:padding="4dp"
+        android:src="@drawable/ic_arrow_back"
+        android:layout_marginHorizontal="16dp"
+        android:layout_alignTop="@+id/tvSkip"
+        android:layout_alignBottom="@+id/tvSkip"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvSkip"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:layout_marginTop="8dp"
+        android:layout_alignParentEnd="true"
+        android:fontFamily="@font/lato_medium"
+        android:paddingHorizontal="16dp"
+        android:text="@string/skip"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        android:textStyle="normal" />
+
+    <ProgressBar
+        android:id="@+id/progressHorizontal"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:indeterminate="false"
+        android:layout_below="@+id/tvSkip"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="8dp"
+        android:max="100"
+        android:progress="45"
+        android:progressDrawable="@drawable/signup_progress_styled"/>
 
     <androidx.core.widget.NestedScrollView
+        android:layout_below="@+id/tvSkip"
+        android:layout_marginTop="24dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:layout_marginTop="50dp"
         android:overScrollMode="never"
         android:scrollbars="none">
 
@@ -63,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:hintEnabled="false"
+                app:errorTextColor="@color/edit_text_color"
                 app:layout_constraintTop_toBottomOf="@+id/txtFName">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -136,7 +177,7 @@
 
             <com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
                 android:id="@+id/text_input_layout_age"
-                android:layout_width="70dp"
+                android:layout_width="75dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 app:errorTextColor="@color/edit_text_color"
@@ -221,7 +262,7 @@
                 android:textSize="16sp"
                 android:textStyle="normal"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_Gender" />
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_age" />
 
             <com.rilixtech.widget.countrycodepicker.CountryCodePicker
                 android:id="@+id/ccp"
@@ -231,7 +272,7 @@
                 android:layout_marginTop="8dp"
                 android:background="@drawable/bg_edittext"
                 android:padding="15dp"
-                app:ccp_defaultNameCode="GB"
+                app:ccp_defaultNameCode="IN"
                 app:ccp_enableHint="false"
                 app:ccp_enablePhoneAutoFormatter="true"
                 app:ccp_hideNameCode="true"
@@ -333,13 +374,5 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/ibBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:padding="4dp"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_arrow_back" />
 
 </RelativeLayout>

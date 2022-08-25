@@ -16,6 +16,7 @@ import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.CustomViews
 import com.example.iiifa_fan_android.utils.extensions.onClick
+import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
@@ -62,6 +63,10 @@ class VerificationCodeFragment : Fragment() {
     }
 
     private fun initListener() {
+        binding.progressHorizontal.setProgress(20, 45)
+        binding.ibBack.onClick {
+            onBack()
+        }
         binding.otpView.setOtpCompletionListener { otp_data ->
             otp = otp_data
         }

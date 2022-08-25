@@ -33,7 +33,7 @@ class MainDashboardActivity : AppCompatActivity(), SideMenuListAdapter.OnItemCli
         val actionBar = supportActionBar
         actionBar?.apply {
             setDisplayHomeAsUpEnabled(true)
-            setHomeAsUpIndicator(R.drawable.ic_done)
+            setHomeAsUpIndicator(R.drawable.menu_drawer)
         }
     }
 
@@ -42,7 +42,7 @@ class MainDashboardActivity : AppCompatActivity(), SideMenuListAdapter.OnItemCli
         sideMenuListAdapter = SideMenuListAdapter(list,this)
         binding.rvMenu.adapter = sideMenuListAdapter
         val decoration = MiddleDividerItemDecoration(this,DividerItemDecoration.VERTICAL)
-        decoration.setDividerColor(ContextCompat.getColor(this,R.color.white70))
+        decoration.setDividerColor(ContextCompat.getColor(this,R.color.white))
         binding.rvMenu.addItemDecoration(decoration)
     }
 
