@@ -73,10 +73,10 @@ class LoginActivity : AppCompatActivity(), GoogleLoginComponent.StartActivityRes
             startActivity(intent)
         }
         binding.btnLogin.onClick {
-            if (validateFields()){
+//            if (validateFields()){
                 val intent = Intent(this@LoginActivity, MainDashboardActivity::class.java)
                 startActivity(intent)
-            }
+//            }
         }
     }
 

@@ -16,6 +16,7 @@
     <color name="color_primary">#242424</color>
     <color name="color_primary_dark">#000000</color>
     <color name="colorAccent">#F8D137</color>
+    <color name="colorAccentDark">#3E350D</color>
     <color name="chipSelected">#574A13</color>
 
     <color name="selected_tab_podcast_bg">#c3f4ba</color>

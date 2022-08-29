@@ -4,15 +4,35 @@
     package="com.example.iiifa_fan_android">
 
     <queries>
+        <!-- Camera -->
         <intent>
             <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+        <!-- Gallery -->
+        <intent>
+            <action android:name="android.intent.action.GET_CONTENT" />
+
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+
+            <data android:mimeType="image/*" />
+        </intent>
+        <intent>
+            <action android:name="android.intent.action.CHOOSER" />
         </intent>
     </queries>
 
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <application
         android:name=".utils.MyApplication"
         android:allowBackup="true"
@@ -32,9 +52,6 @@
             android:name=".ui.view.login.activities.ForceUpdateActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.login.home.activities.HomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.view.registration.activities.RegistrationHolderActivity"
             android:exported="false" />
         <activity
@@ -42,6 +59,18 @@
             android:exported="false" />
         <activity
             android:name=".ui.view.login.activities.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.dashboard.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.dashboard.myprofile.EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.dashboard.myprofile.ChangeProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.dashboard.myprofile.ChangePasswordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.login.activities.SplashActivity"
@@ -75,6 +104,15 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
     </application>
 
 </manifest>

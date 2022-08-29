@@ -28,6 +28,7 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="optional">Email(Optional)</string>
+    <string name="email">Email</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
     <string name="mobile_number">Phone Number</string>
@@ -43,6 +44,7 @@
     <string name="successfully_password_changed">Successfully password changed</string>
     <string name="_password">Password</string>
     <string name="enter_password">Enter password</string>
+    <string name="current_password">Current password</string>
     <string name="use_atleast_8_characters_to_create_a_password">Use atleast 8 characters to create a password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="validation_invalid_password">Your password must contain a minimum of 8 characters including at least one upper case, one lower case and one digit.</string>
@@ -113,5 +115,11 @@
     <string name="validation_select_country">Please select country</string>
     <string name="age_number_validation">Age must be between 18 to 80</string>
     <string name="validation_no_gender">Gender is mandatory.</string>
+    <string name="done">Done</string>
+    <string name="upload_from_gallery">Upload from Gallery</string>
+    <string name="capture_from_the_camera">Capture from the Camera</string>
+    <string name="remove_profile_picture">Remove Profile Picture</string>
+    <string name="new_password">New Password</string>
+    <string name="update_password">Update Password</string>
 
 </resources>

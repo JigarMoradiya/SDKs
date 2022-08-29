@@ -16,7 +16,7 @@ class SideMenuListAdapter(
 ) :
     RecyclerView.Adapter<SideMenuListAdapter.ViewHolder>() {
     interface OnItemClickListener {
-        fun onMenuItemClick(itemTag: String)
+        fun onMenuItemClick(menuItem: SideMenu)
     }
 
     override fun onCreateViewHolder(
@@ -36,7 +36,7 @@ class SideMenuListAdapter(
                 binding.imgArrow.rotation = 0f
                 binding.root.setOnClickListener {
                     if (subMenu.isEmpty()){
-                        mListener.onMenuItemClick(tag)
+                        mListener.onMenuItemClick(listData[position])
                     }else{
                         if (binding.rvMenu.isVisible){
                             binding.rvMenu.hide()
@@ -76,7 +76,7 @@ class SideMenuListAdapter(
                 with(listData[position]) {
                     binding.dataModel = this
                     binding.root.setOnClickListener {
-                        mListener.onMenuItemClick(tag)
+                        mListener.onMenuItemClick(listData[position])
                     }
                 }
             }

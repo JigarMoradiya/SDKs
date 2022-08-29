@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/reg_navigation_graph"
+    app:startDestination="@id/homeFragment">
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.iiifa_fan_android.ui.view.dashboard.fragments.HomeFragment">
+
+    </fragment>
+    <fragment
+        android:id="@+id/privacyPolicyFragment"
+        android:name="com.example.iiifa_fan_android.ui.view.navigation_menu.fragments.PrivacyPolicyFragment">
+        <argument
+            android:name="type"
+            android:defaultValue="privacy_policy"
+            app:argType="string" />
+    </fragment>
+</navigation>
