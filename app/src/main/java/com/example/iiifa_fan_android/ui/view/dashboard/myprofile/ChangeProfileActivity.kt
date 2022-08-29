@@ -136,7 +136,6 @@ class ChangeProfileActivity : BaseActivity() {
 
     private fun setImagePreview(url: String?) {
         pictureImagePath = url
-        Log.e("changeProfileAC","pictureImagePath : "+pictureImagePath)
         Glide.with(this)
             .load(url)
             .apply(RequestOptions().placeholder(R.drawable.ic_default_user))

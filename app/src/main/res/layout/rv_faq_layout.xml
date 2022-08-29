@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingVertical="12dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_faq_cards"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_semi_bold"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/iv_plus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Course Related\nbnnnnnn"
+        tools:textColor="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_plus"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_faq_cards"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_faq_cards"
+        app:srcCompat="@drawable/ic_iv_plus_faq" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_faq_sub_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:nestedScrollingEnabled="false"
+        android:visibility="gone"
+        android:layout_marginTop="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@+id/tv_faq_cards"
+        tools:listitem="@layout/rv_faq_question_answer_layout"
+        tools:visibility="visible" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

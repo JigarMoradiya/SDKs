@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_medium"
+        android:gravity="center"
+        android:text="@string/menu_contact_us"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/ibBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_main_logo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_top"
+        app:layout_constraintTop_toBottomOf="@+id/ibBack" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="36dp"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:padding="16dp"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_main_logo">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/viewEmail"
+                app:layout_constraintBottom_toBottomOf="@+id/txtEmailValue"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/bg_edittext"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ivEmail"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                app:layout_constraintTop_toTopOf="@+id/viewEmail"
+                app:layout_constraintStart_toStartOf="@+id/viewEmail"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/color_divider_grey"
+                android:fontFamily="@font/lato_bold"
+                app:cornerRadius="8dp"
+                app:icon="@drawable/ic_email"
+                app:iconGravity="textStart"
+                app:iconPadding="0dp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtEmailLable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
+                android:lineSpacingExtra="7sp"
+                app:layout_constraintStart_toEndOf="@+id/ivEmail"
+                android:text="@string/e_mail"
+                android:layout_marginStart="12dp"
+                android:textColor="@color/text_color"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@+id/ivEmail"
+                app:layout_constraintTop_toTopOf="@+id/ivEmail"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtEmailValue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
+                android:lineSpacingExtra="7sp"
+                app:layout_constraintStart_toStartOf="@+id/ivEmail"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="hello@connectedminds.com"
+                android:paddingVertical="12dp"
+                android:textColor="@color/colorAccent"
+                android:textSize="14sp"
+                android:textStyle="normal"
+                app:layout_constraintTop_toBottomOf="@+id/ivEmail"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_regular"
+                android:lineSpacingExtra="7sp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/your_name"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintTop_toBottomOf="@+id/viewEmail"/>
+
+
+            <com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
+                android:id="@+id/text_input_layout_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:hintEnabled="false"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:errorTextColor="@color/edit_text_color"
+                app:layout_constraintTop_toBottomOf="@+id/txtName">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_first_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edittext"
+                    android:fontFamily="@font/lato_regular"
+                    android:inputType="textCapWords"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+            </com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/lato_regular"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/email_id"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_name" />
+
+            <com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
+                android:id="@+id/text_input_layout_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:errorTextColor="@color/edit_text_color"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/txtEmail">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="emailAddress"
+                    android:background="@drawable/bg_edittext"
+                    android:fontFamily="@font/lato_regular"
+                    android:maxLines="1"
+                    android:padding="15dp"
+                    android:singleLine="true"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="16sp" />
+            </com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/lato_regular"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/your_message"
+                android:textColor="@color/text_color"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_email" />
+
+            <com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
+                android:id="@+id/text_input_layout_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:errorTextColor="@color/edit_text_color"
+                app:hintEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/txtMessage">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="emailAddress"
+                    android:background="@drawable/bg_edittext"
+                    android:fontFamily="@font/lato_regular"
+                    android:maxLines="5"
+                    android:gravity="top"
+                    android:minHeight="140dp"
+                    android:padding="15dp"
+                    android:singleLine="true"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="16sp" />
+            </com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout>
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_send"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="@color/colorAccent"
+                android:fontFamily="@font/lato_bold"
+                android:paddingVertical="10dp"
+                android:text="@string/send"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintTop_toBottomOf="@+id/text_input_layout_message" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

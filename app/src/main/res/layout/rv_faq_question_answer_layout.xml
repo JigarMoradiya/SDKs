@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_faq_cards"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_semi_bold"
+        android:textSize="16sp"
+        android:textColor="@color/text_color_blue"
+        android:paddingBottom="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_plus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Course Related\nbnnnnnn"
+        tools:textColor="@color/white" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_plus"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        app:tint="@color/black"
+        tools:tint="@color/white"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_faq_cards"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_faq_cards"
+        app:srcCompat="@drawable/ic_right_arrow" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_faq_answer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/lato_regular"
+        app:layout_constraintTop_toBottomOf="@+id/tv_faq_cards"
+        android:textColor="@color/text_color_grey"
+        android:textSize="14sp"
+        android:paddingBottom="16dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        tools:text="All card details are held and processed by one of the largest and most trusted payment providers in the world. We do not have direct access to any of your details." />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/lato_medium"
         android:gravity="center"
-        tools:text="Privacy Policy"
+        android:text="@string/menu_faq"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="normal"
@@ -53,50 +53,21 @@
         android:textStyle="normal"
         app:layout_constraintTop_toBottomOf="@+id/iv_main_logo" />
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:id="@+id/rv_faq"
         android:layout_marginTop="36dp"
         android:background="@drawable/bg_top_curved_24_dp"
-        android:fillViewport="true"
         android:overScrollMode="never"
-        android:padding="16dp"
+        android:paddingTop="16dp"
+        android:paddingHorizontal="16dp"
         android:scrollbars="none"
+        tools:listitem="@layout/rv_faq_layout"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtTitle">
 
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:orientation="vertical">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvLastUpdatedDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_regular"
-                android:text="Last Update: April 20, 2021"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginTop="12dp"
-                android:alpha="0.7"
-                android:textStyle="normal" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_content"
-                android:layout_marginTop="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lato_regular"
-                android:lineSpacingExtra="9.9sp"
-                android:text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry’s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-    </ScrollView>
+    </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

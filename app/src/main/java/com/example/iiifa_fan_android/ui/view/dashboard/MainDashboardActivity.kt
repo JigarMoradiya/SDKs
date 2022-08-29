@@ -12,6 +12,9 @@ import com.example.iiifa_fan_android.data.dataprovider.SideMenu
 import com.example.iiifa_fan_android.databinding.ActivityMainDashboardBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.adapter.SideMenuListAdapter
+import com.example.iiifa_fan_android.ui.view.dashboard.cms.ContactusActivity
+import com.example.iiifa_fan_android.ui.view.dashboard.cms.FAQActivity
+import com.example.iiifa_fan_android.ui.view.dashboard.cms.PrivacyPolicyActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.fragments.HomeFragment
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.ChangePasswordActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.EditProfileActivity
@@ -112,13 +115,13 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
                 PrivacyPolicyActivity.getInstance(this,menuItem)
             }
             "faq" -> {
-
+                FAQActivity.getInstance(this)
             }
             "cancellation_refund" -> {
                 PrivacyPolicyActivity.getInstance(this,menuItem)
             }
             "contact_us" -> {
-
+                ContactusActivity.getInstance(this)
             }
             "help_guide" -> {
 

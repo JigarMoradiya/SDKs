@@ -61,7 +61,13 @@
             android:name=".ui.view.login.activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.dashboard.PrivacyPolicyActivity"
+            android:name=".ui.view.dashboard.cms.PrivacyPolicyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.dashboard.cms.FAQActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.dashboard.cms.ContactusActivity"
             android:exported="false" />
         <activity
             android:name=".ui.view.dashboard.myprofile.EditProfileActivity"
@@ -72,6 +78,7 @@
         <activity
             android:name=".ui.view.dashboard.myprofile.ChangePasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".ui.view.login.activities.SplashActivity"
             android:exported="true">

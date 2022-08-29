@@ -29,6 +29,7 @@
     <string name="last_name">Last name</string>
     <string name="optional">Email(Optional)</string>
     <string name="email">Email</string>
+    <string name="e_mail">E-mail</string>
     <string name="age">Age</string>
     <string name="gender">Gender</string>
     <string name="mobile_number">Phone Number</string>
@@ -121,5 +122,8 @@
     <string name="remove_profile_picture">Remove Profile Picture</string>
     <string name="new_password">New Password</string>
     <string name="update_password">Update Password</string>
+    <string name="your_name">Your Name</string>
+    <string name="your_message">Your Message</string>
+    <string name="send">Send</string>
 
 </resources>
