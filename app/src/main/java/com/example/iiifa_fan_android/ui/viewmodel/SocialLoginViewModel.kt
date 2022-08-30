@@ -1,4 +1,4 @@
-package com.example.iiifa_fan_android.ui.view.login.viewmodel
+package com.example.iiifa_fan_android.ui.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

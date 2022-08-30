@@ -1,6 +1,5 @@
 package com.example.iiifa_fan_android.ui.view.registration.fragments
 
-import android.animation.ValueAnimator
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
@@ -11,12 +10,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
+import com.example.iiifa_fan_android.data.models.Error
+import com.example.iiifa_fan_android.data.network.MainApiResponseInterface
 import com.example.iiifa_fan_android.databinding.FragmentPasswordBinding
+import com.example.iiifa_fan_android.ui.view.base.BaseFragment
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.PasswordMeterClass
+import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.CustomViews
@@ -24,9 +27,10 @@ import com.example.iiifa_fan_android.utils.extensions.hide
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.example.iiifa_fan_android.utils.extensions.show
+import com.google.gson.JsonObject
 import java.util.*
 
-class PasswordFragment : Fragment() {
+class PasswordFragment : BaseFragment(), MainApiResponseInterface {
     private lateinit var binding: FragmentPasswordBinding
     private lateinit var navController: NavController
     private lateinit var passwordMeterClass: PasswordMeterClass
@@ -34,16 +38,17 @@ class PasswordFragment : Fragment() {
     private var password: String = ""
     private var confirm_password: String = ""
     private var lastProgress = 0
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
+    private val registrationViewModel by viewModels<RegistrationViewModel>()
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentPasswordBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initViews()
         initListener()
-        return binding.root
     }
 
     private fun initViews() {
@@ -69,8 +74,7 @@ class PasswordFragment : Fragment() {
         }
         binding.btnNext.onClick {
             if (validateFields()){
-                val bundle = Bundle()
-                navController.navigate(R.id.action_passwordFragment_to_selectDecadeFragment, bundle)
+                addFan()
             }
         }
         binding.etPassword.addTextChangedListener(object : TextWatcher {
@@ -119,7 +123,6 @@ class PasswordFragment : Fragment() {
             }
         })
 
-
         binding.etConfirmPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -128,6 +131,27 @@ class PasswordFragment : Fragment() {
                 CustomViews.removeError(requireContext(),binding.etConfirmPassword,binding.textInputLayoutConfirmPassword,0,R.color.text_color,true)
             }
         })
+    }
+
+    private fun addFan() {
+//        val bundle = Bundle()
+//        navController.navigate(R.id.action_passwordFragment_to_selectDecadeFragment, bundle)
+
+        CustomViews.startButtonLoading(context!!, false)
+        val params = HashMap<String, Any?>()
+        params["first_name"] = registrationViewModel.first_name.value
+        params["last_name"] = registrationViewModel.last_name.value
+        params["email"] = registrationViewModel.email.value
+        params["gender"] = registrationViewModel.gender.value
+        params["age"] = registrationViewModel.age.value
+        params["access_token"] = registrationViewModel.token.value
+        params["referral_code"] = registrationViewModel.referral_code.value
+        params["device_id"] = CustomFunctions.getDeviceId()
+        params["device_name"] = CustomFunctions.getDeviceName()
+
+        params["phone_number"] = registrationViewModel.phone_no.value
+
+        mainApiCall.getData(params, Constants.ADD_FAN, this)
     }
 
     private fun validateFields(): Boolean {
@@ -182,6 +206,25 @@ class PasswordFragment : Fragment() {
             binding.seekbarPassword.setProgress(lastProgress, progress)
             lastProgress = progress
         }
+    }
+
+    /*
+    * API response success
+    * */
+    override fun onSuccess(successResponse: JsonObject?, apiName: String?) {
+        when (apiName) {
+            Constants.ADD_FAN -> {
+
+            }
+        }
+
+    }
+
+    /*
+    * API response Failure
+    * */
+    override fun onFailure(failureMessage: Error?, apiName: String?) {
+
     }
 
 }

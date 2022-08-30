@@ -35,14 +35,14 @@
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:indeterminate="false"
         android:layout_below="@+id/tvSkip"
+        android:layout_centerVertical="true"
         android:layout_marginHorizontal="32dp"
         android:layout_marginTop="8dp"
+        android:indeterminate="false"
         android:max="100"
         android:progress="20"
-        android:progressDrawable="@drawable/signup_progress_styled"/>
+        android:progressDrawable="@drawable/signup_progress_styled" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_below="@+id/tvSkip"

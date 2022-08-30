@@ -1,5 +1,7 @@
 package com.example.iiifa_fan_android.ui.view.dashboard
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.core.content.ContextCompat
@@ -7,8 +9,8 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.iiifa_fan_android.R
-import com.example.iiifa_fan_android.data.dataprovider.HomeDataProvider
-import com.example.iiifa_fan_android.data.dataprovider.SideMenu
+import com.example.iiifa_fan_android.data.models.dataprovider.HomeDataProvider
+import com.example.iiifa_fan_android.data.models.dataprovider.SideMenu
 import com.example.iiifa_fan_android.databinding.ActivityMainDashboardBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.adapter.SideMenuListAdapter
@@ -18,6 +20,7 @@ import com.example.iiifa_fan_android.ui.view.dashboard.cms.PrivacyPolicyActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.fragments.HomeFragment
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.ChangePasswordActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.EditProfileActivity
+import com.example.iiifa_fan_android.ui.view.login.activities.LoginActivity
 import com.example.iiifa_fan_android.utils.widget.MiddleDividerItemDecoration
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,6 +31,16 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
     private lateinit var sideMenuListAdapter : SideMenuListAdapter
     private var currentFragment: Fragment? = null
     private var currentPage = ""
+    companion object {
+        @JvmStatic
+        fun getInstance(context: Context?) {
+            Intent(context, MainDashboardActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                context?.startActivity(this)
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

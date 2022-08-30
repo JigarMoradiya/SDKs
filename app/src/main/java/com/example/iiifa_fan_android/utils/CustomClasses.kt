@@ -3,6 +3,7 @@ package com.example.iiifa_fan_android.utils
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.ui.view.login.activities.SplashActivity
 
 import com.facebook.login.LoginManager
@@ -23,14 +24,13 @@ object CustomClasses {
     @JvmStatic
     fun handleForbiddenResponse() {
         val context: Context = MyApplication.getInstance()
-        val prefManager = PrefManager(context)
-        if (!TextUtils.isEmpty(prefManager.user)) {
-            prefManager.userEmail = null
-            prefManager.user = null
-            prefManager.userId = null
-            prefManager.userEmail = null
-            prefManager.token = null
-            prefManager.notificationToken = null
+        val prefManager = AppPreferencesHelper(context, Constants.PREF_NAME)
+        if (!TextUtils.isEmpty(prefManager.getUserData())) {
+            prefManager.setUserEmail(null)
+            prefManager.setUserData(null)
+            prefManager.setUserId(null)
+            prefManager.setToken(null)
+            prefManager.setNotificationToken(null)
             val intent = Intent(context, SplashActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra("forcefully_logout", true)

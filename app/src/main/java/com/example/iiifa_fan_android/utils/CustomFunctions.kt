@@ -39,6 +39,8 @@ import com.developer.filepicker.view.FilePickerDialog
 import com.example.iiifa_fan_android.BuildConfig
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.data.models.ForceUpdate
+import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
+import com.example.iiifa_fan_android.data.pref.PreferencesHelper
 import com.example.iiifa_fan_android.ui.view.login.activities.ForceUpdateActivity
 import com.example.iiifa_fan_android.ui.view.login.activities.LoginActivity
 import com.example.iiifa_fan_android.utils.*
@@ -59,6 +61,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 
 object CustomFunctions {
@@ -96,8 +99,8 @@ object CustomFunctions {
     @JvmStatic
     fun handleForbiddenResponse(showingAfterLogout: Boolean? = true) {
         val context: Context = MyApplication.getInstance()
-        val prefManager = PrefManager(context)
-        if (!TextUtils.isEmpty(prefManager.user)) {
+        val prefManager = AppPreferencesHelper(context, Constants.PREF_NAME)
+        if (!TextUtils.isEmpty(prefManager.getUserData())) {
             LoginManager.getInstance().logOut()
             val gso =
                 GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN) // .requestIdToken(getString(R.string.server_client_id))
@@ -105,17 +108,15 @@ object CustomFunctions {
                     .requestEmail()
                     .build()
             GoogleSignIn.getClient(context, gso).signOut()
-            prefManager.userEmail = null
-            prefManager.user = null
-            prefManager.userId = null
-            prefManager.userEmail = null
-            prefManager.token = null
-            prefManager.notificationToken = null
+            prefManager.setUserEmail(null)
+            prefManager.setUserData(null)
+            prefManager.setUserId(null)
+            prefManager.setToken(null)
+            prefManager.setNotificationToken(null)
 
 //showingAfterLogout means user was in the app and then user going back so we need to show close icon show user can come back to non logged in flow
-            val intent = LoginActivity.getInstance(context, false, showingAfterLogout)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-            context.startActivity(intent)
+            LoginActivity.getInstance(context, false, showingAfterLogout)
+
         }
     }
 

@@ -6,10 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils
 import com.example.iiifa_fan_android.BuildConfig
+import com.example.iiifa_fan_android.data.pref.PreferencesHelper
 import com.example.iiifa_fan_android.utils.EncryptRequestData
 import com.example.iiifa_fan_android.utils.Jwt
 import com.example.iiifa_fan_android.utils.PeerCertificateExtractor
-import com.example.iiifa_fan_android.utils.PrefManager
 import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.*
 import com.example.iiifa_fan_android.utils.CustomFunctions.handleForbiddenResponse
@@ -47,7 +47,8 @@ class RemoteDataSource @Inject constructor() {
     var client: OkHttpClient? = null
     private var retrofit: Retrofit? = null
     private var cert_count = 0
-    private lateinit var prefManager: PrefManager;
+    @Inject
+    internal lateinit var prefManager: PreferencesHelper
 
 
     fun <Api> buildApi(
@@ -60,17 +61,16 @@ class RemoteDataSource @Inject constructor() {
 
 
     fun getClient(context: Context, base_url: String?): Retrofit? {
-        prefManager = PrefManager(context)
         return try {
-            if (TextUtils.isEmpty(prefManager.certSha)) {
+            if (TextUtils.isEmpty(prefManager.getCertSha())) {
                 downloadCertAndCreateFile(context, base_url)
             } else {
-                createClient(context, File(prefManager.certSha), base_url)
+                createClient(context, File(prefManager.getCertSha()), base_url)
             }
         } catch (e: java.lang.Exception) {
             cert_count++
             if (cert_count < 3) {
-                prefManager.certSha = null
+                prefManager.setCertSha(null)
                 getClient(context, base_url)
             } else  //create fake client
                 getClientWithCertPin(context, base_url, "sha256/")
@@ -88,7 +88,7 @@ class RemoteDataSource @Inject constructor() {
         val downloadCertificateTask =
             DownloadCertificateTask(File(context.filesDir.path + "test.crt"))
         val outputFile = downloadCertificateTask.execute().get()
-        prefManager.certSha = outputFile.toString()
+        prefManager.setCertSha(outputFile.toString())
         return createClient(context, outputFile, base_url)
     }
 
@@ -136,14 +136,12 @@ class RemoteDataSource @Inject constructor() {
     fun forwardNext(context: Context, chain: Interceptor.Chain): Response? {
         var request: Request = chain.request()
         Log.d("post_request", request.url.toString() + "")
-        val prefManager = PrefManager(context)
-
         //get user token
-        val user_id = prefManager.userId
+        val user_id = prefManager.getUserId()?:""
 
 
         //check the user has logged in or not
-        var is_authorized = prefManager.userId != null && !TextUtils.isEmpty(prefManager.userId)
+        var is_authorized = !TextUtils.isEmpty(user_id)
 
         //check weather to turn on encryption on request and rersponse
         val enable_encryption = !BuildConfig.BUILD_TYPE.contains("WithoutEncryption")
@@ -196,14 +194,14 @@ class RemoteDataSource @Inject constructor() {
 
         //set key according to authorization key
         key = if (is_authorized) {
-            prefManager.token
+            prefManager.getToken()?:""
         } else {
             keyThree
         }
         if (enable_encryption) {
             strNewBody =
-                if (is_authorized) EncryptRequestData.getEncryptedData(strOldBody) // Encrypt request body
-                else EncryptRequestData.encrypt(strOldBody) // Encrypt request body
+                if (is_authorized) EncryptRequestData.getEncryptedData(strOldBody)?:"" // Encrypt request body
+                else EncryptRequestData.encrypt(strOldBody)?:"" // Encrypt request body
             Log.d("post_request_new_body", "Encrypted body $strNewBody")
             myjsonString = "{\"params\":\"$strNewBody\"}" // add encrypted body in params
             Log.d("post_request_json", "Encrypted body inside params$myjsonString")
@@ -418,7 +416,7 @@ class RemoteDataSource @Inject constructor() {
             )
         } else if (e is SSLException) {
             cert_count++
-            prefManager.certSha = null
+            prefManager.setCertSha(null)
             handleForbiddenResponse()
             return createEmptyResponse(
                 chain,

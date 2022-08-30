@@ -1,11 +1,10 @@
 package com.example.iiifa_fan_android.utils
 
-import android.app.DownloadManager
 import android.os.AsyncTask
-import android.os.Build
-import android.os.Environment
-import androidx.core.content.ContextCompat.getSystemService
-import java.io.*
+import java.io.BufferedInputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.net.URL
 
 

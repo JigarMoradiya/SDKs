@@ -7,6 +7,10 @@ import java.util.*
 object Constants {
 
     const val ANDROID = "android"
+    const val ENTITY_TYPE = "fan"
+    const val REGISTRATION = "registration"
+    const val PREF_NAME = "androidhive-welcome"
+
     const val EMAIL_PATTERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     const val PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
     const val WHITE_LIST_CHARCTER = "^((?!(\\*\\/|\\/\\*|\\-\\-|<|>)).)*$"
@@ -71,8 +75,6 @@ object Constants {
     @JvmField
     val GENDER = ArrayList(Arrays.asList("Select Gender", "Male", "Female", "Other"))
     val NATIONALITY = ArrayList(Arrays.asList("Select Country", "India", "Other"))
-
-    const val REGISTRATION = "registration"
 
     //cms
     const val PRIVACY_POLICY = "privacy_policy"
@@ -165,5 +167,12 @@ object Constants {
     const val DOCUMENT = "document"
     const val MEDIA = "media"
 
+    // API key
+    const val CHECK_USER_EXIST = "checkuserexists"
+    const val SEND_RESEND_OTP = "sendresendotp"
+    const val VALIDATE_OTP = "validateotp"
+    const val VALIDATE_REFFERAL_CODE: String = "validateReferralCode"
+    const val ADD_FAN: String = "addfan"
+    const val LOGIN = "login"
 
 }

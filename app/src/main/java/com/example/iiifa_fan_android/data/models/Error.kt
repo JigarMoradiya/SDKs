@@ -1,6 +1,5 @@
 package com.example.iiifa_fan_android.data.models
 
-import com.example.iiifa_fan_android.data.models.ErrorSession
 import com.example.iiifa_fan_android.utils.Constants
 
 

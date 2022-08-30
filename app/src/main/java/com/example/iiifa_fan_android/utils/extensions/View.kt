@@ -23,6 +23,11 @@ fun View.toggleVis() {
     }
 }
 
+fun View.enableDisable(isEnable : Boolean) {
+    isEnabled = isEnable
+    isClickable = isEnable
+}
+
 inline fun <T : View> T.onClick(crossinline func: T.() -> Unit) {
     setOnClickListener { func() }
 }

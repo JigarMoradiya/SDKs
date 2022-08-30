@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_type_mobile" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="13dp"
+        android:layout_toEndOf="@+id/iv_image"
+        android:fontFamily="@font/lato_medium"
+        android:textColor="#2c2c2c"
+        android:textSize="16sp"
+        android:textStyle="normal"
+        tools:text="MacBook Air" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:backgroundTint="@android:color/transparent"
+        android:elevation="0dp"
+        android:fontFamily="@font/lato_bold"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:stateListAnimator="@null"
+        android:text="@string/menu_logout"
+        android:textColor="#707070"
+        android:textSize="12sp"
+        app:cornerRadius="4dp"
+        app:elevation="0dp"
+        app:strokeColor="#bebebe"
+        app:strokeWidth="1dp" />
+</RelativeLayout>

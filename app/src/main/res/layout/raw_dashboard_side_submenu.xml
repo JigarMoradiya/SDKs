@@ -9,7 +9,7 @@
 
         <variable
             name="dataModel"
-            type="com.example.iiifa_fan_android.data.dataprovider.SideMenu" />
+            type="com.example.iiifa_fan_android.data.models.dataprovider.SideMenu" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

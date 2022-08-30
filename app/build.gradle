@@ -48,7 +48,7 @@ android {
                 applicationIdSuffix ".dev"
                 buildConfigField "String", "AWS_BUCKET", AWS_DEV_BUCKET
                 buildConfigField "String", "AWS_BUCKET_CV", AWS_DEV_BUCKET_CV
-                buildConfigField "String", "PATIENT_MODULE", dev_patient_module
+                buildConfigField "String", "FAN_MODULE", dev_fan_module
                 buildConfigField "String", "COMMON_MODULE", dev_common_module
                 buildConfigField "String", "SETTING_MODULE", dev_setting
                 buildConfigField "String", "UNAUTH_SETTING_MODULE", unauth_dev_setting
@@ -73,7 +73,7 @@ android {
                 applicationIdSuffix ".test"
                 buildConfigField "String", "AWS_BUCKET", AWS_TEST_BUCKET
                 buildConfigField "String", "AWS_BUCKET_CV", AWS_TEST_BUCKET_CV
-                buildConfigField "String", "PATIENT_MODULE", test_patient_module
+                buildConfigField "String", "FAN_MODULE", test_fan_module
                 buildConfigField "String", "COMMON_MODULE", test_common_module
                 buildConfigField "String", "SETTING_MODULE", test_setting
                 buildConfigField "String", "UNAUTH_SETTING_MODULE", unauth_test_setting
@@ -98,7 +98,7 @@ android {
                 applicationIdSuffix ".prod"
                 buildConfigField "String", "AWS_BUCKET", AWS_PROD_BUCKET
                 buildConfigField "String", "AWS_BUCKET_CV", AWS_PROD_BUCKET_CV
-                buildConfigField "String", "PATIENT_MODULE", prod_patient_module
+                buildConfigField "String", "FAN_MODULE", prod_fan_module
                 buildConfigField "String", "COMMON_MODULE", prod_common_module
                 buildConfigField "String", "SETTING_MODULE", prod_setting
                 buildConfigField "String", "UNAUTH_SETTING_MODULE", unauth_prod_setting

@@ -3,7 +3,7 @@ package com.example.iiifa_fan_android.ui.view.dashboard.adapter
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.example.iiifa_fan_android.data.dataprovider.SideMenu
+import com.example.iiifa_fan_android.data.models.dataprovider.SideMenu
 import com.example.iiifa_fan_android.databinding.RawDashboardSideSubmenuBinding
 import com.example.iiifa_fan_android.databinding.RawDashboardSidemenuBinding
 import com.example.iiifa_fan_android.utils.extensions.hide

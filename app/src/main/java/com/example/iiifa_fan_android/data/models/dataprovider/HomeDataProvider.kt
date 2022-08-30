@@ -1,4 +1,4 @@
-package com.example.iiifa_fan_android.data.dataprovider
+package com.example.iiifa_fan_android.data.models.dataprovider
 
 import android.content.Context
 import com.example.iiifa_fan_android.R

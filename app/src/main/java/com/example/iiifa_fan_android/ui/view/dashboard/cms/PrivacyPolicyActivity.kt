@@ -3,7 +3,7 @@ package com.example.iiifa_fan_android.ui.view.dashboard.cms
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.example.iiifa_fan_android.data.dataprovider.SideMenu
+import com.example.iiifa_fan_android.data.models.dataprovider.SideMenu
 import com.example.iiifa_fan_android.databinding.ActivityPrivacyPolicyBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.utils.CustomViews
@@ -86,8 +86,8 @@ class PrivacyPolicyActivity : BaseActivity() {
     private fun getCmsPagesApi() {
         val params: MutableMap<String?, Any?> = java.util.HashMap()
 
-        if (!prefManager.user.isNullOrBlank()) {
-            params["user_id"] = prefManager.userId
+        if (!prefManager.getUserData().isNullOrBlank()) {
+            params["user_id"] = prefManager.getUserId()
         }
 
 //        params["user_type"] = Constants.ENTITY_TYPE

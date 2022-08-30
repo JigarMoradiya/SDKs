@@ -5,17 +5,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.iiifa_fan_android.R
-import com.example.iiifa_fan_android.utils.PrefManager
+import com.example.iiifa_fan_android.data.pref.PreferencesHelper
+import javax.inject.Inject
 
 
 /**
  * Used for handle common methods of activities
  */
 abstract class BaseActivity : AppCompatActivity() {
-    lateinit var prefManager: PrefManager
+    @Inject
+    internal lateinit var prefManager: PreferencesHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = PrefManager(this)
     }
 
     /**

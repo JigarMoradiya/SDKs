@@ -18,8 +18,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.example.iiifa_fan_android.R
+import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
-import com.example.iiifa_fan_android.utils.PrefManager
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.LoadingUtils
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -206,9 +206,8 @@ object CustomViews {
     @JvmStatic
     fun isUserLoggedIn(context: Activity): Boolean {
         var login = true
-        val prefManager = PrefManager(context)
-
-        if (prefManager.user.isNullOrEmpty()) {
+        val prefManager = AppPreferencesHelper(MyApplication.getInstance(), Constants.PREF_NAME)
+        if (prefManager.getUserData().isNullOrEmpty()) {
             login = false
             openLoginActivity(context)
         }

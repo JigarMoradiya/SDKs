@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.iiifa_fan_android.data.models.SocialMediaUserModel
 import com.example.iiifa_fan_android.databinding.ComponentSocialLoginBinding
-import com.example.iiifa_fan_android.ui.view.login.viewmodel.SocialLoginViewModel
+import com.example.iiifa_fan_android.ui.viewmodel.SocialLoginViewModel
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.toastS
 import com.facebook.*

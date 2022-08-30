@@ -18,10 +18,7 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         lifecycleScope.launch {
             delay(3000)
-            LoginActivity.getInstance(this@SplashActivity).apply {
-                flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                startActivity(this)
-            }
+            LoginActivity.getInstance(this@SplashActivity)
         }
     }
 }
