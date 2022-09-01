@@ -87,7 +87,7 @@ object CustomFunctions {
         val uk = Locale("en", "GB")
         val currency = Currency.getInstance(cur.capitalize())
 
-        Log.d("currency", currency.toString())
+        Log.e("currency", currency.toString())
 //        val symbol = currency.symbol + " " + df.format(number).toDouble()
         return currency.getSymbol(uk) + " " + BigDecimal(number).setScale(
             2,
@@ -408,7 +408,7 @@ object CustomFunctions {
             fos.close()
             f.absolutePath
         } catch (e: Exception) {
-            Log.d("exception_file_upload", e.localizedMessage)
+            Log.e("exception_file_upload", e.localizedMessage)
             return ""
         }
     }
@@ -696,7 +696,7 @@ object CustomFunctions {
             Constants.CAMERA_REQUEST -> {
                 pictureImagePath = openCamera(context, launcher)
                 (!pictureImagePath.isNullOrBlank()).let {
-                    Log.d("picture_path", pictureImagePath!!)
+                    Log.e("picture_path", pictureImagePath!!)
                 }
 
             }
@@ -750,8 +750,8 @@ object CustomFunctions {
                     imagesEncodedList.add(getPath(context, uri))
                     cursor.close()
                 }
-                Log.d("LOG_TAG", "Selected Images" + mArrayUri.size)
-                Log.d("LOG_TAG", "Selected Images$imagesEncodedList")
+                Log.e("LOG_TAG", "Selected Images" + mArrayUri.size)
+                Log.e("LOG_TAG", "Selected Images$imagesEncodedList")
             }
         }
 

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -21,7 +23,11 @@ import com.example.iiifa_fan_android.ui.view.dashboard.fragments.HomeFragment
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.ChangePasswordActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.EditProfileActivity
 import com.example.iiifa_fan_android.ui.view.login.activities.LoginActivity
+import com.example.iiifa_fan_android.utils.CustomFunctions
+import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.widget.MiddleDividerItemDecoration
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.button.MaterialButton
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -143,7 +149,7 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
 
             }
             "logout" -> {
-
+                makeLogout()
             }
             else ->{
                 currentFragment?.let {
@@ -155,6 +161,24 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
                 }
             }
         }
+    }
+
+    private fun makeLogout() {
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
+        val sheetView: View = layoutInflater.inflate(R.layout.bottom_popup_exit_confimation, null)
+        val btnYes: MaterialButton = sheetView.findViewById(R.id.btn_login)
+        val btnNo: TextView = sheetView.findViewById(R.id.tv_no)
+        val tv_title_botom_sheet: TextView = sheetView.findViewById(R.id.tv_title_botom_sheet)
+        tv_title_botom_sheet.text = getString(R.string.sure_want_to_logout)
+
+        btnYes.onClick {
+            bottomSheetDialog.dismiss()
+            CustomFunctions.handleForbiddenResponse()
+        }
+
+        btnNo.onClick { bottomSheetDialog.dismiss() }
+        bottomSheetDialog.setContentView(sheetView)
+        bottomSheetDialog.show()
     }
 
     override fun onBackPressed() {

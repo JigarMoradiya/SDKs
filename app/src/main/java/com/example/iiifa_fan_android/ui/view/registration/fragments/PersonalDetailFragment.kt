@@ -9,18 +9,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
-import com.example.iiifa_fan_android.data.models.Error
 import com.example.iiifa_fan_android.data.models.MultiSelect
-import com.example.iiifa_fan_android.data.network.MainApiResponseInterface
 import com.example.iiifa_fan_android.databinding.BottomPopUpSingleselectionBinding
 import com.example.iiifa_fan_android.databinding.FragmentPersonalDetailsBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseFragment
 import com.example.iiifa_fan_android.ui.view.commonviews.adapters.SingleSelectAdapter
 import com.example.iiifa_fan_android.ui.view.commonviews.interfaces.SingleSelectClickListner
+import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomViews
@@ -29,10 +29,9 @@ import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.example.iiifa_fan_android.utils.extensions.show
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.gson.JsonObject
 import java.util.*
 
-class PersonalDetailFragment : BaseFragment(), MainApiResponseInterface {
+class PersonalDetailFragment : BaseFragment() {
     private lateinit var binding: FragmentPersonalDetailsBinding
     private lateinit var navController: NavController
     private var first_name: String = ""
@@ -41,7 +40,9 @@ class PersonalDetailFragment : BaseFragment(), MainApiResponseInterface {
     private var gender:String = ""
     private var phone:String = ""
     private var country:String = ""
-    private val registrationViewModel by viewModels<RegistrationViewModel>()
+    private val registrationViewModel by activityViewModels<RegistrationViewModel>()
+    private val viewModel by activityViewModels<CommonViewModel>()
+
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentPersonalDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -89,11 +90,11 @@ class PersonalDetailFragment : BaseFragment(), MainApiResponseInterface {
         if (validateFields()) {
             val code = binding.etLastCode.text.toString()
             registrationViewModel.setPersonalDetails(first_name, last_name,phone, age.toInt(), gender, code)
-            if (TextUtils.isEmpty(code)) {
+//            if (TextUtils.isEmpty(code)) {
                 goToCreatePassword()
-            } else {
-                validateReferralCode()
-            }
+//            } else {
+//                validateReferralCode()
+//            }
         }
     }
 
@@ -103,10 +104,10 @@ class PersonalDetailFragment : BaseFragment(), MainApiResponseInterface {
 
     private fun validateReferralCode() {
         CustomViews.startButtonLoading(requireContext(), false)
-        val params = HashMap<String, Any?>()
+        val params: MutableMap<String?, Any?> = HashMap()
         params["email"] = registrationViewModel.email.value
         params["referral_code"] = registrationViewModel.referral_code.value
-        mainApiCall.getData(params, Constants.VALIDATE_REFFERAL_CODE, this)
+//        viewModel.validateReferralCode(params)
     }
 
     private fun showCreateContentPopup() {
@@ -205,30 +206,5 @@ class PersonalDetailFragment : BaseFragment(), MainApiResponseInterface {
                 CustomViews.removeError(requireContext(), edtText, til)
             }
         })
-    }
-    /*
-    * API response success
-    * */
-    override fun onSuccess(successResponse: JsonObject?, apiName: String?) {
-        when (apiName) {
-            Constants.VALIDATE_REFFERAL_CODE -> {
-                CustomViews.hideButtonLoading()
-                goToCreatePassword()
-            }
-        }
-
-    }
-
-    /*
-    * API response Failure
-    * */
-    override fun onFailure(failureMessage: Error?, apiName: String?) {
-        when (apiName) {
-            Constants.VALIDATE_REFFERAL_CODE -> {
-                CustomViews.hideButtonLoading()
-                CustomViews.showFailToast(layoutInflater, failureMessage?.message)
-            }
-        }
-
     }
 }

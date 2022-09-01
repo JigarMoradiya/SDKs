@@ -8,33 +8,37 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.iiifa_fan_android.BuildConfig
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.example.iiifa_fan_android.BuildConfig
 import com.example.iiifa_fan_android.R
-import com.example.iiifa_fan_android.data.models.Error
-import com.example.iiifa_fan_android.data.network.MainApiResponseInterface
 import com.example.iiifa_fan_android.databinding.FragmentRegistrationBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseFragment
 import com.example.iiifa_fan_android.ui.view.registration.dilogs.EmailAlreadyExist
+import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomViews
+import com.example.iiifa_fan_android.utils.Resource
 import com.example.iiifa_fan_android.utils.extensions.enableDisable
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
-import com.google.gson.JsonObject
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-class RegistrationFragment : BaseFragment(), MainApiResponseInterface {
+@AndroidEntryPoint
+class RegistrationFragment : BaseFragment() {
     private lateinit var binding: FragmentRegistrationBinding
     private lateinit var navController: NavController
     private var email: String = ""
-    private val registrationViewModel by viewModels<RegistrationViewModel>()
+    private val registrationViewModel by activityViewModels<RegistrationViewModel>()
+    private val viewModel by activityViewModels<CommonViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -73,12 +77,67 @@ class RegistrationFragment : BaseFragment(), MainApiResponseInterface {
         }
     }
 
+    private fun initObserver() {
+        viewModel.checkUserExistsResponse.observe(this) {
+            when (it) {
+                is Resource.Loading -> {
+                    CustomViews.startButtonLoading(requireContext())
+                }
+                is Resource.Success -> {
+                    CustomViews.hideButtonLoading()
+                    binding.tvTermsAndCondition.enableDisable(true)
+                    when (it.value.code) {
+                        200 -> {
+                            setParamsForGenerateOTP()
+                        }
+                        500 -> {
+                            showEmailAlreadyExistError()
+                        }
+                        else -> CustomViews.showFailToast(layoutInflater, it.value.error?.message)
+                    }
+                }
+
+                is Resource.Failure -> {
+                    CustomViews.hideButtonLoading()
+                    binding.tvTermsAndCondition.enableDisable(true)
+                    CustomViews.showFailToast(layoutInflater, it.errorBody.toString())
+                }
+            }
+        }
+        viewModel.sendResendOtpResponse.observe(this) {
+            when (it) {
+                is Resource.Loading -> {
+                    CustomViews.startButtonLoading(requireContext())
+                }
+                is Resource.Success -> {
+                    CustomViews.hideButtonLoading()
+                    binding.tvTermsAndCondition.enableDisable(true)
+                    if (it.value.code == 200) {
+                        if (BuildConfig.FLAVOR.contains("dev") || BuildConfig.FLAVOR.contains("test") || BuildConfig.FLAVOR.contains("demo")) {
+                            CustomViews.showSuccessToast(layoutInflater,it.value.content?.get("otp")?.toString())
+                        }
+                        val time = it.value.content?.get("wait_time")?.asInt
+                        time?.let { it1 -> goNextToSecond(it1) }
+                    } else
+                        CustomViews.showFailToast(layoutInflater, it.value.message)
+                }
+
+                is Resource.Failure -> {
+                    CustomViews.hideButtonLoading()
+                    binding.tvTermsAndCondition.enableDisable(true)
+                    CustomViews.showFailToast(layoutInflater, it.errorBody.toString())
+                }
+            }
+        }
+
+    }
+
     private fun setParams() {
         CustomViews.startButtonLoading(requireContext(), false)
-        val stringObjectHashMap = HashMap<String, Any?>()
-        stringObjectHashMap["email"] = email
-        stringObjectHashMap["entity_type"] = Constants.ENTITY_TYPE
-        mainApiCall.getData(stringObjectHashMap, Constants.CHECK_USER_EXIST, this)
+        val stringObjectMap: MutableMap<String?, Any?> = HashMap()
+        stringObjectMap["email"] = email
+        stringObjectMap["entity_type"] = Constants.ENTITY_TYPE
+        viewModel.checkUserExists(stringObjectMap)
     }
 
     private fun goNextToSecond(wait_time: Int) {
@@ -113,56 +172,17 @@ class RegistrationFragment : BaseFragment(), MainApiResponseInterface {
         })
     }
 
-    /*
-    * API response success
-    * */
-    override fun onSuccess(successResponse: JsonObject?, apiName: String?) {
-        when (apiName) {
-            Constants.CHECK_USER_EXIST -> {
-                if (successResponse?.get(Constants.DATA)?.asBoolean == true) {
-                    setParamsForGenerateOTP()
-                }
-            }
-            Constants.SEND_RESEND_OTP -> {
-                CustomViews.hideButtonLoading()
-                binding.tvTermsAndCondition.enableDisable(true)
-                if (BuildConfig.FLAVOR.contains("dev")) {
-                    CustomViews.showSuccessToast(layoutInflater,successResponse?.get("otp")?.toString())
-                }
-                successResponse?.get("wait_time")?.let { goNextToSecond(it.asInt) }
-            }
-        }
-    }
-
-    /*
-    * API response Failure
-    * */
-    override fun onFailure(failureMessage: Error?, apiName: String?) {
-        binding.tvTermsAndCondition.enableDisable(true)
-        CustomViews.hideButtonLoading()
-        when (apiName) {
-            Constants.CHECK_USER_EXIST -> {
-                if (failureMessage?.errorType == Constants.EMAIL_ALREADY_REGISTERED) {
-                    showEmailAlreadyExistError()
-                }
-            }
-            else -> {
-                CustomViews.showFailToast(layoutInflater, failureMessage?.message)
-            }
-        }
-    }
-
     private fun showEmailAlreadyExistError() {
         val emailAlreadyExist = EmailAlreadyExist(requireContext(), email)
         emailAlreadyExist.show()
     }
 
     private fun setParamsForGenerateOTP() {
-        val stringObjectMap = HashMap<String, Any?>()
+        val stringObjectMap: MutableMap<String?, Any?> = HashMap()
         stringObjectMap["email"] = email
         stringObjectMap["entity_type"] = Constants.ENTITY_TYPE
         stringObjectMap["action_type"] = Constants.REGISTRATION
-        mainApiCall.getData(stringObjectMap, Constants.SEND_RESEND_OTP, this)
+        viewModel.sendResendOTP(stringObjectMap)
     }
 
 

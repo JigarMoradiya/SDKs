@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.util.Patterns
 import androidx.appcompat.widget.AppCompatEditText
 import com.example.iiifa_fan_android.R
+import com.example.iiifa_fan_android.data.models.FanUser
 import com.example.iiifa_fan_android.data.models.MultiSelect
 import com.example.iiifa_fan_android.databinding.ActivityEditProfileBinding
 import com.example.iiifa_fan_android.databinding.BottomPopUpSingleselectionBinding
@@ -21,6 +22,7 @@ import com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.show
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -28,6 +30,7 @@ import java.util.*
 class EditProfileActivity : BaseActivity() {
 
     private lateinit var binding: ActivityEditProfileBinding
+    private var user: FanUser? = null
     private var first_name: String = ""
     private var last_name:String = ""
     private var email:String = ""
@@ -54,6 +57,8 @@ class EditProfileActivity : BaseActivity() {
     }
 
     private fun initViews() {
+        user = Gson().fromJson(prefManager.getUserData(), FanUser::class.java)
+        binding.dataModel = user
     }
 
     private fun initListener() {

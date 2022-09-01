@@ -3,8 +3,6 @@ package com.example.iiifa_fan_android.data.api
 import android.content.Context
 import android.text.TextUtils
 import android.util.Log
-import android.view.LayoutInflater
-import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils
 import com.example.iiifa_fan_android.BuildConfig
 import com.example.iiifa_fan_android.data.models.MainAPIResponse
 import com.example.iiifa_fan_android.data.pref.PreferencesHelper
@@ -52,16 +50,11 @@ class RemoteDataSource @Inject constructor() {
     internal lateinit var prefManager: PreferencesHelper
 
 
-    fun <Api> buildApi(
-        api: Class<Api>,
-        context: Context,
-        base_url: String?
-    ): Api {
+    fun <Api> buildApi(api: Class<Api>,context: Context,base_url: String?): Api {
         return getClient(context, base_url)?.create(api)!!
     }
 
-
-    fun getClient(context: Context, base_url: String?): Retrofit? {
+    private fun getClient(context: Context, base_url: String?): Retrofit? {
         return try {
             if (TextUtils.isEmpty(prefManager.getCertSha())) {
                 downloadCertAndCreateFile(context, base_url)
@@ -136,7 +129,7 @@ class RemoteDataSource @Inject constructor() {
     @Throws(IOException::class)
     fun forwardNext(context: Context, chain: Interceptor.Chain): Response? {
         var request: Request = chain.request()
-        Log.d("post_request", request.url.toString() + "")
+        Log.e("post_request", request.url.toString() + "")
         //get user token
         val user_id = prefManager.getUserId()?:""
 
@@ -182,7 +175,7 @@ class RemoteDataSource @Inject constructor() {
         val buffer = Buffer()
         oldBody!!.writeTo(buffer)
         val strOldBody = buffer.readUtf8()
-        Log.d("post_request_old_body", strOldBody)
+        Log.e("post_request_old_body", strOldBody)
         val body: RequestBody
         val strNewBody: String
         val key: String
@@ -203,9 +196,9 @@ class RemoteDataSource @Inject constructor() {
             strNewBody =
                 if (is_authorized) EncryptRequestData.getEncryptedData(strOldBody)?:"" // Encrypt request body
                 else EncryptRequestData.encrypt(strOldBody)?:"" // Encrypt request body
-            Log.d("post_request_new_body", "Encrypted body $strNewBody")
+            Log.e("post_request_new_body", "Encrypted body $strNewBody")
             myjsonString = "{\"params\":\"$strNewBody\"}" // add encrypted body in params
-            Log.d("post_request_json", "Encrypted body inside params$myjsonString")
+            Log.e("post_request_json", "Encrypted body inside params$myjsonString")
             val mediaType = "application/json".toMediaType()
             body = myjsonString.toRequestBody(mediaType)
             headers_jwt.clear()
@@ -218,7 +211,7 @@ class RemoteDataSource @Inject constructor() {
 
                 //get jws
                 jws = Jwt.createJWT(headers_jwt, myjsonString, 0, key)
-                Log.d(
+                Log.e(
                     "post_request_jws",
                     "Bearer that we are passing in Authorization API header for authenticate API $jws"
                 )
@@ -235,7 +228,7 @@ class RemoteDataSource @Inject constructor() {
 
                 //get jws
                 jws = Jwt.createJWT(headers_jwt, myjsonString, 0, key)
-                Log.d(
+                Log.e(
                     "post_request_jws",
                     "Bearer that we are passing in Authorization API header for un-authenticate API $jws"
                 )
@@ -252,9 +245,9 @@ class RemoteDataSource @Inject constructor() {
         } else {
             //if API request does not require encryption then pass the request as it is without changing anything
             strNewBody = strOldBody
-            Log.d("post_request_new_body", "Without encryption enabled body $strNewBody")
+            Log.e("post_request_new_body", "Without encryption enabled body $strNewBody")
             myjsonString = "{\"params\":$strNewBody}"
-            Log.d(
+            Log.e(
                 "post_request_json",
                 "Without encryption enabled body in params$myjsonString"
             )
@@ -291,9 +284,9 @@ class RemoteDataSource @Inject constructor() {
                 )
             }
 
-            Log.d("post_response_main", "Response from direct API $response")
+            Log.e("post_response_main", "Response from direct API $response")
             val stringJson = response.body!!.string()
-            Log.d("post_response_body", "Converted response to string $stringJson")
+            Log.e("post_response_body", "Converted response to string $stringJson")
             val jsonObject = JSONObject(stringJson)
             val decrypted_string: String?
 
@@ -304,7 +297,7 @@ class RemoteDataSource @Inject constructor() {
                 if (jsonObject.has("error")) {
                     //if response contains error oject then do no decrypt it
                     decrypted_string = jsonObject.toString()
-                    Log.d(
+                    Log.e(
                         "post_response",
                         "Error response from API direct string $decrypted_string"
                     )
@@ -312,22 +305,22 @@ class RemoteDataSource @Inject constructor() {
                     if (jsonObject.has("content")) {
                         //get the decoded json token
                         //  String token = Jwt.decodeJWT(jsonObject.get("content").toString(), key);
-                        //  Log.d("post_response_token", token);
+                        //  Log.e("post_response_token", token);
                         val token: String
-                        Log.d(
+                        Log.e(
                             "post_response",
                             "Response has content so going inside JWT Decode block..."
                         )
                         if (request.url.toString().contains("logout")) {
                             token = Jwt.decodeJWT(jsonObject["content"].toString(), keyThree)
-                            Log.d(
+                            Log.e(
                                 "post_response_token",
                                 "Decoded JWT value Logout API$token"
                             )
                             decrypted_string = EncryptRequestData.decryptByDefaultToken(token)
                         } else {
                             token = Jwt.decodeJWT(jsonObject["content"].toString(), key)
-                            Log.d(
+                            Log.e(
                                 "post_response_token",
                                 "Decoded JWT value Normal API$token"
                             )
@@ -338,7 +331,7 @@ class RemoteDataSource @Inject constructor() {
                         }
                     } else {
                         decrypted_string = jsonObject.toString()
-                        Log.d(
+                        Log.e(
                             "post_response",
                             "Response has no error and no conetnt $decrypted_string"
                         )
@@ -353,7 +346,7 @@ class RemoteDataSource @Inject constructor() {
 
             val je = jp.parse(decrypted_string)
             val prettyJsonString = gson.toJson(je)
-            Log.d(
+            Log.e(
                 "post_response",
                 "Remove all NULL keys from JSON Object$prettyJsonString"
             )
@@ -370,7 +363,7 @@ class RemoteDataSource @Inject constructor() {
                 )
             } else {
                 //create response body with decrypted value and pass it to the respositories
-                Log.d(
+                Log.e(
                     "post_response",
                     "creating the main response to send it to APIs for" + request.url
                 )
@@ -391,7 +384,7 @@ class RemoteDataSource @Inject constructor() {
                 ).build()
             }
         } catch (e: Exception) {
-            Log.d("post_response_Issue with response of API ", request.url.toString())
+            Log.e("post_response_Issue with response of API ", request.url.toString())
             return handleException(chain, e)
         }
     }
@@ -401,7 +394,7 @@ class RemoteDataSource @Inject constructor() {
         chain: Interceptor.Chain,
         e: Exception
     ): Response? {
-        Log.d("post_response_message", e.message + " " + e.javaClass.canonicalName)
+        Log.e("post_response_message", e.message + " " + e.javaClass.canonicalName)
         //logout user while facing error related to JWT
         return if (e is JwtException) {
             handleForbiddenResponse()
@@ -410,7 +403,7 @@ class RemoteDataSource @Inject constructor() {
                 "Something went wrong, Please try after sometime"
             )
         } else if (e is SocketTimeoutException || e is UnknownHostException) {
-            Log.d("response_create_post", e.message + "")
+            Log.e("response_create_post", e.message + "")
             return createEmptyResponse(
                 chain,
                 "Uh-Oh! Slow or no internet connection. Please check your internet settings and try again"

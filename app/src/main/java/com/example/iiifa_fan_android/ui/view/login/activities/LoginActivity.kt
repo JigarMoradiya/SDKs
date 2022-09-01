@@ -22,7 +22,7 @@ import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
 import com.example.iiifa_fan_android.ui.view.login.component.GoogleLoginComponent
 import com.example.iiifa_fan_android.ui.view.registration.activities.RegistrationHolderActivity
 import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
-import com.example.iiifa_fan_android.ui.viewmodel.LoginViewModel
+import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.SocialLoginViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
@@ -47,7 +47,7 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
     private var password: String = ""
     private var user_id: String? = null
     private val socialLoginViewModel by viewModels<SocialLoginViewModel>()
-    private val viewModel by viewModels<LoginViewModel>()
+    private val viewModel by viewModels<FanViewModel>()
     private val commonViewModel by viewModels<CommonViewModel>()
     private val stringObjectMap: MutableMap<String?, Any?> = HashMap()
     companion object {
@@ -126,7 +126,6 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
         }
     }
 
-
     private fun initObserver() {
         socialLoginViewModel.isSocialDataSet.observe(this) {
             if (it) {
@@ -137,7 +136,7 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
                 }
             }
         }
-        viewModel.loginResponse.observe(this, androidx.lifecycle.Observer {
+        viewModel.loginResponse.observe(this) {
 
             when (it) {
                 is Resource.Loading -> {
@@ -156,9 +155,9 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
                     showFailToast(layoutInflater, getString(R.string.something_went_wrong))
                 }
             }
-        })
+        }
 
-        commonViewModel.sendResendOtpResponse.observe(this, androidx.lifecycle.Observer {
+        commonViewModel.sendResendOtpResponse.observe(this) {
 
             when (it) {
                 is Resource.Loading -> {
@@ -177,9 +176,9 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
                     showFailToast(layoutInflater, it.errorBody.toString())
                 }
             }
-        })
+        }
 
-        commonViewModel.logoutResponse.observe(this, androidx.lifecycle.Observer {
+        commonViewModel.logoutResponse.observe(this) {
 
             when (it) {
                 is Resource.Loading -> {
@@ -198,7 +197,7 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
                     showFailToast(layoutInflater, it.errorBody.toString())
                 }
             }
-        })
+        }
 
     }
 
@@ -265,7 +264,7 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
         }
     }
 
-    fun onSuccess(successResponse: JsonObject?) {
+    private fun onSuccess(successResponse: JsonObject?) {
         val gson = GsonBuilder().create()
         val data = gson.fromJson(successResponse!![Constants.DATA], FanUser::class.java)
         if (data.mfa_required == 1) {
@@ -278,19 +277,16 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
     }
 
     private fun setLearner(data: FanUser?) {
-        Log.e("loginActivity","setLearner : "+Gson().toJson(data))
         prefManager.setUserData(Gson().toJson(data))
         data?.id?.let { prefManager.setUserId(it) }
         data?.email?.let { prefManager.setUserEmail(it) }
         data?.secret?.let { prefManager.setToken(it) }
 
-        Log.e("loginActivity","getUserData : "+Gson().toJson(prefManager.getUserData()))
-
         MainDashboardActivity.getInstance(this)
         finish()
     }
 
-    fun onFailure(failureMessage: Error?) {
+    private fun onFailure(failureMessage: Error?) {
 
         if (failureMessage?.errorType != null) {
             if (failureMessage.errorType.equals(Constants.LOGIN_INTO_ANOTHER_DEVICE)) {

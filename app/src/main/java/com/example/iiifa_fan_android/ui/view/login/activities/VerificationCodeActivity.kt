@@ -116,7 +116,7 @@ class VerificationCodeActivity : BaseActivity() {
 
             when (it) {
                 is Resource.Loading -> {
-                    startButtonLoading(this);
+                    startButtonLoading(this)
                 }
                 is Resource.Success -> {
                     hideButtonLoading()

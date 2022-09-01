@@ -108,7 +108,7 @@ class ChangeProfileActivity : BaseActivity() {
     private fun handleOnActivityResult(result: ActivityResult) {
         if (result.resultCode == Activity.RESULT_OK) {
             val data: Intent? = result.data
-            Log.d("intenetdata", data.toString())
+            Log.e("intenetdata", data.toString())
             setAssetsToTheView(data)
         }
     }
@@ -118,7 +118,7 @@ class ChangeProfileActivity : BaseActivity() {
             Constants.PICK_IMAGE_MULTIPLE -> {
                 if (data != null) {
                     val assetsPath = CustomFunctions.whenImageIsPicked(this, data)
-                    Log.d("assets_print", assetsPath.toString())
+                    Log.e("assets_print", assetsPath.toString())
 
                     if (assetsPath.isNotEmpty())
                         assetsPath[0]?.let { setImagePreview(it) }
@@ -126,7 +126,7 @@ class ChangeProfileActivity : BaseActivity() {
             }
             Constants.CAMERA_REQUEST -> {
                 val assetsPath = CustomFunctions.whenImageIsCaptured(this)
-                Log.d("assets_print", assetsPath.toString())
+                Log.e("assets_print", assetsPath.toString())
 
                 if (assetsPath.isNotEmpty())
                     assetsPath[0]?.let { setImagePreview(it) }

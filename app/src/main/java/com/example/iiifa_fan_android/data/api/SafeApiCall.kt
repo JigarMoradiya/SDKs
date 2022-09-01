@@ -17,7 +17,7 @@ interface SafeApiCall {
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is HttpException -> {
-                        Log.d("error_safe_api_call", throwable.toString()+"....."+throwable.response())
+                        Log.e("error_safe_api_call", throwable.toString()+"....."+throwable.response())
                         Resource.Failure(
                             false,
                             throwable.code(),
@@ -25,7 +25,7 @@ interface SafeApiCall {
                         )
                     }
                     else -> {
-                        Log.d("error_safe_api_call", throwable.toString())
+                        Log.e("error_safe_api_call", throwable.toString())
                         Resource.Failure(true, null, null)
                     }
                 }

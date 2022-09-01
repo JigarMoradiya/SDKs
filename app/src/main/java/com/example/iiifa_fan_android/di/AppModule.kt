@@ -4,7 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.example.iiifa_fan_android.BuildConfig
 import com.example.iiifa_fan_android.data.api.CommonApi
-import com.example.iiifa_fan_android.data.api.LoginApi
+import com.example.iiifa_fan_android.data.api.FanApi
 import com.example.iiifa_fan_android.data.api.RemoteDataSource
 import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.data.pref.PreferenceInfo
@@ -35,8 +35,8 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideLoginApi(@ApplicationContext context: Context,remoteDataSource: RemoteDataSource): LoginApi {
-        return remoteDataSource.buildApi(LoginApi::class.java, context, BuildConfig.FAN_MODULE)
+    fun provideLoginApi(@ApplicationContext context: Context,remoteDataSource: RemoteDataSource): FanApi {
+        return remoteDataSource.buildApi(FanApi::class.java, context, BuildConfig.FAN_MODULE)
     }
 
     @Singleton

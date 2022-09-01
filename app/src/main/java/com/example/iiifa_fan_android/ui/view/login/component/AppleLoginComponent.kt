@@ -77,7 +77,7 @@ class AppleLoginComponent @JvmOverloads constructor(
         mAuth.startActivityForSignInWithProvider(activity, provider.build())
             .addOnSuccessListener { authResult ->
                 // Sign-in successful!
-                Log.d("post_apple", "activitySignIn:onSuccess:" + authResult.user)
+                Log.e("post_apple", "activitySignIn:onSuccess:" + authResult.user)
                 val user = authResult.user
                 socialMediaUserModel = SocialMediaUserModel().apply {
                     social_type = "apple"

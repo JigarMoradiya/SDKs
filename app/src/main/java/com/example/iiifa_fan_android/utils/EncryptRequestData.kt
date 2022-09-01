@@ -25,7 +25,7 @@ object EncryptRequestData {
             if (encryptRequestData == null) {
                 synchronized(EncryptRequestData::class.java) {
                     if (encryptRequestData == null) {
-                        encryptRequestData = instance
+                        encryptRequestData = EncryptRequestData
                         prefManager = AppPreferencesHelper(MyApplication.getInstance(), Constants.PREF_NAME)
                     }
                 }
@@ -36,12 +36,12 @@ object EncryptRequestData {
     //Encrypt the give string using specif key
     fun getEncryptedData(jsonObjectString: String): String? {
         return try {
-            Log.d("encryption_original", jsonObjectString)
+            Log.e("encryption_original", jsonObjectString)
             instance
             var key = keyThree
             if (prefManager?.getToken() != null && !TextUtils.isEmpty(prefManager?.getToken())
             ) key = prefManager?.getToken()?:""
-            Log.d("encryption_key", key)
+            Log.e("encryption_key", key)
             val keySkec = key.toByteArray()
             val skc = SecretKeySpec(keySkec, "AES")
             val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
@@ -67,7 +67,7 @@ object EncryptRequestData {
     //            }
     //
     //
-    //            Log.d("encryption_token", key);
+    //            Log.e("encryption_token", key);
     //
     //            byte[] keySkec = key.getBytes();
     //            SecretKeySpec skc = new SecretKeySpec(keySkec, "AES");
@@ -85,7 +85,7 @@ object EncryptRequestData {
         return try {
             var key = keyThree
             if (prefManager?.getToken() != null && !TextUtils.isEmpty(prefManager?.getToken())) key = prefManager?.getToken()?:""
-            Log.d("decryption_key", key)
+            Log.e("decryption_key", key)
             val keySkec = key.toByteArray()
             val skc = SecretKeySpec(keySkec, "AES")
             val c = Cipher.getInstance("AES/ECB/PKCS5Padding")
@@ -93,7 +93,7 @@ object EncryptRequestData {
             val decryptValue = Base64.decode(strToDecrypt, Base64.NO_WRAP)
             val decValue = c.doFinal(decryptValue)
             val decryptedValue = String(decValue)
-            Log.d("decrypted_string", decryptedValue)
+            Log.e("decrypted_string", decryptedValue)
             decryptedValue
         } catch (e: Exception) {
             Log.e("EXception: ", e.localizedMessage)
@@ -105,7 +105,7 @@ object EncryptRequestData {
     fun decryptByDefaultToken(strToDecrypt: String?): String? {
         return try {
             val key = keyThree
-            Log.d("decryption_key", key)
+            Log.e("decryption_key", key)
             val keySkec = key.toByteArray()
             val skc = SecretKeySpec(keySkec, "AES")
             val c = Cipher.getInstance("AES/ECB/PKCS5Padding")
@@ -113,7 +113,7 @@ object EncryptRequestData {
             val decryptValue = Base64.decode(strToDecrypt, Base64.NO_WRAP)
             val decValue = c.doFinal(decryptValue)
             val decryptedValue = String(decValue)
-            Log.d("decrypted_string", decryptedValue)
+            Log.e("decrypted_string", decryptedValue)
             decryptedValue
         } catch (e: Exception) {
             Log.e("EXception: ", e.localizedMessage)
@@ -130,9 +130,9 @@ object EncryptRequestData {
     //Encryption for Shared Preferences Data
     fun encrypt(jsonObjectString: String?): String? {
         return try {
-            Log.d("encryption_original", jsonObjectString?:"")
+            Log.e("encryption_original", jsonObjectString?:"")
             val key = keyThree
-            Log.d("encryption_key", key)
+            Log.e("encryption_key", key)
             val keySkec = key.toByteArray()
             val skc = SecretKeySpec(keySkec, "AES")
             val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")
@@ -149,7 +149,7 @@ object EncryptRequestData {
         val strToDecrypt = strToDecryptTemp?:""
         return try {
             val key = keyThree
-            Log.d("decryption_key", key)
+            Log.e("decryption_key", key)
             val keySkec = key.toByteArray()
             val skc = SecretKeySpec(keySkec, "AES")
             val c = Cipher.getInstance("AES/ECB/PKCS5Padding")
@@ -157,7 +157,7 @@ object EncryptRequestData {
             val decryptValue = Base64.decode(strToDecrypt, Base64.NO_WRAP)
             val decValue = c.doFinal(decryptValue)
             val decryptedValue = String(decValue)
-            Log.d("decrypted_string", decryptedValue)
+            Log.e("decrypted_string", decryptedValue)
             decryptedValue
         } catch (e: Exception) {
             Log.e("EXception: ", e.localizedMessage)
@@ -176,7 +176,7 @@ object EncryptRequestData {
             } else {
                 getChatTestOther()
             }
-            Log.d("decryption_key", key!!)
+            Log.e("decryption_key", key!!)
             val keySkec = key.toByteArray()
             val skc = SecretKeySpec(keySkec, "AES")
             val c = Cipher.getInstance("AES/ECB/PKCS5Padding")
@@ -184,7 +184,7 @@ object EncryptRequestData {
             val decryptValue = Base64.decode(strToDecrypt, Base64.NO_WRAP)
             val decValue = c.doFinal(decryptValue)
             val decryptedValue = String(decValue)
-            Log.d("decrypted_string", decryptedValue)
+            Log.e("decrypted_string", decryptedValue)
             decryptedValue
         } catch (e: Exception) {
             strToDecrypt
@@ -205,7 +205,7 @@ object EncryptRequestData {
             } else {
                 getChatTestOther()
             }
-            Log.d("encryption_token", key!!)
+            Log.e("encryption_token", key!!)
             val keySkec = key.toByteArray()
             val skc = SecretKeySpec(keySkec, "AES")
             val cipher = Cipher.getInstance("AES/ECB/PKCS5Padding")

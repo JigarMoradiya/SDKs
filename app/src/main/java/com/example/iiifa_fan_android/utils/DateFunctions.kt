@@ -30,7 +30,7 @@ class DateFunctions {
                 val mDate = sdf.parse(date)
                 return mDate.time
             } catch (e: Exception) {
-                Log.d("ErrorInParsing", e.localizedMessage)
+                Log.e("ErrorInParsing", e.localizedMessage)
             }
             return null!!.toLong()
         }
@@ -383,13 +383,13 @@ class DateFunctions {
             val timezone = TimeZone.getDefault()
             val millis = timezone.getRawOffset();
             val minutes = TimeUnit.MILLISECONDS.toMinutes(millis.toLong())
-            Log.d("Time zone  Minute Diff", minutes.toString())
+            Log.e("Time zone  Minute Diff", minutes.toString())
             val remainder = Math.abs(minutes % 60)
 
-            Log.d("Time zone  remainder", remainder.toString())
+            Log.e("Time zone  remainder", remainder.toString())
 
             if (remainder != 0L) {
-                Log.d("Time zone", remainder.toString())
+                Log.e("Time zone", remainder.toString())
             }
 
             return remainder.toInt()
@@ -441,7 +441,7 @@ class DateFunctions {
             cal.timeInMillis = timeInMillies
             cal[cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE], 17, 0] =
                     0
-            Log.d("eve_start", cal.timeInMillis.toString())
+            Log.e("eve_start", cal.timeInMillis.toString())
             return cal.timeInMillis
         }
 
@@ -451,7 +451,7 @@ class DateFunctions {
             cal.timeInMillis = timeInMillies
             cal[cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE], 20, 59] =
                     59
-            Log.d("eve_night", cal.timeInMillis.toString())
+            Log.e("eve_night", cal.timeInMillis.toString())
             return cal.timeInMillis
         }
 
@@ -461,7 +461,7 @@ class DateFunctions {
             cal.timeInMillis = timeInMillies
             cal[cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE], 21, 0] =
                     0
-            Log.d("night_start", cal.timeInMillis.toString())
+            Log.e("night_start", cal.timeInMillis.toString())
             return cal.timeInMillis
         }
 
@@ -471,7 +471,7 @@ class DateFunctions {
             cal.timeInMillis = timeInMillies
             cal[cal[Calendar.YEAR], cal[Calendar.MONTH], cal[Calendar.DATE], 5, 59] =
                     59
-            Log.d("night_end", cal.timeInMillis.toString())
+            Log.e("night_end", cal.timeInMillis.toString())
             return cal.timeInMillis
         }
 
@@ -499,7 +499,7 @@ class DateFunctions {
             val currentMonth = cal.get(Calendar.MONTH)
 
 
-            Log.d("years", passedYear + " " + currentMonth + " " + currentYear)
+            Log.e("years", passedYear + " " + currentMonth + " " + currentYear)
 
             if (passedYear == "2022") {
                 for (i in 2..currentMonth) {

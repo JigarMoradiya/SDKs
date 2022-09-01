@@ -23,7 +23,7 @@ public class Jwt {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
 
-        Log.d("post_request_key", key);
+        Log.e("post_request_key", key);
 
         //We will sign our JWT with our ApiKey secret
         byte[] keySkec = key.getBytes();
@@ -54,7 +54,7 @@ public class Jwt {
     public static String decodeJWT(String jwt, String key) {
         //This line will throw an exception if it is not a signed JWS (as expected)
 
-        Log.d("post_response_key", key);
+        Log.e("post_response_key", key);
         try {
             String claims = (String) Jwts.parserBuilder()
                     .setSigningKey(key.getBytes())

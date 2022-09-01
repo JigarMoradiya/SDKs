@@ -7,6 +7,9 @@ import javax.inject.Inject
 class CommonRepository @Inject constructor(
     private val api: CommonApi
 ) : SafeApiCall {
+    suspend fun checkUserExists(params: Map<String?, Any?>?) = safeApiCall {
+        api.checkUserExists(params)
+    }
     suspend fun sendResendOTP(params: Map<String?, Any?>?) = safeApiCall {
         api.generateOtp(params)
     }

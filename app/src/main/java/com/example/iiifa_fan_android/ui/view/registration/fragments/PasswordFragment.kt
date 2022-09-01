@@ -11,31 +11,30 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
-import com.example.iiifa_fan_android.data.models.Error
 import com.example.iiifa_fan_android.data.models.FanUser
-import com.example.iiifa_fan_android.data.network.MainApiResponseInterface
 import com.example.iiifa_fan_android.databinding.FragmentPasswordBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseFragment
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.PasswordMeterClass
-import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
+import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.CustomViews
+import com.example.iiifa_fan_android.utils.Resource
 import com.example.iiifa_fan_android.utils.extensions.hide
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.example.iiifa_fan_android.utils.extensions.show
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.google.gson.JsonObject
 import java.util.*
 
-class PasswordFragment : BaseFragment(), MainApiResponseInterface {
+class PasswordFragment : BaseFragment(){
     private lateinit var binding: FragmentPasswordBinding
     private lateinit var navController: NavController
     private lateinit var passwordMeterClass: PasswordMeterClass
@@ -43,8 +42,12 @@ class PasswordFragment : BaseFragment(), MainApiResponseInterface {
     private var password: String = ""
     private var confirm_password: String = ""
     private var lastProgress = 0
-    private val registrationViewModel by viewModels<RegistrationViewModel>()
-
+    private val registrationViewModel by activityViewModels<RegistrationViewModel>()
+    private val viewModel by activityViewModels<FanViewModel>()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        initObserver()
+    }
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentPasswordBinding.inflate(inflater, container, false)
         return binding.root
@@ -137,10 +140,50 @@ class PasswordFragment : BaseFragment(), MainApiResponseInterface {
             }
         })
     }
+    private fun initObserver() {
+        viewModel.addFanResponse.observe(this) {
 
+            when (it) {
+                is Resource.Loading -> {
+                    CustomViews.startButtonLoading(requireContext(), false)
+                }
+                is Resource.Success -> {
+                    CustomViews.hideButtonLoading()
+                    if (it.value.code == 200)
+                    {
+                        CustomViews.hideButtonLoading()
+                        val gson = GsonBuilder().create()
+                        val data = gson.fromJson(it.value.content!![Constants.DATA], FanUser::class.java)
+                        Log.e("passwordFragment","fanUserData : "+Gson().toJson(data))
+                        prefManager.setUserData(Gson().toJson(data))
+                        data?.id?.let { prefManager.setUserId(it) }
+                        data?.email?.let { prefManager.setUserEmail(it) }
+                        data?.secret?.let { prefManager.setToken(it) }
+
+                        Log.e("loginActivity","getUserData : "+Gson().toJson(prefManager.getUserData()))
+
+//                MainDashboardActivity.getInstance(requireContext())
+//                requireActivity().finish()
+                    }
+                    else{
+                        CustomViews.hideButtonLoading()
+                        CustomViews.showFailToast(layoutInflater, it.value.error?.message)
+                    }
+
+                }
+
+                is Resource.Failure -> {
+                    CustomViews.hideButtonLoading()
+                    CustomViews.showFailToast(layoutInflater, getString(R.string.something_went_wrong))
+                }
+            }
+        }
+
+    }
     private fun addFan() {
         CustomViews.startButtonLoading(requireContext(), false)
-        val params = HashMap<String, Any?>()
+        val params: MutableMap<String?, Any?> = HashMap()
+        params["password"] = password
         params["first_name"] = registrationViewModel.first_name.value
         params["last_name"] = registrationViewModel.last_name.value
         params["email"] = registrationViewModel.email.value
@@ -153,7 +196,8 @@ class PasswordFragment : BaseFragment(), MainApiResponseInterface {
 
         params["phone_number"] = registrationViewModel.phone_no.value
 
-        mainApiCall.getData(params, Constants.ADD_FAN, this)
+        Log.e("passwordFragment","fanUserData Request : "+Gson().toJson(params))
+        viewModel.addFan(params)
     }
 
     private fun validateFields(): Boolean {
@@ -209,43 +253,4 @@ class PasswordFragment : BaseFragment(), MainApiResponseInterface {
             lastProgress = progress
         }
     }
-
-    /*
-    * API response success
-    * */
-    override fun onSuccess(successResponse: JsonObject?, apiName: String?) {
-        Log.e("passwordFragment","::"+Gson().toJson(successResponse))
-        when (apiName) {
-            Constants.ADD_FAN -> {
-                CustomViews.hideButtonLoading()
-                val gson = GsonBuilder().create()
-                val data = gson.fromJson(successResponse!![Constants.DATA], FanUser::class.java)
-                Log.e("passwordFragment","fanUserData : "+Gson().toJson(data))
-                prefManager.setUserData(Gson().toJson(data))
-                data?.id?.let { prefManager.setUserId(it) }
-                data?.email?.let { prefManager.setUserEmail(it) }
-                data?.secret?.let { prefManager.setToken(it) }
-
-                Log.e("loginActivity","getUserData : "+Gson().toJson(prefManager.getUserData()))
-
-//                MainDashboardActivity.getInstance(requireContext())
-//                requireActivity().finish()
-
-            }
-        }
-
-    }
-
-    /*
-    * API response Failure
-    * */
-    override fun onFailure(failureMessage: Error?, apiName: String?) {
-        when (apiName) {
-            Constants.ADD_FAN -> {
-                CustomViews.hideButtonLoading()
-                CustomViews.showFailToast(layoutInflater, failureMessage?.message)
-            }
-        }
-    }
-
 }

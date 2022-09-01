@@ -5,6 +5,7 @@
     <string name="fb_login_protocol_scheme">fb717417239416064</string>
     <string name="facebook_client_token">6bc4cd9edb8b89f0be29f603766280aa</string>
 
+    <string name="something_went_wrong">Something went wrong, please try after sometime</string>
     <string name="permission_denied">Permission denied</string>
     <string name="login">Login</string>
     <string name="please_enter_your_email_address_to_login">Please enter your email address to login</string>
@@ -129,5 +130,5 @@
     <string name="email_already_exist">Email already exist</string>
     <string name="this_email_is_already_connected_to_an_account_do_you_want_to_log_in_instead">This email is already connected to an account. Do you want to log in instead?</string>
     <string name="dismiss">Dismiss</string>
-    <string name="something_went_wrong">Something went wrong, please try after sometime</string>
+    <string name="sure_want_to_logout">Are you sure you want to logout ?</string>
 </resources>

@@ -96,7 +96,7 @@ class MyApplication : Application() {
                     ?.uncaughtException(Thread.currentThread(), e)
                 return@setErrorHandler
             }
-            Log.d("Undeliverable exception", e.toString())
+            Log.e("Undeliverable exception", e.toString())
         }
 
 

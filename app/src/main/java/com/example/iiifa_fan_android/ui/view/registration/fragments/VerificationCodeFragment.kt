@@ -3,32 +3,31 @@ package com.example.iiifa_fan_android.ui.view.registration.fragments
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.BuildConfig
 import com.example.iiifa_fan_android.R
-import com.example.iiifa_fan_android.data.models.Error
-import com.example.iiifa_fan_android.data.network.MainApiResponseInterface
 import com.example.iiifa_fan_android.databinding.FragmentVerificationCodeBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseFragment
+import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomViews
+import com.example.iiifa_fan_android.utils.Resource
 import com.example.iiifa_fan_android.utils.extensions.enableDisable
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.google.android.gms.auth.api.phone.SmsRetriever
-import com.google.gson.JsonObject
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 
-class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
+class VerificationCodeFragment : BaseFragment() {
     private lateinit var binding: FragmentVerificationCodeBinding
     private lateinit var navController: NavController
     private lateinit var email: String
@@ -37,12 +36,14 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
     private var enteredOtp: String? = null
     private var time: Long = 0
     private var countDownTimer: CountDownTimer? = null
-    private val registrationViewModel by viewModels<RegistrationViewModel>()
+    private val registrationViewModel by activityViewModels<RegistrationViewModel>()
+    private val viewModel by activityViewModels<CommonViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         email = arguments?.getString("email")?:""
         time = (arguments?.getInt("wait_time")?:90).toLong()
         action_type = arguments?.getString("action_type")?:""
+        initObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -66,7 +67,6 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
         navController = Navigation.findNavController(requireActivity(), R.id.fragment_main)
         time = TimeUnit.SECONDS.toMillis(time)
         displayRemainigTime()
-//        startSmsUserConsent()
     }
 
     private fun onBack() {
@@ -89,6 +89,56 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
         binding.btnResend.onClick { setParamsForGenerateOTP() }
     }
 
+    private fun initObserver() {
+        viewModel.validateOtpResponse.observe(this) {
+
+            when (it) {
+                is Resource.Loading -> {
+                    CustomViews.startButtonLoading(requireContext())
+                }
+                is Resource.Success -> {
+                    CustomViews.hideButtonLoading()
+                    if (it.value.code == 200) {
+                        val token: String = (it.value.content?.get("access_token") ?: "").toString()
+                        registrationViewModel.sendToken(token)
+                        goNextToThird()
+
+                    } else
+                        CustomViews.showFailToast(layoutInflater, it.value.error?.message)
+                }
+
+                is Resource.Failure -> {
+                    CustomViews.hideButtonLoading()
+                    CustomViews.showFailToast(layoutInflater, it.errorBody.toString())
+                }
+            }
+        }
+
+        viewModel.sendResendOtpResponse.observe(this) {
+            when (it) {
+                is Resource.Loading -> {
+                    CustomViews.startButtonLoading(requireContext())
+                }
+                is Resource.Success -> {
+                    CustomViews.hideButtonLoading()
+                    if (it.value.code == 200) {
+                        if (BuildConfig.FLAVOR.contains("dev") || BuildConfig.FLAVOR.contains("test") || BuildConfig.FLAVOR.contains("demo")) {
+                            CustomViews.showSuccessToast(layoutInflater,(it.value.content?.get("otp")?:"").toString())
+                        }
+                        time = TimeUnit.SECONDS.toMillis((it.value.content?.get("wait_time")?.asInt?:90).toLong())
+                        displayRemainigTime()
+                    } else
+                        CustomViews.showFailToast(layoutInflater, it.value.message)
+                }
+
+                is Resource.Failure -> {
+                    CustomViews.hideButtonLoading()
+                    CustomViews.showFailToast(layoutInflater, it.errorBody.toString())
+                }
+            }
+        }
+
+    }
     private fun validateDetails(): Boolean {
         otp = binding.otpView.text.toString()
         var valid = true
@@ -104,23 +154,23 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
 
     private fun setParamsForValidateOTP() {
         CustomViews.startButtonLoading(requireActivity(), true)
-        val stringObjectHashMap = java.util.HashMap<String, Any?>()
+        val stringObjectHashMap: MutableMap<String?, Any?> = HashMap()
         stringObjectHashMap["email"] = email
         stringObjectHashMap["entity_type"] = Constants.ENTITY_TYPE
         enteredOtp = otp
         stringObjectHashMap["otp"] = otp
 
         stringObjectHashMap["action_type"] = action_type
-        mainApiCall.getData(stringObjectHashMap, Constants.VALIDATE_OTP, this)
+        viewModel.validateOtp(stringObjectHashMap)
     }
 
     private fun setParamsForGenerateOTP() {
         CustomViews.startButtonLoading(requireActivity(), true)
-        val stringObjectHashMap = HashMap<String, Any?>()
+        val stringObjectHashMap: MutableMap<String?, Any?> = HashMap()
         stringObjectHashMap["email"] = email
         stringObjectHashMap["entity_type"] = Constants.ENTITY_TYPE
         stringObjectHashMap["action_type"] = action_type
-        mainApiCall.getData(stringObjectHashMap,Constants.SEND_RESEND_OTP,this)
+        viewModel.sendResendOTP(stringObjectHashMap)
     }
 
     private fun displayRemainigTime() {
@@ -147,7 +197,7 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
         super.onStop()
         otp = null
         if (countDownTimer != null) {
-            countDownTimer!!.cancel()
+            countDownTimer?.cancel()
             countDownTimer = null
         }
     }
@@ -155,7 +205,7 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
     override fun onPause() {
         super.onPause()
         if (countDownTimer != null) {
-            countDownTimer!!.cancel()
+            countDownTimer?.cancel()
             countDownTimer = null
         }
     }
@@ -209,44 +259,6 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
         if (matcher.find()) {
             binding.otpView.setText(matcher.group(0))
         }
-    }
-
-
-    /*
-    * API response success
-    * */
-    override fun onSuccess(successResponse: JsonObject?, apiName: String?) {
-        when (apiName) {
-            Constants.VALIDATE_OTP -> {
-                CustomViews.hideButtonLoading()
-                if (successResponse?.get(Constants.DATA)?.asBoolean == true) {
-                    Log.d("validate_otp", successResponse.toString())
-                    //saving the validate OTP access token in storage to later confirm with registration process
-                    // we will get access token only in registation process, else we will get null
-                    if (successResponse.has("access_token")) {
-                        val access_token = successResponse["access_token"].asString
-                        registrationViewModel.sendToken(access_token)
-                    }
-                    goNextToThird()
-                }
-            }
-            Constants.SEND_RESEND_OTP -> {
-                CustomViews.hideButtonLoading()
-                if (BuildConfig.FLAVOR.contains("dev")) {
-                    CustomViews.showSuccessToast(layoutInflater,successResponse?.get("otp")?.toString())
-                }
-                time = successResponse?.get("wait_time")?.asInt?.let { TimeUnit.SECONDS.toMillis(it.toLong()) }?:90
-                displayRemainigTime()
-            }
-        }
-    }
-
-    /*
-    * API response Failure
-    * */
-    override fun onFailure(failureMessage: Error?, apiName: String?) {
-        CustomViews.hideButtonLoading()
-        CustomViews.showFailToast(layoutInflater, failureMessage?.message)
     }
 
     private fun goNextToThird() {

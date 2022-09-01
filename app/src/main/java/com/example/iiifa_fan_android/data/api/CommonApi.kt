@@ -5,6 +5,9 @@ import retrofit2.http.Body
 import retrofit2.http.POST
 
 interface CommonApi {
+    @POST("checkuserexists")
+    suspend fun checkUserExists(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
+
     @POST("sendresendotp")
     suspend fun generateOtp(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
 

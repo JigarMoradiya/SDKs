@@ -7,18 +7,24 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
+import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.databinding.ActivityChangePasswordBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.PasswordMeterClass
+import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.CustomViews
+import com.example.iiifa_fan_android.utils.Resource
 import com.example.iiifa_fan_android.utils.extensions.hide
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.example.iiifa_fan_android.utils.extensions.show
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -32,6 +38,7 @@ class ChangePasswordActivity : BaseActivity() {
     private var newPassword: String = ""
     private var confirmPassword: String = ""
     private var lastProgress = 0
+    private val viewModel by viewModels<FanViewModel>()
     companion object {
         fun getInstance(context: Context?) {
             Intent(context, ChangePasswordActivity::class.java).apply {
@@ -47,7 +54,7 @@ class ChangePasswordActivity : BaseActivity() {
         setContentView(binding.root)
         initViews()
         initListener()
-
+        initObserver()
     }
 
     private fun initViews() {
@@ -59,7 +66,7 @@ class ChangePasswordActivity : BaseActivity() {
         binding.ibBack.onClick { onBackPressed() }
         binding.btnUpdatePassword.onClick {
             if (validateFields()){
-
+                setParamsToCallApi()
             }
         }
         binding.etNewpassword.addTextChangedListener(object : TextWatcher {
@@ -108,7 +115,6 @@ class ChangePasswordActivity : BaseActivity() {
             }
         })
 
-
         binding.etConfirmPassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -118,6 +124,7 @@ class ChangePasswordActivity : BaseActivity() {
                     R.color.text_color,true)
             }
         })
+
         binding.etCpassword.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
@@ -127,6 +134,31 @@ class ChangePasswordActivity : BaseActivity() {
                     R.color.text_color,true)
             }
         })
+    }
+
+    private fun initObserver() {
+        viewModel.changePasswordResponse.observe(this) {
+
+            when (it) {
+                is Resource.Loading -> {
+                    CustomViews.startButtonLoading(this, false);
+                }
+                is Resource.Success -> {
+                    CustomViews.hideButtonLoading()
+                    if (it.value.code == 200){
+                        CustomViews.showFailToast(layoutInflater, it.value.message)
+                        finish()
+                    } else{
+                        CustomViews.showFailToast(layoutInflater, it.value.error?.userMessage)
+                    }
+                }
+
+                is Resource.Failure -> {
+                    CustomViews.hideButtonLoading()
+                    CustomViews.showFailToast(layoutInflater, getString(R.string.something_went_wrong))
+                }
+            }
+        }
     }
 
     private fun validateFields(): Boolean {
@@ -153,6 +185,15 @@ class ChangePasswordActivity : BaseActivity() {
             CustomViews.setErrortoEditText(this, binding.etConfirmPassword, binding.textInputLayoutConfirmPassword, getString(R.string.validation_match_password))
         }
         return validate
+    }
+
+    private fun setParamsToCallApi() {
+        val params: MutableMap<String?, Any?> = HashMap()
+        params["user_id"] = prefManager.getUserId()
+        params["old_password"] = oldPassword
+        params["new_password"] = newPassword
+        params["user_type"] = Constants.ENTITY_TYPE
+        viewModel.changePassword(params)
     }
 
     fun changeSeekbar() {

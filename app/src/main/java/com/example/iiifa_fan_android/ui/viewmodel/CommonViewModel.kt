@@ -12,8 +12,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CommonViewModel @Inject constructor(private val repository: CommonRepository) :
-    ViewModel() {
+class CommonViewModel @Inject constructor(private val repository: CommonRepository) : ViewModel() {
+
+    private val _checkUserExistsResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
+    val checkUserExistsResponse: LiveData<Resource<MainAPIResponse>> get() = _checkUserExistsResponse
+    fun checkUserExists(params: Map<String?, Any?>?) = viewModelScope.launch {
+        _checkUserExistsResponse.value = Resource.Loading
+        _checkUserExistsResponse.value = repository.checkUserExists(params)
+    }
 
     private val _sendResendOtpResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
     val sendResendOtpResponse: LiveData<Resource<MainAPIResponse>> get() = _sendResendOtpResponse
@@ -32,10 +38,9 @@ class CommonViewModel @Inject constructor(private val repository: CommonReposito
 
     private val _validateOtpResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
     val validateOtpResponse: LiveData<Resource<MainAPIResponse>> get() = _validateOtpResponse
-    fun validateOtp(
-        params: Map<String?, Any?>?
-    ) = viewModelScope.launch {
+    fun validateOtp(params: Map<String?, Any?>?) = viewModelScope.launch {
         _validateOtpResponse.value = Resource.Loading
         _validateOtpResponse.value = repository.validateOtp(params)
     }
+
 }

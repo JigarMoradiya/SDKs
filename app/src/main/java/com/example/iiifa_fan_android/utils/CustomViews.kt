@@ -169,7 +169,7 @@ object CustomViews {
     ): ColorStateList {
 
 
-        Log.d("hex_code", pressedColorAttr + " " + defaultColorAttr)
+        Log.e("hex_code", pressedColorAttr + " " + defaultColorAttr)
 
         val pressedColor: Int = android.graphics.Color.parseColor(pressedColorAttr)
         val defaultColor: Int = android.graphics.Color.parseColor(defaultColorAttr)
