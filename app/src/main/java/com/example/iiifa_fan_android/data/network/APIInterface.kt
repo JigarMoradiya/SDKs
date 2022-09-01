@@ -1,6 +1,6 @@
 package com.example.iiifa_fan_android.data.network
 
-import com.example.iiifa_fan_android.utils.MainAPIResponse
+import com.example.iiifa_fan_android.data.models.MainAPIResponse
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -19,10 +19,14 @@ interface APIInterface {
     @POST("sendresendotp")
     @JvmSuppressWildcards
     fun sendotp(@Body params: HashMap<String, Any?>): Observable<MainAPIResponse?>?
-//
-//    @POST("validateotp")
-//    @JvmSuppressWildcards
-//    fun validateotp(@Body params: HashMap<String, Any?>): Observable<MainAPIResponse?>?
+
+    @POST("validateotp")
+    @JvmSuppressWildcards
+    fun validateotp(@Body params: HashMap<String, Any?>): Observable<MainAPIResponse?>?
+
+    @POST("addfan")
+    @JvmSuppressWildcards
+    fun addFan(@Body params: HashMap<String, Any?>): Observable<MainAPIResponse?>?
 //
 //
 //    @POST("getemotion")

@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.iiifa_fan_android.data.models.MainAPIResponse
 import com.example.iiifa_fan_android.data.repositories.CommonRepository
-import com.example.iiifa_fan_android.utils.MainAPIResponse
 import com.example.iiifa_fan_android.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

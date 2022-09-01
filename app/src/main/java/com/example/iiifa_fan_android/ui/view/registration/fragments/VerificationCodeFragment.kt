@@ -20,6 +20,7 @@ import com.example.iiifa_fan_android.ui.view.base.BaseFragment
 import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomViews
+import com.example.iiifa_fan_android.utils.extensions.enableDisable
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -65,7 +66,7 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
         navController = Navigation.findNavController(requireActivity(), R.id.fragment_main)
         time = TimeUnit.SECONDS.toMillis(time)
         displayRemainigTime()
-        startSmsUserConsent()
+//        startSmsUserConsent()
     }
 
     private fun onBack() {
@@ -123,7 +124,7 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
     }
 
     private fun displayRemainigTime() {
-        binding.btnResend.isEnabled = false
+        binding.btnResend.enableDisable(false)
         //  tvTimerValidity.setText("Valid for " + TimeUnit.MILLISECONDS.toMinutes(time) + " minutes");
         countDownTimer = object : CountDownTimer(time, 1000) {
             override fun onTick(time_data: Long) {
@@ -190,7 +191,7 @@ class VerificationCodeFragment : BaseFragment(), MainApiResponseInterface {
 
 
     private fun startSmsUserConsent() {
-        val client = SmsRetriever.getClient(context)
+        val client = SmsRetriever.getClient(requireContext())
         //We can add sender phone number or leave it blank
         // I'm adding null here
         client.startSmsUserConsent(null).addOnSuccessListener {

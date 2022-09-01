@@ -8,6 +8,7 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils
+import com.example.iiifa_fan_android.data.models.MainAPIResponse
 import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.data.pref.PreferencesHelper
 import com.example.iiifa_fan_android.utils.*
@@ -90,7 +91,7 @@ object APIClient {
 
     fun getClientWithCertPin(base_url: String?, cert: String?): Retrofit? {
         val certificatePinner: CertificatePinner = CertificatePinner.Builder()
-            .add("apis.midigiworld.com", cert?:"")
+            .add("iifa-apis.connectlab.ai", cert?:"")
             .build()
         client = OkHttpClient.Builder().addInterceptor(Interceptor { chain -> forwardNext(chain)!! })
             .readTimeout(5, TimeUnit.MINUTES).connectTimeout(5, TimeUnit.MINUTES)
@@ -185,10 +186,10 @@ object APIClient {
 
 
         //turn of authrization for some specific APIs even if user is logged in
-        if (request.url.toString().contains("getspecialization") ||
-            request.url.toString().contains("addexpert") ||
-            request.url.toString().contains("expertloginwithsocialmedia") ||
-            request.url.toString().contains("validatereferralcode")
+        if (request.url.toString().contains("addfan") ||
+            request.url.toString().contains("checkuserexists") ||
+            request.url.toString().contains("sendresendotp") ||
+            request.url.toString().contains("validateotp")
         ) {
             is_authorized = false
         }

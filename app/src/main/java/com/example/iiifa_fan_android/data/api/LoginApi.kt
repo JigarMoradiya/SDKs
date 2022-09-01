@@ -1,6 +1,6 @@
 package com.example.iiifa_fan_android.data.api
 
-import com.example.iiifa_fan_android.utils.MainAPIResponse
+import com.example.iiifa_fan_android.data.models.MainAPIResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 

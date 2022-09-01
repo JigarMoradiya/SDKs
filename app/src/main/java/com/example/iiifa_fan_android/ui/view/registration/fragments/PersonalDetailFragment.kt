@@ -210,15 +210,25 @@ class PersonalDetailFragment : BaseFragment(), MainApiResponseInterface {
     * API response success
     * */
     override fun onSuccess(successResponse: JsonObject?, apiName: String?) {
-        CustomViews.hideButtonLoading()
-        goToCreatePassword()
+        when (apiName) {
+            Constants.VALIDATE_REFFERAL_CODE -> {
+                CustomViews.hideButtonLoading()
+                goToCreatePassword()
+            }
+        }
+
     }
 
     /*
     * API response Failure
     * */
     override fun onFailure(failureMessage: Error?, apiName: String?) {
-        CustomViews.hideButtonLoading()
-        CustomViews.showFailToast(layoutInflater, failureMessage!!.message)
+        when (apiName) {
+            Constants.VALIDATE_REFFERAL_CODE -> {
+                CustomViews.hideButtonLoading()
+                CustomViews.showFailToast(layoutInflater, failureMessage?.message)
+            }
+        }
+
     }
 }

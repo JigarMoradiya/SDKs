@@ -1,10 +1,15 @@
 package com.example.iiifa_fan_android.ui.view.login.activities
 
-import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.databinding.ActivitySplashBinding
+import com.example.iiifa_fan_android.ui.view.base.BaseActivity
+import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
+import com.example.iiifa_fan_android.utils.Constants
+import com.example.iiifa_fan_android.utils.MyApplication
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -18,7 +23,17 @@ class SplashActivity : AppCompatActivity() {
         setContentView(binding.root)
         lifecycleScope.launch {
             delay(3000)
-            LoginActivity.getInstance(this@SplashActivity)
+            checkUserIsLoggedIn()
         }
     }
+
+    private fun checkUserIsLoggedIn() {
+        val prefManager = AppPreferencesHelper(this, Constants.PREF_NAME)
+        if (TextUtils.isEmpty(prefManager.getUserId()) || TextUtils.isEmpty(prefManager.getUserData())) {
+            LoginActivity.getInstance(this)
+        } else {
+            MainDashboardActivity.getInstance(this)
+        }
+    }
+
 }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +16,12 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.data.models.Error
+import com.example.iiifa_fan_android.data.models.FanUser
 import com.example.iiifa_fan_android.data.network.MainApiResponseInterface
 import com.example.iiifa_fan_android.databinding.FragmentPasswordBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseFragment
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.PasswordMeterClass
+import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
 import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
@@ -27,6 +30,8 @@ import com.example.iiifa_fan_android.utils.extensions.hide
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.example.iiifa_fan_android.utils.extensions.show
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.google.gson.JsonObject
 import java.util.*
 
@@ -134,10 +139,7 @@ class PasswordFragment : BaseFragment(), MainApiResponseInterface {
     }
 
     private fun addFan() {
-//        val bundle = Bundle()
-//        navController.navigate(R.id.action_passwordFragment_to_selectDecadeFragment, bundle)
-
-        CustomViews.startButtonLoading(context!!, false)
+        CustomViews.startButtonLoading(requireContext(), false)
         val params = HashMap<String, Any?>()
         params["first_name"] = registrationViewModel.first_name.value
         params["last_name"] = registrationViewModel.last_name.value
@@ -212,8 +214,22 @@ class PasswordFragment : BaseFragment(), MainApiResponseInterface {
     * API response success
     * */
     override fun onSuccess(successResponse: JsonObject?, apiName: String?) {
+        Log.e("passwordFragment","::"+Gson().toJson(successResponse))
         when (apiName) {
             Constants.ADD_FAN -> {
+                CustomViews.hideButtonLoading()
+                val gson = GsonBuilder().create()
+                val data = gson.fromJson(successResponse!![Constants.DATA], FanUser::class.java)
+                Log.e("passwordFragment","fanUserData : "+Gson().toJson(data))
+                prefManager.setUserData(Gson().toJson(data))
+                data?.id?.let { prefManager.setUserId(it) }
+                data?.email?.let { prefManager.setUserEmail(it) }
+                data?.secret?.let { prefManager.setToken(it) }
+
+                Log.e("loginActivity","getUserData : "+Gson().toJson(prefManager.getUserData()))
+
+//                MainDashboardActivity.getInstance(requireContext())
+//                requireActivity().finish()
 
             }
         }
@@ -224,7 +240,12 @@ class PasswordFragment : BaseFragment(), MainApiResponseInterface {
     * API response Failure
     * */
     override fun onFailure(failureMessage: Error?, apiName: String?) {
-
+        when (apiName) {
+            Constants.ADD_FAN -> {
+                CustomViews.hideButtonLoading()
+                CustomViews.showFailToast(layoutInflater, failureMessage?.message)
+            }
+        }
     }
 
 }

@@ -2,7 +2,6 @@ package com.example.iiifa_fan_android.data.network
 
 import android.util.Log
 import com.example.iiifa_fan_android.utils.CustomClasses
-import com.example.iiifa_fan_android.utils.MainAPIResponse
 import io.reactivex.Observable
 import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,6 +13,7 @@ import java.util.HashMap
 import com.example.iiifa_fan_android.data.models.Error
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.BuildConfig
+import com.example.iiifa_fan_android.data.models.MainAPIResponse
 
 class MainApiCall {
     private var apiInterface: APIInterface? = null
@@ -36,6 +36,21 @@ class MainApiCall {
                 )
                 postResponseObservable = apiInterface?.sendotp(stringObjectMap)
             }
+            Constants.VALIDATE_OTP -> {
+                apiInterface = APIClient.getClient(BuildConfig.COMMON_MODULE)?.create(
+                    APIInterface::class.java
+                )
+                postResponseObservable = apiInterface?.validateotp(stringObjectMap)
+            }
+            Constants.ADD_FAN -> {
+                apiInterface = APIClient.getClient(BuildConfig.FAN_MODULE)?.create(
+                    APIInterface::class.java
+                )
+                postResponseObservable = apiInterface?.addFan(stringObjectMap)
+            }
+            Constants.VALIDATE_REFFERAL_CODE -> {
+            }
+
 
 
         }

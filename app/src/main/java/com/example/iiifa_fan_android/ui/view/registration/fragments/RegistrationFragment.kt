@@ -125,8 +125,7 @@ class RegistrationFragment : BaseFragment(), MainApiResponseInterface {
             }
             Constants.SEND_RESEND_OTP -> {
                 CustomViews.hideButtonLoading()
-                binding.tvTermsAndCondition.isClickable = true
-                binding.tvTermsAndCondition.isEnabled = true
+                binding.tvTermsAndCondition.enableDisable(true)
                 if (BuildConfig.FLAVOR.contains("dev")) {
                     CustomViews.showSuccessToast(layoutInflater,successResponse?.get("otp")?.toString())
                 }

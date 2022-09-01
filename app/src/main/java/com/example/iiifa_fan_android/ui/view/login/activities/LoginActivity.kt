@@ -18,6 +18,7 @@ import com.example.iiifa_fan_android.data.models.FanUser
 import com.example.iiifa_fan_android.databinding.ActivityLoginBinding
 import com.example.iiifa_fan_android.databinding.BottomPopUpMfaBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
+import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
 import com.example.iiifa_fan_android.ui.view.login.component.GoogleLoginComponent
 import com.example.iiifa_fan_android.ui.view.registration.activities.RegistrationHolderActivity
 import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
@@ -285,8 +286,8 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
 
         Log.e("loginActivity","getUserData : "+Gson().toJson(prefManager.getUserData()))
 
-//        MainDashboardActivity.getInstance(this)
-//        finish()
+        MainDashboardActivity.getInstance(this)
+        finish()
     }
 
     fun onFailure(failureMessage: Error?) {

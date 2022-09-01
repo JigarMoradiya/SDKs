@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import com.amazonaws.mobile.auth.core.internal.util.ThreadUtils
 import com.example.iiifa_fan_android.BuildConfig
+import com.example.iiifa_fan_android.data.models.MainAPIResponse
 import com.example.iiifa_fan_android.data.pref.PreferencesHelper
 import com.example.iiifa_fan_android.utils.EncryptRequestData
 import com.example.iiifa_fan_android.utils.Jwt
