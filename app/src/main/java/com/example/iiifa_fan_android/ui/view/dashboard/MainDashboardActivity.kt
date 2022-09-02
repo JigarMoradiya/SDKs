@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.iiifa_fan_android.R
+import com.example.iiifa_fan_android.data.models.FanUser
 import com.example.iiifa_fan_android.data.models.dataprovider.HomeDataProvider
 import com.example.iiifa_fan_android.data.models.dataprovider.SideMenu
 import com.example.iiifa_fan_android.databinding.ActivityMainDashboardBinding
@@ -28,6 +29,7 @@ import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.widget.MiddleDividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +39,7 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
     private lateinit var sideMenuListAdapter : SideMenuListAdapter
     private var currentFragment: Fragment? = null
     private var currentPage = ""
+    private var user: FanUser? = null
     companion object {
         @JvmStatic
         fun getInstance(context: Context?) {
@@ -78,6 +81,12 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
 
     private fun initListener() {
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        user = Gson().fromJson(prefManager.getUserData(), FanUser::class.java)
+        binding.dataModel = user
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

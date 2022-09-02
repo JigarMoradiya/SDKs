@@ -6,6 +6,7 @@ import com.example.iiifa_fan_android.BuildConfig
 import com.example.iiifa_fan_android.data.api.CommonApi
 import com.example.iiifa_fan_android.data.api.FanApi
 import com.example.iiifa_fan_android.data.api.RemoteDataSource
+import com.example.iiifa_fan_android.data.api.SettingsApi
 import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.data.pref.PreferenceInfo
 import com.example.iiifa_fan_android.data.pref.PreferencesHelper
@@ -43,5 +44,11 @@ object AppModule {
     @Provides
     fun provideCommonApi(@ApplicationContext context: Context,remoteDataSource: RemoteDataSource): CommonApi {
         return remoteDataSource.buildApi(CommonApi::class.java,context,BuildConfig.COMMON_MODULE)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSettingsApi(@ApplicationContext context: Context,remoteDataSource: RemoteDataSource): SettingsApi {
+        return remoteDataSource.buildApi(SettingsApi::class.java,context,BuildConfig.SETTING_MODULE)
     }
 }

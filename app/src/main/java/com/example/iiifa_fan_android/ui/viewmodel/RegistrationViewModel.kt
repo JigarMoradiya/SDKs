@@ -16,12 +16,6 @@ class RegistrationViewModel : ViewModel() {
     val password = MutableLiveData<String>()
     val emotions_ids = MutableLiveData<List<String>>()
 
-
-    fun sendEmotionsIds(value: List<String>) {
-        emotions_ids.value = value
-    }
-
-
     fun sendEmail(value: String) {
         email.value = value
     }

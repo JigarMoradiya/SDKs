@@ -52,5 +52,13 @@ fun setImgUrlCircular(view: CircularImageView, profile_url: String?, placeHolder
         .load(profile_url)
         .apply(RequestOptions().placeholder(placeHolder?: ContextCompat.getDrawable(context,R.drawable.ic_default_user)))
         .into(view)
+}
+@BindingAdapter("imgUrl","placeHolder")
+fun setImgUrl(view: AppCompatImageView, profile_url: String?, placeHolder : Drawable?) {
+    val context = view.context
+    Glide.with(view.context)
+        .load(profile_url)
+        .apply(RequestOptions().placeholder(placeHolder?: ContextCompat.getDrawable(context,R.drawable.ic_default_user)))
+        .into(view)
 
 }

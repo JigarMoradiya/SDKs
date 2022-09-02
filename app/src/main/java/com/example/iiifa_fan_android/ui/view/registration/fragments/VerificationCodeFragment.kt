@@ -3,6 +3,7 @@ package com.example.iiifa_fan_android.ui.view.registration.fragments
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomViews
 import com.example.iiifa_fan_android.utils.Resource
 import com.example.iiifa_fan_android.utils.extensions.enableDisable
+import com.example.iiifa_fan_android.utils.extensions.hide
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.google.android.gms.auth.api.phone.SmsRetriever
@@ -42,6 +44,7 @@ class VerificationCodeFragment : BaseFragment() {
         super.onCreate(savedInstanceState)
         email = arguments?.getString("email")?:""
         time = (arguments?.getInt("wait_time")?:90).toLong()
+        time = TimeUnit.SECONDS.toMillis(time)
         action_type = arguments?.getString("action_type")?:""
         initObserver()
     }
@@ -64,8 +67,17 @@ class VerificationCodeFragment : BaseFragment() {
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
 
-        navController = Navigation.findNavController(requireActivity(), R.id.fragment_main)
-        time = TimeUnit.SECONDS.toMillis(time)
+        if (action_type == Constants.REGISTRATION){
+            navController = Navigation.findNavController(requireActivity(), R.id.fragment_main)
+        }else if (action_type == Constants.FORGOT_PASSWORD){
+            binding.ibBack.hide()
+            binding.tvSkip.hide()
+            binding.progressHorizontal.hide()
+            binding.viewDivider.hide()
+            navController = Navigation.findNavController(requireActivity(), R.id.fragment_forgot_password_main)
+        }
+
+
         displayRemainigTime()
     }
 
@@ -99,7 +111,7 @@ class VerificationCodeFragment : BaseFragment() {
                 is Resource.Success -> {
                     CustomViews.hideButtonLoading()
                     if (it.value.code == 200) {
-                        val token: String = (it.value.content?.get("access_token") ?: "").toString()
+                        val token = (it.value.content?.get("access_token")?.asString ?: "")
                         registrationViewModel.sendToken(token)
                         goNextToThird()
 
@@ -182,13 +194,16 @@ class VerificationCodeFragment : BaseFragment() {
                 val minutes: Long = time / 1000 / 60
                 val seconds: Long = time / 1000 % 60
                 val output = String.format("%02d : %02d", minutes, seconds)
-                binding.btnResend.text = getString(R.string.resend) + " in " + output
+                if (isResumed){
+                    binding.btnResend.text = getString(R.string.resend) + " in " + output
+                }
             }
 
             override fun onFinish() {
-                binding.btnResend.text = getString(R.string.resend)
-                binding.btnResend.isEnabled = true
-                binding.btnResend.isEnabled = true
+                if (isResumed){
+                    binding.btnResend.text = requireActivity().resources.getString(R.string.resend)
+                    binding.btnResend.enableDisable(true)
+                }
             }
         }.start()
     }
@@ -204,10 +219,8 @@ class VerificationCodeFragment : BaseFragment() {
 
     override fun onPause() {
         super.onPause()
-        if (countDownTimer != null) {
-            countDownTimer?.cancel()
-            countDownTimer = null
-        }
+        countDownTimer?.cancel()
+        countDownTimer = null
     }
 
 
@@ -215,30 +228,6 @@ class VerificationCodeFragment : BaseFragment() {
         super.onDestroy()
         CustomViews.hideButtonLoading()
     }
-
-    override fun onResume() {
-        super.onResume()
-        if (countDownTimer == null) {
-            binding.btnResend.isEnabled = false
-            //  tvTimerValidity.setText("Valid for " + TimeUnit.MILLISECONDS.toMinutes(time) + " minutes");
-            countDownTimer = object : CountDownTimer(time, 1000) {
-                override fun onTick(time_data: Long) {
-                    time = time_data
-                    val minutes = time / 1000 / 60
-                    val seconds = time / 1000 % 60
-                    val output = String.format("%02d : %02d", minutes, seconds)
-                    binding.btnResend.text = getString(R.string.resend) + " in " + output
-                }
-
-                override fun onFinish() {
-                    binding.btnResend.text = getString(R.string.resend)
-                    binding.btnResend.isEnabled = true
-                    binding.btnResend.isEnabled = true
-                }
-            }.start()
-        }
-    }
-
 
     private fun startSmsUserConsent() {
         val client = SmsRetriever.getClient(requireContext())
@@ -262,8 +251,16 @@ class VerificationCodeFragment : BaseFragment() {
     }
 
     private fun goNextToThird() {
+        countDownTimer?.cancel()
+        countDownTimer = null
         if (action_type == Constants.REGISTRATION){
             navController.navigate(R.id.action_verificationCodeFragment_to_personalDetailsFragment2)
+        }else if (action_type == Constants.FORGOT_PASSWORD){
+            val bundle = Bundle().apply {
+                putString("email", email)
+                putString("otp", enteredOtp)
+            }
+            navController.navigate(R.id.action_verificationCodeFragment_to_resetPasswordFragment,bundle)
         }
     }
 

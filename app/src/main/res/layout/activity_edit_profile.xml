@@ -213,6 +213,8 @@
                     android:layout_marginTop="8dp"
                     app:errorTextColor="@color/edit_text_color"
                     app:hintEnabled="false"
+                    android:enabled="false"
+                    android:focusable="false"
                     app:layout_constraintTop_toBottomOf="@+id/txtEmail">
 
                     <androidx.appcompat.widget.AppCompatEditText
@@ -223,6 +225,8 @@
                         android:background="@drawable/bg_edittext"
                         android:fontFamily="@font/lato_regular"
                         android:maxLines="1"
+                        android:focusable="false"
+                        android:enabled="false"
                         android:padding="15dp"
                         android:text="@{dataModel.email}"
                         android:singleLine="true"

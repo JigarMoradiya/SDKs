@@ -146,7 +146,7 @@ class ChangePasswordActivity : BaseActivity() {
                 is Resource.Success -> {
                     CustomViews.hideButtonLoading()
                     if (it.value.code == 200){
-                        CustomViews.showFailToast(layoutInflater, it.value.message)
+                        CustomViews.showSuccessToast(layoutInflater, it.value.message)
                         finish()
                     } else{
                         CustomViews.showFailToast(layoutInflater, it.value.error?.userMessage)

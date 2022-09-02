@@ -19,6 +19,7 @@ import com.example.iiifa_fan_android.databinding.ActivityLoginBinding
 import com.example.iiifa_fan_android.databinding.BottomPopUpMfaBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
+import com.example.iiifa_fan_android.ui.view.forgotpassword.ForgotPasswordActivity
 import com.example.iiifa_fan_android.ui.view.login.component.GoogleLoginComponent
 import com.example.iiifa_fan_android.ui.view.registration.activities.RegistrationHolderActivity
 import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
@@ -90,8 +91,10 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
 
     private fun initListener() {
         binding.tvSignUp.onClick {
-            val intent = Intent(this@LoginActivity, RegistrationHolderActivity::class.java)
-            startActivity(intent)
+            RegistrationHolderActivity.getInstance(this@LoginActivity)
+        }
+        binding.tvForgotPassword.onClick {
+            ForgotPasswordActivity.getInstance(this@LoginActivity)
         }
         binding.btnLogin.onClick {
             if (validateFields()){

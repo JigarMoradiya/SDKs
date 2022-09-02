@@ -26,6 +26,7 @@ import com.example.iiifa_fan_android.utils.Resource
 import com.example.iiifa_fan_android.utils.extensions.enableDisable
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
@@ -68,7 +69,11 @@ class RegistrationFragment : BaseFragment() {
     }
 
     private fun initListener() {
+        prefManager.setUserData("")
         binding.progressHorizontal.setProgress(0, 20)
+        binding.tvLogin.onClick {
+            requireActivity().finish()
+        }
         binding.btnNext.onClick {
             if (validateFields()){
                 binding.tvTermsAndCondition.enableDisable(false)

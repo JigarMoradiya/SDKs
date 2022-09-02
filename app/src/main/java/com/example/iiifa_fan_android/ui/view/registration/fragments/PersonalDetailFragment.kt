@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,6 +70,8 @@ class PersonalDetailFragment : BaseFragment() {
     }
 
     private fun initListener() {
+        Log.e("personalDetailFG","registrationViewModel token : "+registrationViewModel.token.value)
+
         binding.progressHorizontal.setProgress(45, 75)
         addTextWatcher(binding.etFirstName, binding.textInputLayoutFirstName)
         addTextWatcher(binding.etLastName, binding.textInputLayoutLastName)

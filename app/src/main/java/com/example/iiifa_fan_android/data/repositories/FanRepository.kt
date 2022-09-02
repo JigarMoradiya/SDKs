@@ -12,6 +12,14 @@ class FanRepository @Inject constructor(
         api.login(params)
     }
 
+    suspend fun updateFanProfile(params: Map<String?, Any?>?) = safeApiCall {
+        api.updateFanProfile(params)
+    }
+
+    suspend fun resetPassword(params: Map<String?, Any?>?) = safeApiCall {
+        api.resetPassword(params)
+    }
+
     suspend fun changePassword(params: Map<String?, Any?>?) = safeApiCall {
         api.changePassword(params)
     }

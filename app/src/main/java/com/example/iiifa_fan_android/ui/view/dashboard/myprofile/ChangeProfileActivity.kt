@@ -139,6 +139,6 @@ class ChangeProfileActivity : BaseActivity() {
         Glide.with(this)
             .load(url)
             .apply(RequestOptions().placeholder(R.drawable.ic_default_user))
-            .into(binding.ivProfile)
+            .into(binding.ivUserProfile)
     }
 }

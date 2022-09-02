@@ -165,6 +165,11 @@ class RemoteDataSource @Inject constructor() {
             || request.url.toString().contains("patientloginwithsocialmedia")
             || request.url.toString().contains("unauth")
             || request.url.toString().contains("userversioncheck")
+
+            || request.url.toString().contains("addfan")
+            || request.url.toString().contains("checkuserexists")
+            || request.url.toString().contains("sendresendotp")
+            || request.url.toString().contains("validateotp")
         ) {
             is_authorized = false
         }

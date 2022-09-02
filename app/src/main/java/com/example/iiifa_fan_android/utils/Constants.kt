@@ -6,10 +6,13 @@ import java.util.*
 //Application Constants Values
 object Constants {
 
+    const val PREF_NAME = "androidhive-welcome"
+
     const val ANDROID = "android"
     const val ENTITY_TYPE = "fan"
+    const val ENTITY_TYPE_DECADE = "decade"
+    const val ACTION_TYPE_LIST = "list"
     const val REGISTRATION = "registration"
-    const val PREF_NAME = "androidhive-welcome"
 
     const val EMAIL_PATTERN = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
     const val PASSWORD_PATTERN = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,}$"
@@ -174,5 +177,6 @@ object Constants {
     const val VALIDATE_REFFERAL_CODE: String = "validateReferralCode"
     const val ADD_FAN: String = "addfan"
     const val LOGIN = "login"
+    const val FORGOT_PASSWORD = "forgot_password"
 
 }

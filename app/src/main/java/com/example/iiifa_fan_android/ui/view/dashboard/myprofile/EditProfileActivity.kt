@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
+import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.fragment.app.activityViewModels
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.data.models.FanUser
 import com.example.iiifa_fan_android.data.models.MultiSelect
@@ -16,9 +19,8 @@ import com.example.iiifa_fan_android.databinding.BottomPopUpSingleselectionBindi
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.ui.view.commonviews.adapters.SingleSelectAdapter
 import com.example.iiifa_fan_android.ui.view.commonviews.interfaces.SingleSelectClickListner
-import com.example.iiifa_fan_android.utils.Constants
-import com.example.iiifa_fan_android.utils.CustomViews
-import com.example.iiifa_fan_android.utils.NoChangingBackgroundTextInputLayout
+import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
+import com.example.iiifa_fan_android.utils.*
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.show
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -38,6 +40,7 @@ class EditProfileActivity : BaseActivity() {
     private var gender:String = ""
     private var phone:String = ""
     private var country:String = ""
+    private val viewModel by viewModels<FanViewModel>()
     companion object {
         fun getInstance(context: Context?) {
             Intent(context, EditProfileActivity::class.java).apply {
@@ -53,7 +56,7 @@ class EditProfileActivity : BaseActivity() {
         setContentView(binding.root)
         initViews()
         initListener()
-
+        initObserver()
     }
 
     private fun initViews() {
@@ -72,12 +75,51 @@ class EditProfileActivity : BaseActivity() {
         binding.ivEditProfile.onClick { ChangeProfileActivity.getInstance(this@EditProfileActivity) }
         binding.tvSave.onClick {
             if (validateFields()){
-
+                updateFanProfile()
             }
         }
         binding.spinnerGender.onClick { showCreateContentPopup() }
     }
 
+    private fun initObserver() {
+        viewModel.updateFanProfileResponse.observe(this) {
+            when (it) {
+                is Resource.Loading -> {
+                    CustomViews.startButtonLoading(this@EditProfileActivity, false)
+                }
+                is Resource.Success -> {
+                    CustomViews.hideButtonLoading()
+                    if (it.value.code == 200) {
+                        CustomViews.hideButtonLoading()
+                        val data = Gson().fromJson(it.value.content!![Constants.DATA], FanUser::class.java)
+                        prefManager.setUserData(Gson().toJson(data))
+                        data?.email?.let { prefManager.setUserEmail(it) }
+                        CustomViews.showSuccessToast(layoutInflater, it.value.message)
+                    } else{
+                        CustomViews.hideButtonLoading()
+                        CustomViews.showFailToast(layoutInflater, it.value.message)
+                    }
+                }
+                is Resource.Failure -> {
+                    CustomViews.hideButtonLoading()
+                    CustomViews.showFailToast(layoutInflater, getString(R.string.something_went_wrong))
+                }
+            }
+        }
+
+    }
+
+    private fun updateFanProfile() {
+        CustomViews.startButtonLoading(this, false)
+        val params: MutableMap<String?, Any?> = HashMap()
+        params["fan_id"] = prefManager.getUserId()
+        params["first_name"] = first_name
+        params["last_name"] = last_name
+        params["gender"] = gender
+        params["age"] = age.toIntOrNull()
+        params["phone_number"] = phone
+        viewModel.updateFanProfile(params)
+    }
     private fun showCreateContentPopup() {
         val bottomSheetDialog = BottomSheetDialog(this, R.style.BottomSheetDialog)
         val sheetBinding: BottomPopUpSingleselectionBinding = BottomPopUpSingleselectionBinding.inflate(layoutInflater)

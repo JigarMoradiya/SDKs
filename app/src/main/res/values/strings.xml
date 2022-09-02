@@ -131,4 +131,7 @@
     <string name="this_email_is_already_connected_to_an_account_do_you_want_to_log_in_instead">This email is already connected to an account. Do you want to log in instead?</string>
     <string name="dismiss">Dismiss</string>
     <string name="sure_want_to_logout">Are you sure you want to logout ?</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password_title">Forgot password</string>
+    <string name="please_enter_your_registered_email_address_to_reset_your_password">Please enter your registered email address to reset your password.</string>
 </resources>

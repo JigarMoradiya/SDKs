@@ -11,15 +11,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.data.models.FanUser
+import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.databinding.FragmentPasswordBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseFragment
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.PasswordMeterClass
+import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
 import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.RegistrationViewModel
 import com.example.iiifa_fan_android.utils.Constants
@@ -34,10 +37,11 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import java.util.*
 
-class PasswordFragment : BaseFragment(){
+class PasswordFragment : Fragment(){
     private lateinit var binding: FragmentPasswordBinding
     private lateinit var navController: NavController
     private lateinit var passwordMeterClass: PasswordMeterClass
+    private lateinit var prefManager : AppPreferencesHelper
     private var type: String? = null
     private var password: String = ""
     private var confirm_password: String = ""
@@ -60,6 +64,7 @@ class PasswordFragment : BaseFragment(){
     }
 
     private fun initViews() {
+        prefManager = AppPreferencesHelper(requireContext(), Constants.PREF_NAME)
         passwordMeterClass = PasswordMeterClass(requireActivity())
         passwordMeterClass.setAdapter(binding.rvPassword)
         navController = Navigation.findNavController(requireActivity(), R.id.fragment_main)
@@ -142,36 +147,21 @@ class PasswordFragment : BaseFragment(){
     }
     private fun initObserver() {
         viewModel.addFanResponse.observe(this) {
-
             when (it) {
                 is Resource.Loading -> {
                     CustomViews.startButtonLoading(requireContext(), false)
                 }
                 is Resource.Success -> {
                     CustomViews.hideButtonLoading()
-                    if (it.value.code == 200)
-                    {
+                    if (it.value.code == 200) {
                         CustomViews.hideButtonLoading()
-                        val gson = GsonBuilder().create()
-                        val data = gson.fromJson(it.value.content!![Constants.DATA], FanUser::class.java)
-                        Log.e("passwordFragment","fanUserData : "+Gson().toJson(data))
-                        prefManager.setUserData(Gson().toJson(data))
-                        data?.id?.let { prefManager.setUserId(it) }
-                        data?.email?.let { prefManager.setUserEmail(it) }
-                        data?.secret?.let { prefManager.setToken(it) }
-
-                        Log.e("loginActivity","getUserData : "+Gson().toJson(prefManager.getUserData()))
-
-//                MainDashboardActivity.getInstance(requireContext())
-//                requireActivity().finish()
-                    }
-                    else{
+                        val data = Gson().fromJson(it.value.content!![Constants.DATA], FanUser::class.java)
+                        setLearner(data)
+                    } else{
                         CustomViews.hideButtonLoading()
                         CustomViews.showFailToast(layoutInflater, it.value.error?.message)
                     }
-
                 }
-
                 is Resource.Failure -> {
                     CustomViews.hideButtonLoading()
                     CustomViews.showFailToast(layoutInflater, getString(R.string.something_went_wrong))
@@ -179,6 +169,14 @@ class PasswordFragment : BaseFragment(){
             }
         }
 
+    }
+    private fun setLearner(data: FanUser?) {
+        prefManager.setUserData(Gson().toJson(data))
+        data?.id?.let { prefManager.setUserId(it) }
+        data?.email?.let { prefManager.setUserEmail(it) }
+        data?.secret?.let { prefManager.setToken(it) }
+        MainDashboardActivity.getInstance(requireContext())
+        requireActivity().finish()
     }
     private fun addFan() {
         CustomViews.startButtonLoading(requireContext(), false)
