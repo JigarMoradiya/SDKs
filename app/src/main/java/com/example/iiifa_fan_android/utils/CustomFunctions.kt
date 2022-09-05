@@ -186,11 +186,11 @@ object CustomFunctions {
     private fun createImageFile(context: Context): File? {
         // Create an image file name
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val imageFileName = "JPEG_" + timeStamp + "_"
+        val imageFileName = "PNG_" + timeStamp + "_"
         val storageDir: File = context.getExternalFilesDir(null)!!
         val image = File.createTempFile(
             imageFileName,  /* prefix */
-            ".jpg",  /* suffix */
+            ".png",  /* suffix */
             storageDir /* directory */
         )
         return image
@@ -840,5 +840,16 @@ object CustomFunctions {
         return ""
     }
 
+    fun getFolderNameForChat(type: String?): String {
+        var default_folder = Constants.MEDIA_ATTACHMENT_FOLDER
+        when (type) {
+            Constants.IMAGE -> default_folder += Constants.IMAGE_FOLDER
+            Constants.VIDEO -> default_folder += Constants.VIDEO_FOLDER
+            Constants.DOCUMENT -> default_folder += Constants.DOCUMENT_FOLDER
+            Constants.AUDIO -> default_folder += Constants.AUDIO_FOLDER
+            Constants.THUMBNAILS -> default_folder += Constants.THUMBNAIL_FOLDER
+        }
+        return default_folder
+    }
 
 }

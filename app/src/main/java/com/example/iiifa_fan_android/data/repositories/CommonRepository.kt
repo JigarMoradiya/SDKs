@@ -22,8 +22,11 @@ class CommonRepository @Inject constructor(
     suspend fun resetPassword(params: Map<String?, Any?>?) = safeApiCall {
         api.resetPassword(params)
     }
-
     suspend fun changePassword(params: Map<String?, Any?>?) = safeApiCall {
         api.changePassword(params)
     }
+    suspend fun getSignedPutObjectUrl(params: Map<String?, Any?>?) = safeApiCall {
+        api.getSignedPutObjectUrl(params)
+    }
+
 }

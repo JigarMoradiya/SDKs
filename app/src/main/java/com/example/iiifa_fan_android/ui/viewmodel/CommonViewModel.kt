@@ -6,10 +6,19 @@ import com.example.iiifa_fan_android.data.repositories.CommonRepository
 import com.example.iiifa_fan_android.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
 class CommonViewModel @Inject constructor(private val repository: CommonRepository) : ViewModel() {
+    val currentPosition = MutableLiveData<Int>()
+    val filePath = MutableLiveData<String>()
+    val fileExtension = MutableLiveData<String>()
+    val fileType = MutableLiveData<String>()
+    val imageFile = MutableLiveData<File>()
+    val position = MutableLiveData<Int>()
+    val isPublicAssets = MutableLiveData<Boolean>()
+
 
     private val _checkUserExistsResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
     val checkUserExistsResponse: LiveData<Resource<MainAPIResponse>> get() = _checkUserExistsResponse
@@ -53,5 +62,28 @@ class CommonViewModel @Inject constructor(private val repository: CommonReposito
         _changePasswordResponse.value = Resource.Loading
         _changePasswordResponse.value = repository.changePassword(params)
     }
+
+    private val _getSignedObjectPutUrlResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
+    val getSignedObjectPutUrlResponse: LiveData<Resource<MainAPIResponse>> get() = _getSignedObjectPutUrlResponse
+    fun getSignedObjectPutUrl(params: Map<String?, Any?>?) = viewModelScope.launch {
+        _getSignedObjectPutUrlResponse.value = Resource.Loading
+        _getSignedObjectPutUrlResponse.value = repository.getSignedPutObjectUrl(params)
+    }
+    fun updateFileName(pos: Int, url: String) {
+        currentPosition.value = pos
+        filePath.value = url
+    }
+    fun setUrlAndPosition(
+        pos: Int, url: String, file_extension: String,
+        file_type: String, image_file: File, is_public_assets: Boolean = false
+    ) {
+        currentPosition.value = pos
+        filePath.value = url
+        fileExtension.value = file_extension
+        fileType.value = file_type
+        imageFile.value = image_file
+        isPublicAssets.value = is_public_assets
+    }
+
 
 }

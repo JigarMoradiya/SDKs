@@ -23,4 +23,6 @@ interface CommonApi {
     @POST("changepassword")
     suspend fun changePassword(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
 
+    @POST("getsignedgetobjecturl")
+    suspend fun getSignedPutObjectUrl(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
 }

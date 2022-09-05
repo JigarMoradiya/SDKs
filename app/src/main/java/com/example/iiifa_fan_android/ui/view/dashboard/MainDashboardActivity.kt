@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ import com.example.iiifa_fan_android.ui.view.dashboard.cms.FAQActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.cms.PrivacyPolicyActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.fragments.HomeFragment
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.ChangePasswordActivity
+import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.ChangeProfileActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.EditProfileActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.notification.NotificationSettingActivity
 import com.example.iiifa_fan_android.ui.view.login.activities.LoginActivity
@@ -72,6 +75,7 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
     }
 
     private fun initViews() {
+        setProfile()
         val list = HomeDataProvider.getMenuListWithLogin(this)
         sideMenuListAdapter = SideMenuListAdapter(list,this)
         binding.rvMenu.adapter = sideMenuListAdapter
@@ -80,14 +84,13 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
         binding.rvMenu.addItemDecoration(decoration)
     }
 
-    private fun initListener() {
-
-    }
-
-    override fun onResume() {
-        super.onResume()
+    private fun setProfile() {
         user = Gson().fromJson(prefManager.getUserData(), FanUser::class.java)
         binding.dataModel = user
+    }
+
+    private fun initListener() {
+
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -101,6 +104,13 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
         }
     }
 
+    private var editProfileActivityResultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                setProfile()
+            }
+        }
+
     // side menu item click
     override fun onMenuItemClick(menuItem: SideMenu) {
 //        binding.drawerLayout.closeDrawer(GravityCompat.START)
@@ -111,7 +121,8 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
 //        supportActionBar?.title = menuItem.menuTitle
         when (menuItem.tag) {
             "edit_profile" -> {
-                EditProfileActivity.getInstance(this)
+                val intent = Intent(this, EditProfileActivity::class.java)
+                editProfileActivityResultLauncher.launch(intent)
             }
             "change_password" -> {
                 ChangePasswordActivity.getInstance(this)

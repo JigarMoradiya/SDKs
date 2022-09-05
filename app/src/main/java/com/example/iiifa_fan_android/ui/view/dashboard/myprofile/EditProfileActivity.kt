@@ -8,6 +8,8 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.activityViewModels
@@ -41,6 +43,7 @@ class EditProfileActivity : BaseActivity() {
     private var phone:String = ""
     private var country:String = ""
     private val viewModel by viewModels<FanViewModel>()
+    private var isProfileDataChange = false
     companion object {
         fun getInstance(context: Context?) {
             Intent(context, EditProfileActivity::class.java).apply {
@@ -64,6 +67,15 @@ class EditProfileActivity : BaseActivity() {
         binding.dataModel = user
     }
 
+    override fun onBackPressed() {
+        if (isProfileDataChange){
+            val intent = Intent()
+            setResult(RESULT_OK,intent)
+            finish()
+        }  else{
+            super.onBackPressed()
+        }
+    }
     private fun initListener() {
         addTextWatcher(binding.etFirstName, binding.textInputLayoutFirstName)
         addTextWatcher(binding.etLastName, binding.textInputLayoutLastName)
@@ -71,8 +83,13 @@ class EditProfileActivity : BaseActivity() {
         addTextWatcher(binding.etAge, binding.textInputLayoutAge)
         addTextWatcher(binding.etPhone, binding.textInputLayoutPhone)
         addTextWatcher(binding.spinnerGender, binding.textInputLayoutGender)
-        binding.ibBack.onClick { onBackPressed() }
-        binding.ivEditProfile.onClick { ChangeProfileActivity.getInstance(this@EditProfileActivity) }
+        binding.ibBack.onClick {
+            onBackPressed()
+        }
+        binding.ivEditProfile.onClick {
+            val intent = Intent(context, ChangeProfileActivity::class.java)
+            changeProfileActivityResultLauncher.launch(intent)
+        }
         binding.tvSave.onClick {
             if (validateFields()){
                 updateFanProfile()
@@ -80,6 +97,14 @@ class EditProfileActivity : BaseActivity() {
         }
         binding.spinnerGender.onClick { showCreateContentPopup() }
     }
+
+    private var changeProfileActivityResultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+                binding.dataModel = user
+                isProfileDataChange = true
+            }
+        }
 
     private fun initObserver() {
         viewModel.updateFanProfileResponse.observe(this) {
@@ -95,6 +120,7 @@ class EditProfileActivity : BaseActivity() {
                         prefManager.setUserData(Gson().toJson(data))
                         data?.email?.let { prefManager.setUserEmail(it) }
                         CustomViews.showSuccessToast(layoutInflater, it.value.message)
+                        isProfileDataChange = true
                     } else{
                         CustomViews.hideButtonLoading()
                         CustomViews.showFailToast(layoutInflater, it.value.message)

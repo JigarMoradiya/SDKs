@@ -41,11 +41,11 @@ object Constants {
     const val JOURNAL_FOLDER = "user/journal/"
 
 
-    //foldet for media
+    //folder for media
     const val POST_IMAGE = "post/images/"
     const val POST_VIDEO = "post/videos/"
     const val POST_THUMBNAIL = "post/thumbnailImages/"
-    const val PROFILE_IMAGE = "user/profilePictures/"
+    const val PROFILE_IMAGE = "users/fan/profilePictures"
 
     //Error type const
     const val LOGIN_INTO_ANOTHER_DEVICE = "LOGIN_IN_ANOTHER_DEVICE"
@@ -167,8 +167,10 @@ object Constants {
     const val AUDIO = "audio"
     const val VIDEO = "video"
     const val IMAGE = "image"
+    const val THUMBNAIL = "thumbnail"
     const val DOCUMENT = "document"
     const val MEDIA = "media"
+    const val THUMBNAILS = "thumbnail"
 
     // API key
     const val CHECK_USER_EXIST = "checkuserexists"

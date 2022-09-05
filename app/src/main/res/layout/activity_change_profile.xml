@@ -93,12 +93,12 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="16dp"
-                android:backgroundTint="@color/colorAccentDark"
+                android:backgroundTint="@color/color_primary"
                 android:fontFamily="@font/lato_bold"
                 android:insetTop="0dp"
                 android:insetBottom="0dp"
                 app:cornerRadius="12dp"
-                app:iconTint="@color/colorAccent"
+                app:iconTint="@color/white"
                 app:icon="@drawable/ic_filled_camera"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
@@ -152,7 +152,7 @@
                 app:layout_constraintTop_toTopOf="@+id/ivCamera"
                 app:layout_constraintBottom_toBottomOf="@+id/ivCamera"
                 android:text="@string/capture_from_the_camera"
-                android:textColor="@color/colorAccent"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="normal" />
 
