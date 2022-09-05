@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/reg_navigation_graph"
     app:startDestination="@id/registrationFragment">
+<!--    app:startDestination="@id/selectDecadeFragment">-->
     <fragment
         android:id="@+id/registrationFragment"
         android:name="com.example.iiifa_fan_android.ui.view.registration.fragments.RegistrationFragment">
@@ -36,21 +37,21 @@
     </fragment>
     <fragment
         android:id="@+id/selectDecadeFragment"
-        android:name="com.example.iiifa_fan_android.ui.view.registration.preferences.SelectDecadeFragment">
+        android:name="com.example.iiifa_fan_android.ui.view.registration.fragments.preferences.SelectDecadeFragment">
         <action
             android:id="@+id/action_selectDecadeFragment_to_selectGenreFragment"
             app:destination="@id/selectGenreFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectGenreFragment"
-        android:name="com.example.iiifa_fan_android.ui.view.registration.preferences.SelectGenreFragment">
+        android:name="com.example.iiifa_fan_android.ui.view.registration.fragments.preferences.SelectGenreFragment">
         <action
             android:id="@+id/action_selectGenreFragment_to_selectAuditionsFragment"
             app:destination="@id/selectAuditionsFragment" />
     </fragment>
     <fragment
         android:id="@+id/selectAuditionsFragment"
-        android:name="com.example.iiifa_fan_android.ui.view.registration.preferences.SelectAuditionsFragment">
+        android:name="com.example.iiifa_fan_android.ui.view.registration.fragments.preferences.SelectAuditionsFragment">
     <!--    <action
             android:id="@+id/action_passwordFragment_to_successfullRegistartionFragment"
             app:destination="@id/successfullRegistartionFragment" />

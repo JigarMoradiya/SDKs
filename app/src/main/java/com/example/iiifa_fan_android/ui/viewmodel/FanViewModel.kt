@@ -25,19 +25,6 @@ class FanViewModel @Inject constructor(private val repository: FanRepository) : 
         _updateFanProfileResponse.value = repository.updateFanProfile(params)
     }
 
-    private val _resetPasswordResponse: MediatorLiveData<Resource<MainAPIResponse>> = MediatorLiveData()
-    val resetPasswordResponse: LiveData<Resource<MainAPIResponse>> get() = _resetPasswordResponse
-    fun resetPassword(params: Map<String?, Any?>? ) = viewModelScope.launch {
-        _resetPasswordResponse.value = Resource.Loading
-        _resetPasswordResponse.value = repository.resetPassword(params)
-    }
-
-    private val _changePasswordResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
-    val changePasswordResponse: LiveData<Resource<MainAPIResponse>> get() = _changePasswordResponse
-    fun changePassword(params: Map<String?, Any?>? ) = viewModelScope.launch {
-        _changePasswordResponse.value = Resource.Loading
-        _changePasswordResponse.value = repository.changePassword(params)
-    }
 
     private val _addFanResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
     val addFanResponse: LiveData<Resource<MainAPIResponse>> get() = _addFanResponse

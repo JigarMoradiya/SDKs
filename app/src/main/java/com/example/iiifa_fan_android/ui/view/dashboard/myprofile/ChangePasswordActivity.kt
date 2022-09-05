@@ -15,6 +15,7 @@ import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.databinding.ActivityChangePasswordBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.PasswordMeterClass
+import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
@@ -38,7 +39,7 @@ class ChangePasswordActivity : BaseActivity() {
     private var newPassword: String = ""
     private var confirmPassword: String = ""
     private var lastProgress = 0
-    private val viewModel by viewModels<FanViewModel>()
+    private val viewModel by viewModels<CommonViewModel>()
     companion object {
         fun getInstance(context: Context?) {
             Intent(context, ChangePasswordActivity::class.java).apply {

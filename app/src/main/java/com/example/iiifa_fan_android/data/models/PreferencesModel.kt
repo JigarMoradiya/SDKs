@@ -6,8 +6,9 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Preferences(
-        var name: String,
-        var id: String,
-        var is_selected: Boolean = false
+        val name: String,
+        val id: Int,
+        var is_selected: Boolean = false,
+        val is_deleted: Int = 0
 ) : Parcelable
 

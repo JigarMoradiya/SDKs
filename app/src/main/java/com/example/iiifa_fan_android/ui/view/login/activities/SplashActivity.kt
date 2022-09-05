@@ -8,6 +8,7 @@ import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.databinding.ActivitySplashBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.MainDashboardActivity
+import com.example.iiifa_fan_android.ui.view.registration.activities.RegistrationHolderActivity
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.MyApplication
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +34,7 @@ class SplashActivity : AppCompatActivity() {
             LoginActivity.getInstance(this)
         } else {
             MainDashboardActivity.getInstance(this)
+//            RegistrationHolderActivity.getInstance(this)
         }
     }
 

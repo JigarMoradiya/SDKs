@@ -1,12 +1,10 @@
-package com.example.iiifa_fan_android.ui.view.registration.preferences
+package com.example.iiifa_fan_android.ui.view.registration.fragments.preferences
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.children
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -14,13 +12,10 @@ import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.data.models.Preferences
 import com.example.iiifa_fan_android.databinding.FragmentSelectAuditionsBinding
-import com.example.iiifa_fan_android.databinding.FragmentSelectDecadeBinding
-import com.example.iiifa_fan_android.ui.view.commonviews.adapters.PasswordMeterAdapter
 import com.example.iiifa_fan_android.ui.view.registration.adapters.GenreAdapter
 import com.example.iiifa_fan_android.utils.extensions.hide
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.show
-import com.google.android.material.chip.Chip
 
 class SelectAuditionsFragment : Fragment() {
     private lateinit var binding: FragmentSelectAuditionsBinding
@@ -50,12 +45,12 @@ class SelectAuditionsFragment : Fragment() {
 
         list.run {
             clear()
-            add(Preferences("Drama & Romance","1"))
-            add(Preferences("Mimicry","2"))
-            add(Preferences("Action & War","3"))
-            add(Preferences("Comedy","4"))
-            add(Preferences("Singing & Music","5"))
-            add(Preferences("Other","6"))
+//            add(Preferences("Drama & Romance","1"))
+//            add(Preferences("Mimicry","2"))
+//            add(Preferences("Action & War","3"))
+//            add(Preferences("Comedy","4"))
+//            add(Preferences("Singing & Music","5"))
+//            add(Preferences("Other","6"))
         }
         setChips()
     }

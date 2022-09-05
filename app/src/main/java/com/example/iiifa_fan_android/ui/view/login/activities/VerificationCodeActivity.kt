@@ -306,13 +306,14 @@ class VerificationCodeActivity : BaseActivity() {
 
 
 
-    private fun setLearner(expert: FanUser?) {
-//        prefManager!!.user = Gson().toJson(expert)
-//        prefManager!!.userEmail = expert?.email
-//        prefManager!!.token = expert?.secret
-//        prefManager!!.userId = expert?.id
-//        MainDashboardActivity.getInstance(this)
-//        finish()
+    private fun setLearner(data: FanUser?) {
+        prefManager.setUserData(Gson().toJson(data))
+        data?.id?.let { prefManager.setUserId(it) }
+        data?.email?.let { prefManager.setUserEmail(it) }
+        data?.secret?.let { prefManager.setToken(it) }
+
+        MainDashboardActivity.getInstance(this)
+        finish()
     }
 
 }

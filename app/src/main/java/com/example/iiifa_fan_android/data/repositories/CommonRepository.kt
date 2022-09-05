@@ -19,4 +19,11 @@ class CommonRepository @Inject constructor(
     suspend fun logoutUser(params: Map<String?, Any?>?) = safeApiCall {
         api.logoutUser(params)
     }
+    suspend fun resetPassword(params: Map<String?, Any?>?) = safeApiCall {
+        api.resetPassword(params)
+    }
+
+    suspend fun changePassword(params: Map<String?, Any?>?) = safeApiCall {
+        api.changePassword(params)
+    }
 }

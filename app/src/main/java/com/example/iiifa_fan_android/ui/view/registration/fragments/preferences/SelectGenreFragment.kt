@@ -1,33 +1,24 @@
-package com.example.iiifa_fan_android.ui.view.registration.preferences
+package com.example.iiifa_fan_android.ui.view.registration.fragments.preferences
 
 import android.os.Bundle
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.children
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
-import com.example.iiifa_fan_android.data.models.FanUser
 import com.example.iiifa_fan_android.data.models.Preferences
-import com.example.iiifa_fan_android.databinding.FragmentSelectDecadeBinding
 import com.example.iiifa_fan_android.databinding.FragmentSelectGenreBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseFragment
-import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.SettingsViewModel
 import com.example.iiifa_fan_android.utils.Constants
-import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.CustomViews
-import com.example.iiifa_fan_android.utils.Resource
 import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.google.android.material.chip.Chip
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import java.util.HashMap
 
 class SelectGenreFragment : BaseFragment() {
@@ -58,22 +49,22 @@ class SelectGenreFragment : BaseFragment() {
 
         list.run {
             clear()
-            add(Preferences("Action","1"))
-            add(Preferences("Drama","2"))
-            add(Preferences("Crime","3"))
-            add(Preferences("Science Fiction","4"))
-            add(Preferences("Romance","5"))
-            add(Preferences("Comedy","6"))
-            add(Preferences("Biography","7"))
-            add(Preferences("Fantasy","8"))
-            add(Preferences("Horror","9"))
-            add(Preferences("Adventure","10"))
-            add(Preferences("Musical","11"))
-            add(Preferences("Documentary","12"))
-            add(Preferences("Suspense & Triller","13"))
-            add(Preferences("Noir","14"))
-            add(Preferences("Historical","15"))
-            add(Preferences("Other","16"))
+//            add(Preferences("Action","1"))
+//            add(Preferences("Drama","2"))
+//            add(Preferences("Crime","3"))
+//            add(Preferences("Science Fiction","4"))
+//            add(Preferences("Romance","5"))
+//            add(Preferences("Comedy","6"))
+//            add(Preferences("Biography","7"))
+//            add(Preferences("Fantasy","8"))
+//            add(Preferences("Horror","9"))
+//            add(Preferences("Adventure","10"))
+//            add(Preferences("Musical","11"))
+//            add(Preferences("Documentary","12"))
+//            add(Preferences("Suspense & Triller","13"))
+//            add(Preferences("Noir","14"))
+//            add(Preferences("Historical","15"))
+//            add(Preferences("Other","16"))
         }
         getGenreList()
         setChips()

@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.databinding.FragmentResetPasswordBinding
 import com.example.iiifa_fan_android.ui.view.commonviews.classes.PasswordMeterClass
+import com.example.iiifa_fan_android.ui.viewmodel.CommonViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
@@ -34,7 +35,7 @@ import java.util.concurrent.TimeUnit
 @AndroidEntryPoint
 class ResetPasswordFragment : Fragment() {
     private lateinit var binding: FragmentResetPasswordBinding
-    private val viewModel by activityViewModels<FanViewModel>()
+    private val viewModel by activityViewModels<CommonViewModel>()
     private var password: String? = null
     private var confirm_password: String? = null
 
@@ -207,6 +208,7 @@ class ResetPasswordFragment : Fragment() {
         params["email"] = email
         params["otp"] = otp
         params["password"] = password
+        params["user_type"] = Constants.ENTITY_TYPE
 
         viewModel.resetPassword(params)
     }

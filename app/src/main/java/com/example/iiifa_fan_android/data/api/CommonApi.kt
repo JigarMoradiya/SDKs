@@ -16,4 +16,11 @@ interface CommonApi {
 
     @POST("logoutuser")
     suspend fun logoutUser(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
+
+    @POST("resetpassword")
+    suspend fun resetPassword(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
+
+    @POST("changepassword")
+    suspend fun changePassword(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
+
 }

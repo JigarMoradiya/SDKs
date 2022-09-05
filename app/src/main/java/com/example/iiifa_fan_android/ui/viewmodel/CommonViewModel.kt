@@ -1,9 +1,6 @@
 package com.example.iiifa_fan_android.ui.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.iiifa_fan_android.data.models.MainAPIResponse
 import com.example.iiifa_fan_android.data.repositories.CommonRepository
 import com.example.iiifa_fan_android.utils.Resource
@@ -41,6 +38,20 @@ class CommonViewModel @Inject constructor(private val repository: CommonReposito
     fun validateOtp(params: Map<String?, Any?>?) = viewModelScope.launch {
         _validateOtpResponse.value = Resource.Loading
         _validateOtpResponse.value = repository.validateOtp(params)
+    }
+
+    private val _resetPasswordResponse: MediatorLiveData<Resource<MainAPIResponse>> = MediatorLiveData()
+    val resetPasswordResponse: LiveData<Resource<MainAPIResponse>> get() = _resetPasswordResponse
+    fun resetPassword(params: Map<String?, Any?>? ) = viewModelScope.launch {
+        _resetPasswordResponse.value = Resource.Loading
+        _resetPasswordResponse.value = repository.resetPassword(params)
+    }
+
+    private val _changePasswordResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
+    val changePasswordResponse: LiveData<Resource<MainAPIResponse>> get() = _changePasswordResponse
+    fun changePassword(params: Map<String?, Any?>? ) = viewModelScope.launch {
+        _changePasswordResponse.value = Resource.Loading
+        _changePasswordResponse.value = repository.changePassword(params)
     }
 
 }

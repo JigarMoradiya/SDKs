@@ -15,13 +15,13 @@ def apikeyProperties = new Properties()
 apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "31.0.0"
+    compileSdkVersion 32
+//    buildToolsVersion "31.0.0"
 
     defaultConfig {
         applicationId "com.iifa.fan"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 12
         versionName "1.2.4"
         resConfigs "en"

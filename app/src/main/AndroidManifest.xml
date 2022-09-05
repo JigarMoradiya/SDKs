@@ -81,6 +81,9 @@
         <activity
             android:name=".ui.view.forgotpassword.ForgotPasswordActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.view.login.activities.VerificationCodeActivity"
+            android:exported="false" />
 
         <activity
             android:name=".ui.view.login.activities.SplashActivity"
