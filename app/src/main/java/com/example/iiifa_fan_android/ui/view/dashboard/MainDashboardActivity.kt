@@ -23,6 +23,7 @@ import com.example.iiifa_fan_android.ui.view.dashboard.cms.PrivacyPolicyActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.fragments.HomeFragment
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.ChangePasswordActivity
 import com.example.iiifa_fan_android.ui.view.dashboard.myprofile.EditProfileActivity
+import com.example.iiifa_fan_android.ui.view.dashboard.notification.NotificationSettingActivity
 import com.example.iiifa_fan_android.ui.view.login.activities.LoginActivity
 import com.example.iiifa_fan_android.utils.CustomFunctions
 import com.example.iiifa_fan_android.utils.extensions.onClick
@@ -134,7 +135,7 @@ class MainDashboardActivity : BaseActivity(), SideMenuListAdapter.OnItemClickLis
 
             }
             "notification_setting" -> {
-
+                NotificationSettingActivity.getInstance(this)
             }
             "pp" -> {
                 PrivacyPolicyActivity.getInstance(this,menuItem)

@@ -55,9 +55,6 @@
             android:name=".ui.view.registration.activities.RegistrationHolderActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.view.login.activities.ResetPasswordActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.view.login.activities.LoginActivity"
             android:exported="false" />
         <activity
@@ -83,6 +80,9 @@
             android:exported="false" />
         <activity
             android:name=".ui.view.login.activities.VerificationCodeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.view.dashboard.notification.NotificationSettingActivity"
             android:exported="false" />
 
         <activity

@@ -134,4 +134,8 @@
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password_title">Forgot password</string>
     <string name="please_enter_your_registered_email_address_to_reset_your_password">Please enter your registered email address to reset your password.</string>
+    <string name="messages">Messages</string>
+    <string name="receive_messages_from_professionals_including_booking_requests">Receive messages from professionals, including booking requests</string>
+    <string name="push_notification">Push Notification</string>
+    <string name="receive_messages_on_your_mobile_or_tablet_devices">Receive messages on your mobile or tablet devices</string>
 </resources>
