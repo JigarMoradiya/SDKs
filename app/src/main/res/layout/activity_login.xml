@@ -166,6 +166,7 @@
 
                 <com.example.iiifa_fan_android.ui.view.login.component.FaceBookLoginComponent
                     android:id="@+id/iv_facebook"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

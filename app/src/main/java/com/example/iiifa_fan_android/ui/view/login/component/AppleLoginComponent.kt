@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.data.models.SocialMediaUserModel
 import com.example.iiifa_fan_android.databinding.ComponentSocialLoginBinding
@@ -29,6 +30,7 @@ class AppleLoginComponent @JvmOverloads constructor(
     private lateinit var socialLoginViewModel: SocialLoginViewModel
     private lateinit var mAuth: FirebaseAuth
     private lateinit var activity : AppCompatActivity
+    private lateinit var fragmentActivity : FragmentActivity
     init {
         if (context is AppCompatActivity) {
             binding.lifecycleOwner = context
@@ -43,12 +45,12 @@ class AppleLoginComponent @JvmOverloads constructor(
 
     private fun initView() {
 //        FirebaseApp.initializeApp(context)
-//        mAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
         binding.ivSocial.icon = ContextCompat.getDrawable(context, R.drawable.ic_apple)
         binding.ivSocial.onClick {
             socialLoginViewModel.isLoader.postValue(true)
-            if (::activity.isInitialized){
-//                appleLogin()
+            if (::activity.isInitialized || ::fragmentActivity.isInitialized){
+                appleLogin()
             }
         }
 
@@ -67,14 +69,19 @@ class AppleLoginComponent @JvmOverloads constructor(
         activity = signInActivity
     }
 
+    fun setListener(signInActivity: FragmentActivity) {
+        fragmentActivity = signInActivity
+    }
+
 
     /**
      * apple login
      */
     private fun appleLogin() {
         val provider = OAuthProvider.newBuilder("apple.com")
+        val ac = if (::activity.isInitialized){activity}else{fragmentActivity}
 
-        mAuth.startActivityForSignInWithProvider(activity, provider.build())
+        mAuth.startActivityForSignInWithProvider(ac, provider.build())
             .addOnSuccessListener { authResult ->
                 // Sign-in successful!
                 Log.e("post_apple", "activitySignIn:onSuccess:" + authResult.user)

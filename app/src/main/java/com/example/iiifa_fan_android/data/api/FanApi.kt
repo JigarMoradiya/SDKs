@@ -9,6 +9,9 @@ interface FanApi {
     @POST("fanlogin")
     suspend fun login(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
 
+    @POST("fanloginwithsocialmedia")
+    suspend fun getSocialMediaLogin(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
+
     @POST("updatefanprofile")
     suspend fun updateFanProfile(@Body params: Map<String?, @JvmSuppressWildcards Any?>?): MainAPIResponse
 

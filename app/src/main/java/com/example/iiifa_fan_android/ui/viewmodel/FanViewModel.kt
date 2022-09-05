@@ -18,6 +18,13 @@ class FanViewModel @Inject constructor(private val repository: FanRepository) : 
         _loginResponse.value = repository.login(params)
     }
 
+    private val _socail_media_loginResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
+    val socail_media_loginResponse: LiveData<Resource<MainAPIResponse>> get() = _socail_media_loginResponse
+    fun socialMediaLogin(params: Map<String?, Any?>?) = viewModelScope.launch {
+        _socail_media_loginResponse.value = Resource.Loading
+        _socail_media_loginResponse.value = repository.socialMediaLogin(params)
+    }
+
     private val _updateFanProfileResponse: MutableLiveData<Resource<MainAPIResponse>> = MutableLiveData()
     val updateFanProfileResponse: LiveData<Resource<MainAPIResponse>> get() = _updateFanProfileResponse
     fun updateFanProfile(params: Map<String?, Any?>?) = viewModelScope.launch {

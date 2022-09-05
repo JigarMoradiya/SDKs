@@ -74,6 +74,7 @@ class GoogleLoginComponent @JvmOverloads constructor(context: Context, attrs: At
                 socialMediaUserModel = SocialMediaUserModel().apply {
                     account.also {
                         social_type = "google"
+                        social_id = it.id
                         email = it.email
                         fullName = it.displayName
                         first_name = if (it.displayName?.contains(" ") == true) it.displayName?.split(" ".toRegex())?.toTypedArray()?.get(0) else it.displayName

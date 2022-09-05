@@ -27,7 +27,9 @@ data class FanUser(
     val registration_type: String,
     val secret: String,
     val status: String,
-    val stripe_customer_id: String? = null
+    val stripe_customer_id: String? = null,
+    val is_complete_profile: Boolean = true,
+
 ) {
     fun getGenders(): String {
         return gender?.substring(0, 1)?.uppercase(Locale.ROOT) + gender?.substring(1)

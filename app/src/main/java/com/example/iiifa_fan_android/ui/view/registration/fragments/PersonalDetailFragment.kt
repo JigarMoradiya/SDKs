@@ -11,10 +11,10 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.iiifa_fan_android.R
+import com.example.iiifa_fan_android.data.models.FanUser
 import com.example.iiifa_fan_android.data.models.MultiSelect
 import com.example.iiifa_fan_android.databinding.BottomPopUpSingleselectionBinding
 import com.example.iiifa_fan_android.databinding.FragmentPersonalDetailsBinding
@@ -30,6 +30,7 @@ import com.example.iiifa_fan_android.utils.extensions.onClick
 import com.example.iiifa_fan_android.utils.extensions.setProgress
 import com.example.iiifa_fan_android.utils.extensions.show
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.gson.Gson
 import java.util.*
 
 class PersonalDetailFragment : BaseFragment() {
@@ -42,8 +43,7 @@ class PersonalDetailFragment : BaseFragment() {
     private var phone:String = ""
     private var country:String = ""
     private val registrationViewModel by activityViewModels<RegistrationViewModel>()
-    private val viewModel by activityViewModels<CommonViewModel>()
-
+    private var data: FanUser? = null
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentPersonalDetailsBinding.inflate(inflater, container, false)
         return binding.root
@@ -63,6 +63,13 @@ class PersonalDetailFragment : BaseFragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        if (prefManager.getUserId() != null && !TextUtils.isEmpty(prefManager.getUserData())) {
+            data = Gson().fromJson(prefManager.getUserData(), FanUser::class.java)
+            if (!data?.first_name.isNullOrEmpty()) binding.etFirstName.setText(data?.first_name)
+            if (!data?.last_name.isNullOrEmpty()) binding.etLastName.setText(data?.last_name)
+            data?.email?.let { registrationViewModel.sendEmail(it) }
+        }
     }
 
     private fun onBack() {
@@ -70,8 +77,6 @@ class PersonalDetailFragment : BaseFragment() {
     }
 
     private fun initListener() {
-        Log.e("personalDetailFG","registrationViewModel token : "+registrationViewModel.token.value)
-
         binding.progressHorizontal.setProgress(45, 75)
         addTextWatcher(binding.etFirstName, binding.textInputLayoutFirstName)
         addTextWatcher(binding.etLastName, binding.textInputLayoutLastName)

@@ -15,6 +15,7 @@ import com.example.iiifa_fan_android.R
 import com.example.iiifa_fan_android.data.models.Error
 import com.example.iiifa_fan_android.data.models.ErrorSession
 import com.example.iiifa_fan_android.data.models.FanUser
+import com.example.iiifa_fan_android.data.models.SocialMediaUserModel
 import com.example.iiifa_fan_android.databinding.ActivityLoginBinding
 import com.example.iiifa_fan_android.databinding.BottomPopUpMfaBinding
 import com.example.iiifa_fan_android.ui.view.base.BaseActivity
@@ -27,6 +28,7 @@ import com.example.iiifa_fan_android.ui.viewmodel.FanViewModel
 import com.example.iiifa_fan_android.ui.viewmodel.SocialLoginViewModel
 import com.example.iiifa_fan_android.utils.Constants
 import com.example.iiifa_fan_android.utils.CustomFunctions
+import com.example.iiifa_fan_android.utils.CustomViews
 import com.example.iiifa_fan_android.utils.CustomViews.hideButtonLoading
 import com.example.iiifa_fan_android.utils.CustomViews.removeError
 import com.example.iiifa_fan_android.utils.CustomViews.setErrortoEditText
@@ -106,7 +108,7 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
     private fun setParams() {
         startButtonLoading(this, false)
         if (stringObjectMap.containsKey("type")) {
-//            loginWithSocialMdeiaAPI()
+            loginWithSocialMdeiaAPI()
         } else {
             stringObjectMap["email"] = email
             stringObjectMap["password"] = password
@@ -127,7 +129,20 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
 
             viewModel.login(stringObjectMap)
         }
+
     }
+
+    private fun loginWithSocialMdeiaAPI() {
+        startButtonLoading(this, false)
+        if (stringObjectMap.containsKey("password")) stringObjectMap.remove("password")
+        if (stringObjectMap.containsKey("phone_number"))
+            stringObjectMap.remove("phone_number")
+        stringObjectMap["device_id"] = CustomFunctions.getDeviceId()
+        stringObjectMap["device_name"] = CustomFunctions.getDeviceName()
+
+        viewModel.socialMediaLogin(stringObjectMap)
+    }
+
 
     private fun initObserver() {
         socialLoginViewModel.isSocialDataSet.observe(this) {
@@ -135,10 +150,44 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
                 val socialMediaModel = socialLoginViewModel.getSocialMediaLoginData()
                 Log.e("loginActivity","socialMediaModel : "+Gson().toJson(socialMediaModel))
                 if (!socialMediaModel?.email.isNullOrEmpty()) {
-
+                    loginUsingSocialMedia(socialMediaModel)
                 }
             }
         }
+        viewModel.socail_media_loginResponse.observe(this, androidx.lifecycle.Observer {
+
+            when (it) {
+                is Resource.Loading -> {
+                    startButtonLoading(this, false);
+                }
+                is Resource.Success -> {
+                    hideButtonLoading()
+                    if (it.value.code == 200) {
+                        val data = Gson().fromJson(it.value.content!![Constants.DATA], FanUser::class.java)
+
+                        prefManager.setUserData(Gson().toJson(data))
+                        data?.id?.let { prefManager.setUserId(it) }
+                        data?.email?.let { prefManager.setUserEmail(it) }
+                        data?.secret?.let { prefManager.setToken(it) }
+
+                        if (data.is_complete_profile) {
+                            MainDashboardActivity.getInstance(this)
+                        } else {
+                            //Move to Registration
+                            RegistrationHolderActivity.getInstance(this)
+                        }
+                    }
+                    //    onSuccess(it.value.content)
+                    else
+                        onFailure(it.value.error)
+                }
+
+                is Resource.Failure -> {
+                    hideButtonLoading()
+                    showFailToast(layoutInflater, "Something went wrong, please try after sometime")
+                }
+            }
+        })
         viewModel.loginResponse.observe(this) {
 
             when (it) {
@@ -202,6 +251,28 @@ class LoginActivity : BaseActivity(), GoogleLoginComponent.StartActivityResult {
             }
         }
 
+    }
+
+    private fun loginUsingSocialMedia(socialMediaModel: SocialMediaUserModel?) {
+        if (socialMediaModel?.email.isNullOrEmpty()){
+            stringObjectMap["email"] = ""
+        }else{
+            stringObjectMap["email"] = Objects.requireNonNull(socialMediaModel?.email)
+        }
+        if (!socialMediaModel?.first_name.isNullOrEmpty()) {
+            stringObjectMap["first_name"] = Objects.requireNonNull(socialMediaModel?.first_name)
+        }
+        if (!socialMediaModel?.last_name.isNullOrEmpty()) {
+            stringObjectMap["last_name"] = Objects.requireNonNull(socialMediaModel?.last_name)
+        }
+        if (!socialMediaModel?.profile_pic.isNullOrEmpty()) {
+            stringObjectMap["profile_url"] = Objects.requireNonNull(socialMediaModel?.profile_pic)
+        }
+        if (socialMediaModel?.social_type == "apple" && !socialMediaModel.social_id.isNullOrEmpty()) {
+            stringObjectMap["apple_id"] = Objects.requireNonNull(socialMediaModel.profile_pic)
+        }
+        stringObjectMap["type"] = Objects.requireNonNull(socialMediaModel?.social_type)
+        setParams()
     }
 
     private fun validateFields(): Boolean {

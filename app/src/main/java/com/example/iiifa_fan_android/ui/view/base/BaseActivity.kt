@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.iiifa_fan_android.R
+import com.example.iiifa_fan_android.data.pref.AppPreferencesHelper
 import com.example.iiifa_fan_android.data.pref.PreferencesHelper
+import com.example.iiifa_fan_android.utils.Constants
 import javax.inject.Inject
 
 
@@ -13,10 +15,13 @@ import javax.inject.Inject
  * Used for handle common methods of activities
  */
 abstract class BaseActivity : AppCompatActivity() {
-    @Inject
-    internal lateinit var prefManager: PreferencesHelper
+//    @Inject
+//    internal lateinit var prefManager: PreferencesHelper
+
+    lateinit var prefManager : AppPreferencesHelper
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        prefManager = AppPreferencesHelper(this, Constants.PREF_NAME)
     }
 
     /**

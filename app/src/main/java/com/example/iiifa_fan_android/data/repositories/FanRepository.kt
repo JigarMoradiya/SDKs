@@ -12,6 +12,10 @@ class FanRepository @Inject constructor(
         api.login(params)
     }
 
+    suspend fun socialMediaLogin(params: Map<String?, Any?>?) = safeApiCall {
+        api.getSocialMediaLogin(params)
+    }
+
     suspend fun updateFanProfile(params: Map<String?, Any?>?) = safeApiCall {
         api.updateFanProfile(params)
     }
