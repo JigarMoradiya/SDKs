@@ -1,141 +1,305 @@
 <resources>
 
-    <!--    Facebook Keys-->
-    <string name="facebook_app_id">717417239416064</string>
-    <string name="fb_login_protocol_scheme">fb717417239416064</string>
-    <string name="facebook_client_token">6bc4cd9edb8b89f0be29f603766280aa</string>
+<!--    <string name="app_name">Abacus child learning application</string>-->
+    <string name="download_folder">Abacus Downloads</string>
+    <string name="txt_mail">info.brainapptech@gmail.com</string>
+    <string name="privacy_policy_text">Here we declare the Privacy Policy for Abacus - Child Learning Application android mobile application.\n\nAbacus - Child Learning Application is a mathematical tools used for calculation. This app will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\nAbacus is suitable for children age 5 and up, who know about numbers and some basic addition and subtraction.\n\n<b>All application data collocting by Brainapptech Team and we are responsible for that if any issue regarding to data. Content not have any violent, sexual or nudity and drugs so all the people can use it and special kids below 9 year.</b>\n\n<b><font color='#FF0000'>Benefits of Abacus - Child Learning Application : </font></b>\n- Boosting the calculation skills making them better and faster.<br />- Sharpens concentration and comprehension.\n- Increases endurance for stress and pressure.<br />- It helps in better reading and writing.\n- Sharpens listening skills.\n- One of major benefits of Abacus program is that it makes mathematics meaningful, useful and fun for the children.\n- Specially this Abacus program is very effective for those who do not like studying math.\n\n<b><font color='#0000EE'>Give exam</font></b> as per your children level and determine result.\n<b><font color='#0000EE'>Download practice material</font></b> available, its not only math your kids can learn all about around us.\n- Kids can <b><font color='#0000EE'>learn about Pets animals, Farm animals, Mammal animals, Sea animals, Wild animals, Birds, Fruits, Vegetables, Shapes,</font></b> etc..\n- <b><font color='#0000EE'>Count the objects, Fill the blank, Less than &amp; Greater than &amp; Equals, Odds &amp; Evens number.</font></b>\n- Know about Abacus, Identify beads of abacus, Draw beads of abacus.\n- Learn about Number, Addition &amp; Subtraction, Multiplication &amp; Division.\n\nApplication contain ads but its not harmfull to child. We contolled ads to showing in application. We blocked all the Sensitive Categories ads which can harmfull to kids.\n\nWe are responsible for all content which are showing in application and we declare in Privacy Policy.\n\nIn application following permission is used.\n1) INTERNET - For data load and ads loading.\n\nBest Regarding,\nBrainapptech Team.</string>
+    <string name="default_notification_channel_id">abacus_public_notification</string>
 
-    <string name="something_went_wrong">Something went wrong, please try after sometime</string>
-    <string name="permission_denied">Permission denied</string>
-    <string name="login">Login</string>
-    <string name="please_enter_your_email_address_to_login">Please enter your email address to login</string>
-    <string name="email_id">Email Id</string>
-    <string name="password">Password</string>
-    <string name="forgot_password">Forgot Password?</string>
-    <string name="or">Or</string>
-    <string name="don_t_have_an_account_signup">Don’t have an account?<font color="#F8D137"> Signup</font></string>
-    <string name="verification_code">Verify your account</string>
-    <string name="verify">Verify</string>
-    <string name="resend">Resend</string>
-    <string name="verify_your_account">Verify your account</string>
-    <string name="signup">Signup</string>
-    <string name="please_enter_your_email_address_to_receive_a_one_time_password_or_sign_up_through_social_links">Please enter your email address to receive a one time password or sign up through social links</string>
-    <string name="or_through_social_links">Or through social links</string>
-    <string name="i_agree_to_the_terms_amp_conditions">By Continuing you agree to the  <b><u><font color="#F8D137">Terms &amp; Conditions</font></u></b> and <b><u><font color="#F8D137">Privacy Policy</font></u></b></string>
-    <string name="already_have_an_account_login">Already have an account?<font color="#F8D137"> Login</font></string>
-    <string name="next">Next</string>
-    <string name="personal_details">Now, let\'s complete\nyour profile</string>
-    <string name="please_enter_your_details">Please enter your details</string>
-    <string name="first_name">First name</string>
-    <string name="last_name">Last name</string>
-    <string name="optional">Email(Optional)</string>
-    <string name="email">Email</string>
-    <string name="e_mail">E-mail</string>
-    <string name="age">Age</string>
-    <string name="gender">Gender</string>
-    <string name="mobile_number">Phone Number</string>
-    <string name="referral_code_optional">Referral Code (if any)</string>
-    <string name="create_account">Create Account</string>
-    <string name="clear">Clear</string>
-    <string name="preview">Preview</string>
-    <string name="choose_your_gender">Choose your gender</string>
-    <string name="edit_profile_success">Successfully updated profile</string>
-    <string name="create_password">Create a password</string>
-    <string name="validation_no_current_password">Password is mandatory.</string>
-    <string name="new_password_current_password_validation_msg">New Password and Current Password can not be same</string>
-    <string name="successfully_password_changed">Successfully password changed</string>
-    <string name="_password">Password</string>
-    <string name="enter_password">Enter password</string>
-    <string name="current_password">Current password</string>
-    <string name="use_atleast_8_characters_to_create_a_password">Use atleast 8 characters to create a password</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="validation_invalid_password">Your password must contain a minimum of 8 characters including at least one upper case, one lower case and one digit.</string>
-    <string name="what_s_your_favourite_decade">What’s your favourite decade?</string>
-    <string name="skip">Skip</string>
-    <string name="what_genre_do_you_like">What genre do you like?</string>
-    <string name="are_you_interested_in_auditions">Are you interested in Auditions?</string>
-    <string name="which_genre_you_prefer">Which genre you prefer\nfor Auditions?</string>
-    <string name="no">No</string>
-    <string name="yes">Yes</string>
-    <string name="save">Save</string>
-    <string name="title_activity_main_dashboard">MainDashboardActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_download_monitor_channel_name">App Download Monitor</string>
+    <string name="app_download_monitor_channel_id">app_download_monitor_service</string>
+    <string name="app_download_monitor_channel_description">Help Users monitor the number of Files Downloading through App.</string>
+    <string name="app_notification_channel_id">app_notification</string>
 
-    <string name="menu_my_profile">My Profile</string>
-    <string name="menu_edit_profile">Edit Profile</string>
-    <string name="menu_change_password">Change Password</string>
-    <string name="menu_my_shoutouts">My Shoutouts</string>
-    <string name="menu_my_auditions">My Auditions</string>
-    <string name="menu_account_management">Account Management</string>
-    <string name="menu_app_design_setting">App design settings</string>
-    <string name="menu_my_preference">My Preferences</string>
-    <string name="menu_payment">Payment</string>
-    <string name="menu_transaction_history">Transaction History</string>
-    <string name="menu_manage_payment_methods">Manage Payment Methods</string>
-    <string name="menu_notification_setting">Notification Settings</string>
-    <string name="menu_about_iifa_connect">About IIFA connect</string>
-    <string name="menu_pp">Privacy Policy</string>
-    <string name="menu_tc">Term &amp; Conditions</string>
-    <string name="menu_faq">FAQs</string>
-    <string name="menu_cancellation_refund">Cancellation &amp; Refund Policy</string>
-    <string name="menu_contact_us">Contact us</string>
-    <string name="menu_help_guide">Help Guide</string>
-    <string name="menu_rate_us">Rate us on the Play Store</string>
-    <string name="menu_logout">Logout</string>
+    <!--    <string name="banner_ad_unit_id">ca-app-pub-5759468493922763/8591840381</string>-->
+    <!--    <string name="interstitial_ad_unit_id">ca-app-pub-5759468493922763/5018160875</string>-->
 
-    <string name="validation_no_OTP">Please enter a 6 digit verification code.</string>
-    <string name="validation_invalid_OTP">Please enter a valid verification code.</string>
-    <string name="validation_no_mobile_no">Please enter a mobile number.</string>
-    <string name="validation_invalid_mobile_no">Please enter valid mobile number</string>
-    <string name="validation_no_email">Please enter your email address.</string>
-    <string name="validation_invalid_email">Please enter valid email address.</string>
-    <string name="validation_no_username">Please enter your email address</string>
-    <string name="validation_invalid_username">Please enter valid email address</string>
-    <string name="validation_invalid_email_or_phone">Please enter valid email address</string>
-    <string name="validation_no_password">Please enter your password</string>
-    <string name="validation_no_confirmPassword">Confirm password is mandatory.</string>
-    <string name="validation_no_old_password">Please enter your current password.</string>
-    <string name="validation_no_new_password">Password is mandatory.</string>
-    <string name="validation_no_new_confirmPassword">Please confirm new password</string>
-    <string name="validation_match_password">Password and confirm password does not match. Please try again</string>
-    <string name="validation_no_firstName">First name is mandatory</string>
-    <string name="validation_no_lastName">Last name is mandatory</string>
-    <string name="validation_invalid_first_name">Please enter valid first name</string>
-    <string name="validation_invalid_last_name">Please enter valid last name</string>
-    <string name="validation_password_regex_error">Your password contains invalid symbols</string>
-    <string name="validation_name_regex_error">Your name contains invalid symbols</string>
-    <string name="validation_first_name_length">First name length can\'t be greater than 40 characters.</string>
-    <string name="validation_last_name_length">Last name length can\'t be greater than 40 characters.</string>
-    <string name="validation_age_incorrect">Please enter valid age</string>
-    <string name="validation_no_age">Age is mandatory.</string>
-    <string name="validation_select_language">Please select language</string>
-    <string name="validation_select_country">Please select country</string>
-    <string name="age_number_validation">Age must be between 18 to 80</string>
-    <string name="validation_no_gender">Gender is mandatory.</string>
-    <string name="done">Done</string>
-    <string name="upload_from_gallery">Upload from Gallery</string>
-    <string name="capture_from_the_camera">Capture from the Camera</string>
-    <string name="remove_profile_picture">Remove Profile Picture</string>
-    <string name="new_password">New Password</string>
-    <string name="update_password">Update Password</string>
-    <string name="your_name">Your Name</string>
-    <string name="your_message">Your Message</string>
-    <string name="send">Send</string>
+    <string name="banner_ad_unit_id_abacus">ca-app-pub-5759468493922763/9552869463</string>
+    <string name="banner_ad_unit_id_practise_material">ca-app-pub-5759468493922763/7125661457</string>
+    <string name="banner_ad_unit_id_exam">ca-app-pub-5759468493922763/8179760812</string>
+    <string name="banner_ad_unit_id_exam_result">ca-app-pub-5759468493922763/3513719503</string>
+    <string name="banner_ad_unit_id_sudoku">ca-app-pub-5759468493922763/7314067633</string>
+    <string name="banner_ad_unit_id_number_puzzle">ca-app-pub-5759468493922763/4809269700</string>
 
-    <string name="email_already_exist">Email already exist</string>
-    <string name="this_email_is_already_connected_to_an_account_do_you_want_to_log_in_instead">This email is already connected to an account. Do you want to log in instead?</string>
-    <string name="dismiss">Dismiss</string>
-    <string name="sure_want_to_logout">Are you sure you want to logout ?</string>
-    <string name="reset_password">Reset Password</string>
-    <string name="forgot_password_title">Forgot password</string>
-    <string name="please_enter_your_registered_email_address_to_reset_your_password">Please enter your registered email address to reset your password.</string>
-    <string name="messages">Messages</string>
-    <string name="receive_messages_from_professionals_including_booking_requests">Receive messages from professionals, including booking requests</string>
-    <string name="push_notification">Push Notification</string>
-    <string name="receive_messages_on_your_mobile_or_tablet_devices">Receive messages on your mobile or tablet devices</string>
+    <string name="interstitial_ad_unit_id_exam_complete_show_result">ca-app-pub-5759468493922763/2660158056</string>
+    <string name="interstitial_ad_unit_id_exam_complete_close">ca-app-pub-5759468493922763/6703027611</string>
+    <string name="interstitial_ad_unit_id_exam_leave">ca-app-pub-5759468493922763/9329190959</string>
+    <string name="interstitial_ad_unit_id_abacus_full_screen">ca-app-pub-5759468493922763/4787310717</string>
+    <string name="interstitial_ad_unit_id_abacus_half_screen">ca-app-pub-5759468493922763/7616616046</string>
+    <string name="interstitial_ad_unit_id_sudoku">ca-app-pub-5759468493922763/1552149652</string>
+    <string name="interstitial_ad_unit_id_number_puzzle_step">ca-app-pub-5759468493922763/9842104535</string>
+    <string name="interstitial_ad_unit_id_number_puzzle_complete">ca-app-pub-5759468493922763/8865980504</string>
+
+    <integer-array name="bead_top">
+        <item>@drawable/egg0</item>
+
+    </integer-array>
+    <integer-array name="big_bottom">
+        <item>@drawable/egg1</item>
+        <item>@drawable/egg4</item>
+        <item>@drawable/egg2</item>
+        <item>@drawable/egg3</item>
+    </integer-array>
+
+    <!--Error messages-->
+    <string name="no_internet">Please check your network connection.</string>
+    <string name="request_timeout">Request timed out. Please try again later.</string>
+    <string name="some_thing_wrong">Some thing went wrong, Please try again after sometime.</string>
+    <string name="connection_error">You are offline. Kindly check your network connection.</string>
+    <string name="session_expired">Your session has expired, please log in again.</string>
+
+    <!--  Tour page  -->
+    <string name="SKIP">SKIP</string>
+    <string name="DONE">DONE</string>
+    <string name="tourTitle1">Abacus Child Learning Application</string>
+    <string name="tourTitle2">Mathematics Rules</string>
+    <string name="tourTitle3">Practice Material</string>
+    <string name="tourTitle4">Daily Test</string>
+    <string name="tourSubTitle1">Everything for child to learn &amp;\ngrow there brain</string>
+    <string name="tourSubTitle2">Help your children to learn about\nAbacus, Numbers, Addition,\nSubtraction, Multiplication &amp; Division</string>
+    <string name="tourSubTitle3">Using the practice material to learn\nmore about maths and all about\naround to us</string>
+    <string name="tourSubTitle4">Give the daily exam as per\nyour child level &amp;\ndetermine the result</string>
+    <string name="agree_privacy_policy">By continue, you agree to our\n<font color='#0000EE'><u>Privacy Policy</u></font></string>
+    <string name="PrivacyPolicy">Privacy Policy</string>
+    <string name="PrivacyPolicy_"><font color='#0000EE'><u>Privacy Policy</u></font></string>
+    <!--  Comman  -->
+    <string name="txtOk">OK</string>
+    <string name="txtYES">YES</string>
+    <string name="txtCancel">CANCEL</string>
+    <string name="txtNo">NO</string>
+    <string name="notification">Notification</string>
+
+    <string name="appUpdateFail">Failed to Update the Application.</string>
+    <string name="appUpdateSuccess">Application update Successful.</string>
+
+    <!--  Home Page  -->
+    <string name="Number">Number</string>
+    <string name="Addition">Addition</string>
+    <string name="AdditionSubtraction">Addition &amp; Subtraction</string>
+    <string name="Multiplication">Multiplication</string>
+    <string name="Division">Division</string>
+    <string name="title_purchase">Abacus Purchase Store</string>
+    <string name="test">Daily Test</string>
+    <string name="downloadMaterial">Practice Material</string>
+
+    <!--  Full abacus  -->
+    <string name="txt_Toddler_Range">Toddler Range</string>
+    <string name="txt_From">From</string>
+    <string name="error_range_from">Range from is empty</string>
+    <string name="error_range_to">Range to is empty</string>
+    <string name="error_range">Minimum 50 toddler is needed</string>
+    <string name="txt_To">To</string>
+    <string name="txt_Random">Random</string>
+    <string name="txt_Reset_when_start">Reset Every Time?</string>
+    <string name="txt_start_with_1">Start With 1?</string>
+    <string name="txt_Range">Range</string>
+    <string name="set_only">Set</string>
+
+    <!--  Page list  -->
+    <string name="unlimited">unlimited</string>
+    <string name="lesson">Lesson</string>
+    <string name="lessons_of">Lessons of</string>
+
+    <!--  Abacus  -->
+    <string name="language_not_supported">This language is not supported!</string>
+    <string name="ResettoContinue">Reset to Continue</string>
+    <string name="txt_reset_now">START AGAIN</string>
+    <string name="txt_purchase">Purchase</string>
+    <string name="txt_purchased">Purchased</string>
+    <string name="txt_purchase_Now">Purchase Now</string>
+    <string name="txt_reset_page">Reset Page Progress</string>
+    <string name="txt_page_reset_not">Sorry you can"'"t start this page again, if you want to start this page again then you need to buy paid plan from purchase store.</string>
+    <string name="txt_reset_page_alert">Are you sure want to start this page again?</string>
+    <string name="txt_page_completed_already_purchased">You already completed this page, you can start this page again.</string>
+    <string name="txt_page_completed_already">You already completed this page. If want to more abacus then you need to buy paid plan from purchase store.</string>
+    <string name="txt_page_completed">Congratulations you completed this page.</string>
+    <string name="txt_page_completed_free">If you want more abacus then you need to buy paid plan from purchase store.</string>
+    <string name="txt_page_full_abacus">If you want use this feature then you need to buy paid plan from purchase store.</string>
+    <string name="txt_page_practise_material">If you want use this practice material then you need make payment first.</string>
+    <!--  Settings  -->
+    <string name="txt_setting_title">Application Setting</string>
+    <string name="txt_setting_theme">Abacus theme</string>
+    <string name="txt_setting_default_theme">Default Abacus</string>
+    <string name="txt_setting_theme_egg">Egg Theme</string>
+    <string name="txt_setting_theme_Face">Face Theme</string>
+    <string name="txt_setting_theme_Shape">Shape Theme</string>
+
+    <string name="txt_setting_hintsound_purchase">For this feature you need to buy paid plan from purchase store.</string>
+    <string name="txt_setting_display_abacus_number">Display abacus number</string>
+    <string name="txt_setting_display_help_message">Display help message</string>
+    <string name="txt_setting_hide_table">Hide table</string>
+    <string name="txt_setting_left_hand">Left handed</string>
+    <string name="txt_setting_step_by_step">Step by Step</string>
+    <string name="txt_setting_final_answer">Final Answer</string>
+    <string name="txt_setting_sound">Abacus sound</string>
+    <string name="txt_setting_hintsound">Abacus hint sound</string>
+    <!--  TTS  -->
+    <string name="speech_formula_for" translatable="false">formula for</string>
+    <string name="speech_set_minus" translatable="false">set minus</string>
+    <string name="speech_set_plus" translatable="false">set plus</string>
+    <string name="speech_set" translatable="false">Set</string>
+    <string name="random" translatable="false">Random</string>
+    <string name="to_" translatable="false">to</string>
+    <string name="numbers" translatable="false">Numbers</string>
+
+    <!--  Daily Exam  -->
+    <string name="test_cancel">Are you sure want to leave this exam?</string>
+    <string name="testResult">Result of this test</string>
+    <string name="child_level">Select Exam Level as per Kid\'s Ability</string>
+    <string name="select_sudoku_child_level">Select type as per Kid\'s Ability for Play Sudoku</string>
+
+    <string name="TapCorrectAns">Click on Correct Answer</string>
+    <string name="Time">Time</string>
+    <string name="TotalTakeTime">Total Time</string>
+    <string name="ShowResult">Show Result</string>
+    <string name="YourAnswer">Your Answer</string>
+    <string name="correctAnswer">Correct Answer</string>
+    <string name="SKipped">Skipped</string>
+    <string name="TotalTime">Total Time</string>
+    <string name="TotalQue">Total Question</string>
+    <string name="SkipQue">Skip Question</string>
+    <string name="WrongQue">Wrong Answer</string>
+    <string name="RightQue">Right Answer</string>
+
+    <!--  Download material  -->
+    <string name="download_now">Download</string>
+    <string name="worksheet">Worksheet</string>
+    <string name="downloading">Downloading..</string>
+    <string name="may_take_a_moment">Please wait! This may take a moment.</string>
+    <string name="material_download_for_ready_use">Your practice material is ready for use.\nStorage path :</string>
+    <string name="download_txt1"><![CDATA[- Download material, Print itself & do Practice at any time.]]></string>
+    <string name="download_txt2">- This is not only math, your kids can learn all about around us.</string>
+    <string name="download_txt3"><![CDATA[- Count the objects, Fill the blank, Less than & Greater than & Equals, Odds & Evens number.]]></string>
+    <string name="download_txt4">- Know about Abacus, Identify beads of abacus, Draw beads of abacus.</string>
+    <string name="download_txt5">- Kids can learn about Pets animals, Farm animals, Mammal animals, Sea animals, Wild animals, Birds, Fruits, Vegetables, Shapes, etc..</string>
+    <string name="download_txt6"><![CDATA[- Learn about Number, Addition & Subtraction, Multiplication & Division.]]></string>
+    <string name="download_txt7">More material coming soon...</string>
+    <string name="material_customization">If want to material customization like Logo, watermark or any other changes,etc.. you can contact on brainapptech@gmail.com</string>
+
+    <!--  Tutorial  -->
+
+    <!--  Rating dailog  -->
+    <string name="we_need_your_help">We need your help!</string>
+    <string name="kindly_rate_us">Kindly Rate Us</string>
+    <string name="abacus_child_learning_app">Abacus Child learning app,</string>
+    <string name="kindly_support_us_by_rating_us_on_playstore">Kindly support us by\nrating us on Playstore</string>
+    <string name="rate_now">Rate Now</string>
+    <string name="next_time">Next Time</string>
+    <string name="i_have_already_rated_this_application">I have already rated this application</string>
+    <string name="play_store_not_found">Play store not found in device.</string>
+    <string name="gmail_not_found">Gmail app is not installed in device.</string>
+    <string name="reset_to_go_next">Press here to reset\nand go next Abacus</string>
+
+    <!--  Purchase Info  -->
+    <string name="txt_free">FREE</string>
+    <string name="txt_free1">Each lesson has 20 Abacus</string>
+    <string name="txt_free2">Abacus Hint</string>
+    <string name="txt_free3">Advertisement</string>
+
+    <string name="txt_purchase1">Unlimited Abacus</string>
+    <string name="txt_purchase2">Abacus Hint + Hint Sound</string>
+    <string name="txt_purchase3">No Advertisement</string>
+    <string name="txt_purchase6">Reset Page Progress</string>
+    <string name="txt_purchase5">Abacus Theme</string>
+    <string name="txt_purchase8">Nursery and Maths Printable Practice Material</string>
+    <string name="txt_purchase7">Random Number in Starters Level</string>
+
+
+    <!--  About Us  -->
+    <string name="about_desc">Everything for <font color='#0000EE'>child</font> to <font color='#0000EE'>learn &amp; grow</font> there <font color='#0000EE'>brain</font></string>
+    <string name="need_help">Need Help?</string>
+    <string name="txt_about1">Design and Development by Brain Apptech Team</string>
+
+    <string name="abacus">Abacus</string>
+    <string name="child_learning_application">Child learning application</string>
+    <string name="version">version</string>
+
+    <string name="signPlus">+</string>
+    <string name="signMinus">-</string>
+    <string name="select_the_empty_answer_box_and_tap_on_correct_answer">Select the empty answer box and Tap on Correct Answer</string>
+    <string name="select_correct_answers">Select Correct Answers</string>
+    <string name="right_answer">Right Answer</string>
+    <string name="wrong_answer">Wrong Answer</string>
+    <string name="start_again">Start Again</string>
+    <string name="result">Results</string>
+    <string name="let_s_start_exam">It"'"s Exam Time</string>
+    <string name="let_s_start">Let\'s Start</string>
+    <string name="let_s_play">Let\'s Play</string>
+    <string name="exam_history">Exam History</string>
+    <string name="history_of">History of</string>
+    <string name="no_exam_giving_yet">No Exam Giving Yet</string>
+    <string name="no_sudoku_giving_yet">No Sudoku Play Yet</string>
+    <string name="check_result">Check Result</string>
+    <string name="count_the">Counting of</string>
+    <string name="additions_of">Additions of</string>
+    <string name="subtraction_of">Subtractions of</string>
+    <string name="star_theme">Star Theme</string>
+    <string name="auto_reset">Abacus auto reset?</string>
+    <string name="join_now">Join now <b>→</b></string>
+    <string name="share_now">Share now <b>→</b></string>
+    <string name="share">Share</string>
+    <string name="join_to_our_paid_version_desc">Join to our paid version to get unlimited Abacus, no Advertisement and much more..</string>
+    <string name="get_the_most_out_of_abacus">Get the most out of Abacus</string>
+    <string name="share_app_msg">Kindly support us by sharing application with your Family and Friends.</string>
+    <string name="rate_app_msg">Kindly support us by rating us on google Playstore.</string>
+    <string name="suitable_to_age_5_and_up">Suitable to age 5 and up</string>
+    <string name="suitable_to_age_4_5">Suitable to age 4 and 5</string>
+    <string name="maths_material">Maths Material</string>
+    <string name="maths_material_desc"><b>• A4 size and printable material</b>\n\n<b>•</b> Learn about Count the objects, Fill the blank, Less than &amp; Greater than &amp; Equals, Odds &amp; Evens number.\n\n<b>•</b> Know about Abacus, Identify beads of abacus, Draw beads of abacus.\n\n<b>•</b> Learn about Number, Addition &amp; Subtraction, Multiplication &amp; Division and much more..\n\n<b>• Once paid you can download any time.</b></string>
+    <string name="nursery_material_desc"><b>• A4 size and printable material</b>\n\n<b>•</b> Connect the Dots of Standing lines, Sleeping lines, Slanting lines, Arc, Circle, Zigzag lines &amp; Shapes\n\n<b>•</b> Connect the Dots for Capital and small later of ABCD, 1 to 10 Number with Multiple visual images.\n\n<b>• Once paid you can download any time.</b></string>
+    <string name="view_material">View Material</string>
+    <string name="nursery_class_material">Nursery Class Material</string>
+    <string name="recommended">Recommended</string>
+    <string name="favourite">Favourite</string>
+    <string name="hot">Hot</string>
+    <string name="new_">New</string>
+
+    <string name="txt_completed_level">Congratulations, you completed this Sudoku</string>
+    <string name="txt_select_box_empty">Select Empty box</string>
+    <string name="txt_select_box">Select box</string>
+    <string name="Hint_come">Come tomorrow for next hint</string>
+    <string name="notes">Notes</string>
+    <string name="hint">Hint</string>
+    <string name="sudoku_history">Sudoku History</string>
+    <string name="play_sudoku">Play Sudoku</string>
+    <string name="sudoku">Sudoku</string>
+    <string name="sudoku_description">The goal of Sudoku is to fill a 9×9 grid with numbers so that each row, column and 3×3 grid contain all of the digits between 1 and 9.</string>
+    <string name="sudoku_description4">The goal of Sudoku is to fill a 4×4 grid with numbers so that each row, column and 2×2 grid contain all of the digits between 1 and 4.</string>
+    <string name="sudoku_description6">The goal of Sudoku is to fill a 6×6 grid with numbers so that each row, column and 3×2 grid contain all of the digits between 1 and 6.</string>
+    <string name="about_sudoku_description"><font color='#0000EE'><b>• Sudoku builds problem-solving skills.</b></font>\nSudoku is all about solving problems. When your child plays sudoku, they are constantly being challenged to find the right numbers to place in each box. Finding the right number requires some critical thinking and looking for a solution from different directions. This helps improve their problem-solving skills, which will help them solve other problems in school.\n\n<font color='#0000EE'><b>• Sudoku helps with number recognition and counting.</b></font>\nSudoku requires your child to recognize the numbers and place each one in a specific box. This helps them learn to recognize the numbers and count. Later, this skill will help them with basic arithmetic, so they can easily add and subtract numbers without much effort.\n\n<font color='#0000EE'><b>• Sudoku improves spatial relationships skills.</b></font>\nYour child has to look at each row and column of boxes on a sudoku puzzle before they start filling in any boxes. They have to be able to see how the number fits into the larger picture of the entire board before they can solve it. This improves their ability and notice how different objects are positioned relative to other objects, which is called spatial awareness or spatial relations. This is important because math problems often involve spatial relations.\n\n<font color='#0000EE'><b>• Sudoku helps your child develop concentration skills.</b></font>\nPlacing each number in the right box requires focus and concentration, at least until they learn to play sudoku well enough that it becomes second nature. This skill will help them sit still longer during lessons or at home while they read. It can also make it easier for them to complete tasks without getting distracted by everything else they see around them.\n\n<font color='#0000EE'><b>• Sudoku improves visual memory skills.</b></font>\nWhen your child plays sudoku they are not only looking for the correct numbers, but where those numbers go in relation to all of the other numbers on the board. Once they’ve filled in one or two boxes, they see how everything connects and will remember where the other numbers go. This helps improve their visual memory, which makes it easier for them to complete school tasks like reading or recalling information they’ve learned.</string>
+    <string name="start_new_sudoku">Start New Sudoku</string>
+    <string name="completed">Completed</string>
+    <string name="continue_">Continue</string>
+    <string name="about_sudoku">About Sudoku</string>
+    <string name="close">Close</string>
+    <string name="advantages_of_sudoku">Let’s see the some advantages of Sudoku and how help to build math skills</string>
+    <string name="sudoku_for_kid_s">Sudoku for Kid\'s</string>
+    <string name="select_sudoku_type">Select sudoku type</string>
+    <string name="sudoku_volume">Sudoku volume</string>
+
+
+    <string name="_24_number_puzzle">24 Number Puzzle</string>
+    <string name="_15_number_puzzle">15 Number Puzzle</string>
+    <string name="_8_number_puzzle">8 Number Puzzle</string>
+    <string name="button">button</string>
+    <string name="score">Score</string>
+    <string name="bestScore">Best Score</string>
+    <string name="number_sequences_puzzle">Number Sequence Puzzle</string>
+    <string name="_3_x_3_puzzle">3 x 3 Puzzle</string>
+    <string name="_4_x_4_puzzle">4 x 4 Puzzle</string>
+    <string name="_5_x_5_puzzle">5 x 5 Puzzle</string>
+    <string name="select_the_puzzle_dashboard">Select the puzzle dashboard</string>
+    <string name="arrange_all_the_numbers_of_puzzle_in_ascending_order">Arrange all the numbers of puzzle in ascending order</string>
+    <string name="current_moves">Current Moves</string>
+    <string name="best_moves">Best Moves</string>
+    <string name="start_new">Start New Game</string>
+    <string name="volume_on">Volume ON</string>
+    <string name="volume_off">Volume OFF</string>
+    <string name="number_sequences_puzzle_volume">Number sequence puzzle volume</string>
+    <string name="congratulations">Congratulations..</string>
+    <string name="continue_to_play_game">Continue to play</string>
+    <string name="no_i_want_to_close">No, I want to close</string>
+    <string name="you_completed_this_puzzle_in_moves">You completed this puzzle in %1$s moves</string>
+    <string name="this_is_your_best_moves_in_puzzle">This is your best moves in %1$s</string>
+    <string name="but_your_best_moves_in_puzzle_is">But, your best moves in %1$s is</string>
 </resources>

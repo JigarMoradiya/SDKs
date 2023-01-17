@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_1sdp"
+            android:elevation="@dimen/card_elevation"
+            app:cardBackgroundColor="@color/light_back"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardMaxElevation="@dimen/card_elevation"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:padding="@dimen/activity_padding8"
+                app:srcCompat="@drawable/ic_back" />
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtAbacus"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_40sdp"
+            android:fontFamily="@font/font_bold"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:paddingStart="@dimen/activity_padding4"
+            tools:text="SET 1"
+            app:layout_constraintEnd_toStartOf="@+id/txtStartWith1"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSizeSuperExtraLarge"
+            app:layout_constraintBottom_toBottomOf="@+id/cardBack"
+            app:layout_constraintStart_toEndOf="@+id/cardBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtStartWith1"
+            android:textColor="@color/textColor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/screen_margin"
+            android:fontFamily="@font/font_bold"
+            android:gravity="center"
+            android:paddingStart="@dimen/activity_padding8"
+            android:paddingEnd="@dimen/activity_padding8"
+            android:text="@string/txt_start_with_1"
+            android:textSize="@dimen/textSizeExtraSmall"
+            app:layout_constraintEnd_toStartOf="@+id/swRandom"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/swResetStarting"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:theme="@style/SCBSwitch"
+            app:layout_constraintEnd_toEndOf="@+id/txtStartWith1"
+            app:layout_constraintStart_toStartOf="@+id/txtStartWith1"
+            app:layout_constraintTop_toBottomOf="@+id/txtResetEveryTime" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:textColor="@color/textColor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/font_bold"
+            android:gravity="center"
+            android:text="@string/txt_Random"
+            android:textSize="@dimen/textSizeExtraSmall"
+            app:layout_constraintEnd_toEndOf="@+id/swRandom"
+            app:layout_constraintStart_toStartOf="@+id/swRandom"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/swRandom"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginEnd="@dimen/screen_margin"
+            android:theme="@style/SCBSwitch"
+            app:layout_constraintEnd_toStartOf="@+id/txtRange"
+            app:layout_constraintTop_toBottomOf="@+id/txtResetEveryTime" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:textColor="@color/textColor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_padding8"
+            android:fontFamily="@font/font_bold"
+            android:gravity="center"
+            android:text="@string/txt_Range"
+            android:textSize="@dimen/textSizeExtraSmall"
+            app:layout_constraintEnd_toEndOf="@+id/txtRange"
+            app:layout_constraintStart_toStartOf="@+id/txtRange"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtRange"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginEnd="12dp"
+            android:drawableEnd="@drawable/ic_edit"
+            android:drawablePadding="@dimen/activity_padding4"
+            android:drawableTint="@color/red"
+            android:fontFamily="@font/font_bold"
+            android:gravity="center"
+            android:paddingStart="@dimen/activity_padding8"
+            android:paddingEnd="@dimen/activity_padding8"
+            android:text="From 1 To 100"
+            android:textColor="@color/red"
+            android:textSize="@dimen/textSizeExtraSmall"
+            app:drawableTint="@color/red_600"
+            app:layout_constraintBottom_toBottomOf="@+id/swReset"
+            app:layout_constraintEnd_toStartOf="@+id/txtResetEveryTime"
+            app:layout_constraintTop_toTopOf="@+id/swReset"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtResetEveryTime"
+            android:textColor="@color/textColor1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_padding8"
+            android:fontFamily="@font/font_bold"
+            android:gravity="center"
+            android:text="@string/txt_Reset_when_start"
+            android:textSize="@dimen/textSizeExtraSmall"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/swReset"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:theme="@style/SCBSwitch"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/txtResetEveryTime"
+            app:layout_constraintTop_toBottomOf="@+id/txtResetEveryTime" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/relAbacus"
+            android:visibility="gone"
+            tools:visibility="visible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/swReset"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivReset"
+                android:layout_width="@dimen/_10sdp"
+                android:layout_height="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:layout_alignEnd="@+id/rlAbacusMain"
+                android:layout_marginEnd="@dimen/_20sdp"
+                app:srcCompat="@drawable/box_primory_accent"/>
+
+            <RelativeLayout
+                android:id="@+id/rlAbacusMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_13sdp"
+                android:background="@drawable/abacus_full_new"
+                android:gravity="right"
+                android:paddingStart="@dimen/seventeen"
+                android:paddingTop="@dimen/_20sdp"
+                android:paddingEnd="@dimen/seventeen"
+                android:paddingBottom="@dimen/_20sdp">
+
+                <RelativeLayout
+                    android:id="@+id/rlAbacus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="@dimen/zero">
+
+                    <FrameLayout
+                        android:id="@+id/flAbacusTop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/six"
+                        android:paddingEnd="@dimen/six">
+
+                        <com.jigar.me.ui.view.base.abacus.AbacusMasterView
+                            android:id="@+id/abacusTop"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:beadDrawables="@array/bead_top"
+                            app:columnSpacing="@dimen/_24sdp"
+                            app:isBeadStackFromBottom="false"
+                            app:noOfBead="1"
+                            app:roadDrawable="@drawable/road_blue"
+                            app:singleBeadValue="5" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/flAbacusBottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/rlDivider"
+                        android:paddingStart="@dimen/six"
+                        android:paddingEnd="@dimen/six">
+
+                        <com.jigar.me.ui.view.base.abacus.AbacusMasterView
+                            android:id="@+id/abacusBottom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:beadDrawables="@array/big_bottom"
+                            app:columnSpacing="@dimen/_24sdp"
+                            app:isBeadStackFromBottom="true"
+                            app:noOfBead="4"
+                            app:roadDrawable="@drawable/road_blue"
+                            app:singleBeadValue="1" />
+
+                    </FrameLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/sixteen"
+                        android:layout_below="@+id/flAbacusTop"
+                        android:layout_marginStart="@dimen/minus_two"
+                        android:layout_marginTop="@dimen/minus_twofive"
+                        android:layout_toEndOf="@+id/rlDivider"
+                        app:srcCompat="@drawable/road_dot" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/sixteen"
+                        android:layout_below="@+id/flAbacusTop"
+                        android:layout_marginStart="@dimen/zero"
+                        android:layout_marginTop="@dimen/minus_twofive"
+                        app:srcCompat="@drawable/road_dot" />
+
+
+                    <RelativeLayout
+                        android:id="@+id/rlDivider"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/flAbacusTop"
+                        android:layout_alignStart="@+id/flAbacusTop"
+                        android:layout_alignEnd="@+id/flAbacusTop"
+                        android:layout_marginStart="@dimen/twopointfive">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/ivDivider"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/eight"/>
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvCurrentVal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/rlAbacusMain"
+                android:layout_alignTop="@+id/rlAbacusMain"
+                android:layout_alignEnd="@+id/rlAbacusMain"
+                android:layout_marginTop="@dimen/two"
+                android:gravity="center"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_5sdp" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -2,18 +2,90 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/reg_navigation_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/splashFragment">
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.starts.SplashFragment">
+        <action
+            android:id="@+id/action_splashFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.iiifa_fan_android.ui.view.dashboard.fragments.HomeFragment">
+        android:name="com.jigar.me.ui.view.dashboard.fragments.home.HomeFragment">
+        <action
+            android:id="@+id/action_homeFragment_to_fullAbacusFragment"
+            app:destination="@id/fullAbacusFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_pageFragment"
+            app:destination="@id/pageFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/fullAbacusFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.abacus.FullAbacusFragment">
+        <action
+            android:id="@+id/action_fullAbacusFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pageFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.page.PageFragment">
+        <argument
+            android:name="from"
+            app:argType="integer" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_pageFragment_to_halfAbacusFragment"
+            app:destination="@id/halfAbacusFragment" />
+        <action
+            android:id="@+id/action_pageFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_pageFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/halfAbacusFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.abacus.half.HalfAbacusFragment">
+        <action
+            android:id="@+id/action_halfAbacusFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_halfAbacusFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.AboutFragment">
+        <action
+            android:id="@+id/action_aboutFragment_to_privacyPolicyFragment"
+            app:destination="@id/privacyPolicyFragment" />
     </fragment>
     <fragment
         android:id="@+id/privacyPolicyFragment"
-        android:name="com.example.iiifa_fan_android.ui.view.navigation_menu.fragments.PrivacyPolicyFragment">
-        <argument
-            android:name="type"
-            android:defaultValue="privacy_policy"
-            app:argType="string" />
+        android:name="com.jigar.me.ui.view.dashboard.fragments.PrivacyPolicyFragment">
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.SettingsFragment">
+    </fragment>
+    <fragment
+        android:id="@+id/purchaseFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.purchase.PurchaseFragment">
+    </fragment>
+
+
 </navigation>

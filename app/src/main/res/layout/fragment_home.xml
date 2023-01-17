@@ -1,19 +1,334 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.1"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:srcCompat="@drawable/bg_abacus_number" />
 
-    <com.google.android.material.textview.MaterialTextView
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/logoBanner"
         android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/lato_medium"
-        android:gravity="center"
-        android:text="Welcome"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="normal" />
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginStart="@dimen/activity_padding8"
+        android:adjustViewBounds="true"
+        android:paddingVertical="@dimen/activity_padding4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_banner" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAboutUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_padding8"
+        app:cardBackgroundColor="@color/light_about_us"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardElevation="@dimen/card_elevation4"
+        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:padding="@dimen/activity_padding8"
+            app:srcCompat="@drawable/ic_about_us_new" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardSettingTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_padding8"
+        app:cardBackgroundColor="@color/light_setting"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardElevation="@dimen/card_elevation4"
+        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:layout_constraintEnd_toStartOf="@+id/cardYoutube"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:padding="@dimen/activity_padding8"
+            app:srcCompat="@drawable/ic_home_setting" />
+
+    </com.google.android.material.card.MaterialCardView>
 
 
-</RelativeLayout>
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardYoutube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_padding8"
+        app:cardBackgroundColor="@color/light_youtube"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardElevation="@dimen/card_elevation4"
+        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:layout_constraintEnd_toStartOf="@+id/cardPurchase"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:padding="@dimen/activity_padding8"
+            app:srcCompat="@drawable/ic_youtube" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardPurchase"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_padding8"
+        app:cardBackgroundColor="@color/light_purchase"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardElevation="@dimen/card_elevation4"
+        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:padding="@dimen/activity_padding8"
+            app:srcCompat="@drawable/ic_purchase" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logoBanner">
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardAbacusStarter"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_starter" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardAbacusNumber"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_number" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardAddition"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_addition" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardSubtractions"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_subtraction" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardMultiplication"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_multiplication" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardDivision"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_division" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardPracticeMaterial"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_material" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardExam"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_test" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardSudoku"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_sudoku" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/home_menu_margin"
+                    android:id="@+id/cardNumberSequence"
+                    app:cardBackgroundColor="@color/home_menu_icon_bg"
+                    app:cardCornerRadius="@dimen/home_menu_corner"
+                    app:cardElevation="@dimen/home_menu_elevation">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/home_menu_width"
+                        android:layout_height="@dimen/home_menu_height"
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/home_menu_number_sequence" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.jigar.me.utils.widget.CustomViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="@dimen/_280sdp"
+                android:layout_height="@dimen/_60sdp"
+                android:layout_gravity="center"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:visibility="visible" />
+
+            <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+                android:id="@+id/indicatorPager"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:spi_dotSelectedColor="@color/colorPrimary"
+                app:spi_looped="true" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,44 +1,38 @@
 plugins {
     id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
+
+    id 'androidx.navigation.safeargs'
+    id 'dagger.hilt.android.plugin'
+
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
 }
-
-apply plugin: 'com.amazonaws.appsync'
-apply plugin: 'androidx.navigation.safeargs'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-parcelize'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'dagger.hilt.android.plugin'
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
-
-def apikeyPropertiesFile = rootProject.file("apikey.properties")
-def apikeyProperties = new Properties()
-apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
-
 android {
     compileSdkVersion 32
 
     defaultConfig {
-        applicationId "com.iifa.fan"
+        applicationId 'com.jigar.me'
         minSdkVersion 23
         targetSdkVersion 32
         versionCode 12
         versionName "1.2.4"
-        resConfigs "en"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-        resConfig "en"
 
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
         buildFeatures {
             viewBinding true
         }
-
         dataBinding {
             enabled = true
         }
-
         kotlinOptions {
             jvmTarget = JavaVersion.VERSION_1_8.toString()
         }
@@ -46,103 +40,10 @@ android {
         flavorDimensions "version"
         productFlavors {
             dev {
-                applicationIdSuffix ".dev"
-                buildConfigField "String", "AWS_BUCKET", AWS_DEV_BUCKET
-                buildConfigField "String", "AWS_BUCKET_CV", AWS_DEV_BUCKET_CV
-                buildConfigField "String", "FAN_MODULE", dev_fan_module
-                buildConfigField "String", "COMMON_MODULE", dev_common_module
-                buildConfigField "String", "SETTING_MODULE", dev_setting
-                buildConfigField "String", "UNAUTH_SETTING_MODULE", unauth_dev_setting
-                buildConfigField "String", "FEED_MODULE", dev_feed_module
-                buildConfigField "String", "UNAUTH_FEED_MODULE", unauth_dev_feed_module
-                buildConfigField "String", "CONTENT_MODULE", dev_content_module
-                buildConfigField "String", "UNAUTH_CONTENT_MODULE", unauth_dev_content_module
-                buildConfigField "String", "PAYMENT_MODULE", dev_payment_module
-                buildConfigField "String", "STRIPE_KEY", test_stripe_key
-                buildConfigField "String", "FEEDBACK_MODULE", dev_feedback_module
-                buildConfigField "String", "COMMENT_MODULE", dev_comment_module
-                buildConfigField "String", "EXPERT_MODULE", dev_expert_module
-                buildConfigField "String", "ZOOM_MODULE", dev_zoom_module
-                buildConfigField "String", "APPOINTMENT_MODULE", dev_appointment_module
-                buildConfigField "String", "ONE_SIGNAL", dev_one_signal
-
-                resValue "string", "app_name", "Dev connectedminds"
-
+                applicationId "com.abacus.puzzle"
+                buildConfigField "String", "FAN_MODULE", base_module
+                resValue "string", "app_name", "Abacus Hilt"
             }
-
-            restest {
-                applicationIdSuffix ".test"
-                buildConfigField "String", "AWS_BUCKET", AWS_TEST_BUCKET
-                buildConfigField "String", "AWS_BUCKET_CV", AWS_TEST_BUCKET_CV
-                buildConfigField "String", "FAN_MODULE", test_fan_module
-                buildConfigField "String", "COMMON_MODULE", test_common_module
-                buildConfigField "String", "SETTING_MODULE", test_setting
-                buildConfigField "String", "UNAUTH_SETTING_MODULE", unauth_test_setting
-                buildConfigField "String", "FEED_MODULE", test_feed_module
-                buildConfigField "String", "UNAUTH_FEED_MODULE", unauth_test_feed_module
-                buildConfigField "String", "CONTENT_MODULE", test_content_module
-                buildConfigField "String", "UNAUTH_CONTENT_MODULE", unauth_test_content_module
-                buildConfigField "String", "FEEDBACK_MODULE", test_feedback_module
-                buildConfigField "String", "COMMENT_MODULE", test_comment_module
-                buildConfigField "String", "EXPERT_MODULE", test_expert_module
-                buildConfigField "String", "PAYMENT_MODULE", test_payment_module
-                buildConfigField "String", "STRIPE_KEY", test_stripe_key
-                buildConfigField "String", "ZOOM_MODULE", test_zoom_module
-                buildConfigField "String", "APPOINTMENT_MODULE", test_appointment_module
-                buildConfigField "String", "ONE_SIGNAL", test_one_signal
-
-                resValue "string", "app_name", "Test connectedminds"
-
-            }
-
-            prod {
-                applicationIdSuffix ".prod"
-                buildConfigField "String", "AWS_BUCKET", AWS_PROD_BUCKET
-                buildConfigField "String", "AWS_BUCKET_CV", AWS_PROD_BUCKET_CV
-                buildConfigField "String", "FAN_MODULE", prod_fan_module
-                buildConfigField "String", "COMMON_MODULE", prod_common_module
-                buildConfigField "String", "SETTING_MODULE", prod_setting
-                buildConfigField "String", "UNAUTH_SETTING_MODULE", unauth_prod_setting
-                buildConfigField "String", "FEED_MODULE", prod_feed_module
-                buildConfigField "String", "UNAUTH_FEED_MODULE", unauth_prod_feed_module
-                buildConfigField "String", "CONTENT_MODULE", prod_content_module
-                buildConfigField "String", "UNAUTH_CONTENT_MODULE", unauth_prod_content_module
-                buildConfigField "String", "PAYMENT_MODULE", prod_payment_module
-                buildConfigField "String", "STRIPE_KEY", prod_stripe_key
-                resValue "string", "app_name", "Prod Patient"
-                buildConfigField "String", "FEEDBACK_MODULE", prod_feedback_module
-                buildConfigField "String", "COMMENT_MODULE", prod_comment_module
-                buildConfigField "String", "EXPERT_MODULE", prod_expert_module
-                buildConfigField "String", "ZOOM_MODULE", prod_zoom_module
-                buildConfigField "String", "APPOINTMENT_MODULE", prod_appointment_module
-                buildConfigField "String", "ONE_SIGNAL", prod_one_signal
-
-                resValue "string", "app_name", "connectedminds"
-
-            }
-        }
-
-
-        // should correspond to key/value pairs inside the file
-        buildConfigField("String", "KEY", apikeyProperties['KEY'])
-        buildConfigField("String", "SECRET", apikeyProperties['SECRET'])
-        buildConfigField("String", "CONSTANT", apikeyProperties['CONSTANT'])
-        buildConfigField("String", "TEST_CONSTANT", apikeyProperties['TEST_CONSTANT'])
-        buildConfigField("String", "CHAT_TEST_OTHER_CONSTANT", apikeyProperties['CHAT_TEST_OTHER_CONSTANT'])
-        buildConfigField("String", "CHAT_DEV_OTHER_CONSTANT", apikeyProperties['CHAT_DEV_OTHER_CONSTANT'])
-        buildConfigField("String", "CHAT_UAT_CONSTANT", apikeyProperties['CHAT_UAT_CONSTANT'])
-        buildConfigField("String", "CHAT_PROD_CONSTANT", apikeyProperties['CHAT_PROD_CONSTANT'])
-        buildConfigField("String", "PROD_CONSTANT", apikeyProperties['PROD_CONSTANT'])
-
-    }
-
-
-    signingConfigs {
-        release {
-            keyAlias 'key0'
-            keyPassword 'key1578086991146'
-            storeFile file('Key')
-            storePassword 'key1578086991146'
         }
     }
 
@@ -154,8 +55,6 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-            applicationIdSuffix ".release"
         }
 
         debug {
@@ -164,128 +63,53 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            applicationIdSuffix ".debug"
         }
     }
 
 
-//    sourceSets {
-//        main {
-//            res.srcDirs =
-//                    [
-//                            'src/main/res/layouts/dialogs',
-//                            'src/main/res/layouts/login',
-//                            'src/main/res/layouts/registration',
-//                            'src/main/res/layouts/utils',
-//                            'src/main/res/layouts/findprofessionals',
-//                            'src/main/res/layouts',
-//                            'src/main/res'
-//                    ]
-//        }
-//    }
-
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    buildFeatures {
-        viewBinding true
-    }
-    kotlinOptions {
-        jvmTarget = '1.8'
-    }
 }
 
 dependencies {
-
-    implementation 'androidx.appcompat:appcompat:1.4.0'
+    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.4.30"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
-    //s3 Amazon
-    implementation 'com.amazonaws:aws-android-sdk-s3:2.16.8'
-    implementation('com.amazonaws:aws-android-sdk-mobile-client:2.16.8@aar') {
-        transitive = true
-    }
-    implementation('com.amazonaws:aws-android-sdk-auth-userpools:2.16.8@aar') {
-        transitive = true
-    }
-
-
-    // (Recommended) Firebase
-    implementation 'com.google.firebase:firebase-analytics'
-    implementation platform('com.google.firebase:firebase-bom:26.2.0')
+    // Firebase
+    implementation 'com.google.firebase:firebase-core:21.1.1'
+    implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
+    implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation platform('com.google.firebase:firebase-bom:26.8.0')
     implementation 'com.google.firebase:firebase-crashlytics'
-    implementation 'com.google.firebase:firebase-auth'
-
+    // notification
+    implementation 'com.google.firebase:firebase-messaging-ktx'
 
     implementation 'com.jakewharton.rxbinding3:rxbinding-material:3.1.0'
 
     //Retrofit
     implementation('com.squareup.retrofit2:retrofit:2.9.0')
-            {
-                exclude module: 'okhttp'
-            }
+    {
+        exclude module: 'okhttp'
+    }
 
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.17'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
-
-
-    //Recyclerview
-    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
 
-    //Support library
-    implementation 'com.google.android.material:material:1.4.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-
-    //circular imageview
-    implementation 'com.mikhaellopez:circularimageview:4.0.2'
-
-    implementation 'io.jsonwebtoken:jjwt-api:0.11.1'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.11.1',
-            'io.jsonwebtoken:jjwt-gson:0.11.1'
-
-    //common io
-    implementation "commons-io:commons-io:2.8.0"
-
-    //otp view
-    implementation 'com.github.mukeshsolanki:android-otpview-pinview:2.1.0'
-
-    //country code
-    implementation 'com.github.joielechong:countrycodepicker:2.4.2'
-
-    //google
-    implementation 'com.google.android.gms:play-services-auth:19.2.0'
-    implementation 'com.google.android.gms:play-services-auth-api-phone:17.5.1'
-
-    //Facebook Login Dependency
-    implementation 'com.facebook.android:facebook-android-sdk:5.15.3'
-
-    //Get unicode of emojis
-    implementation 'org.apache.commons:commons-text:1.9'
-
     // screen size according size
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
 
-
     def nav_version = "2.3.5"
-
-    // Java language implementation
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
-
     //Navigation Architecture
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -296,20 +120,6 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
-
-    //tags
-    implementation 'co.lujun:androidtagview:1.1.7'
-    implementation 'androidx.appcompat:appcompat:1.4.0'
-
-
-    //viewpager 2
-    implementation 'androidx.viewpager2:viewpager2:1.0.0'
-
-
-    //datasource
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
-
-
     //hilt
     implementation "com.google.dagger:hilt-android:2.38"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
@@ -317,83 +127,42 @@ dependencies {
     kapt "com.google.dagger:hilt-android-compiler:2.38"
 
     //coroutine
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 
     //lifecomponents
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
-    //noinspection LifecycleAnnotationProcessorWithJava8
-    kapt 'androidx.lifecycle:lifecycle-compiler:2.3.1'
+    kapt 'androidx.lifecycle:lifecycle-compiler:2.5.1'
 
+    implementation 'androidx.room:room-ktx:2.4.3'
+    implementation 'androidx.room:room-runtime:2.4.3'
+    kapt 'androidx.room:room-compiler:2.4.3'
 
-    //audio audiovisualizer
-    // Adding  audio visualizer Library for recoding
-    implementation 'com.github.Armen101:AudioRecordView:1.0.5'
+    implementation 'com.google.code.gson:gson:2.8.9'
 
-    //for player
-    implementation 'com.chibde:audiovisualizer:2.2.0'
+    // work manager
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
+    // admob ads
+    implementation 'com.google.android.gms:play-services-ads:21.4.0'
+    // Calculator
+    implementation 'com.fathzer:javaluator:3.0.2'
 
-    //exoplayer
-    implementation 'com.google.android.exoplayer:exoplayer:2.16.1'
+    // In App Purchase
+    implementation 'com.android.billingclient:billing:5.0.0'
 
-    //facebook login
-    implementation 'com.facebook.android:facebook-android-sdk:[5,6)'
+    // App Auto Update
+    implementation 'com.google.android.play:core:1.10.3'
 
-    def lottieVersion = "4.1.0"
-    implementation "com.airbnb.android:lottie:$lottieVersion"
+    // Recyceler view pager indicator
+    implementation "ru.tinkoff.scrollingpagerindicator:scrollingpagerindicator:1.2.1"
 
-    //swipe right to delete
-    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
-    implementation "com.daimajia.swipelayout:library:1.2.0@aar"
+    // view pager anim
+    implementation 'com.eftimoff:android-viewpager-transformers:1.0.1@aar'
 
-    implementation "android.arch.persistence.room:runtime:1.1.1"
-    annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
-    testImplementation "android.arch.persistence.room:testing:1.1.1"
-    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+    // rating bar
+    implementation 'com.github.ome450901:SimpleRatingBar:1.4.3'
 
-    //article
-    implementation 'jp.wasabeef:richeditor-android:2.0.0'
-
-    //Facebook Login Dependency
-    implementation 'com.facebook.android:facebook-android-sdk:latest.release'
-
-    //Stripe
-    implementation 'com.stripe:stripe-android:19.0.0'
-
-    implementation 'com.google.code.gson:gson:2.8.8'
-
-    //appsync
-    implementation 'com.amazonaws:aws-android-sdk-appsync:3.3.0'
-    implementation 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
-    implementation 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
-
-    //audio recording
-    implementation 'com.devlomi.record-view:record-view:2.0.1'
-
-    //file picker
-    implementation 'com.github.TutorialsAndroid:FilePicker:v8.0.19'
-
-    //zoom
-    implementation 'com.google.android:flexbox:2.0.1'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-
-    implementation 'wu.seal.jsontokotlin:library:3.6.1'
-
-    implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
-
-    //char
-    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
-    //placeholder animation
-    implementation 'com.facebook.shimmer:shimmer:0.5.0'
-
-
-    implementation 'com.mig35:carousellayoutmanager:1.4.6'
-
-    implementation 'androidx.work:work-runtime-ktx:2.7.0'
-
-
-
-
+    // Android Lighter library
+    implementation 'me.samlss:lighter:1.0.3'
 }

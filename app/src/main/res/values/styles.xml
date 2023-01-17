@@ -3,13 +3,11 @@
 
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowBackground">@color/color_primary_dark</item>
-        <item name="otpViewStyle">@style/OtpWidget.OtpView</item>
         <item name="editTextStyle">@style/App_EditTextStyle</item>
-        ¬
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
@@ -17,23 +15,9 @@
     </style>
 
     <style name="bottomsheetStyleWrapper" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_top_curved</item>
+        <item name="android:background">@drawable/bg_top_curved_24_dp</item>
         <item name="android:backgroundTint">@color/white</item>
     </style>
-
-    <style name="CustomChipChoicePreference" parent="@style/Widget.MaterialComponents.Chip.Choice">
-        <item name="chipStrokeColor">@color/border_chip_state_list_prference</item>
-        <item name="chipBackgroundColor">@color/bg_chip_state_list_prference</item>
-        <item name="android:textColor">@color/text_color_chip_state_list_preference</item>
-        <item name="chipCornerRadius">12dp</item>
-        <item name="chipMinHeight">20dp</item>
-        <item name="android:textAppearance">@style/SmallerText</item>
-    </style>
-    <style name="SmallerText" parent="TextAppearance.AppCompat.Small">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-
 
     <style name="App_EditTextStyle" parent="@android:style/Widget.EditText">
         <item name="android:background">@drawable/text_box_underline</item>
@@ -41,7 +25,7 @@
     </style>
 
     <style name="TextLabel" parent="TextAppearance.Design.Hint">
-        <item name="fontFamily">@font/lato_regular</item>
+        <item name="fontFamily">@font/font_regular</item>
         <item name="android:textSize">16sp</item>
     </style>
 
@@ -50,15 +34,29 @@
         <item name="colorControlActivated">@color/colorAccent</item>
     </style>
 
-    <style name="mySwitchTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="colorControlActivated">@color/password_text_selected</item>
-        <item name="android:colorForeground">#a6a6b2</item>
-    </style>
-
     <style name="mySwitchThemeDeactivated" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorControlActivated">#6B825FFC</item>
         <item name="android:colorForeground">#a6a6b2</item>
     </style>
 
+    <style name="SCBSwitch" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorControlActivated">@color/green_600</item>
+        <item name="android:colorForeground">#a6a6b2</item>
+    </style>
 
+    <!--  Dailog  -->
+    <style name="DialogAppearFromCenter">
+        <item name="android:windowEnterAnimation">@anim/dialog_from_center_fast</item>
+        <item name="android:windowExitAnimation">@anim/dialog_from_center_fast_close</item>
+    </style>
+
+    <style name="DialogAppearFromBottomExpand">
+        <item name="android:windowEnterAnimation">@anim/dialog_open_animation</item>
+        <item name="android:windowExitAnimation">@anim/dialog_close_animation</item>
+    </style>
+
+    <style name="DialogTopMenuAnimation">
+        <item name="android:windowEnterAnimation">@anim/dialog_top_menu_open</item>
+        <item name="android:windowExitAnimation">@anim/dialog_top_menu_close</item>
+    </style>
 </resources>

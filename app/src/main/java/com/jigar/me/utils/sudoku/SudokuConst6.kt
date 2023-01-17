@@ -1,0 +1,67 @@
+package com.jigar.me.utils.sudoku
+
+object SudokuConst6 {
+    var str_Grid0 = "'00','01','02','03','04','05'"
+    var str_Grid1 = "'10','11','12','13','14','15'"
+    var str_Grid2 = "'20','21','22','23','24','25'"
+    var str_Grid3 = "'30','31','32','33','34','35'"
+    var str_Grid4 = "'40','41','42','43','44','45'"
+    var str_Grid5 = "'50','51','52','53','54','55'"
+
+    var str_Row0 = "'00','01','02','10','11','12'"
+    var str_Row1 = "'03','04','05','13','14','15'"
+    var str_Row2 = "'20','21','22','30','31','32'"
+    var str_Row3 = "'23','24','25','33','34','35'"
+    var str_Row4 = "'40','41','42','50','51','52'"
+    var str_Row5 = "'43','44','45','53','54','55'"
+
+    var str_Column0 = "'00','03','20','23','40','43'"
+    var str_Column1 = "'01','04','21','24','41','44'"
+    var str_Column2 = "'02','05','22','25','42','45'"
+    var str_Column3 = "'10','13','30','33','50','53'"
+    var str_Column4 = "'11','14','31','34','51','54'"
+    var str_Column5 = "'12','15','32','35','52','55'"
+
+    var Room1 = "1"
+    var Cell_00 = "00"
+    var Cell_01 = "01"
+    var Cell_02 = "02"
+    var Cell_03 = "03"
+    var Cell_04 = "04"
+    var Cell_05 = "05"
+
+    var Cell_10 = "10"
+    var Cell_11 = "11"
+    var Cell_12 = "12"
+    var Cell_13 = "13"
+    var Cell_14 = "14"
+    var Cell_15 = "15"
+
+    var Cell_20 = "20"
+    var Cell_21 = "21"
+    var Cell_22 = "22"
+    var Cell_23 = "23"
+    var Cell_24 = "24"
+    var Cell_25 = "25"
+
+    var Cell_30 = "30"
+    var Cell_31 = "31"
+    var Cell_32 = "32"
+    var Cell_33 = "33"
+    var Cell_34 = "34"
+    var Cell_35 = "35"
+
+    var Cell_40 = "40"
+    var Cell_41 = "41"
+    var Cell_42 = "42"
+    var Cell_43 = "43"
+    var Cell_44 = "44"
+    var Cell_45 = "45"
+
+    var Cell_50 = "50"
+    var Cell_51 = "51"
+    var Cell_52 = "52"
+    var Cell_53 = "53"
+    var Cell_54 = "54"
+    var Cell_55 = "55"
+}

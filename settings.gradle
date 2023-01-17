@@ -5,5 +5,5 @@ pluginManagement {
         mavenCentral()
     }
 }
-rootProject.name = "iiifa-fan-android"
+rootProject.name = "Abacus"
 include ':app'

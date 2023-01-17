@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cardColor"
+            type="Integer" />
+
+        <variable
+            name="sku"
+            type="com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardMain"
+        cardColor="@{cardColor}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_2sdp"
+        tools:cardBackgroundColor="@color/light_bg_orange"
+        app:cardCornerRadius="@dimen/card_corner_radius4"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:paddingHorizontal="@dimen/activity_padding6"
+            android:paddingVertical="@dimen/activity_padding16">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnRecommended"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_20sdp"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:insetRight="0dp"
+                android:insetLeft="0dp"
+                android:letterSpacing="0.05"
+                android:text="@string/recommended"
+                android:textAllCaps="false"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeMedium"
+                app:backgroundTint="#BD4F5C"
+                app:cornerRadius="@dimen/_2sdp"
+                app:fontFamily="@font/font_bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.legacy.widget.Space
+                android:id="@+id/spaceTop"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_padding8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRecommended" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_bold"
+                android:gravity="center"
+                android:text="@{sku.title.contains(`(`)?sku.title.substring(0, sku.title.indexOf(`(`)):sku.title}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeRegular"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spaceTop"
+                tools:text="All paid features of Application" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtSubTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_padding4"
+                android:alpha="0.9"
+                android:fontFamily="@font/font_medium"
+                android:gravity="center"
+                android:lines="3"
+                android:lineSpacingMultiplier="1.1"
+                android:text="@{sku.description}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                tools:text="All paid features of abacus soroban - Child learning application for lifetime" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtSubTitle"
+                android:id="@+id/linearPrices"
+                android:gravity="center"
+                android:visibility="@{sku.isPurchase?View.GONE:View.VISIBLE}"
+                android:layout_marginTop="@dimen/activity_padding6"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_extra_bold"
+                    android:gravity="center"
+                    android:text="@{sku.price}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeLarge"
+                    tools:text="₹800.00" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtOriginalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:visibility="gone"
+                    tools:visibility="visible"
+                    android:textColor="@color/white"
+                    android:alpha="0.9"
+                    android:paddingHorizontal="@dimen/activity_padding6"
+                    android:textSize="@dimen/textSizeMedium"
+                    tools:text="₹800.00" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtDiscount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    tools:visibility="visible"
+                    android:includeFontPadding="false"
+                    android:paddingVertical="@dimen/_2sdp"
+                    android:paddingHorizontal="@dimen/activity_padding6"
+                    android:background="@drawable/box_bg_purchase_white"
+                    android:visibility="gone"
+                    android:textColor="@color/green_900"
+                    android:textSize="@dimen/textSizeRegular"
+                    tools:text="40% OFF" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtOrderId"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_padding8"
+                android:fontFamily="@font/font_regular"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeSmall"
+                android:visibility="@{sku.isPurchase?View.VISIBLE:View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearPrices"
+                app:purchaseOrderId="@{sku.orderId}"
+                tools:text="Order Id : GPA.3789-3456-9801-231093" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtPurchaseTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:fontFamily="@font/font_regular"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeSmall"
+                android:visibility="@{sku.isPurchase?View.VISIBLE:View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtOrderId"
+                app:purchaseTime="@{sku.purchaseTime}"
+                tools:text="Purchased ON : 06 April 2020" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtPurchase"
+                txtColorApp="@{sku.isPurchase?cardColor:@color/white}"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/activity_padding8"
+                android:background="@{sku.isPurchase?@drawable/box_bg_purchase_white:@drawable/box_bg_purchase}"
+                app:fontFamily="@font/font_bold"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/activity_padding12"
+                android:text="@{sku.isPurchase?@string/txt_purchased:@string/txt_purchase_Now}"
+                android:textSize="@dimen/textSizeMedium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPurchaseTime"
+                tools:background="@drawable/box_bg_purchase"
+                tools:text="@string/txt_purchase_Now"
+                tools:textColor="@color/white" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+
+</layout>

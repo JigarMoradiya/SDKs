@@ -1,5 +1,87 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="bead_dimens">@dimen/_22sdp</dimen>
+    <dimen name="bead_dimens_width">@dimen/_40sdp</dimen>
+
+    <dimen name="minus_two">-2.00dp</dimen>
+    <dimen name="minus_twofive">-4dp</dimen>
+    <dimen name="eight_dp">@dimen/four</dimen>
+    <dimen name="zero">0.00dp</dimen>
+    <dimen name="two">2.00dp</dimen>
+    <dimen name="four">4.00dp</dimen>
+    <dimen name="six">6.00dp</dimen>
+    <dimen name="eight">8.00dp</dimen>
+    <dimen name="ten">10.00dp</dimen>
+    <dimen name="sixteen">16.00dp</dimen>
+    <dimen name="seventeen">17.00dp</dimen>
+    <dimen name="twopointfive">2.5dp</dimen>
+
+
+    <dimen name="button_corner_radius">@dimen/_12sdp</dimen>
+
+    <dimen name="activity_padding16">@dimen/_16sdp</dimen>
+    <dimen name="activity_padding12">@dimen/_12sdp</dimen>
+    <dimen name="activity_padding10">@dimen/_10sdp</dimen>
+    <dimen name="activity_padding6">@dimen/_6sdp</dimen>
+    <dimen name="activity_padding8">@dimen/_8sdp</dimen>
+    <dimen name="activity_padding4">@dimen/_4sdp</dimen>
+
+    <dimen name="sudoku_number_dimen">@dimen/_36sdp</dimen>
+
+    <dimen name="home_menu_width">@dimen/_70sdp</dimen>
+    <dimen name="home_menu_height">@dimen/_70sdp</dimen>
+
+    <dimen name="home_menu_width600">@dimen/_65sdp</dimen>
+    <dimen name="home_menu_height600">@dimen/_65sdp</dimen>
+
+    <dimen name="home_menu_elevation">@dimen/_3sdp</dimen>
+    <dimen name="home_menu_margin">@dimen/_5sdp</dimen>
+    <dimen name="home_menu_corner">@dimen/_12sdp</dimen>
+    <dimen name="exam_option_width">@dimen/_120sdp</dimen>
+    <dimen name="exam_option_round">@dimen/_40sdp</dimen>
+    <dimen name="exam_option_round_corner">@dimen/_20sdp</dimen>
+
+    <dimen name="screen_margin">@dimen/_12sdp</dimen>
+    <dimen name="screen_margin_half">@dimen/_6sdp</dimen>
+    <dimen name="quiz_progress_height">@dimen/_8sdp</dimen>
+
+    <dimen name="card_elevation">@dimen/_1sdp</dimen>
+    <dimen name="card_elevation2">@dimen/_2sdp</dimen>
+    <dimen name="card_elevation3">@dimen/_3sdp</dimen>
+    <dimen name="card_elevation4">@dimen/_4sdp</dimen>
+    <dimen name="card_corner_radius">@dimen/_6sdp</dimen>
+    <dimen name="card_corner_radius4">@dimen/_4sdp</dimen>
+
+    <!-- Home page   -->
+
+    <!--  Tutorial   -->
+
+    <!--Text Size-->
+    <dimen name="textSizeVeryExtraSmall">@dimen/_7sdp</dimen>
+    <dimen name="textSizeExtraSmall">@dimen/_8sdp</dimen>
+    <dimen name="textSizeSmall">@dimen/_9sdp</dimen>
+    <dimen name="textSizeMedium">@dimen/_10sdp</dimen>
+    <dimen name="textSizeRegular">@dimen/_11sdp</dimen>
+    <dimen name="textSizeLarge">@dimen/_12sdp</dimen>
+    <dimen name="textSizeExtraLarge">@dimen/_13sdp</dimen>
+    <dimen name="textSizeSuperExtraLarge">@dimen/_14sdp</dimen>
+    <dimen name="textSize16">@dimen/_16sdp</dimen>
+    <dimen name="textSize20">@dimen/_20sdp</dimen>
+    <dimen name="textSizeAbacusNumber">@dimen/_80sdp</dimen>
+    <dimen name="textSizeMenuItem">@dimen/_10sdp</dimen>
+
+    <!-- Profile Image Sizes   -->
+
+    <dimen name="box9SizeWidth">@dimen/_32sdp</dimen>
+    <dimen name="box9SizeHeight">@dimen/_32sdp</dimen>
+
+    <dimen name="box9SignSize">@dimen/_12sdp</dimen>
+    <dimen name="image_size_no_data_view">@dimen/_70sdp</dimen>
+    <dimen name="text_size_no_data_view">@dimen/_14sdp</dimen>
+
+    <dimen name="bGameSize9">@dimen/_66sdp</dimen>
+    <dimen name="bGameSize15">@dimen/_50sdp</dimen>
+    <dimen name="buttonSize24">@dimen/_40sdp</dimen>
+    <dimen name="button_margin">@dimen/_3sdp</dimen>
+
+    <dimen name="button_height">@dimen/_30sdp</dimen>
 </resources>
