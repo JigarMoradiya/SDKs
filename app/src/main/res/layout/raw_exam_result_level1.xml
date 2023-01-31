@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/screen_margin_half"
+        app:cardBackgroundColor="@color/card_bg"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/card_elevation4">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/screen_margin">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearQuestion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="@dimen/screen_margin"
+                app:layout_constraintEnd_toStartOf="@+id/linearAnswer"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerviewObjects1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="5"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/raw_object_list_result" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgSign"
+                    android:layout_width="@dimen/_22sdp"
+                    android:layout_height="@dimen/_22sdp"
+                    android:layout_marginTop="@dimen/activity_padding8"
+                    android:layout_marginBottom="@dimen/activity_padding8"
+                    app:srcCompat="@drawable/ic_sign_plus"
+                    android:tint="@color/red"
+                    android:visibility="gone"
+                    tools:visibility="gone" />
+
+                <androidx.legacy.widget.Space
+                    android:id="@+id/spaceBetween"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/activity_padding16"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerviewObjects2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:visibility="gone"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="7"
+                    tools:itemCount="7"
+                    tools:listitem="@layout/raw_object_list_result"
+                    tools:visibility="visible" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearAnswer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/img"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtAnswer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:text="Answer : "
+                    android:layout_marginTop="@dimen/screen_margin_half"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="@dimen/textSizeExtraSmall" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtYourAnswer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:text="Your Answer : "
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/textSizeExtraSmall" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

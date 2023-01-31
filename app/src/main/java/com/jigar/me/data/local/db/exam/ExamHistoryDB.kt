@@ -1,5 +1,6 @@
 package com.jigar.me.data.local.db.exam
 
+import androidx.lifecycle.LiveData
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ class ExamHistoryDB @Inject constructor(private val dao: ExamHistoryDao) {
         dao.insert(data)
     }
 
-    suspend fun getExamHistoryList(examType : String): List<ExamHistory> {
+     fun getExamHistoryList(examType : String): LiveData<List<ExamHistory>> {
         return dao.getExamHistoryListByType(examType)
     }
 

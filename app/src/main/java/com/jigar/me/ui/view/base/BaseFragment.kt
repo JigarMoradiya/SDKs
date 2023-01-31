@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.view.Gravity
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
@@ -18,11 +19,21 @@ import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.show
 import com.jigar.me.utils.extensions.toastS
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import java.util.*
+import kotlin.coroutines.CoroutineContext
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment(), CoroutineScope {
     lateinit var prefManager : AppPreferencesHelper
     lateinit var mNavController: NavController
+
+    private lateinit var job: Job
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Default
+
 
     //   TTS
     private var textToSpeech: TextToSpeech? = null
@@ -30,7 +41,7 @@ abstract class BaseFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         prefManager = AppPreferencesHelper(requireContext(), Constants.PREF_NAME)
-
+        job = Job()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -42,6 +53,43 @@ abstract class BaseFragment : Fragment() {
     private fun setNavigationGraph() {
         mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
+
+    fun showToast(id : Int){
+        requireContext().toastS(getString(id))
+    }
+    fun showToast(msg : String){
+        requireContext().toastS(msg)
+    }
+
+
+    fun showLoading() {
+        if (progressDialog != null && progressDialog?.isShowing == false) {
+            progressDialog?.show()
+        } else {
+            initProgressDialog()
+            progressDialog?.show()
+        }
+    }
+
+    fun hideLoading() {
+        if (progressDialog != null && progressDialog?.isShowing == true) {
+            progressDialog?.dismiss()
+        }
+    }
+
+    private var progressDialog: AlertDialog? = null
+
+    open fun initProgressDialog() {
+        val inflater = layoutInflater
+        val alertLayout: View = inflater.inflate(R.layout.dialog_loading, null)
+        val builder1 = AlertDialog.Builder(requireContext())
+        builder1.setView(alertLayout)
+        builder1.setCancelable(true)
+        progressDialog = builder1.create()
+        progressDialog?.setCancelable(true)
+        progressDialog?.window?.setBackgroundDrawableResource(R.color.transparent)
+    }
+
     // TODO Speech
     open fun txtToSpeechInit() {
         textToSpeech = TextToSpeech(requireContext()) { status ->
@@ -75,6 +123,7 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        job.cancel()
         if (textToSpeech != null) {
             textToSpeech?.stop()
             textToSpeech?.shutdown()

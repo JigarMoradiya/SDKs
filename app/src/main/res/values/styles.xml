@@ -59,4 +59,67 @@
         <item name="android:windowEnterAnimation">@anim/dialog_top_menu_open</item>
         <item name="android:windowExitAnimation">@anim/dialog_top_menu_close</item>
     </style>
+
+    <style name="TabTextAppearanceMedium" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/font_semibold</item>
+        <item name="textAllCaps">false</item>
+        <item name="android:lineSpacingExtra">@dimen/_2sdp</item>
+        <item name="android:textSize">@dimen/textSizeRegular</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
+    <style name="gridBGameStyle15">
+        <item name="android:layout_width">@dimen/bGameSize15</item>
+        <item name="android:layout_height">@dimen/bGameSize15</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    <style name="textGameStyle24">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">5</item>
+        <item name="android:shadowRadius">5</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+    <style name="gridBGameStyle24">
+        <item name="android:layout_width">@dimen/buttonSize24</item>
+        <item name="android:layout_height">@dimen/buttonSize24</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    <style name="gridBGameStyle9">
+        <item name="android:layout_width">@dimen/bGameSize9</item>
+        <item name="android:layout_height">@dimen/bGameSize9</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:scaleType">centerInside</item>
+    </style>
+    <style name="textGameStyle9">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">5</item>
+        <item name="android:shadowRadius">5</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
+    <style name="textGameStyle15">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:shadowColor">@color/white</item>
+        <item name="android:shadowDx">5</item>
+        <item name="android:shadowDy">5</item>
+        <item name="android:shadowRadius">5</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_marginBottom">1dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+    </style>
 </resources>

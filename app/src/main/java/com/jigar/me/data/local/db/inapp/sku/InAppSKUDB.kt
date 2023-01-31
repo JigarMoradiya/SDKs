@@ -17,7 +17,7 @@ class InAppSKUDB @Inject constructor(private val dao: InAppSKUDao) {
     fun getInAppSKUDetailLive(sku : String): LiveData<List<InAppSkuDetails>> {
         return dao.getInAppSkuDetailLive(sku)
     }
-    suspend fun getInAppSKUDetail(sku : String): List<InAppSkuDetails> {
+    fun getInAppSKUDetail(sku : String): List<InAppSkuDetails> {
         return dao.getInAppSkuDetail(sku)
     }
 }

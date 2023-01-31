@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
@@ -26,6 +27,20 @@ fun setImgUrl(view: AppCompatImageView, profile_url: String?, placeHolder : Draw
         .load(profile_url)
         .apply(RequestOptions().placeholder(placeHolder?: ContextCompat.getDrawable(context, R.drawable.ic_default_user)))
         .into(view)
+}
+@BindingAdapter("loadImgInsideCache","placeHolder")
+fun loadImgInsideCache(view: AppCompatImageView, loadImgURL: String?,placeHolder : Drawable) {
+    if (loadImgURL.isNullOrEmpty()) {
+        view.setImageDrawable(placeHolder)
+    } else {
+        Glide.with(view.context)
+            .load(loadImgURL)
+            .placeholder(ImageUtils.getCircleProgress(view.context))
+            .error(placeHolder)
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .fitCenter()
+            .into(view)
+    }
 
 }
 

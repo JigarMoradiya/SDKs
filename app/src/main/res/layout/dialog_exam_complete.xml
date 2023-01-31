@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardHint"
+        app:cardBackgroundColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/activity_padding12"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtTitle"
+                android:textColor="@color/textColor1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_bold"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_padding12"
+                android:text="@string/result"
+                android:textSize="@dimen/textSize16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/simpleRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srb_numStars="5"
+                app:srb_minimumStars="1"
+                app:srb_rating="2"
+                app:srb_starWidth="@dimen/_24sdp"
+                app:srb_starHeight="@dimen/_24sdp"
+                app:srb_starPadding="@dimen/_10sdp"
+                app:srb_stepSize="0.1"
+                app:srb_isIndicator="true"
+                app:srb_clickable="false"
+                app:srb_scrollable="false"
+                app:srb_clearRatingEnabled="true"
+                app:srb_drawableEmpty="@drawable/start_empty"
+                app:srb_drawableFilled="@drawable/star_filled"
+
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTitle">
+            </com.willy.ratingbar.ScaleRatingBar>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearTotalQuestion"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/screen_margin_half"
+                app:layout_constraintEnd_toStartOf="@+id/linearTotalTime"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/simpleRatingBar">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    app:srcCompat="@mipmap/ic_question_total" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTotalQue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="@color/colorBlueDark"
+                    android:textSize="@dimen/textSizeLarge" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/font_semibold"
+                    android:gravity="center"
+                    android:text="@string/TotalQue"
+                    android:textColor="@color/colorBlueDark"
+                    android:textSize="@dimen/textSizeSmall" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearTotalTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/linearRightAnswer"
+                app:layout_constraintStart_toEndOf="@+id/linearTotalQuestion"
+                app:layout_constraintTop_toTopOf="@+id/linearTotalQuestion">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    app:srcCompat="@mipmap/ic_time" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTotalTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:text="10m 20s"
+                    android:textColor="@color/colorPinkDark"
+                    android:textSize="@dimen/textSizeLarge" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/font_semibold"
+                    android:gravity="center"
+                    android:text="@string/TotalTime"
+                    android:textColor="@color/colorPinkDark"
+                    android:textSize="@dimen/textSizeSmall" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearRightAnswer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/linearWrongAnswer"
+                app:layout_constraintStart_toEndOf="@+id/linearTotalTime"
+                app:layout_constraintTop_toTopOf="@+id/linearTotalQuestion">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    app:srcCompat="@mipmap/ic_question_right" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtRightQue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="@color/colorGreenDark"
+                    android:textSize="@dimen/textSizeLarge" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/font_semibold"
+                    android:gravity="center"
+                    android:text="@string/RightQue"
+                    android:textColor="@color/colorGreenDark"
+                    android:textSize="@dimen/textSizeSmall" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearWrongAnswer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toStartOf="@+id/linearSkipAnswer"
+                app:layout_constraintStart_toEndOf="@+id/linearRightAnswer"
+                app:layout_constraintTop_toTopOf="@+id/linearTotalQuestion">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    app:srcCompat="@mipmap/ic_question_wrong" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtWrongQue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="@color/colorRedDark"
+                    android:textSize="@dimen/textSizeLarge" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/font_semibold"
+                    android:gravity="center"
+                    android:text="@string/WrongQue"
+                    android:textColor="@color/colorRedDark"
+                    android:textSize="@dimen/textSizeSmall" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearSkipAnswer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/linearWrongAnswer"
+                app:layout_constraintTop_toTopOf="@+id/linearTotalTime">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_36sdp"
+                    android:layout_height="@dimen/_36sdp"
+                    app:srcCompat="@mipmap/ic_question_skip" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtSkipQue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:text="20"
+                    android:textColor="@color/colorYellowDark"
+                    android:textSize="@dimen/textSizeLarge" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/font_semibold"
+                    android:gravity="center"
+                    android:text="@string/SkipQue"
+                    android:textColor="@color/colorYellowDark"
+                    android:textSize="@dimen/textSizeSmall" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/btnNo"
+                android:textColor="@color/textColor0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/screen_margin"
+                android:layout_marginEnd="@dimen/activity_padding4"
+                android:alpha="0.4"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/font_semibold"
+                android:padding="@dimen/activity_padding8"
+                android:text="@string/txtOk"
+                android:textSize="@dimen/textSizeLarge"
+                app:layout_constraintEnd_toStartOf="@+id/btnYes"
+                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/btnYes"
+                android:textColor="@color/textColor0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_padding4"
+                android:layout_marginTop="@dimen/screen_margin"
+                android:layout_marginEnd="@dimen/activity_padding4"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/font_semibold"
+                android:padding="@dimen/activity_padding8"
+                android:text="@string/ShowResult"
+                android:textSize="@dimen/textSizeLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime"
+                app:textAllCaps="true" />
+
+
+            <androidx.legacy.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/activity_padding8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnYes" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

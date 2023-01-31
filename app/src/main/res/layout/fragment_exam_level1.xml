@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.08"
+            android:scaleType="centerCrop"
+            app:layout_anchorGravity="center"
+            app:srcCompat="@drawable/bg_abacus_number" />
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cardBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_1sdp"
+            android:elevation="@dimen/card_elevation"
+            app:cardBackgroundColor="@color/light_back"
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardMaxElevation="@dimen/card_elevation"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
+                android:padding="@dimen/activity_padding8"
+                app:srcCompat="@drawable/ic_back" />
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <ProgressBar
+            android:id="@+id/progressHorizontal"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/activity_padding16"
+            android:layout_marginEnd="@dimen/activity_padding16"
+            android:elevation="@dimen/screen_margin_half"
+            android:indeterminate="false"
+            android:max="20"
+            android:progress="3"
+            android:progressDrawable="@drawable/quiz_progress_styled"
+            app:layout_constraintBottom_toTopOf="@+id/txtHeaderTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/_6sdp"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:text="Count the Objects"
+            android:shadowColor="@color/colorBlueDark"
+            android:shadowRadius="1"
+            app:fontFamily="@font/font_bold"
+            android:textColor="@color/colorBlueDark"
+            android:textSize="@dimen/textSizeLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/progressHorizontal" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtTimer"
+            txtColorApp="@{1}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/screen_margin_half"
+            android:fontFamily="@font/font_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:shadowColor="@color/colorHeadingBlack_00"
+            android:shadowRadius="1"
+            android:singleLine="true"
+            android:text="Time : 0:00"
+            android:textSize="@dimen/textSizeLarge"
+            app:layout_constraintBottom_toBottomOf="@+id/cardBack"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/adView"
+            app:layout_constraintTop_toBottomOf="@+id/cardBack">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardBack">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearQuestion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerviewObjects1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:overScrollMode="never"
+                        android:layout_marginTop="@dimen/activity_padding4"
+                        android:scrollbars="none"
+                        android:layout_gravity="center_horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="5"
+                        tools:itemCount="10"
+                        tools:listitem="@layout/raw_object_list" />
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/_22sdp"
+                        android:layout_height="@dimen/_22sdp"
+                        android:id="@+id/imgSign"
+                        android:layout_margin="@dimen/activity_padding6"
+                        android:layout_gravity="center_horizontal"
+                        app:srcCompat="@drawable/ic_sign_plus"
+                        android:visibility="gone"
+                        tools:visibility="gone"
+                        android:tint="@color/red"/>
+
+                    <androidx.legacy.widget.Space
+                        android:id="@+id/spaceBetween"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/activity_padding16"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerviewObjects2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:overScrollMode="never"
+                        android:visibility="gone"
+                        tools:visibility="visible"
+                        android:scrollbars="none"
+                        android:layout_gravity="center_horizontal"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="7"
+                        tools:itemCount="7"
+                        tools:listitem="@layout/raw_object_list" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTapCorrectAns"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin_half"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:shadowColor="@color/colorPurple"
+                    android:shadowRadius="1"
+                    android:paddingVertical="@dimen/activity_padding6"
+                    android:text="@string/TapCorrectAns"
+                    android:textColor="@color/colorPurple"
+                    android:textSize="@dimen/textSizeLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearQuestion" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAnswer1"
+                    android:layout_width="@dimen/exam_option_round"
+                    android:layout_height="@dimen/exam_option_round"
+                    android:layout_margin="@dimen/activity_padding4"
+                    app:cardBackgroundColor="@color/colorGreen"
+                    app:cardCornerRadius="@dimen/exam_option_round_corner"
+                    app:cardElevation="@dimen/card_elevation4"
+                    app:layout_constraintEnd_toStartOf="@+id/cardAnswer2"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTapCorrectAns">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtAnswer1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/font_bold"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        tools:text="12"
+                        android:shadowRadius="4"
+                        android:shadowColor="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize20" />
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAnswer2"
+                    android:layout_width="@dimen/exam_option_round"
+                    android:layout_height="@dimen/exam_option_round"
+                    android:layout_margin="@dimen/activity_padding4"
+                    app:cardBackgroundColor="@color/colorOrange"
+                    app:cardCornerRadius="@dimen/exam_option_round_corner"
+                    app:cardElevation="@dimen/card_elevation4"
+                    app:layout_constraintEnd_toStartOf="@+id/cardAnswer3"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@+id/cardAnswer1"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTapCorrectAns">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtAnswer2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/font_bold"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        tools:text="49"
+                        android:shadowRadius="4"
+                        android:shadowColor="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize20" />
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAnswer3"
+                    android:layout_width="@dimen/exam_option_round"
+                    android:layout_height="@dimen/exam_option_round"
+                    android:layout_margin="@dimen/activity_padding4"
+                    app:cardBackgroundColor="@color/colorYellow"
+                    app:cardCornerRadius="@dimen/exam_option_round_corner"
+                    app:cardElevation="@dimen/card_elevation4"
+                    app:layout_constraintEnd_toStartOf="@+id/cardAnswer4"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@+id/cardAnswer2"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTapCorrectAns">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtAnswer3"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/font_bold"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        tools:text="57"
+                        android:shadowRadius="4"
+                        android:shadowColor="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize20" />
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAnswer4"
+                    android:layout_width="@dimen/exam_option_round"
+                    android:layout_height="@dimen/exam_option_round"
+                    android:layout_margin="@dimen/activity_padding4"
+                    android:layout_marginStart="@dimen/screen_margin_half"
+                    app:cardBackgroundColor="@color/colorTint"
+                    app:cardCornerRadius="@dimen/exam_option_round_corner"
+                    app:cardElevation="@dimen/card_elevation4"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toEndOf="@+id/cardAnswer3"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTapCorrectAns">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtAnswer4"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/font_bold"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:maxLines="1"
+                        tools:text="83"
+                        android:shadowRadius="4"
+                        android:shadowColor="@color/black"
+                        android:singleLine="true"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize20" />
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.legacy.widget.Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/screen_margin_half"
+                    app:layout_constraintTop_toBottomOf="@+id/cardAnswer4"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/adView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:visibility="gone"
+            tools:visibility="visible"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

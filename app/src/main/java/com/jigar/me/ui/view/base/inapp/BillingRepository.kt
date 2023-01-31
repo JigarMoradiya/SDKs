@@ -5,12 +5,14 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import com.android.billingclient.api.*
+import com.google.firebase.crashlytics.internal.model.ImmutableList
 import com.google.gson.Gson
 import com.jigar.me.MyApplication
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDB
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.data.pref.AppPreferencesHelper
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productList
 import com.jigar.me.utils.AppConstants
 import kotlinx.coroutines.*
@@ -33,7 +35,6 @@ class BillingRepository @Inject constructor(
     }
 
     fun endDataSourceConnections() {
-
         playStoreBillingClient?.endConnection()
         // normally you don't worry about closing a DB connection unless you have more than
         // one DB open. so no need to call 'localCacheBillingClient.close()'
@@ -85,7 +86,6 @@ class BillingRepository @Inject constructor(
             BillingClient.BillingResponseCode.OK -> {
                 Log.d(LOG_TAG, "onBillingSetupFinished successfully")
                 queryProductDetailsAsync()
-//                querySkuDetailsAsync(BillingClient.SkuType.INAPP, AbacusSku.INAPP_SKU)
                 queryPurchasesAsync()
             }
             BillingClient.BillingResponseCode.BILLING_UNAVAILABLE -> {
@@ -101,11 +101,33 @@ class BillingRepository @Inject constructor(
     }
 
     private fun queryProductDetailsAsync() {
+//        val queryProductDetailsParams =
+//            QueryProductDetailsParams.newBuilder()
+//                .setProductList(
+//                    arrayListOf(
+//                        QueryProductDetailsParams.Product.newBuilder()
+//                            .setProductId(PRODUCT_ID_Subscription_Month3)
+//                            .setProductType(BillingClient.ProductType.SUBS)
+//                            .build())
+//                )
+//                .build()
+//
+//        playStoreBillingClient?.queryProductDetailsAsync(queryProductDetailsParams) {
+//                billingResult,
+//                productDetailsList ->
+//            Log.e("jigarLogs","productDetailsList = "+Gson().toJson(productDetailsList))
+//            if (productDetailsList.isNotEmpty()) {
+//                CoroutineScope(Job() + Dispatchers.IO).launch {
+//                    inAppSKUDB.saveInAppSKU(productDetailsList)
+//                }
+//            }
+//            // check billingResult
+//            // process returned productDetailsList
+//        }
+
         val params = QueryProductDetailsParams.newBuilder().setProductList(productList)
 
-        playStoreBillingClient?.queryProductDetailsAsync(params.build()) {
-                billingResult,
-                productDetailsList ->
+        playStoreBillingClient?.queryProductDetailsAsync(params.build()) { billingResult, productDetailsList ->
             // Process the result
             if (productDetailsList.isNotEmpty()) {
                 CoroutineScope(Job() + Dispatchers.IO).launch {
@@ -291,6 +313,7 @@ class BillingRepository @Inject constructor(
 //        const val PRODUCT_ID_All_lifetime = "android.test.purchased"
         const val PRODUCT_ID_All_lifetime_old = "com.abacus.puzzle.onetime"
 
+
         const val PRODUCT_ID_All_lifetime = "com.abacus.all"
         const val PRODUCT_ID_level1_lifetime = "com.abacus.singledigit.starter"
         const val PRODUCT_ID_level2_lifetime = "com.abacus.addition.subtraction"
@@ -299,10 +322,14 @@ class BillingRepository @Inject constructor(
 
         const val PRODUCT_ID_material_maths = "kids.material.maths.abacus"
         const val PRODUCT_ID_material_nursery = "kids.material.nursery"
-//        const val PRODUCT_ID_material_nursery = "com.abacus.multiplication.division"
-//        const val PRODUCT_ID_material_nursery = "android.test.purchased"
+
+        const val PRODUCT_ID_Subscription_Month3 = "com.abacus.puzzle.3month"
 
         val productList: ArrayList<QueryProductDetailsParams.Product> = arrayListOf(
+//            QueryProductDetailsParams.Product.newBuilder()
+//                .setProductId(PRODUCT_ID_Subscription_Month3)
+//                .setProductType(BillingClient.ProductType.SUBS)
+//                .build(),
             QueryProductDetailsParams.Product.newBuilder()
                 .setProductId(PRODUCT_ID_All_lifetime)
                 .setProductType(BillingClient.ProductType.INAPP)

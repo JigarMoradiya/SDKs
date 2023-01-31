@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardHint"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/activity_padding12"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtTitle"
+                txtColorApp="@{1}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_toStartOf="@+id/imgClose"
+                android:fontFamily="@font/font_semibold"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/_12sdp"
+                android:paddingEnd="@dimen/_12sdp"
+                android:text="@string/downloadMaterial"
+                android:textSize="@dimen/textSizeExtraLarge" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imgClose"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/_10sdp"
+                android:tint="@color/red"
+                app:srcCompat="@drawable/ic_close" />
+
+
+            <View
+                android:id="@+id/viewDivider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/txtTitle"
+                android:background="@color/gray_dark50" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/rel_footer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtPayableAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center_vertical"
+                    android:padding="8dp"
+                    android:text="100 INR"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="@dimen/textSizeLarge"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/spaceBottom"
+                    app:layout_constraintEnd_toStartOf="@+id/btnDownload"
+                    app:layout_constraintTop_toTopOf="@+id/btnDownload" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/btnDownload"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:fontFamily="@font/font_semibold"
+                    android:padding="8dp"
+                    android:text="@string/download_now"
+                    android:textColor="@color/textColor0"
+                    android:textSize="@dimen/textSizeLarge"
+                    app:layout_constraintBottom_toTopOf="@+id/spaceBottom"
+                    app:layout_constraintEnd_toStartOf="@+id/btnPurchase"
+                    app:textAllCaps="true" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/btnPurchase"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="4dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:fontFamily="@font/font_semibold"
+                    android:padding="8dp"
+                    android:text="@string/txt_purchase"
+                    android:textColor="@color/textColor0"
+                    android:textSize="@dimen/textSizeLarge"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toTopOf="@+id/spaceBottom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:textAllCaps="true" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/rel_footer"
+                android:layout_below="@+id/viewDivider"
+                android:layout_centerHorizontal="true"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingTop="@dimen/_8sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/download_txt1"
+                        android:textColor="@color/colorHeadingBlack_00"
+                        android:textSize="@dimen/textSizeMedium" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/download_txt2"
+                        android:textColor="@color/colorHeadingBlack_00"
+                        android:textSize="@dimen/textSizeMedium" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/download_txt3"
+                        android:textColor="@color/colorListingHeading"
+                        android:textSize="@dimen/textSizeMedium" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/download_txt4"
+                        android:textColor="@color/colorListingHeading"
+                        android:textSize="@dimen/textSizeMedium" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/download_txt5"
+                        android:textColor="@color/colorListingHeading"
+                        android:textSize="@dimen/textSizeMedium" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/download_txt6"
+                        android:textColor="@color/colorListingHeading"
+                        android:textSize="@dimen/textSizeMedium" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:autoLink="all"
+                        android:fontFamily="@font/font_semibold"
+                        android:gravity="center_vertical"
+                        android:linksClickable="true"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/material_customization"
+                        android:textColor="@color/colorYellow"
+                        android:textColorLink="@color/colorHyperlinkBlue"
+                        android:textSize="@dimen/textSizeMedium" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_semibold"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="@string/download_txt7"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="@dimen/textSizeMedium" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_6sdp"
+                        android:fontFamily="@font/font_semibold"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:text="Material Storage Path : "
+                        android:textColor="@color/colorListingHeading"
+                        android:textSize="@dimen/textSizeSmall" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtStoragePath"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font_medium"
+                        android:gravity="center_vertical"
+                        android:paddingStart="@dimen/_12sdp"
+                        android:paddingEnd="@dimen/_12sdp"
+                        android:textColor="@color/colorListingHeading"
+                        android:textSize="@dimen/textSizeExtraSmall" />
+
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.core.widget.NestedScrollView>
+        </RelativeLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

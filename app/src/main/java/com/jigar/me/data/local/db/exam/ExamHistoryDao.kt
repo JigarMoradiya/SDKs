@@ -1,5 +1,6 @@
 package com.jigar.me.data.local.db.exam
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -12,7 +13,7 @@ interface  ExamHistoryDao {
     fun insert(item: ExamHistory)
 
     @Query("SELECT * FROM ExamHistory WHERE examType = :examType ORDER BY addedOn DESC")
-    fun getExamHistoryListByType(examType: String): List<ExamHistory>
+    fun getExamHistoryListByType(examType: String): LiveData<List<ExamHistory>>
 
     @Query("SELECT COUNT(*) as total FROM ExamHistory WHERE examType = :examType")
     suspend fun getExamHistoryTypeCount(examType: String): Int

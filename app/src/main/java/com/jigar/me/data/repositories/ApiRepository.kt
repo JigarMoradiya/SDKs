@@ -16,6 +16,10 @@ class ApiRepository @Inject constructor(
         api.getAbacusOfPages(pageId,limit)
     }
 
+    suspend fun getExamAbacus(level : String) = safeApiCall {
+        api.getExamAbacus(level)
+    }
+
     suspend fun getPracticeMaterial(type : String) = safeApiCall {
         api.getPracticeMaterial(type)
     }

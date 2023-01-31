@@ -1,19 +1,14 @@
 package com.jigar.me.ui.view.dashboard.fragments.home
 
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -46,12 +41,6 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
     private var timer: Timer? = null
     private val DELAY_MS: Long = 5000 //delay in milliseconds before task is to be executed
     private val PERIOD_MS: Long = 5000 // time in milliseconds between successive task executions.
-
-    companion object {
-        fun newInstance() = HomeFragment().apply {
-        }
-    }
-
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -224,6 +213,15 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Division))
                 mNavController.navigate(action)
             }
+            AppConstants.HomeClicks.Menu_DailyExam -> {
+                mNavController.navigate(R.id.action_homeFragment_to_examHomeFragment)
+            }
+            AppConstants.HomeClicks.Menu_PractiseMaterial -> {
+                mNavController.navigate(R.id.action_homeFragment_to_materialHomeFragment)
+            }
+            AppConstants.HomeClicks.Menu_Number_Puzzle -> {
+                mNavController.navigate(R.id.action_homeFragment_to_puzzleNumberHomeFragment)
+            }
             AppConstants.HomeClicks.Menu_Setting -> {
                 mNavController.navigate(R.id.action_homeFragment_to_settingsFragment)
             }
@@ -243,23 +241,8 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
             AppConstants.HomeClicks.Menu_Click_Youtube -> {
                 requireContext().openYoutube()
             }
-
-            AppConstants.HomeClicks.Menu_Number_Puzzle -> {
-//                mNavController?.navigate(R.id.toPuzzleNumberActivityFromHome)
-            }
             AppConstants.HomeClicks.Menu_Sudoku -> {
 //                mNavController?.navigate(R.id.toSudokuHomeFragmentFromHome)
-            }
-
-
-            AppConstants.HomeClicks.Menu_PractiseMaterial -> {
-//                mNavController?.navigate(R.id.toMaterialHomeFragmentFromHome)
-            }
-
-
-
-            AppConstants.HomeClicks.Menu_DailyExam -> {
-//                mNavController?.navigate(R.id.toExamActivityFromHome)
             }
         }
     }

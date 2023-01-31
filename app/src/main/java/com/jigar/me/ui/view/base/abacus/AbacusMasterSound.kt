@@ -7,16 +7,23 @@ import com.jigar.me.utils.AppConstants
 import java.io.IOException
 
 object AbacusMasterSound {
+    const val abacus_click = "click.wav"
+    const val clap_click = "clap.wav"
+    const val number_puzzle_win = "number_puzzle_win.wav"
+    const val swap_sound = "number_puzzle_click.wav"
+    const val tap_sound = "number_puzzle_set_button.wav"
+    const val reset_sound = "reset.wav"
+
     private val player = MediaPlayer()
-    @JvmStatic
     fun playClickSound(context: Context?) {
-        play(context!!, "click.wav")
+        play(context!!, abacus_click)
     }
-    @JvmStatic
     fun playResetSound(context: Context?) {
-        play(context!!, "reset.wav")
+        play(context!!, reset_sound)
     }
-    @JvmStatic
+    fun playClapSound(context: Context) {
+        play(context, clap_click)
+    }
     private fun play(context: Context, fileName: String) {
         if (AppPreferencesHelper(context, AppConstants.PREF_NAME)
                 .getCustomParamBoolean(AppConstants.Settings.Setting_sound,true)

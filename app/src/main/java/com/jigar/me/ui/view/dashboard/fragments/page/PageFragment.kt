@@ -30,6 +30,7 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
     MultiplicationPageListAdapter.OnItemClickListener, DivisionPageListAdapter.OnItemClickListener,
     AdditionSubtractionPageListAdapter.OnItemClickListener {
     private lateinit var binding: FragmentPageBinding
+    private var root : View? = null
     private val apiViewModel by viewModels<AppViewModel>()
 
     private var from = 0
@@ -56,10 +57,13 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        binding = FragmentPageBinding.inflate(inflater, container, false)
-        initViews()
-        initListener()
-        return binding.root
+        if (root == null){
+            binding = FragmentPageBinding.inflate(inflater, container, false)
+            root = binding.root
+            initViews()
+            initListener()
+        }
+        return root!!
     }
 
     private fun initViews() {
@@ -125,10 +129,10 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
         apiViewModel.getPagesResponse.observe(this) {
             when (it) {
                 is Resource.Loading -> {
-//                    CustomViews.startButtonLoading(requireActivity())
+                    showLoading()
                 }
                 is Resource.Success -> {
-//                    CustomViews.hideButtonLoading()
+                    hideLoading()
                     it.value.content?.also {
                         val list: ArrayList<AdditionSubtractionCategory> = Gson().fromJson(
                             it.asJsonArray, object : TypeToken<ArrayList<AdditionSubtractionCategory>>() {}.type)
@@ -137,7 +141,7 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
                     }
                 }
                 is Resource.Failure -> {
-//                    CustomViews.hideButtonLoading()
+                    hideLoading()
                     it.errorBody?.let { it1 -> requireContext().toastL(it1) }
                 }
                 else -> {}

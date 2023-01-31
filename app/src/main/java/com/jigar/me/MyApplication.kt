@@ -5,17 +5,18 @@ import android.app.Application
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.jigar.me.internal.service.download.CustomFileDownloader
+import com.jigar.me.internal.service.download.FileDownloadNotificationManager
+import com.jigar.me.utils.Constants
+import com.tonyodev.fetch2.Fetch
+import com.tonyodev.fetch2.FetchConfiguration
+import com.tonyodev.fetch2core.Downloader
 import dagger.hilt.android.HiltAndroidApp
 import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import java.io.IOException
 import java.net.SocketException
 
@@ -42,6 +43,25 @@ class MyApplication : Application() {
             return instance!!.applicationContext
         }
 
+        private var fetch: Fetch? = null
+        fun getFetchInstance(): Fetch {
+
+            if (fetch == null || fetch?.isClosed == true) {
+                val fetchConfiguration = FetchConfiguration.Builder(getInstance())
+                    .setDownloadConcurrentLimit(10)
+                    .setHttpDownloader(CustomFileDownloader(Downloader.FileDownloaderType.PARALLEL))
+                    .setNamespace(Constants.FETCH_NAMESPACE)
+                    .setNotificationManager(object :
+                        FileDownloadNotificationManager(getInstance()) {
+                        override fun getFetchInstanceForNamespace(namespace: String): Fetch {
+                            return fetch!!
+                        }
+                    })
+                    .build()
+                fetch = Fetch.Impl.getInstance(fetchConfiguration)
+            }
+            return fetch!!
+        }
     }
 
 
