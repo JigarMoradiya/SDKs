@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
+import androidx.hilt.work.HiltWorkerFactory
+import androidx.work.Configuration
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.jigar.me.internal.service.download.CustomFileDownloader
@@ -19,11 +21,15 @@ import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.io.IOException
 import java.net.SocketException
+import javax.inject.Inject
 
 
 @HiltAndroidApp
-class MyApplication : Application() {
-
+class MyApplication : Application(),Configuration.Provider {
+    @Inject lateinit var workerFactory: HiltWorkerFactory
+    override fun getWorkManagerConfiguration() = Configuration.Builder()
+        .setWorkerFactory(workerFactory)
+        .build()
     init {
         instance = this
         alreadyCalledversionCheck = false
@@ -114,7 +120,5 @@ class MyApplication : Application() {
 
 
     }
-
-
 
 }

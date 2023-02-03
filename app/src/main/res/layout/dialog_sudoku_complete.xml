@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardHint"
+        app:cardBackgroundColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/activity_padding12"
+        android:layout_marginHorizontal="@dimen/_30sdp"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtTitle"
+                android:textColor="@color/textColor1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/font_bold"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/activity_padding12"
+                android:text="@string/result"
+                android:textSize="@dimen/textSize16"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearTotalTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/activity_padding12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTitle">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
+                    app:srcCompat="@mipmap/ic_time" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTotalTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/screen_margin"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    tools:text="10m 20s"
+                    android:textColor="@color/colorGreenDark"
+                    android:textSize="@dimen/textSizeLarge" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:alpha="0.8"
+                    android:fontFamily="@font/font_semibold"
+                    android:gravity="center"
+                    android:text="@string/TotalTime"
+                    android:textColor="@color/colorGreenDark"
+                    android:textSize="@dimen/textSizeSmall" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:fontFamily="@font/font_semibold"
+                    android:gravity="center"
+                    android:text="@string/txt_completed_level"
+                    android:textColor="@color/colorGreen"
+                    android:textSize="@dimen/textSizeMedium" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/btnYes"
+                android:textColor="@color/textColor0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/activity_padding4"
+                android:layout_marginTop="@dimen/screen_margin"
+                android:layout_marginEnd="@dimen/activity_padding4"
+                android:background="?attr/selectableItemBackground"
+                android:fontFamily="@font/font_semibold"
+                android:padding="@dimen/activity_padding8"
+                android:text="@string/txtOk"
+                android:textSize="@dimen/textSizeLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime"
+                app:textAllCaps="true" />
+
+
+            <androidx.legacy.widget.Space
+                android:layout_width="0dp"
+                android:layout_height="@dimen/activity_padding8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnYes" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

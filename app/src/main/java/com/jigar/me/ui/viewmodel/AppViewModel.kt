@@ -1,8 +1,6 @@
 package com.jigar.me.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.google.gson.Gson
 import com.jigar.me.data.model.MainAPIResponseArray
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
@@ -10,14 +8,12 @@ import com.jigar.me.data.repositories.ApiRepository
 import com.jigar.me.data.repositories.DBRepository
 import com.jigar.me.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(private val apiRepository: ApiRepository,private val dbRepository: DBRepository) : ViewModel() {
-
 
     private val _getPagesResponse: MutableLiveData<Resource<MainAPIResponseArray>> = MutableLiveData()
     val getPagesResponse: LiveData<Resource<MainAPIResponseArray>> get() = _getPagesResponse

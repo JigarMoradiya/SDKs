@@ -1,15 +1,25 @@
 package com.jigar.me.ui.view.dashboard.fragments.home
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager.widget.ViewPager
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -160,18 +170,6 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
         }, DELAY_MS, PERIOD_MS)
     }
 
-    override fun onPause() {
-        super.onPause()
-        timer?.cancel()
-        runnable?.let{ handler?.removeCallbacks(it) }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (::bannerPagerAdapter.isInitialized){
-            autoScrollBanner()
-        }
-    }
     override fun onBannerItemClick(data: HomeBanner) {
         // firebase event
         MyApplication.logEvent(data.type, null)
@@ -219,6 +217,9 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
             AppConstants.HomeClicks.Menu_PractiseMaterial -> {
                 mNavController.navigate(R.id.action_homeFragment_to_materialHomeFragment)
             }
+            AppConstants.HomeClicks.Menu_Sudoku -> {
+                mNavController.navigate(R.id.action_homeFragment_to_sudokuHomeFragment)
+            }
             AppConstants.HomeClicks.Menu_Number_Puzzle -> {
                 mNavController.navigate(R.id.action_homeFragment_to_puzzleNumberHomeFragment)
             }
@@ -241,9 +242,20 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
             AppConstants.HomeClicks.Menu_Click_Youtube -> {
                 requireContext().openYoutube()
             }
-            AppConstants.HomeClicks.Menu_Sudoku -> {
-//                mNavController?.navigate(R.id.toSudokuHomeFragmentFromHome)
-            }
         }
     }
+    override fun onPause() {
+        super.onPause()
+        timer?.cancel()
+        runnable?.let{ handler?.removeCallbacks(it) }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::bannerPagerAdapter.isInitialized){
+            autoScrollBanner()
+        }
+    }
+
+
 }

@@ -6,9 +6,9 @@ import androidx.room.TypeConverters
 import com.jigar.me.data.local.db.exam.ExamHistoryDao
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDao
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDao
-import com.jigar.me.data.local.db.sodoku.SudukoAnswerStatusDao
-import com.jigar.me.data.local.db.sodoku.SudukoDao
-import com.jigar.me.data.local.db.sodoku.SudukoLevelDao
+import com.jigar.me.data.local.db.sudoku.SudukoAnswerStatusDao
+import com.jigar.me.data.local.db.sudoku.SudukoDao
+import com.jigar.me.data.local.db.sudoku.SudukoLevelDao
 import com.jigar.me.data.local.db.sudoku.SudukoPlayDao
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.data.model.dbtable.inapp.InAppPurchaseDetails

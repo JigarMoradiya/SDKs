@@ -1,8 +1,5 @@
 package com.jigar.me.data.local.db.sudoku
 
-import com.jigar.me.data.local.db.sodoku.SudukoAnswerStatusDao
-import com.jigar.me.data.local.db.sodoku.SudukoDao
-import com.jigar.me.data.local.db.sodoku.SudukoLevelDao
 import com.jigar.me.data.model.dbtable.suduko.Suduko
 import com.jigar.me.data.model.dbtable.suduko.SudukoAnswerStatus
 import com.jigar.me.data.model.dbtable.suduko.SudukoLevel
@@ -195,13 +192,12 @@ class SudokuDB @Inject constructor(
         return sudokuPlayDao.getCellNotes(roomId, cellPosition)
     }
 
-    fun getLevel_SudokuPlay(type: String): List<SudukoPlay> {
+    suspend fun getLevel_SudokuPlay(type: String): List<SudukoPlay> {
         return if (type == SudukoConst.Level_9By9) {
             sudokuPlayDao.getLevel()
         } else {
             sudokuPlayDao.getLevel(type)
         }
-
     }
 
     suspend fun getCellValue_SudokuPlay(roomId: String, cellPosition: String): String {

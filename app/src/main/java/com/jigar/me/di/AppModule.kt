@@ -3,6 +3,7 @@ package com.jigar.me.di
 import android.app.Application
 import android.content.Context
 import androidx.room.Room
+import androidx.work.CoroutineWorker
 import com.jigar.kotlin.data.local.db.Migrations.MIGRATION_1_2
 import com.jigar.kotlin.data.local.db.Migrations.MIGRATION_2_3
 import com.jigar.me.BuildConfig
@@ -15,9 +16,9 @@ import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDao
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDB
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDao
-import com.jigar.me.data.local.db.sodoku.SudukoAnswerStatusDao
-import com.jigar.me.data.local.db.sodoku.SudukoDao
-import com.jigar.me.data.local.db.sodoku.SudukoLevelDao
+import com.jigar.me.data.local.db.sudoku.SudukoAnswerStatusDao
+import com.jigar.me.data.local.db.sudoku.SudukoDao
+import com.jigar.me.data.local.db.sudoku.SudukoLevelDao
 import com.jigar.me.data.local.db.sudoku.SudokuDB
 import com.jigar.me.data.local.db.sudoku.SudukoPlayDao
 import com.jigar.me.data.pref.AppPreferencesHelper
@@ -25,16 +26,17 @@ import com.jigar.me.data.pref.PreferenceInfo
 import com.jigar.me.data.pref.PreferencesHelper
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
-import dagger.Module
-import dagger.Provides
+import dagger.*
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
+import kotlin.reflect.KClass
 
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+
     @Provides
     @Singleton
     internal fun provideContext(application: Application): Context = application
@@ -82,6 +84,8 @@ object AppModule {
     fun providesSudukoAnswerStatusDao(db: AppDatabase): SudukoAnswerStatusDao = db.sudokuAnswerStatusDao()
     @Provides
     fun providesSudukoPlayDao(db: AppDatabase): SudukoPlayDao = db.sudokuPlayDao()
+
+    @Singleton
     @Provides
     fun providesSudokuDB(sudokuDao: SudukoDao,
                               sudokuLevelDao: SudukoLevelDao,
@@ -95,4 +99,18 @@ object AppModule {
     }
 
 
+//    @Binds
+//    @IntoMap
+//    @Singleton
+//    @Provides
+//    @WorkerKey(Sudoku4WorkManager::class)
+//    internal fun bindCreateSudoku4WorkerManager(factory: Sudoku4WorkManager.Factory): ChildWorkerFactory = factory
 }
+
+
+@Retention(AnnotationRetention.RUNTIME)
+@MapKey
+annotation class WorkerKey(val value: KClass<out CoroutineWorker>)
+
+
+

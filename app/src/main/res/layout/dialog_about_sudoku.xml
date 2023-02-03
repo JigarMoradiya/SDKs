@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardHint"
+        cardColor="@{3}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="@dimen/activity_padding12"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="@dimen/activity_padding16">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/txtClose"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgLogo"
+                        android:layout_width="@dimen/_40sdp"
+                        android:layout_height="@dimen/_40sdp"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:rotation="10"
+                        android:layout_marginStart="@dimen/_6sdp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/ic_sudoku" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtTite"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:text="@string/advantages_of_sudoku"
+                        android:textColor="@color/colorBlueDark"
+                        android:textSize="@dimen/textSizeExtraLarge"
+                        app:fontFamily="@font/font_semibold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/imgLogo"
+                        app:layout_constraintBottom_toBottomOf="@+id/imgLogo"
+                        app:layout_constraintStart_toEndOf="@+id/imgLogo" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_20sdp"
+                        android:alpha="0.8"
+                        android:lineSpacingExtra="@dimen/_4sdp"
+                        android:text="@string/about_sudoku_description"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSizeMedium"
+                        app:fontFamily="@font/font_medium"
+                        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </ScrollView>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txtClose"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_above="@+id/spaceBottom"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activity_padding4"
+                android:background="@drawable/button_background_rounded"
+                android:elevation="@dimen/_8sdp"
+                android:fontFamily="@font/font_bold"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/activity_padding12"
+                android:text="@string/close"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSizeSmall"
+                app:textAllCaps="true" />
+
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_padding16"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/spaceBottom"/>
+
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

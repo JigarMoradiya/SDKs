@@ -133,28 +133,30 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     fun showAMFullScreenAds(adUnit: String) {
         val count = prefManager.getCustomParamInt(AppConstants.Purchase.AdsShowCount, 0)
         if (count == 5) {
-            newInterstitialAd(adUnit)
+            newInterstitialAd(adUnit,true)
         } else {
             val newCount = count + 1
             prefManager.setCustomParamInt(AppConstants.Purchase.AdsShowCount, newCount)
         }
     }
 
-    fun newInterstitialAd(adUnit: String) {
+    fun newInterstitialAd(adUnit: String,isAdsCountReset : Boolean = false) {
         val adRequest = AdRequest.Builder().build()
         InterstitialAd.load(requireContext(),adUnit, adRequest, object : InterstitialAdLoadCallback() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                showInterstitial(interstitialAd)
+                showInterstitial(interstitialAd,isAdsCountReset)
             }
         })
     }
-    fun showInterstitial(interstitialAd: InterstitialAd) {
+    fun showInterstitial(interstitialAd: InterstitialAd,isAdsCountReset : Boolean) {
         // Show the ad if it's ready. Otherwise toast and reload the ad.
         interstitialAd.show(requireActivity())
-        prefManager.setCustomParamInt(AppConstants.Purchase.AdsShowCount, 0)
+        if (isAdsCountReset){
+            prefManager.setCustomParamInt(AppConstants.Purchase.AdsShowCount, 0)
+        }
     }
     // load banner ads
     fun showAMBannerAds(adViewLayout: LinearLayoutCompat, adUnit : String) {

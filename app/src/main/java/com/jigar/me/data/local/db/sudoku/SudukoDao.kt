@@ -1,4 +1,4 @@
-package com.jigar.me.data.local.db.sodoku
+package com.jigar.me.data.local.db.sudoku
 
 import androidx.room.Dao
 import androidx.room.Insert

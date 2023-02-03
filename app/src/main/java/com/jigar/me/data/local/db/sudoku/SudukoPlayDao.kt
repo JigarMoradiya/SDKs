@@ -9,13 +9,13 @@ import com.jigar.me.data.model.dbtable.suduko.SudukoPlay
 @Dao
 interface SudukoPlayDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: SudukoPlay)
+    suspend fun insert(item: SudukoPlay)
 
     @Query("SELECT * FROM Suduko_Play WHERE level != '4 By 4' AND level != '6 By 6' GROUP BY roomID ORDER BY id DESC")
-    fun getLevel(): List<SudukoPlay>
+    suspend fun getLevel(): List<SudukoPlay>
 
     @Query("SELECT * FROM Suduko_Play WHERE level == :type GROUP BY roomID ORDER BY id DESC")
-    fun getLevel(type : String): List<SudukoPlay>
+    suspend fun getLevel(type : String): List<SudukoPlay>
 
     @Query("SELECT * FROM Suduko_Play WHERE level != '4 By 4' AND level != '6 By 6' GROUP BY roomID ORDER BY id ASC")
     suspend fun getAllLevel9(): List<SudukoPlay>
