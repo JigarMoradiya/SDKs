@@ -24,10 +24,20 @@
         <item name="android:paddingBottom">15dp</item>
     </style>
 
-    <style name="TextLabel" parent="TextAppearance.Design.Hint">
-        <item name="fontFamily">@font/font_regular</item>
-        <item name="android:textSize">16sp</item>
+    <style name="mainTitle" parent="TextAppearance.AppCompat.Title">
+        <item name="fontFamily">@font/font_extra_bold</item>
+        <item name="android:textSize">@dimen/textSize18</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
+
+    <style name="mainTitleSmall" parent="TextAppearance.AppCompat.Title">
+        <item name="fontFamily">@font/font_extra_bold</item>
+        <item name="android:textSize">@dimen/textSizeRegular</item>
+        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+
 
     <style name="MyRadioButtonCurrency" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">#80FFFFFF</item>

@@ -44,7 +44,7 @@ object AppModule {
     // Preferences
     @Provides
     @PreferenceInfo
-    internal fun providePreferenceName(): String = Constants.PREF_NAME
+    internal fun providePreferenceName(): String = AppConstants.PREF_NAME
 
     @Provides
     @Singleton

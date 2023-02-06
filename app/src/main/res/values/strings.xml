@@ -78,8 +78,8 @@
     <string name="AdditionSubtraction">Addition &amp; Subtraction</string>
     <string name="Multiplication">Multiplication</string>
     <string name="Division">Division</string>
-    <string name="title_purchase">Abacus Purchase Store</string>
-    <string name="test">Daily Test</string>
+    <string name="title_purchase">Application\'s Purchase Store</string>
+    <string name="leave_exam_alert">Leave Exam</string>
     <string name="downloadMaterial">Practice Material</string>
 
     <!--  Full abacus  -->
@@ -107,15 +107,38 @@
     <string name="txt_purchase">Purchase</string>
     <string name="txt_purchased">Purchased</string>
     <string name="txt_purchase_Now">Purchase Now</string>
+
+    <string name="txt_page_full_abacus_not_purchased">Sorry you can"'"t access this feature.\nIf you want use this feature then you need to purchase paid plan.</string>
+    <string name="txt_page_practise_material_not_purchased">Sorry you can"'"t download this material.\nIf you want download this material then you need to purchase paid plan.</string>
+
+    <!--  not purchased and reset dialog click  -->
+    <string name="txt_purchase_alert">Purchase Alert</string>
+    <string name="txt_page_reset_not">Sorry you can"'"t start this page again.\nIf you want to start this page again then you need to purchase paid plan.</string>
+
+    <!--  purchased and reset page progress click  -->
     <string name="txt_reset_page">Reset Page Progress</string>
-    <string name="txt_page_reset_not">Sorry you can"'"t start this page again, if you want to start this page again then you need to buy paid plan from purchase store.</string>
-    <string name="txt_reset_page_alert">Are you sure want to start this page again?</string>
-    <string name="txt_page_completed_already_purchased">You already completed this page, you can start this page again.</string>
-    <string name="txt_page_completed_already">You already completed this page. If want to more abacus then you need to buy paid plan from purchase store.</string>
-    <string name="txt_page_completed">Congratulations you completed this page.</string>
-    <string name="txt_page_completed_free">If you want more abacus then you need to buy paid plan from purchase store.</string>
-    <string name="txt_page_full_abacus">If you want use this feature then you need to buy paid plan from purchase store.</string>
-    <string name="txt_page_practise_material">If you want use this practice material then you need make payment first.</string>
+    <string name="txt_reset_page_alert">Are you sure want to reset this page progress and start again?</string>
+
+    <string name="leave_exam_msg">Are you sure want to leave this exam without complete?</string>
+
+    <!--  purchased and page already completed  -->
+    <string name="txt_page_complete">Page Completed</string>
+    <string name="txt_page_completed_already_purchased">You already completed this page, if you want you can start again this page.</string>
+
+    <!--  purchased and page completed  -->
+    <string name="txt_page_completed_msg">Congratulations you completed this page.\nIf you want you can start this page again.</string>
+
+    <!--  not purchased and page already complete  -->
+    <string name="txt_page_completed_already">You already completed this page.\nIf want to more abacus then you need to buy purchase paid plan.</string>
+    <string name="txt_page_completed_free">If you want more abacus then you need to buy purchase plan.</string>
+
+    <string name="yes_i_want_to_start">Yes, I want to start</string>
+    <string name="yes_i_m_sure">Yes, I\'m sure</string>
+    <string name="yes_i_want_to_purchase">Yes, I want to Purchase</string>
+    <string name="no_purchase_later">No, I will Purchase later</string>
+    <string name="no_thanks">No, thanks</string>
+    <string name="no_please_continue">No, please continue</string>
+    <string name="no_thanks_continue_later">No, thanks continue later</string>
     <!--  Settings  -->
     <string name="txt_setting_title">Application Setting</string>
     <string name="txt_setting_theme">Abacus theme</string>
@@ -143,7 +166,7 @@
     <string name="numbers" translatable="false">Numbers</string>
 
     <!--  Daily Exam  -->
-    <string name="test_cancel">Are you sure want to leave this exam?</string>
+
     <string name="testResult">Result of this test</string>
     <string name="child_level">Select Exam Level as per Kid\'s Ability</string>
     <string name="select_sudoku_child_level">Select type as per Kid\'s Ability for Play Sudoku</string>
@@ -151,7 +174,8 @@
     <string name="TapCorrectAns">Click on Correct Answer</string>
     <string name="Time">Time</string>
     <string name="TotalTakeTime">Total Time</string>
-    <string name="ShowResult">Show Result</string>
+    <string name="checkResult">Check Result</string>
+    <string name="give_exam_again">Give Exam Again</string>
     <string name="YourAnswer">Your Answer</string>
     <string name="correctAnswer">Correct Answer</string>
     <string name="SKipped">Skipped</string>
@@ -174,7 +198,7 @@
     <string name="download_txt5">- Kids can learn about Pets animals, Farm animals, Mammal animals, Sea animals, Wild animals, Birds, Fruits, Vegetables, Shapes, etc..</string>
     <string name="download_txt6"><![CDATA[- Learn about Number, Addition & Subtraction, Multiplication & Division.]]></string>
     <string name="download_txt7">More material coming soon...</string>
-    <string name="material_customization">If want to material customization like Logo, watermark or any other changes,etc.. you can contact on brainapptech@gmail.com</string>
+    <string name="material_customization">If you want any customization on material like change to Logo, add watermark, etc.. you can contact us on brainapptech@gmail.com</string>
 
     <!--  Tutorial  -->
 
@@ -191,7 +215,7 @@
     <string name="reset_to_go_next">Press here to reset\nand go next Abacus</string>
 
     <!--  Purchase Info  -->
-    <string name="txt_free">FREE</string>
+    <string name="txt_free">Free</string>
     <string name="txt_free1">Each lesson has 20 Abacus</string>
     <string name="txt_free2">Abacus Hint</string>
     <string name="txt_free3">Advertisement</string>
@@ -221,7 +245,7 @@
     <string name="right_answer">Right Answer</string>
     <string name="wrong_answer">Wrong Answer</string>
     <string name="start_again">Start Again</string>
-    <string name="result">Results</string>
+    <string name="result">Results of Exam</string>
     <string name="let_s_start_exam">It"'"s Exam Time</string>
     <string name="let_s_start">Let\'s Start</string>
     <string name="let_s_play">Let\'s Play</string>
@@ -296,10 +320,17 @@
     <string name="volume_on">Volume ON</string>
     <string name="volume_off">Volume OFF</string>
     <string name="number_sequences_puzzle_volume">Number sequence puzzle volume</string>
-    <string name="congratulations">Congratulations..</string>
-    <string name="continue_to_play_game">Continue to play</string>
+    <string name="congratulations">Congratulations…</string>
+    <string name="continue_to_play_game">Continue to Play</string>
     <string name="no_i_want_to_close">No, I want to close</string>
     <string name="you_completed_this_puzzle_in_moves">You completed this puzzle in %1$s moves</string>
     <string name="this_is_your_best_moves_in_puzzle">This is your best moves in %1$s</string>
     <string name="but_your_best_moves_in_puzzle_is">But, your best moves in %1$s is</string>
+    <string name="no">No</string>
+    <string name="yes">Yes</string>
+    <string name="yes_i_want_to_close">Yes, I want to close</string>
+    <string name="no_i_don_t_want">No, I don\'t want</string>
+    <string name="please_close">Please close</string>
+    <string name="submit">Submit</string>
+
 </resources>

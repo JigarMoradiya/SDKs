@@ -30,24 +30,18 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtAbacus"
+            style="@style/mainTitle"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:fontFamily="@font/font_bold"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:paddingStart="@dimen/activity_padding4"
-            android:singleLine="true"
-            tools:text="SET 1"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/textSizeSuperExtraLarge"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/title_margin"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintEnd_toStartOf="@+id/txtStartWith1"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack"
+            tools:text="SET 1" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtStartWith1"
-            android:textColor="@color/textColor1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/screen_margin"
@@ -56,6 +50,7 @@
             android:paddingStart="@dimen/activity_padding8"
             android:paddingEnd="@dimen/activity_padding8"
             android:text="@string/txt_start_with_1"
+            android:textColor="@color/textColor1"
             android:textSize="@dimen/textSizeExtraSmall"
             app:layout_constraintEnd_toStartOf="@+id/swRandom"
             app:layout_constraintTop_toTopOf="parent" />
@@ -71,12 +66,12 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRandom"
-            android:textColor="@color/textColor1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/font_bold"
             android:gravity="center"
             android:text="@string/txt_Random"
+            android:textColor="@color/textColor1"
             android:textSize="@dimen/textSizeExtraSmall"
             app:layout_constraintEnd_toEndOf="@+id/swRandom"
             app:layout_constraintStart_toStartOf="@+id/swRandom"
@@ -84,23 +79,23 @@
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/swRandom"
-            android:checked="false"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
             android:layout_marginEnd="@dimen/screen_margin"
+            android:checked="false"
             android:theme="@style/SCBSwitch"
             app:layout_constraintEnd_toStartOf="@+id/txtRange"
             app:layout_constraintTop_toBottomOf="@+id/txtResetEveryTime" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRangeLable"
-            android:textColor="@color/textColor1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_padding8"
             android:fontFamily="@font/font_bold"
             android:gravity="center"
             android:text="@string/txt_Range"
+            android:textColor="@color/textColor1"
             android:textSize="@dimen/textSizeExtraSmall"
             app:layout_constraintEnd_toEndOf="@+id/txtRange"
             app:layout_constraintStart_toStartOf="@+id/txtRange"
@@ -129,22 +124,22 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtResetEveryTime"
-            android:textColor="@color/textColor1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_padding8"
             android:fontFamily="@font/font_bold"
             android:gravity="center"
             android:text="@string/txt_Reset_when_start"
+            android:textColor="@color/textColor1"
             android:textSize="@dimen/textSizeExtraSmall"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/swReset"
-            android:checked="false"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_30sdp"
+            android:checked="false"
             android:theme="@style/SCBSwitch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txtResetEveryTime"
@@ -155,11 +150,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            tools:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/swReset">
+            app:layout_constraintTop_toBottomOf="@+id/swReset"
+            tools:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivReset"

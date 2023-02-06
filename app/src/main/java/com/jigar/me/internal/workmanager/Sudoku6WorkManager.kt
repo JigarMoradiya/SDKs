@@ -32,7 +32,6 @@ class Sudoku6WorkManager @AssistedInject constructor(
     val dataManager : SudokuDB
 ) : CoroutineWorker(contexts, params) {
     private val context : Context = contexts
-    private val TAG = "jigar_HelloWorldWorker"
     private var workProgress = 0
     private var temp_list_number = ArrayList<String>()
     private val list_suduko = ArrayList<String>()
@@ -44,10 +43,9 @@ class Sudoku6WorkManager @AssistedInject constructor(
     private lateinit var prefManager : AppPreferencesHelper
 
     override suspend fun doWork(): Result = coroutineScope {
-        prefManager = AppPreferencesHelper(context, Constants.PREF_NAME)
+        prefManager = AppPreferencesHelper(context, AppConstants.PREF_NAME)
         level = inputData.getString(SudokuConst4.Level) ?: SudukoConst.Level_6By6
         roomId = inputData.getInt(SudokuConst4.RoomId, 9999999).toString()
-        Log.e(TAG, "Starting Work. level = "+level+" roomId = "+roomId)
         val jobs = try {
             async {
                 createSudoStart()
@@ -673,16 +671,11 @@ class Sudoku6WorkManager @AssistedInject constructor(
             if (list_suduko_random[random] == 2 || list_suduko_random[random] == 3) {
                 list_suduko_random.removeAt(random)
             }
-
-            if (i == 5) {
-                Log.e(TAG,"donneee")
-                prefManager.setCustomParamInt(SudokuConst4.totalSudoku,roomId.toInt())
-
-                // todo maintain 50 record history
-                dataManager.deletePreviousSudukoPlay(level)
-                sendBroadcastOfCompletion()
-            }
         }
+        prefManager.setCustomParamInt(SudokuConst4.totalSudoku,roomId.toInt())
+        // todo maintain 50 record history
+        dataManager.deletePreviousSudukoPlay(level)
+        sendBroadcastOfCompletion()
     }
     private fun genrateRandomNumber(): Int {
         var randomInt = 0
@@ -719,7 +712,6 @@ class Sudoku6WorkManager @AssistedInject constructor(
         return randomInt
     }
     private fun sendBroadcastOfCompletion() {
-        Log.e(TAG, "Work Complete.")
         // event log for sudoku
         MyApplication.logEvent(AppConstants.FirebaseEvents.Sudoku, Bundle().apply {
             putString(AppConstants.FirebaseEvents.deviceId, prefManager.getDeviceId())

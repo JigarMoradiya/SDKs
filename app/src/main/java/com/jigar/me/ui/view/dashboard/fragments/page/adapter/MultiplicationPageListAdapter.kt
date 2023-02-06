@@ -9,6 +9,7 @@ import com.jigar.me.data.model.pages.MultiplicationPages
 import com.jigar.me.databinding.RawPagelistChildBinding
 import com.jigar.me.databinding.RawPagelistParentBinding
 import com.jigar.me.utils.CommonUtils
+import com.jigar.me.utils.CommonUtils.getCurrentSumFromPref
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
@@ -77,7 +78,7 @@ class MultiplicationPageListAdapter(
             holder.binding.txtTitle.hide()
 
             val pageId = "Multilication_Page ${data.id}"
-            if (CommonUtils.getCurrentSumFromPref(context,pageId) != null){
+            if (context.getCurrentSumFromPref(pageId) != null){
                 CommonUtils.blinkView(holder.binding.imgContinueIndicator)
             }else{
                 holder.binding.imgContinueIndicator.hide()

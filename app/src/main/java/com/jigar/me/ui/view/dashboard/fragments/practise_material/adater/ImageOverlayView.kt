@@ -1,4 +1,4 @@
-package com.jigar.me.ui.view.dashboard.fragments.practise_material
+package com.jigar.me.ui.view.dashboard.fragments.practise_material.adater
 
 import android.content.Context
 import android.util.AttributeSet

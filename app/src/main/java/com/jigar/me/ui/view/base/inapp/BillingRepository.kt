@@ -7,6 +7,7 @@ import android.util.Log
 import com.android.billingclient.api.*
 import com.google.firebase.crashlytics.internal.model.ImmutableList
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.jigar.me.MyApplication
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDB
@@ -16,6 +17,7 @@ import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Su
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productList
 import com.jigar.me.utils.AppConstants
 import kotlinx.coroutines.*
+import java.lang.reflect.Type
 import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
@@ -147,8 +149,9 @@ class BillingRepository @Inject constructor(
      * launch the Google Play Billing flow. The response to this call is returned in
      * [onPurchasesUpdated]
      */
+
     fun launchBillingFlow(activity: Activity, skuDetails: InAppSkuDetails) {
-        val productDetails = Gson().fromJson(skuDetails.originalJson, ProductDetails::class.java)
+        val productDetails : ProductDetails = Gson().fromJson(skuDetails.originalJson, ProductDetails::class.java)
         val offerToken = if (!productDetails.subscriptionOfferDetails.isNullOrEmpty()){
             productDetails.subscriptionOfferDetails?.first()?.offerToken?:""
         }else{""}

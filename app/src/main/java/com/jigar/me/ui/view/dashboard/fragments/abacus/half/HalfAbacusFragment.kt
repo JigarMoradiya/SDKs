@@ -1,16 +1,12 @@
 package com.jigar.me.ui.view.dashboard.fragments.abacus.half
 
 import android.app.AlertDialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.InsetDrawable
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.core.view.isVisible
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -20,20 +16,18 @@ import com.google.gson.reflect.TypeToken
 import com.jigar.me.R
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.PojoAbacus
-import com.jigar.me.data.model.pages.AdditionSubtractionCategory
-import com.jigar.me.databinding.DialogAlertBinding
 import com.jigar.me.databinding.FragmentHalfAbacusBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterCompleteListener
 import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
-import com.jigar.me.ui.view.confirm_alerts.dialogs.abacus.CompleteResetAlertDialog
-import com.jigar.me.ui.view.confirm_alerts.dialogs.abacus.ResetProgressAlertDialog
-import com.jigar.me.ui.view.confirm_alerts.dialogs.abacus.ResetPurchaseAlertDialog
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter.AbacusAdditionSubtractionTypeAdapter
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter.AbacusDivisionTypeAdapter
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter.AbacusMultiplicationTypeAdapter
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.*
+import com.jigar.me.utils.CommonUtils.getCurrentSumFromPref
+import com.jigar.me.utils.CommonUtils.saveCurrentSum
 import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -43,11 +37,7 @@ import org.json.JSONObject
 import java.util.*
 
 @AndroidEntryPoint
-class HalfAbacusFragment : BaseFragment(),
-    OnAbacusValueChangeListener, CompleteResetAlertDialog.CompleteResetAlertDialogInterface,
-    AbacusAdditionSubtractionTypeAdapter.HintListener,
-    ResetProgressAlertDialog.ResetProgressAlertDialogInterface,
-    ResetPurchaseAlertDialog.ResetPurchaseAlertDialogInterface {
+class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAdditionSubtractionTypeAdapter.HintListener{
     private lateinit var binding: FragmentHalfAbacusBinding
     private val apiViewModel by viewModels<AppViewModel>()
 
@@ -145,7 +135,6 @@ class HalfAbacusFragment : BaseFragment(),
         }else{
             setRightAbacusRules()
         }
-
         isDisplayHelpMessage = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_help_message, true)
         isHintSound = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting__hint_sound, false)
         isHideTable = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_hide_table, false)
@@ -182,12 +171,12 @@ class HalfAbacusFragment : BaseFragment(),
 
     private fun resetProgressClick() {
         if (isPurchased) {
-            ResetProgressAlertDialog.showPopup(requireActivity(), this)
+            paidResetPageProgressDialog()
         } else {
-            ResetPurchaseAlertDialog.showPopup(requireActivity(), this)
+            resetPurchaseDialog()
         }
     }
-    override fun goToPurchase() {
+    private fun goToPurchase() {
         mNavController.navigate(R.id.action_halfAbacusFragment_to_purchaseFragment)
     }
 
@@ -198,14 +187,6 @@ class HalfAbacusFragment : BaseFragment(),
         binding.flAbacus.removeAllViews()
         binding.relAbacus.hide()
         goBack()
-    }
-
-    // dialog listener
-    override fun resetProgressConfirm() {
-        updateToFirebase(0)
-        removeSum()
-        current_pos = 0
-        startAbacus()
     }
 
     private fun ads() {
@@ -220,10 +201,10 @@ class HalfAbacusFragment : BaseFragment(),
         apiViewModel.getAbacusOfPagesResponse.observe(this) {
             when (it) {
                 is Resource.Loading -> {
-//                    CustomViews.startButtonLoading(requireActivity())
+                    showLoading()
                 }
                 is Resource.Success -> {
-//                    CustomViews.hideButtonLoading()
+                    hideLoading()
                     it.value.content?.also {
                         val list: ArrayList<PojoAbacus> = Gson().fromJson(
                             it.asJsonArray, object : TypeToken<ArrayList<PojoAbacus>>() {}.type)
@@ -232,7 +213,7 @@ class HalfAbacusFragment : BaseFragment(),
                     }
                 }
                 is Resource.Failure -> {
-//                    CustomViews.hideButtonLoading()
+                    hideLoading()
                     it.errorBody?.let { it1 -> requireContext().toastL(it1) }
                 }
                 else -> {}
@@ -240,11 +221,10 @@ class HalfAbacusFragment : BaseFragment(),
         }
     }
     private fun startAbacus() {
-        val currentPosTemp = CommonUtils.getCurrentSumFromPref(requireContext(),pageId)
+        val currentPosTemp = prefManager.getCurrentSumFromPref(pageId)
         if (currentPosTemp!= null){
             current_pos = currentPosTemp
         }
-        getCurrentSumFromPref()
         if (requireContext().isNetworkAvailable) {
             if (abacusType == AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
                 isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
@@ -300,18 +280,11 @@ class HalfAbacusFragment : BaseFragment(),
         }
     }
 
-    override fun goBack() {
-        mNavController.navigateUp()
-    }
-
     private fun setTempTheme() {
         if (isPurchased){
             prefManager.setCustomParam(
                 AppConstants.Settings.TheamTempView,
-                prefManager.getCustomParam(
-                    AppConstants.Settings.Theam,
-                    AppConstants.Settings.theam_Default
-                )
+                prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
             )
         }else{
             prefManager.setCustomParam(
@@ -323,9 +296,9 @@ class HalfAbacusFragment : BaseFragment(),
     private fun setDataOfNumber(fromTop: Boolean) {
         if (!isPurchased && current_pos >= AppConstants.Purchase.Purchase_limit_free) {
             if (fromTop) {
-                completePage(resources.getString(R.string.txt_page_completed_already), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_already))
             } else {
-                completePage(resources.getString(R.string.txt_page_completed_free), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
             binding.txtTitle.text =
@@ -368,9 +341,9 @@ class HalfAbacusFragment : BaseFragment(),
     private fun setDataOfDivision(fromTop: Boolean) {
         if (!isPurchased && current_pos >= AppConstants.Purchase.Purchase_limit_free) {
             if (fromTop) {
-                completePage(resources.getString(R.string.txt_page_completed_already), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_already))
             } else {
-                completePage(resources.getString(R.string.txt_page_completed_free), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
             binding.txtTitle.text =
@@ -488,9 +461,9 @@ class HalfAbacusFragment : BaseFragment(),
     private fun setDataOfMultiplication(fromTop: Boolean) {
         if (!isPurchased && current_pos >= AppConstants.Purchase.Purchase_limit_free) {
             if (fromTop) {
-                completePage(resources.getString(R.string.txt_page_completed_already), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_already))
             } else {
-                completePage(resources.getString(R.string.txt_page_completed_free), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
             binding.txtTitle.text =
@@ -546,13 +519,12 @@ class HalfAbacusFragment : BaseFragment(),
         list_abacus = dataList
         setDataOfAdditionSubtraction()
     }
-
     private fun setDataOfAdditionSubtraction() {
         if (current_pos >= list_abacus.size) {
             if (isPurchased) {
-                CompleteResetAlertDialog.showPopup(requireActivity(), this)
+                paidPageAlreadyCompletedDialog()
             } else {
-                completePage(resources.getString(R.string.txt_page_completed_already), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_already))
             }
         } else {
             binding.txtTitle.text = "${(current_pos + 1)}/$total"
@@ -791,7 +763,79 @@ class HalfAbacusFragment : BaseFragment(),
             }
         }
     }
+    // not purchased and page completed
+    private fun resetPurchaseDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_purchase_alert),getString(R.string.txt_page_reset_not)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_not_purchased,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
+    }
+    // not purchased and reset dialog click
+    private fun freePageCompleteDialog(msg : String) {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_purchase_alert), msg,
+            getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_not_purchased,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) {
+                    goBack()
+                }
+            })
+    }
+    // purchased and page already completed
+    private fun paidPageAlreadyCompletedDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_page_complete),getString(R.string.txt_page_completed_already_purchased)
+            ,getString(R.string.yes_i_want_to_start),getString(R.string.no_thanks), icon = R.drawable.ic_alert_complete_page,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    resetProgressConfirm()
+                }
 
+                override fun onConfirmationNoClick(bundle: Bundle?) {
+                    goBack()
+                }
+            })
+    }
+    // purchased and page completed
+    private fun paidPageCompleteDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_page_complete),getString(R.string.txt_page_completed_msg)
+            ,getString(R.string.yes_i_want_to_start),getString(R.string.no_thanks_continue_later), icon = R.drawable.ic_complete,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    resetProgressConfirm()
+                }
+
+                override fun onConfirmationNoClick(bundle: Bundle?) {
+                    goBack()
+                }
+            })
+    }
+    // purchased and reset page progress
+    private fun paidResetPageProgressDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_reset_page),getString(R.string.txt_reset_page_alert)
+            ,getString(R.string.yes_i_m_sure),getString(R.string.no_please_continue), icon = R.drawable.ic_alert,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    resetProgressConfirm()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
+    }
+    // reset page progress and start from 1st abacus
+    private fun resetProgressConfirm() {
+        updateToFirebase(0)
+        removeSum()
+        current_pos = 0
+        startAbacus()
+    }
+    private fun goBack() {
+        mNavController.navigateUp()
+    }
     private fun setTableDataAndVisiblilty() {
         if (list_abacus_main.size >= 2) {
             if (abacus_type == 1) {
@@ -892,32 +936,6 @@ class HalfAbacusFragment : BaseFragment(),
             binding.relativeTable.hide()
         }
 
-    }
-
-    fun getCurrentSumFromPref() {
-        try {
-            val pageSum: String = prefManager.getCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM, "{}")
-            val objJson = JSONObject(pageSum)
-            if (objJson.has(pageId)) {
-                current_pos = objJson.getInt(pageId)
-            }
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
-    }
-    private fun saveCurrentSum() {
-        try {
-            val pageSum: String = prefManager
-                .getCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM, "{}")
-            val objJson = JSONObject(pageSum)
-            objJson.put(pageId, current_pos)
-            prefManager.setCustomParam(
-                AppConstants.AbacusProgress.PREF_PAGE_SUM,
-                objJson.toString()
-            )
-        } catch (e: JSONException) {
-            e.printStackTrace()
-        }
     }
 
     private fun removeSum() {
@@ -1054,7 +1072,7 @@ class HalfAbacusFragment : BaseFragment(),
 
         if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber) {
             current_pos++
-            saveCurrentSum()
+            prefManager.saveCurrentSum(pageId,current_pos)
             prefManager.setCustomParamInt(pageId + "value", number + 1)
             setDataOfNumber(false)
         } else if (abacus_type == 0 && current_pos == list_abacus.size - 1) {
@@ -1064,17 +1082,17 @@ class HalfAbacusFragment : BaseFragment(),
                 current_pos.toString()
             )
             current_pos++
-            saveCurrentSum()
+            prefManager.saveCurrentSum(pageId,current_pos)
             if (isPurchased) {
-                completePage(resources.getString(R.string.txt_page_completed), "1")
+                paidPageCompleteDialog()
             } else {
-                completePage(resources.getString(R.string.txt_page_completed_free), "2")
+                freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
             binding.tvAns.text = ""
             binding.cardHint.hide()
             current_pos++
-            saveCurrentSum()
+            prefManager.saveCurrentSum(pageId,current_pos)
             when (abacus_type) {
                 0 -> {
                     adapterAdditionSubtraction.reset()
@@ -1283,51 +1301,4 @@ class HalfAbacusFragment : BaseFragment(),
         paramsHint.addRule(RelativeLayout.START_OF, R.id.cardAbacusQue)
         binding.cardHint.layoutParams = paramsHint
     }
-
-    fun completePage(str: String, buttonType: String) { // complete page
-        val inflater = layoutInflater
-        val alertLayout: DialogAlertBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_alert, null, false)
-        val alert = AlertDialog.Builder(requireContext())
-        alert.setView(alertLayout.root)
-        alert.setCancelable(false)
-        alertLayout.txtTitle.text = resources.getString(R.string.app_name)
-        alertLayout.txtQue.text = str
-        if (buttonType == "1") {
-            alertLayout.btnNo.hide()
-            alertLayout.btnYes.text = resources.getString(R.string.txtOk)
-            alertLayout.btnYes.setOnClickListener {
-                alertdialog?.dismiss()
-            }
-        } else {
-            alertLayout.btnYes.text = resources.getString(R.string.txt_purchase)
-
-            alertLayout.btnYes.setOnClickListener {
-                alertdialog?.dismiss()
-                goToPurchase()
-            }
-        }
-
-        alertLayout.btnNo.setOnClickListener {
-            alertdialog?.dismiss()
-            goBack()
-        }
-        alertdialog = alert.create()
-        alertdialog?.setCanceledOnTouchOutside(false)
-        val windows = alertdialog?.window
-        val colorD = ColorDrawable(Color.TRANSPARENT)
-        val insetD = InsetDrawable(colorD, 40, 5, 40, 5)
-        windows?.setBackgroundDrawable(insetD)
-        // Setting Animation for Appearing from Center
-        windows?.attributes?.windowAnimations = R.style.DialogAppearFromCenter
-        // Positioning it in Bottom Right
-        val wlp = windows?.attributes
-        wlp?.width = WindowManager.LayoutParams.WRAP_CONTENT
-        wlp?.height = WindowManager.LayoutParams.WRAP_CONTENT
-        wlp?.gravity = Gravity.CENTER
-        windows?.attributes = wlp
-        alertdialog?.show()
-    }
-
-
 }

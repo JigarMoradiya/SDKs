@@ -8,13 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.1"
-            android:scaleType="centerCrop"
-            app:layout_anchorGravity="center"
-            app:srcCompat="@drawable/bg_abacus_number" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardBack"
@@ -57,10 +50,10 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTimer"
-            txtColorApp="@{1}"
+            android:textColor="@color/black"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/screen_margin_half"
+            android:layout_marginEnd="@dimen/activity_padding16"
             android:fontFamily="@font/font_bold"
             android:gravity="center"
             android:includeFontPadding="false"
@@ -82,7 +75,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardBack">
 
@@ -124,6 +118,8 @@
                     android:layout_marginTop="@dimen/screen_margin_half"
                     android:fontFamily="@font/font_bold"
                     android:gravity="center"
+                    android:shadowColor="@color/colorPurple"
+                    android:shadowRadius="1"
                     android:paddingVertical="@dimen/activity_padding4"
                     android:text="@string/TapCorrectAns"
                     android:textColor="@color/colorPurple"
@@ -156,7 +152,7 @@
                         android:padding="@dimen/_4sdp"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize16" />
+                        android:textSize="@dimen/textSize18" />
 
 
                 </com.google.android.material.card.MaterialCardView>
@@ -185,7 +181,7 @@
                         android:padding="@dimen/_4sdp"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize16" />
+                        android:textSize="@dimen/textSize18" />
 
 
                 </com.google.android.material.card.MaterialCardView>
@@ -222,7 +218,7 @@
                         android:padding="@dimen/_4sdp"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize16" />
+                        android:textSize="@dimen/textSize18" />
 
 
                 </com.google.android.material.card.MaterialCardView>
@@ -252,7 +248,7 @@
                         android:padding="@dimen/_4sdp"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize16" />
+                        android:textSize="@dimen/textSize18" />
 
 
                 </com.google.android.material.card.MaterialCardView>

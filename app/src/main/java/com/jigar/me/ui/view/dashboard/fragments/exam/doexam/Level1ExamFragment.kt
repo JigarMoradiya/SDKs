@@ -27,8 +27,8 @@ import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.databinding.FragmentExamLevel1Binding
 import com.jigar.me.ui.view.base.BaseFragment
-import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.TestCompleteDialog
-import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.TestLeaveDialog
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
+import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.ExamCompleteDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Calculator
@@ -43,8 +43,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class Level1ExamFragment : BaseFragment(),
-    TestCompleteDialog.TestCompleteDialogInterface,
-    TestLeaveDialog.TestLeaveDialogInterface {
+    ExamCompleteDialog.TestCompleteDialogInterface{
 
     private lateinit var mBinding: FragmentExamLevel1Binding
     private val apiViewModel by viewModels<AppViewModel>()
@@ -72,7 +71,10 @@ class Level1ExamFragment : BaseFragment(),
     private fun init() {
         mCalculator = Calculator()
         handler = Handler(Looper.getMainLooper())
+        getAndStartExam()
+    }
 
+    private fun getAndStartExam(){
         if (requireContext().isNetworkAvailable) {
             if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
                 listExam = DataProvider.generateBegginerExamPaper(requireContext(),examLevel )
@@ -87,7 +89,6 @@ class Level1ExamFragment : BaseFragment(),
             onBack()
         }
     }
-
 
     private fun clickListener() {
         // blink animation
@@ -111,7 +112,11 @@ class Level1ExamFragment : BaseFragment(),
     private fun setDailyExamAbacus() {
         mBinding.progressHorizontal.max = listExam.size
         total_sec = 0
-
+        currentQuestionPos = 0
+        mBinding.cardAnswer1.isEnabled = true
+        mBinding.cardAnswer2.isEnabled = true
+        mBinding.cardAnswer3.isEnabled = true
+        mBinding.cardAnswer4.isEnabled = true
         val delay = 1000 //milliseconds
 
         runnable = object : Runnable {
@@ -278,13 +283,13 @@ class Level1ExamFragment : BaseFragment(),
         val previousCount = prefManager.getCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,0)
         prefManager.setCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,(previousCount+1))
 
-        TestCompleteDialog.showPopup(requireActivity(),totalTime,"0",totalWrong.toString(),right.toString(),listExam.size.toString(),this)
+        ExamCompleteDialog.showPopup(requireActivity(),totalTime,"0",totalWrong.toString(),right.toString(),listExam.size.toString(),this)
     }
 
     private fun onViewClick(clickType: String) {
         when (clickType) {
             "back" -> {
-                testAlertBack()
+                examLeaveAlert()
             }
             "answer1" -> {
                 if (correctAns != mBinding.txtAnswer1.text.toString()) {
@@ -338,12 +343,23 @@ class Level1ExamFragment : BaseFragment(),
     }
 
 
-    // exam leave listner
-    private fun testAlertBack() {
-        TestLeaveDialog.showPopup(requireActivity(), this)
+    // exam leave listener
+    override fun testGiveAgain() {
+        getAndStartExam()
     }
 
-    override fun testLeaveConfirm() {
+    fun examLeaveAlert() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.leave_exam_alert),getString(R.string.leave_exam_msg)
+            ,getString(R.string.yes_i_m_sure),getString(R.string.no_please_continue), icon = R.drawable.ic_alert,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    testLeaveConfirm()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
+    }
+
+    private fun testLeaveConfirm() {
         if (handler != null && runnable != null) {
             handler?.removeCallbacks(runnable!!)
         }

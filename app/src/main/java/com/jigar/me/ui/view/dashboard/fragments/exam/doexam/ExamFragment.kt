@@ -22,8 +22,8 @@ import com.jigar.me.data.model.dbtable.exam.DailyExamData
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.databinding.FragmentExamBinding
 import com.jigar.me.ui.view.base.BaseFragment
-import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.TestCompleteDialog
-import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.TestLeaveDialog
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
+import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.ExamCompleteDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.*
 import com.jigar.me.utils.extensions.*
@@ -35,8 +35,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 @AndroidEntryPoint
 class ExamFragment : BaseFragment(),
-    TestCompleteDialog.TestCompleteDialogInterface,
-    TestLeaveDialog.TestLeaveDialogInterface {
+    ExamCompleteDialog.TestCompleteDialogInterface{
 
     private lateinit var mBinding: FragmentExamBinding
     private val apiViewModel by viewModels<AppViewModel>()
@@ -71,6 +70,10 @@ class ExamFragment : BaseFragment(),
         mCalculator = Calculator()
         handler = Handler(Looper.getMainLooper())
 
+        getAndStartExam()
+    }
+
+    private fun getAndStartExam() {
         if (requireContext().isNetworkAvailable) {
             if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
                 apiViewModel.getExamAbacus(examLevel)
@@ -82,6 +85,7 @@ class ExamFragment : BaseFragment(),
             onBack()
         }
     }
+
     private fun initObserver() {
         apiViewModel.getExamAbacusResponse.observe(this) {
             when (it) {
@@ -132,6 +136,11 @@ class ExamFragment : BaseFragment(),
         mBinding.progressHorizontal.max = list_abacus.size
         (list_abacus as ArrayList<DailyExamData>).shuffle()
         total_sec = 0
+        currentQuestionPos = 0
+        mBinding.cardAnswer1.isEnabled = true
+        mBinding.cardAnswer2.isEnabled = true
+        mBinding.cardAnswer3.isEnabled = true
+        mBinding.cardAnswer4.isEnabled = true
 
         val delay = 1000 //milliseconds
 
@@ -232,7 +241,7 @@ class ExamFragment : BaseFragment(),
         val previousCount = prefManager.getCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,0)
         prefManager.setCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,(previousCount+1))
 
-        TestCompleteDialog.showPopup(
+        ExamCompleteDialog.showPopup(
             requireActivity(),
             totalTime,
             totalSkip.toString(),
@@ -245,7 +254,7 @@ class ExamFragment : BaseFragment(),
     private fun onViewClick(clickType: String) {
         when (clickType) {
             "back" -> {
-                testAlertBack()
+                examLeaveAlert()
             }
             "skip" -> {
                 totalSkip++
@@ -314,11 +323,18 @@ class ExamFragment : BaseFragment(),
 
 
     // exam leave listner
-    private fun testAlertBack() {
-        TestLeaveDialog.showPopup(requireActivity(), this)
+    fun examLeaveAlert() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.leave_exam_alert),getString(R.string.leave_exam_msg)
+            ,getString(R.string.yes_i_m_sure),getString(R.string.no_please_continue), icon = R.drawable.ic_alert,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    testLeaveConfirm()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
     }
 
-    override fun testLeaveConfirm() {
+    private fun testLeaveConfirm() {
         if (handler != null && runnable != null) {
             handler?.removeCallbacks(runnable!!)
         }
@@ -332,6 +348,9 @@ class ExamFragment : BaseFragment(),
         }
     }
     // exam complete listner
+    override fun testGiveAgain() {
+        getAndStartExam()
+    }
     override fun testCompleteClose() {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" // local
             && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" && // if yes in firebase

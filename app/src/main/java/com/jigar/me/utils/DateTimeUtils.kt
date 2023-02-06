@@ -7,6 +7,7 @@ import java.util.*
 
 object DateTimeUtils {
     var ddMMMyyyyhhmma: String = "dd MMM yyyy hh:mm a"
+    var yyyy_MM_dd_HH_mm: String = "yyyy_MM_dd_hh_mm"
 
     fun convertDateFormat(
         date: String,

@@ -17,6 +17,7 @@ import com.jigar.me.data.model.DownloadMaterialData
 import com.jigar.me.ui.view.dashboard.MainDashboardActivity
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
+import com.jigar.me.utils.DateTimeUtils
 import com.jigar.me.utils.extensions.downloadFilePath
 import com.jigar.me.utils.extensions.isStringNotBlank
 import com.jigar.me.utils.extensions.notificationManager
@@ -107,7 +108,8 @@ class PDFDownloadService : Service(), FetchObserver<Download> {
             GlobalScope.launch(Dispatchers.IO){
 
                 val url = downloadList[listIndex].pdf_path
-                val filePath = downloadFilePath()+"/"+ downloadList[listIndex].groupName.plus(".pdf")
+                val currentDateFormate =  DateTimeUtils.getDateString(Date(),DateTimeUtils.yyyy_MM_dd_HH_mm)
+                val filePath = downloadFilePath().plus("/").plus(downloadList[listIndex].groupName).plus("_").plus(currentDateFormate).plus(".pdf")
                 File(filePath).delete()
                 Handler(Looper.getMainLooper()).postDelayed({
                     if (url.isStringNotBlank() && filePath.isStringNotBlank()) {

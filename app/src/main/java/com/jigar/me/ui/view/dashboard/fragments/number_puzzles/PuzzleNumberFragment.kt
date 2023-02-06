@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatImageView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -14,7 +13,7 @@ import com.jigar.me.MyApplication
 import com.jigar.me.R
 import com.jigar.me.databinding.FragmentPuzzleNumberBinding
 import com.jigar.me.ui.view.base.BaseFragment
-import com.jigar.me.ui.view.confirm_alerts.dialogs.NumberSequenceCompleteDialog
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.NumberSequenceCompleteBottomSheet
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.PlaySound
 import com.jigar.me.utils.extensions.hide
@@ -24,7 +23,7 @@ import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class PuzzleNumberFragment : BaseFragment(), NumberSequenceCompleteDialog.NumberSequenceCompleteDialogInterface {
+class PuzzleNumberFragment : BaseFragment(), NumberSequenceCompleteBottomSheet.NumberSequenceCompleteDialogInterface {
     private lateinit var mBinding: FragmentPuzzleNumberBinding
     private var check = false
     private var gridType = 3
@@ -101,16 +100,7 @@ class PuzzleNumberFragment : BaseFragment(), NumberSequenceCompleteDialog.Number
     }
 
     private fun showCompleteDialog() {
-        NumberSequenceCompleteDialog.showPopup(requireActivity(),gridType,numbSteps,numbBestSteps,this)
-    }
-
-    private fun toolBar() {
-        val callback: OnBackPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                onBack()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+        NumberSequenceCompleteBottomSheet.showPopup(requireActivity(),gridType,numbSteps,numbBestSteps,this)
     }
 
     fun initViews() {
@@ -302,7 +292,7 @@ class PuzzleNumberFragment : BaseFragment(), NumberSequenceCompleteDialog.Number
 
     private fun onBack() {
         saveValueBoard()
-        mNavController?.navigateUp()
+        mNavController.navigateUp()
     }
 
     // complete dialog click listener

@@ -30,19 +30,14 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtAbacus"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:fontFamily="@font/font_bold"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:paddingStart="@dimen/activity_padding4"
+            android:layout_height="wrap_content"
             tools:text="SET 1"
+            style="@style/mainTitle"
+            android:layout_marginHorizontal="@dimen/title_margin"
             app:layout_constraintEnd_toStartOf="@+id/txtStartWith1"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/textSizeSuperExtraLarge"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtStartWith1"

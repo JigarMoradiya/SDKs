@@ -30,20 +30,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
-            txtColorApp="@{0}"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_40sdp"
-            android:fontFamily="@font/font_bold"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/activity_padding4"
-            android:paddingEnd="@dimen/activity_padding4"
-            android:shadowColor="@color/colorHeadingBlack_00"
-            android:shadowRadius="1"
+            android:layout_height="wrap_content"
             android:text="@string/downloadMaterial"
-            android:textSize="@dimen/textSizeLarge"
+            style="@style/mainTitle"
+            android:layout_marginHorizontal="@dimen/title_margin"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/adView"
@@ -76,6 +70,7 @@
                 android:padding="@dimen/activity_padding8"
                 app:srcCompat="@drawable/ic_download_arrow" />
         </com.google.android.material.card.MaterialCardView>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewMaterial"

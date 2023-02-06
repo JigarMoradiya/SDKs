@@ -20,17 +20,13 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtTitle"
-                android:textColor="@color/textColor1"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_bold"
-                android:gravity="center_vertical"
-                android:padding="@dimen/activity_padding12"
-                android:text="@string/txt_Toddler_Range"
-                android:textSize="@dimen/textSizeExtraLarge"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="@dimen/activity_padding16"
+                style="@style/mainTitle"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/txt_Toddler_Range" />
 
             <View
                 android:id="@+id/viewDivider"
@@ -92,45 +88,45 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnYes"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height_small"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/activity_padding20"
+                android:backgroundTint="@color/colorButton"
+                android:fontFamily="@font/font_bold"
+                android:insetTop="0dp"
+                android:layout_marginStart="@dimen/activity_padding8"
+                android:insetBottom="0dp"
+                android:letterSpacing="0"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="0dp"
+                android:text="@string/submit"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_height_small_text_size"
+                app:cornerRadius="@dimen/button_corner_radius"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_edt_to" />
+
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/btnNo"
-                android:textColor="@color/textColor0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/activity_padding8"
-                android:layout_marginEnd="@dimen/activity_padding4"
-                android:alpha="0.4"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="@font/font_semibold"
-                android:padding="@dimen/activity_padding8"
+                android:layout_gravity="center"
+                android:fontFamily="@font/font_bold"
+                android:includeFontPadding="false"
+                android:padding="@dimen/activity_padding16"
                 android:text="@string/txtCancel"
-                android:textSize="@dimen/textSizeLarge"
-                app:layout_constraintEnd_toStartOf="@+id/btnYes"
-                app:layout_constraintTop_toBottomOf="@+id/layout_edt_to" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/btnYes"
-                android:textColor="@color/textColor0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_padding4"
-                android:layout_marginTop="@dimen/activity_padding8"
-                android:layout_marginEnd="@dimen/activity_padding4"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="@font/font_semibold"
-                android:padding="@dimen/activity_padding8"
-                android:text="@string/txtOk"
-                android:textSize="@dimen/textSizeLarge"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_edt_to" />
-
-
-            <androidx.legacy.widget.Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/activity_padding8"
+                android:textColor="@color/colorListingHeading"
+                android:textSize="@dimen/textSizeRegular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnYes" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

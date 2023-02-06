@@ -31,7 +31,6 @@ class Sudoku9WorkManager @AssistedInject constructor(
     val dataManager : SudokuDB
 ) : CoroutineWorker(contexts, params) {
     private val context : Context = contexts
-    private val TAG = "jigar_HelloWorldWorker"
     private var workProgress = 0
     private var temp_list_number = ArrayList<String>()
     private val list_suduko = ArrayList<String>()
@@ -43,10 +42,9 @@ class Sudoku9WorkManager @AssistedInject constructor(
     private lateinit var prefManager : AppPreferencesHelper
 
     override suspend fun doWork(): Result = coroutineScope {
-        prefManager = AppPreferencesHelper(context, Constants.PREF_NAME)
+        prefManager = AppPreferencesHelper(context, AppConstants.PREF_NAME)
         level = inputData.getString(SudokuConst4.Level) ?: SudukoConst.Level_9By9
         roomId = inputData.getInt(SudokuConst4.RoomId, 9999999).toString()
-        Log.e(TAG, "Starting Work. level = "+level+" roomId = "+roomId)
         val jobs = try {
             async {
                 createSudoStart()
@@ -6800,7 +6798,6 @@ class Sudoku9WorkManager @AssistedInject constructor(
                 )
                 list_suduko_result.removeAt(random1)
             }
-            //            Log.e(TAG, "GenrateSudoko:==============");
             if (level.equals(SudukoConst.Level_Hard, ignoreCase = true)) {
                 if (list_suduko_random[random] == 2 || list_suduko_random[random] == 3) {
                     list_suduko_random.removeAt(random)
@@ -6810,14 +6807,12 @@ class Sudoku9WorkManager @AssistedInject constructor(
                     list_suduko_random.removeAt(random)
                 }
             }
-            if (i == 8) {
-                prefManager.setCustomParamInt(SudukoConst.totalSudoku,roomId.toInt())
-
-                // todo maintain 50 record history
-                dataManager.deletePreviousSudukoPlay(level)
-                sendBroadcastOfCompletion()
-            }
         }
+        prefManager.setCustomParamInt(SudukoConst.totalSudoku,roomId.toInt())
+
+        // todo maintain 50 record history
+        dataManager.deletePreviousSudukoPlay(level)
+        sendBroadcastOfCompletion()
     }
     private fun genrateRandomNumber(): Int {
         var randomInt = 0
@@ -6854,7 +6849,6 @@ class Sudoku9WorkManager @AssistedInject constructor(
         return randomInt
     }
     private fun sendBroadcastOfCompletion() {
-        Log.e(TAG, "Work Complete.")
         // event log for sudoku
         MyApplication.logEvent(AppConstants.FirebaseEvents.Sudoku, Bundle().apply {
             putString(AppConstants.FirebaseEvents.deviceId, prefManager.getDeviceId())

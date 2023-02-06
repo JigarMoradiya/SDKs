@@ -3,6 +3,7 @@ package com.jigar.me.ui.view.dashboard.fragments.abacus.half
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -106,6 +107,7 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
 
     private fun setBead() {
         val theam: String = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg)
+        Log.e("jigarLogs"," = setTempTheme = "+theam)
         when (theam) {
             AppConstants.Settings.theam_eyes -> {
                 val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_eyes, requireActivity())

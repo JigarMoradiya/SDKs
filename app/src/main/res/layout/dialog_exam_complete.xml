@@ -18,18 +18,15 @@
 
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtTitle"
-                android:textColor="@color/textColor1"
-                android:layout_width="0dp"
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_bold"
-                android:gravity="center"
-                android:layout_marginTop="@dimen/activity_padding12"
-                android:text="@string/result"
-                android:textSize="@dimen/textSize16"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/activity_padding16"
+                style="@style/mainTitle"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/simpleRatingBar"
+                android:text="@string/result" />
 
             <com.willy.ratingbar.ScaleRatingBar
                 android:id="@+id/simpleRatingBar"
@@ -38,9 +35,10 @@
                 app:srb_numStars="5"
                 app:srb_minimumStars="1"
                 app:srb_rating="2"
-                app:srb_starWidth="@dimen/_24sdp"
-                app:srb_starHeight="@dimen/_24sdp"
-                app:srb_starPadding="@dimen/_10sdp"
+                app:srb_starWidth="32dp"
+                app:srb_starHeight="32dp"
+                android:layout_marginTop="@dimen/activity_padding8"
+                app:srb_starPadding="@dimen/activity_padding12"
                 app:srb_stepSize="0.1"
                 app:srb_isIndicator="true"
                 app:srb_clickable="false"
@@ -48,10 +46,9 @@
                 app:srb_clearRatingEnabled="true"
                 app:srb_drawableEmpty="@drawable/start_empty"
                 app:srb_drawableFilled="@drawable/star_filled"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitle">
+                app:layout_constraintTop_toTopOf="parent">
             </com.willy.ratingbar.ScaleRatingBar>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -60,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                android:layout_marginTop="@dimen/screen_margin_half"
+                android:layout_marginTop="@dimen/activity_padding12"
                 app:layout_constraintEnd_toStartOf="@+id/linearTotalTime"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/simpleRatingBar">
@@ -248,48 +245,68 @@
                     android:textSize="@dimen/textSizeSmall" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/btnNo"
-                android:textColor="@color/textColor0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/screen_margin"
-                android:layout_marginEnd="@dimen/activity_padding4"
-                android:alpha="0.4"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="@font/font_semibold"
-                android:padding="@dimen/activity_padding8"
-                android:text="@string/txtOk"
-                android:textSize="@dimen/textSizeLarge"
-                app:layout_constraintEnd_toStartOf="@+id/btnYes"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnGiveExamAgain"
+                android:layout_width="180dp"
+                android:layout_height="@dimen/button_height_small"
+                android:layout_gravity="center_horizontal"
+                android:backgroundTint="@color/colorButton"
+                android:fontFamily="@font/font_bold"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:letterSpacing="0"
+                android:paddingVertical="0dp"
+                android:text="@string/give_exam_again"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_height_small_text_size"
+                app:cornerRadius="@dimen/button_corner_radius"
+                android:layout_marginTop="@dimen/activity_padding20"
+                android:layout_marginEnd="@dimen/activity_padding8"
+                app:layout_constraintEnd_toStartOf="@+id/btnCheckResult"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintTop_toBottomOf="@+id/linearTotalTime" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCheckResult"
+                android:layout_width="180dp"
+                android:layout_height="@dimen/button_height_small"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/activity_padding20"
+                android:backgroundTint="@color/colorButton"
+                android:fontFamily="@font/font_bold"
+                android:insetTop="0dp"
+                android:layout_marginStart="@dimen/activity_padding8"
+                android:insetBottom="0dp"
+                android:letterSpacing="0"
+                android:paddingHorizontal="32dp"
+                android:paddingVertical="0dp"
+                android:text="@string/checkResult"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/button_height_small_text_size"
+                app:cornerRadius="@dimen/button_corner_radius"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btnGiveExamAgain"
+                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime" />
+
+
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/btnYes"
-                android:textColor="@color/textColor0"
+                android:id="@+id/tvClose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_padding4"
-                android:layout_marginTop="@dimen/screen_margin"
-                android:layout_marginEnd="@dimen/activity_padding4"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="@font/font_semibold"
-                android:padding="@dimen/activity_padding8"
-                android:text="@string/ShowResult"
-                android:textSize="@dimen/textSizeLarge"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime"
-                app:textAllCaps="true" />
-
-
-            <androidx.legacy.widget.Space
-                android:layout_width="0dp"
-                android:layout_height="@dimen/activity_padding8"
+                android:layout_gravity="center"
+                android:fontFamily="@font/font_bold"
+                android:includeFontPadding="false"
+                android:padding="@dimen/activity_padding16"
+                android:text="@string/please_close"
+                android:textColor="@color/colorListingHeading"
+                android:textSize="@dimen/textSizeRegular"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnYes" />
-
+                app:layout_constraintTop_toBottomOf="@+id/btnCheckResult" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

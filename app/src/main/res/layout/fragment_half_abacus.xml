@@ -13,14 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgBG"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.08"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/bg_abacus_number" />
-
         <ScrollView
             android:id="@+id/scrollMenu"
             android:layout_width="wrap_content"
@@ -311,8 +303,8 @@
                                 android:layout_marginBottom="@dimen/_2sdp"
                                 android:paddingStart="@dimen/_16sdp"
                                 android:paddingEnd="@dimen/_16sdp"
-                                app:srcCompat="@color/green_600"
-                                android:visibility="visible" />
+                                android:visibility="visible"
+                                app:srcCompat="@color/green_600" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/tvAns"

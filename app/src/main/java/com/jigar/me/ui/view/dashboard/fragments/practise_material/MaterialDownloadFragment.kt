@@ -16,7 +16,9 @@ import com.jigar.me.databinding.FragmentMaterialDownloadBinding
 import com.jigar.me.internal.service.download.PDFDownloadService
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.inapp.BillingRepository
-import com.jigar.me.ui.view.confirm_alerts.dialogs.PurchaseMaterialDownloadAlertDialog
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
+import com.jigar.me.ui.view.dashboard.fragments.practise_material.adater.ImageOverlayView
+import com.jigar.me.ui.view.dashboard.fragments.practise_material.adater.MaterialDownloadAdapter
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
 import com.jigar.me.utils.AppConstants
@@ -25,14 +27,9 @@ import com.jigar.me.utils.extensions.*
 import com.stfalcon.frescoimageviewer.ImageViewer
 import com.stfalcon.frescoimageviewer.ImageViewer.OnImageChangeListener
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MaterialDownloadFragment :
-    BaseFragment(),MaterialDownloadAdapter.OnItemClickListener,
-    PurchaseMaterialDownloadAlertDialog.PurchaseMaterialAlertDialogInterface {
+class MaterialDownloadFragment : BaseFragment(), MaterialDownloadAdapter.OnItemClickListener{
     private lateinit var binding: FragmentMaterialDownloadBinding
     private val inAppViewModel by viewModels<InAppViewModel>()
     private val appViewModel by viewModels<AppViewModel>()
@@ -133,7 +130,7 @@ class MaterialDownloadFragment :
         }else{
             binding.txtTitle.text = getString(R.string.maths_material)
         }
-        binding.txtStoragePath.text = HtmlCompat.fromHtml("<b>Material Storage Path : </b>"+context?.downloadFilePath(),HtmlCompat.FROM_HTML_MODE_COMPACT)
+        binding.txtStoragePath.text = HtmlCompat.fromHtml("<font color='#EE0000'><b>Download Material Storage Path : </b></font>"+context?.downloadFilePath(),HtmlCompat.FROM_HTML_MODE_COMPACT)
 
         if (requireContext().isNetworkAvailable) {
             if (prefManager.getCustomParam(AppConstants.Extras_Comman.DownloadType + "_" + downloadType,"").isEmpty()) {
@@ -153,7 +150,9 @@ class MaterialDownloadFragment :
 
     private fun initListener() {
         binding.cardBack.onClick { onBack() }
-        binding.cardDownload.onClick { onDownloadItemClick() }
+        binding.cardDownload.onClick {
+            onDownloadItemClick()
+        }
     }
 
     private fun setDownloadMaterial() {
@@ -201,37 +200,22 @@ class MaterialDownloadFragment :
             }
 
         } else {
-            PurchaseMaterialDownloadAlertDialog.showPopup(requireActivity(), this)
+            notPurchaseDialog()
         }
     }
 
-    // click from adapter
-    override fun onItemDownloadClick(position: Int) {
-
-        if (requireContext().isNetworkAvailable) {
-            this.downloadPos = position
-            if (isPurchase){
-                PDFDownloadService.startPDFDownload(requireContext(), listOf(listDownloadMaterial[downloadPos]))
-            }else{
-                appViewModel.getInAppSKUDetail(BillingRepository.AbacusSku.PRODUCT_ID_material_nursery).observe(viewLifecycleOwner){ list ->
-                    if (list.isNotEmpty()){
-                        fetchSKUDetail(list[0])
-                    }
+    // not purchased
+    private fun notPurchaseDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_purchase_alert),getString(R.string.txt_page_practise_material_not_purchased)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_not_purchased,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
                 }
-            }
-        } else {
-            showToast(R.string.no_internet)
-        }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
     }
-
-    private fun getImageChangeListener(): OnImageChangeListener {
-        return OnImageChangeListener { position ->
-            overlayView.setTitleText(listDownloadMaterial[parentPos].groupName)
-            overlayView.setDescription(listImages[position].description)
-        }
-    }
-
-    override fun onPurchaseClick() {
+    private fun goToPurchase() {
         if (requireContext().isNetworkAvailable) {
             val type = if (downloadType == AppConstants.Extras_Comman.DownloadType_Maths) {
                 BillingRepository.AbacusSku.PRODUCT_ID_material_maths
@@ -246,6 +230,27 @@ class MaterialDownloadFragment :
 
         } else {
             showToast(R.string.no_internet)
+        }
+    }
+    // click from adapter
+    override fun onItemDownloadClick(position: Int) {
+
+        if (requireContext().isNetworkAvailable) {
+            this.downloadPos = position
+            if (isPurchase){
+                PDFDownloadService.startPDFDownload(requireContext(), listOf(listDownloadMaterial[downloadPos]))
+            }else{
+                notPurchaseDialog()
+            }
+        } else {
+            showToast(R.string.no_internet)
+        }
+    }
+
+    private fun getImageChangeListener(): OnImageChangeListener {
+        return OnImageChangeListener { position ->
+            overlayView.setTitleText(listDownloadMaterial[parentPos].groupName)
+            overlayView.setDescription(listImages[position].description)
         }
     }
 

@@ -13,6 +13,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager.widget.ViewPager
@@ -24,6 +25,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
 import com.eftimoff.viewpagertransformers.DepthPageTransformer
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.jigar.me.MyApplication
 import com.jigar.me.R
 import com.jigar.me.data.local.data.HomeBanner
@@ -35,11 +40,14 @@ import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONException
+import org.json.JSONObject
 import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
+    private var root : View? = null
     private val appViewModel by viewModels<AppViewModel>()
 
     private lateinit var bannerPagerAdapter: BannerPagerAdapter
@@ -53,12 +61,16 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
     private val PERIOD_MS: Long = 5000 // time in milliseconds between successive task executions.
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
-        initViews()
-        initListener()
-        return binding.root
+        if (root == null){
+            binding = FragmentHomeBinding.inflate(inflater, container, false)
+            root = binding.root
+            initViews()
+            initListener()
+        }
+        return root!!
     }
     private fun initViews() {
+        getTrackData()
         setViewPager()
     }
 
@@ -257,5 +269,33 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
         }
     }
 
+    private fun getTrackData() {
+        FirebaseDatabase.getInstance().reference.child(
+            AppConstants.AbacusProgress.Track + "/" + prefManager.getDeviceId()
+        ).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(@NonNull snapshot: DataSnapshot) {
+                for (snapshotdata in snapshot.children) {
+                    val pageId = snapshotdata.key!!
+                    val mapMessage = snapshotdata.value as HashMap<*, *>
+                    val position = mapMessage[AppConstants.AbacusProgress.Position] as Long
+                    try {
+                        val pageSum: String = prefManager.getCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM, "{}")
+                        val objJson = JSONObject(pageSum)
+                        objJson.put(pageId, (position + 1))
+                        prefManager.setCustomParam(
+                                AppConstants.AbacusProgress.PREF_PAGE_SUM,
+                                objJson.toString()
+                            )
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }
+                prefManager.setCustomParam(AppConstants.AbacusProgress.TrackFetch, "Y")
+            }
+
+            override fun onCancelled(@NonNull error: DatabaseError) {
+            }
+        })
+    }
 
 }

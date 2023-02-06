@@ -9,6 +9,7 @@ import com.jigar.me.data.model.pages.AdditionSubtractionPage
 import com.jigar.me.databinding.RawPagelistChildBinding
 import com.jigar.me.databinding.RawPagelistParentBinding
 import com.jigar.me.utils.CommonUtils
+import com.jigar.me.utils.CommonUtils.getCurrentSumFromPref
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.layoutInflater
 
@@ -61,7 +62,7 @@ class AdditionSubtractionPageListAdapter(private var listData: ArrayList<Additio
             holder.binding.title = data.PageName
             holder.binding.desc = data.SortDesc
 
-            if (data.page_id?.let { CommonUtils.getCurrentSumFromPref(context, it) } != null){
+            if (data.page_id?.let { context.getCurrentSumFromPref(it) } != null){
                 CommonUtils.blinkView(holder.binding.imgContinueIndicator)
             }else{
                 holder.binding.imgContinueIndicator.hide()

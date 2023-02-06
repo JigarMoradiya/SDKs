@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/activity_padding12"
-        android:layout_marginHorizontal="@dimen/_30sdp"
         app:cardElevation="@dimen/card_elevation"
         app:cardMaxElevation="@dimen/card_elevation"
         app:cardUseCompatPadding="true">
@@ -21,14 +20,12 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtTitle"
-                android:textColor="@color/textColor1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_bold"
                 android:gravity="center"
                 android:layout_marginTop="@dimen/activity_padding12"
                 android:text="@string/result"
-                android:textSize="@dimen/textSize16"
+                style="@style/mainTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

@@ -15,14 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.08"
-            android:scaleType="centerCrop"
-            app:layout_anchorGravity="center"
-            app:srcCompat="@drawable/bg_abacus_number" />
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardBack"
             android:layout_width="wrap_content"
@@ -42,17 +34,14 @@
         </com.google.android.material.card.MaterialCardView>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
-            android:textColor="@color/textColor0"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/font_extra_bold"
-            android:gravity="center"
-            android:text="@string/_4_x_4_puzzle"
             android:textSize="@dimen/textSizeSuperExtraLarge"
-            android:layout_marginStart="@dimen/activity_padding8"
+            style="@style/mainTitle"
+            android:layout_marginHorizontal="@dimen/title_margin"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtCurrentMoves"

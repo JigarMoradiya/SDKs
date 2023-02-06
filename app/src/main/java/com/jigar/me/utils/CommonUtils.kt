@@ -37,10 +37,23 @@ object CommonUtils {
         animation.repeatMode = Animation.REVERSE //animation will start from end point once ended.
         view.startAnimation(animation) //to start animation
     }
-    fun getCurrentSumFromPref(context: Context,pageId : String) : Int? {
+    fun AppPreferencesHelper.getCurrentSumFromPref(pageId : String) : Int? {
         var currentPos : Int? = null
         try {
-            val pageSum: String = AppPreferencesHelper(context, AppConstants.PREF_NAME)
+            val pageSum: String = getCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM, "{}")
+            val objJson = JSONObject(pageSum)
+            if (objJson.has(pageId)) {
+                currentPos = objJson.getInt(pageId)
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return currentPos
+    }
+    fun Context.getCurrentSumFromPref(pageId : String) : Int? {
+        var currentPos : Int? = null
+        try {
+            val pageSum: String = AppPreferencesHelper(this, AppConstants.PREF_NAME)
                 .getCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM, "{}")
             val objJson = JSONObject(pageSum)
             if (objJson.has(pageId)) {
@@ -51,7 +64,16 @@ object CommonUtils {
         }
         return currentPos
     }
-
+    fun AppPreferencesHelper.saveCurrentSum(pageId : String, current_pos : Int) {
+        try {
+            val pageSum: String = getCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM, "{}")
+            val objJson = JSONObject(pageSum)
+            objJson.put(pageId, current_pos)
+            setCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM,objJson.toString())
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+    }
     private fun get2Decimal(value: Double): String {
         val df = DecimalFormat("#.##")
         df.roundingMode = RoundingMode.DOWN

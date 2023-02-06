@@ -14,7 +14,7 @@ import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
 import com.jigar.me.ui.view.base.abacus.AbacusMasterView
 import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
-import com.jigar.me.ui.view.confirm_alerts.dialogs.PurchaseAlertDialog
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.confirm_alerts.dialogs.ToddlerRangeDialog
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
@@ -28,7 +28,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialogInterface,
-    PurchaseAlertDialog.PurchaseAlertDialogInterface, AbacusMasterBeadShiftListener,
+    AbacusMasterBeadShiftListener,
     OnAbacusValueChangeListener {
     private lateinit var binding: FragmentFullAbacusBinding
     private var values: Int = 1
@@ -121,12 +121,26 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             } else {
                 setCustomParam(AppConstants.Settings.SW_Random,"N")
                 setSwitchs(false)
-                PurchaseAlertDialog.showPopup(requireActivity(),this@FullAbacusFragment)
+                notPurchaseDialog()
             }
         }
 
     }
+    // not purchased
+    private fun notPurchaseDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_purchase_alert),getString(R.string.txt_page_full_abacus_not_purchased)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_not_purchased,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
+    }
 
+    private fun goToPurchase() {
+        mNavController.navigate(R.id.action_fullAbacusFragment_to_purchaseFragment)
+    }
     private fun ads() {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
             prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&
@@ -171,12 +185,8 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     }
     private fun setSwitchs(isSpeak: Boolean) {
         with(prefManager){
-            if (getCustomParam(AppConstants.Settings.SW_Random, "") == "Y") {
-                binding.swRandom.isChecked = true
-            }
-            if (getCustomParam(AppConstants.Settings.SW_Reset, "") == "Y") {
-                binding.swReset.isChecked = true
-            }
+            binding.swRandom.isChecked = getCustomParam(AppConstants.Settings.SW_Random, "") == "Y"
+            binding.swReset.isChecked = getCustomParam(AppConstants.Settings.SW_Reset, "") == "Y"
             random_min = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
             random_max = getCustomParamInt(AppConstants.Settings.SW_Range_max,101)
             binding.txtRange.text = requireContext().resources.getString(R.string.txt_From) + " " + random_min + " " + requireContext().resources.getString(
@@ -213,11 +223,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             setCustomParamInt(AppConstants.Settings.Toddler_No,getCustomParamInt(AppConstants.Settings.SW_Range_min,1))
             setSwitchs(true)
         }
-    }
-
-    // PurchaseAlertDialog click listener
-    override fun onPurchaseClick() {
-        mNavController.navigate(R.id.action_fullAbacusFragment_to_purchaseFragment)
     }
 
     // abacus Bead Shift Listener

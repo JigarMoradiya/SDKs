@@ -11,12 +11,12 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 android {
-    compileSdkVersion 33
+    compileSdkVersion 32
 
     defaultConfig {
         applicationId 'com.jigar.me'
         minSdkVersion 23
-        targetSdkVersion 33
+        targetSdkVersion 32
         versionCode 12
         versionName "1.2.4"
         vectorDrawables.useSupportLibrary = true
@@ -145,7 +145,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
 
     // admob ads
-    implementation 'com.google.android.gms:play-services-ads:21.4.0'
+    implementation 'com.google.android.gms:play-services-ads:21.5.0'
     // Calculator
     implementation 'com.fathzer:javaluator:3.0.2'
 

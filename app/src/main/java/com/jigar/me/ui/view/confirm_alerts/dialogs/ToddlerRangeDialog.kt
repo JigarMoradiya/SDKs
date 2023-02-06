@@ -10,6 +10,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.jigar.me.R
+import com.jigar.me.databinding.DialogExamCompleteBinding
 import com.jigar.me.databinding.DialogToddlerRangeBinding
 import com.jigar.me.utils.extensions.onClick
 
@@ -22,16 +23,8 @@ object ToddlerRangeDialog {
     }
 
     fun showPopup(
-        activity: Activity,
-        fromValue: String,
-        toValue: String,
-        listener: ToddlerRangeDialogInterface
-    ) {
-
-        val inflater = activity.layoutInflater
-        val alertLayout: DialogToddlerRangeBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_toddler_range, null, false)
-
+        activity: Activity,fromValue: String,toValue: String,listener: ToddlerRangeDialogInterface) {
+        val alertLayout = DialogToddlerRangeBinding.inflate(activity.layoutInflater,null,false)
         val alertBuilder = AlertDialog.Builder(activity)
         alertBuilder.setView(alertLayout.root)
 

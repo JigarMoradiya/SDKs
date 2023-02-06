@@ -3,6 +3,7 @@ package com.jigar.me.ui.view.dashboard.fragments.starts
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,8 @@ class SplashFragment : BaseFragment() {
     }
 
     private fun initViews() {
+        val androidId = Settings.Secure.getString(requireContext().contentResolver, Settings.Secure.ANDROID_ID)
+        prefManager.setDeviceId(androidId)
         if (prefManager.getBaseUrl().isEmpty()) {
             if (requireContext().isNetworkAvailable){
                 getFBConstant()

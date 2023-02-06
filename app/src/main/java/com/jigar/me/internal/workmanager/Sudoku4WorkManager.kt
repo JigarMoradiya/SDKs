@@ -43,7 +43,7 @@ class Sudoku4WorkManager @AssistedInject constructor(
     private lateinit var prefManager : AppPreferencesHelper
 
     override suspend fun doWork(): Result = coroutineScope {
-        prefManager = AppPreferencesHelper(context, Constants.PREF_NAME)
+        prefManager = AppPreferencesHelper(context, AppConstants.PREF_NAME)
         level = inputData.getString(SudokuConst4.Level) ?: SudukoConst.Level_4By4
         roomId = inputData.getInt(SudokuConst4.RoomId, 9999999).toString()
         Log.e(TAG, "Starting Work. level = "+level+" roomId = "+roomId)

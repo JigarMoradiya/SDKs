@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
 import com.jigar.me.data.pref.AppPreferencesHelper
@@ -78,7 +79,7 @@ class AbacusMasterRowEngine(
         beadDrawables_eyes_smaile = ArrayList()
         theam = AppPreferencesHelper(context,AppConstants.PREF_NAME)
             .getCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-
+        Log.e("jigarLogs","setTempTheme theam1 = "+theam)
         when {
             theam.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true) -> {
                 beadDrawables_eyes.add(ContextCompat.getDrawable(context, R.drawable.poligon_gray))

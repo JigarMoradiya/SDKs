@@ -106,21 +106,15 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
+            style="@style/mainTitle"
             android:layout_width="0dp"
-            android:layout_height="@dimen/_40sdp"
-            android:fontFamily="@font/font_bold"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/activity_padding4"
-            android:paddingEnd="@dimen/activity_padding4"
-            android:shadowColor="@color/colorHeadingBlack_00"
-            android:shadowRadius="1"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/title_margin"
             android:text="@string/txt_setting_title"
-            android:textColor="@color/textColor0"
-            android:textSize="@dimen/textSizeLarge"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintEnd_toEndOf="@+id/cardPurchase"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
 
         <androidx.core.widget.NestedScrollView
@@ -243,9 +237,9 @@
                             android:background="@color/gray_dark50" />
 
                         <RelativeLayout
+                            android:id="@+id/relThemeEgg"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relThemeEgg"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -292,9 +286,9 @@
                             android:background="@color/gray_dark50" />
 
                         <RelativeLayout
+                            android:id="@+id/relThemeStar"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relThemeStar"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -349,9 +343,9 @@
                             android:background="@color/gray_dark50" />
 
                         <RelativeLayout
+                            android:id="@+id/relThemeEyes"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relThemeEyes"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -406,9 +400,9 @@
                             android:background="@color/gray_dark50" />
 
                         <RelativeLayout
+                            android:id="@+id/relThemeShape"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relThemeShape"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -476,9 +470,9 @@
                         android:orientation="vertical">
 
                         <RelativeLayout
+                            android:id="@+id/relHintSound"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relHintSound"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -532,9 +526,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relAbacusSound"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relAbacusSound"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -579,9 +573,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relAutoReset"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relAutoReset"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -626,9 +620,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relSudokuSound"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relSudokuSound"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -673,9 +667,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relNumberPuzzleSound"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relNumberPuzzleSound"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -734,9 +728,9 @@
                         android:orientation="vertical">
 
                         <RelativeLayout
+                            android:id="@+id/relDisplayAbacusNumber"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relDisplayAbacusNumber"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -780,9 +774,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relDisplayHelpMessage"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relDisplayHelpMessage"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -826,9 +820,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relHideTable"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relHideTable"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -871,9 +865,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relLeftHand"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relLeftHand"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -932,9 +926,9 @@
                         android:orientation="vertical">
 
                         <RelativeLayout
+                            android:id="@+id/relAnswerStep"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relAnswerStep"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 
@@ -980,9 +974,9 @@
                             android:background="@color/gray_dark70" />
 
                         <RelativeLayout
+                            android:id="@+id/relAnswerFinal"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_32sdp"
-                            android:id="@+id/relAnswerFinal"
                             android:paddingStart="@dimen/activity_padding8"
                             android:paddingEnd="@dimen/activity_padding8">
 

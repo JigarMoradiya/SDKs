@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.jigar.me.R
+import com.jigar.me.databinding.DialogAboutSudokuBinding
 import com.jigar.me.databinding.DialogSudokuCompleteBinding
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
@@ -17,21 +18,15 @@ object SudokuCompleteDialog {
 
     var alertdialog: AlertDialog? = null
 
-    fun hideDialog() {
-        alertdialog?.dismiss()
-    }
-
     fun showPopup(context: Context,totalTime: String,listener: SudokuCompleteDialogInterface) {
 
-        val inflater = context.layoutInflater
-        val alertLayout: DialogSudokuCompleteBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_sudoku_complete, null, false)
+        val alertLayout = DialogSudokuCompleteBinding.inflate(context.layoutInflater,null,false)
         val alertBuilder = AlertDialog.Builder(context)
         alertBuilder.setView(alertLayout.root)
 
         alertLayout.txtTotalTime.text = totalTime
         alertLayout.btnYes.onClick {
-            hideDialog()
+            alertdialog?.dismiss()
             listener.sudokuCompleteDialogCloseClick()
         }
         alertBuilder.setView(alertLayout.root)

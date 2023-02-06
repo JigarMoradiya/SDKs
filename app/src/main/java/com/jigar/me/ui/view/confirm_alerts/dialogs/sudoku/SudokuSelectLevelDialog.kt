@@ -9,6 +9,7 @@ import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.jigar.me.R
+import com.jigar.me.databinding.DialogSudokuCompleteBinding
 import com.jigar.me.databinding.DialogSudokuSelectLevelBinding
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
@@ -18,23 +19,16 @@ object SudokuSelectLevelDialog {
 
     var alertdialog: AlertDialog? = null
 
-    fun hideDialog() {
-        alertdialog?.dismiss()
-    }
-
     fun showPopup(context: Context,listener: SudokuSelectLevelDialogInterface) {
-
-        val inflater = context.layoutInflater
-        val mBinding: DialogSudokuSelectLevelBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_sudoku_select_level, null, false)
+        val mBinding = DialogSudokuSelectLevelBinding.inflate(context.layoutInflater,null,false)
         val alertBuilder = AlertDialog.Builder(context)
         alertBuilder.setView(mBinding.root)
 
         mBinding.imgClose.onClick {
-            hideDialog()
+            alertdialog?.dismiss()
         }
         mBinding.txtStart.onClick {
-            hideDialog()
+            alertdialog?.dismiss()
             val level = when {
                 mBinding.rdchildLevelVeryHard.isChecked -> {
                     SudukoConst.Level_Very_Hard

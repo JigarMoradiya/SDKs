@@ -16,14 +16,16 @@
     <dimen name="twopointfive">2.5dp</dimen>
 
 
-    <dimen name="button_corner_radius">@dimen/_12sdp</dimen>
+    <dimen name="button_corner_radius">8dp</dimen>
 
-    <dimen name="activity_padding16">@dimen/_16sdp</dimen>
-    <dimen name="activity_padding12">@dimen/_12sdp</dimen>
-    <dimen name="activity_padding10">@dimen/_10sdp</dimen>
-    <dimen name="activity_padding6">@dimen/_6sdp</dimen>
-    <dimen name="activity_padding8">@dimen/_8sdp</dimen>
-    <dimen name="activity_padding4">@dimen/_4sdp</dimen>
+    <dimen name="activity_padding20">20dp</dimen>
+    <dimen name="activity_padding16">16dp</dimen>
+    <dimen name="activity_padding12">12dp</dimen>
+    <dimen name="activity_padding10">10dp</dimen>
+    <dimen name="activity_padding8">8dp</dimen>
+    <dimen name="activity_padding6">6dp</dimen>
+    <dimen name="activity_padding4">4dp</dimen>
+    <dimen name="title_margin">4dp</dimen>
 
     <dimen name="sudoku_number_dimen">@dimen/_36sdp</dimen>
 
@@ -40,48 +42,43 @@
     <dimen name="exam_option_round">@dimen/_40sdp</dimen>
     <dimen name="exam_option_round_corner">@dimen/_20sdp</dimen>
 
-    <dimen name="screen_margin">@dimen/_12sdp</dimen>
-    <dimen name="screen_margin_half">@dimen/_6sdp</dimen>
-    <dimen name="quiz_progress_height">@dimen/_8sdp</dimen>
+    <dimen name="screen_margin">12dp</dimen>
+    <dimen name="screen_margin_half">6dp</dimen>
+    <dimen name="quiz_progress_height">10dp</dimen>
 
-    <dimen name="card_elevation">@dimen/_1sdp</dimen>
-    <dimen name="card_elevation2">@dimen/_2sdp</dimen>
-    <dimen name="card_elevation3">@dimen/_3sdp</dimen>
-    <dimen name="card_elevation4">@dimen/_4sdp</dimen>
-    <dimen name="card_corner_radius">@dimen/_6sdp</dimen>
-    <dimen name="card_corner_radius4">@dimen/_4sdp</dimen>
-
-    <!-- Home page   -->
-
-    <!--  Tutorial   -->
+    <dimen name="card_elevation">1dp</dimen>
+    <dimen name="card_elevation2">2dp</dimen>
+    <dimen name="card_elevation3">3dp</dimen>
+    <dimen name="card_elevation4">4dp</dimen>
+    <dimen name="card_corner_radius">6dp</dimen>
+    <dimen name="card_corner_radius4">4dp</dimen>
 
     <!--Text Size-->
-    <dimen name="textSizeVeryExtraSmall">@dimen/_7sdp</dimen>
-    <dimen name="textSizeExtraSmall">@dimen/_8sdp</dimen>
-    <dimen name="textSizeSmall">@dimen/_9sdp</dimen>
-    <dimen name="textSizeMedium">@dimen/_10sdp</dimen>
-    <dimen name="textSizeRegular">@dimen/_11sdp</dimen>
-    <dimen name="textSizeLarge">@dimen/_12sdp</dimen>
-    <dimen name="textSizeExtraLarge">@dimen/_13sdp</dimen>
-    <dimen name="textSizeSuperExtraLarge">@dimen/_14sdp</dimen>
-    <dimen name="textSize16">@dimen/_16sdp</dimen>
-    <dimen name="textSize20">@dimen/_20sdp</dimen>
-    <dimen name="textSizeAbacusNumber">@dimen/_80sdp</dimen>
-    <dimen name="textSizeMenuItem">@dimen/_10sdp</dimen>
+    <dimen name="textSizeVeryExtraSmall">10sp</dimen>
+    <dimen name="textSizeExtraSmall">11sp</dimen>
+    <dimen name="textSizeSmall">12sp</dimen>
+    <dimen name="textSizeMedium">13sp</dimen>
+    <dimen name="textSizeRegular">14sp</dimen>
+    <dimen name="textSizeLarge">15sp</dimen>
+    <dimen name="textSizeExtraLarge">16sp</dimen>
+    <dimen name="textSizeSuperExtraLarge">17sp</dimen>
+    <dimen name="textSize18">18sp</dimen>
+    <dimen name="textSize20">20sp</dimen>
+    <dimen name="textSizeAbacusNumber">80sp</dimen>
 
     <!-- Profile Image Sizes   -->
+    <dimen name="box9SizeWidth">36dp</dimen>
+    <dimen name="box9SizeHeight">36dp</dimen>
 
-    <dimen name="box9SizeWidth">@dimen/_32sdp</dimen>
-    <dimen name="box9SizeHeight">@dimen/_32sdp</dimen>
+    <dimen name="image_size_no_data_view">80dp</dimen>
+    <dimen name="text_size_no_data_view">16sp</dimen>
 
-    <dimen name="box9SignSize">@dimen/_12sdp</dimen>
-    <dimen name="image_size_no_data_view">@dimen/_70sdp</dimen>
-    <dimen name="text_size_no_data_view">@dimen/_14sdp</dimen>
+    <dimen name="bGameSize9">70dp</dimen>
+    <dimen name="bGameSize15">56dp</dimen>
+    <dimen name="buttonSize24">44dp</dimen>
+    <dimen name="button_margin">4dp</dimen>
 
-    <dimen name="bGameSize9">@dimen/_66sdp</dimen>
-    <dimen name="bGameSize15">@dimen/_50sdp</dimen>
-    <dimen name="buttonSize24">@dimen/_40sdp</dimen>
-    <dimen name="button_margin">@dimen/_3sdp</dimen>
-
-    <dimen name="button_height">@dimen/_30sdp</dimen>
+    <dimen name="button_height_small_text_size">16sp</dimen>
+    <dimen name="button_height_small">40dp</dimen>
+    <dimen name="button_height_large">48dp</dimen>
 </resources>

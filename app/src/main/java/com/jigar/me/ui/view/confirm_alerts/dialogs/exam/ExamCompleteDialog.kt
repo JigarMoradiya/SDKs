@@ -7,29 +7,16 @@ import android.graphics.drawable.InsetDrawable
 import android.view.Gravity
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
-import androidx.databinding.DataBindingUtil
 import com.jigar.me.R
 import com.jigar.me.databinding.DialogExamCompleteBinding
-import com.jigar.me.databinding.RawPagelistParentBinding
-import com.jigar.me.utils.extensions.layoutInflater
+import com.jigar.me.utils.extensions.onClick
 
-object TestCompleteDialog {
+object ExamCompleteDialog {
 
     var alertdialog: AlertDialog? = null
 
-    fun hideDialog() {
-        alertdialog?.dismiss()
-    }
-
-    fun showPopup(
-        activity: Activity,
-        totalTime: String,
-        totalSkip: String,
-        totalWrong: String,
-        totalRight: String,
-        totalQuestion: String,
-        listener: TestCompleteDialogInterface
-    ) {
+    fun showPopup(activity: Activity, totalTime: String, totalSkip: String, totalWrong: String,
+                  totalRight: String, totalQuestion: String, listener: TestCompleteDialogInterface) {
 
         val alertLayout = DialogExamCompleteBinding.inflate(activity.layoutInflater,null,false)
         val alertBuilder = AlertDialog.Builder(activity)
@@ -43,12 +30,18 @@ object TestCompleteDialog {
 
         val percentage : Float = ((totalRight.toFloat() * 5) / totalQuestion.toFloat())
         alertLayout.simpleRatingBar.rating = percentage
-        alertLayout.btnNo.setOnClickListener {
-            hideDialog()
+        alertLayout.tvClose.onClick {
+            alertdialog?.dismiss()
             listener.testCompleteClose()
         }
-        alertLayout.btnYes.setOnClickListener {
-            hideDialog()
+
+        alertLayout.btnGiveExamAgain.onClick {
+            alertdialog?.dismiss()
+            listener.testGiveAgain()
+        }
+
+        alertLayout.btnCheckResult.onClick {
+            alertdialog?.dismiss()
             listener.testCompleteGotoResult()
         }
         alertBuilder.setView(alertLayout.root)
@@ -71,6 +64,7 @@ object TestCompleteDialog {
 
     interface TestCompleteDialogInterface {
         fun testCompleteClose()
+        fun testGiveAgain()
         fun testCompleteGotoResult()
     }
 

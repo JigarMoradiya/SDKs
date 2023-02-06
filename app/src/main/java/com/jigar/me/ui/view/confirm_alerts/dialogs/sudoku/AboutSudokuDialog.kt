@@ -10,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import com.jigar.me.R
 import com.jigar.me.databinding.DialogAboutSudokuBinding
+import com.jigar.me.databinding.DialogToddlerRangeBinding
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
 
@@ -17,20 +18,13 @@ object AboutSudokuDialog {
 
     var alertdialog: AlertDialog? = null
 
-    fun hideDialog() {
-        alertdialog?.dismiss()
-    }
-
     fun showPopup(context: Context) {
-
-        val inflater = context.layoutInflater
-        val mBinding: DialogAboutSudokuBinding =
-            DataBindingUtil.inflate(inflater, R.layout.dialog_about_sudoku, null, false)
+        val mBinding = DialogAboutSudokuBinding.inflate(context.layoutInflater,null,false)
         val alertBuilder = AlertDialog.Builder(context)
         alertBuilder.setView(mBinding.root)
 
         mBinding.txtClose.onClick {
-            hideDialog()
+            alertdialog?.dismiss()
         }
         alertBuilder.setView(mBinding.root)
         alertBuilder.setCancelable(true)

@@ -4,21 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.jigar.me.MyApplication
 import com.jigar.me.R
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
-import com.jigar.me.databinding.FragmentPageBinding
 import com.jigar.me.databinding.FragmentPurchaseBinding
 import com.jigar.me.ui.view.base.BaseFragment
-import com.jigar.me.ui.view.confirm_alerts.bottomsheets.PurchaseInfoBottomSheet
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.PurchaseInfoBottomSheetDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
-import com.jigar.me.utils.Resource
 import com.jigar.me.utils.extensions.isNetworkAvailable
 import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.toastL
 import com.jigar.me.utils.extensions.toastS
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,7 +44,7 @@ class PurchaseFragment : BaseFragment(), PurchaseAdapter.OnItemClickListener {
 
     private fun initListener() {
         binding.cardBack.onClick { mNavController.navigateUp() }
-        binding.cardInfo.onClick { PurchaseInfoBottomSheet.showPopup(requireContext()) }
+        binding.cardInfo.onClick { PurchaseInfoBottomSheetDialog.showPopup(requireActivity()) }
     }
 
     private fun setSKU(listData: List<InAppSkuDetails>) {

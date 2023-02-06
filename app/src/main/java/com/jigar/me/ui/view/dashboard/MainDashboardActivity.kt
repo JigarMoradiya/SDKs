@@ -15,6 +15,8 @@ import com.jigar.me.databinding.ActivityMainDashboardBinding
 import com.jigar.me.ui.view.base.BaseActivity
 import com.jigar.me.ui.view.base.inapp.BillingRepository
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.HalfAbacusFragment
+import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.ExamFragment
+import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.Level1ExamFragment
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
 import com.jigar.me.utils.AppConstants
@@ -25,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainDashboardActivity : BaseActivity(){
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
-    var selectedFragment: Int = -1
+    private var selectedFragment: Int = -1
     private val inAppViewModel by viewModels<InAppViewModel>()
     private val appViewModel by viewModels<AppViewModel>()
     private lateinit var binding: ActivityMainDashboardBinding
@@ -147,11 +149,8 @@ class MainDashboardActivity : BaseActivity(){
                         R.id.homeFragment -> {
                             finish()
                         }
-                        R.id.halfAbacusFragment -> {
-                            onBackOfHalfAbacusFragment()
-                        }
                         else -> {
-                            navigationUp()
+                            onBackOfHalfAbacusFragment()
                         }
                     }
                 }
@@ -161,16 +160,7 @@ class MainDashboardActivity : BaseActivity(){
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                when (selectedFragment) {
-                    R.id.homeFragment -> {
-                    }
-                    R.id.halfAbacusFragment -> {
-                        onBackOfHalfAbacusFragment()
-                    }
-                    else -> {
-                        navigationUp()
-                    }
-                }
+                onBackOfHalfAbacusFragment()
                 true
             }
 
@@ -180,10 +170,19 @@ class MainDashboardActivity : BaseActivity(){
 
     private fun onBackOfHalfAbacusFragment() {
         val fragment = navHostFragment.childFragmentManager.fragments[0]
-        if (fragment is HalfAbacusFragment){
-            fragment.onBackClick()
-        }else{
-            navigationUp()
+        when (fragment) {
+            is HalfAbacusFragment -> {
+                fragment.onBackClick()
+            }
+            is Level1ExamFragment -> {
+                fragment.examLeaveAlert()
+            }
+            is ExamFragment -> {
+                fragment.examLeaveAlert()
+            }
+            else -> {
+                navigationUp()
+            }
         }
     }
     private fun navigationUp() {

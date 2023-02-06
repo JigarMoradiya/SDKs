@@ -13,14 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:alpha="0.08"
-            android:scaleType="centerCrop"
-            app:layout_anchorGravity="center"
-            app:srcCompat="@drawable/bg_abacus_number" />
-
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardBack"
             android:layout_width="wrap_content"
@@ -41,17 +33,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
-            android:textColor="@color/textColor0"
+            style="@style/mainTitle"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_40sdp"
-            android:fontFamily="@font/font_extra_bold"
-            android:gravity="center"
+            android:layout_height="wrap_content"
             android:text="@string/number_sequences_puzzle"
-            android:textSize="@dimen/textSizeSuperExtraLarge"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
         <ScrollView
             android:layout_width="match_parent"

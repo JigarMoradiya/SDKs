@@ -40,7 +40,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     private var speak = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        prefManager = AppPreferencesHelper(requireContext(), Constants.PREF_NAME)
+        prefManager = AppPreferencesHelper(requireContext(), AppConstants.PREF_NAME)
         job = Job()
     }
 
