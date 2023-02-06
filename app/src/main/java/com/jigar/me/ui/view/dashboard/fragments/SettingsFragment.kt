@@ -42,7 +42,7 @@ class SettingsFragment : BaseFragment() {
 
     private fun initListener() {
         binding.cardBack.onClick { mNavController.navigateUp() }
-        binding.cardPurchase.onClick { onPurchaseItemClick() }
+        binding.cardPurchase.onClick { mNavController.navigate(R.id.action_settingsFragment_to_purchaseFragment) }
         binding.relThemePoligon.onClick { onThemeClick(AppConstants.Settings.theam_Poligon) }
         binding.relThemeEgg.onClick { onThemeClick(AppConstants.Settings.theam_Egg) }
         binding.relThemeStar.onClick { onThemeClick(AppConstants.Settings.theam_Star) }
@@ -162,7 +162,4 @@ class SettingsFragment : BaseFragment() {
         }
     }
 
-    private fun onPurchaseItemClick() {
-
-    }
 }

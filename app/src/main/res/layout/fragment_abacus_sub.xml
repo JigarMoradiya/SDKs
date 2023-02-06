@@ -128,11 +128,10 @@
             android:layout_alignStart="@+id/rlAbacusMain"
             android:layout_alignTop="@+id/rlAbacusMain"
             android:layout_alignEnd="@+id/rlAbacusMain"
+            android:fontFamily="@font/font_bold"
+            android:includeFontPadding="false"
             android:gravity="center"
             android:text="0"
-            android:shadowColor="@color/colorHeadingBlack_00"
-            android:shadowRadius="1"
-            android:fontFamily="@font/font_semibold"
             android:textColor="@color/white"
             android:textSize="@dimen/textSizeMedium" />
 

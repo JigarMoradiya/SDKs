@@ -113,6 +113,7 @@ class Level1ExamFragment : BaseFragment(),
         mBinding.progressHorizontal.max = listExam.size
         total_sec = 0
         currentQuestionPos = 0
+        totalWrong = 0
         mBinding.cardAnswer1.isEnabled = true
         mBinding.cardAnswer2.isEnabled = true
         mBinding.cardAnswer3.isEnabled = true

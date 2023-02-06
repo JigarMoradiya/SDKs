@@ -180,6 +180,9 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.jigar.me.ui.view.dashboard.fragments.SettingsFragment">
+        <action
+            android:id="@+id/action_settingsFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
     </fragment>
     <fragment
         android:id="@+id/purchaseFragment"

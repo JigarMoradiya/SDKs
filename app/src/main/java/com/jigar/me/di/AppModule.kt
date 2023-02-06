@@ -4,12 +4,12 @@ import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import androidx.work.CoroutineWorker
-import com.jigar.kotlin.data.local.db.Migrations.MIGRATION_1_2
-import com.jigar.kotlin.data.local.db.Migrations.MIGRATION_2_3
 import com.jigar.me.BuildConfig
 import com.jigar.me.data.api.AppApi
 import com.jigar.me.data.api.RemoteDataSource
 import com.jigar.me.data.local.db.AppDatabase
+import com.jigar.me.data.local.db.Migrations.MIGRATION_1_2
+import com.jigar.me.data.local.db.Migrations.MIGRATION_2_3
 import com.jigar.me.data.local.db.exam.ExamHistoryDB
 import com.jigar.me.data.local.db.exam.ExamHistoryDao
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
@@ -25,7 +25,6 @@ import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.data.pref.PreferenceInfo
 import com.jigar.me.data.pref.PreferencesHelper
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.Constants
 import dagger.*
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -57,7 +56,7 @@ object AppModule {
     @Singleton
     fun providesDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, AppConstants.DB_NAME)
-            .fallbackToDestructiveMigration()
+//            .fallbackToDestructiveMigration()
             .addMigrations(MIGRATION_1_2,MIGRATION_2_3)
             .build()
 
@@ -95,22 +94,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAppApi(@ApplicationContext context: Context,remoteDataSource: RemoteDataSource): AppApi {
-        return remoteDataSource.buildApi(AppApi::class.java, context, BuildConfig.FAN_MODULE)
+        return remoteDataSource.buildApi(AppApi::class.java, context, BuildConfig.API_MODULE)
     }
 
-
-//    @Binds
-//    @IntoMap
-//    @Singleton
-//    @Provides
-//    @WorkerKey(Sudoku4WorkManager::class)
-//    internal fun bindCreateSudoku4WorkerManager(factory: Sudoku4WorkManager.Factory): ChildWorkerFactory = factory
 }
-
-
-@Retention(AnnotationRetention.RUNTIME)
-@MapKey
-annotation class WorkerKey(val value: KClass<out CoroutineWorker>)
-
-
-

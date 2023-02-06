@@ -333,7 +333,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 column = ans.length - 1
             }
             binding.tvAnsNumber.text = number.toString()
-            binding.relativeQueNumber.visibility = View.VISIBLE
+            binding.relativeQueNumber.show()
             replaceAbacusFragment(column, noOfDecimalPlace)
         }
     }
@@ -363,7 +363,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                         speakOut(list_abacus_main[0][Constants.Que].toString() + " divide by " + list_abacus_main[1][Constants.Que])
                     }
                 }
-                binding.cardAbacusQue.visibility = View.VISIBLE
+                binding.cardAbacusQue.show()
                 adapterDivision = AbacusDivisionTypeAdapter(
                     list_abacus_main,
                     isStepByStep
@@ -494,7 +494,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     noOfDecimalPlace = ans.length - ans.indexOf(".") - 1
                     column = ans.length - 1
                 }
-                binding.cardAbacusQue.visibility = View.VISIBLE
+                binding.cardAbacusQue.show()
                 binding.recyclerview.adapter = adapterMultiplication
                 adapterMultiplication.setData(list_abacus_main, isStepByStep)
                 //set table
@@ -645,7 +645,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             }
             list_abacus_main.clear()
             list_abacus_main.addAll(list_abacus_main_temp)
-            binding.cardAbacusQue.visibility = View.VISIBLE
+            binding.cardAbacusQue.show()
             when (abacus_type) {
                 0 -> {
                     adapterAdditionSubtraction.setData(list_abacus_main, isStepByStep)

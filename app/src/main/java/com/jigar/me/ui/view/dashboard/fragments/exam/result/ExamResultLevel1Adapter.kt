@@ -92,12 +92,12 @@ class ExamResultLevel1Adapter(
         }
 
         if (data.userAnswer?.isEmpty() == true) {
-            holder.binding.img.visibility = View.GONE
-            holder.binding.txtYourAnswer.visibility = View.VISIBLE
+            holder.binding.img.hide()
+            holder.binding.txtYourAnswer.show()
             holder.binding.txtYourAnswer.text =
                 holder.binding.txtYourAnswer.context.getText(R.string.SKipped)
         } else {
-            holder.binding.img.visibility = View.VISIBLE
+            holder.binding.img.show()
             val tempAns = when (data.type) {
                 BeginnerExamQuestionType.Additions -> {
                     data.value+"+"+data.value2

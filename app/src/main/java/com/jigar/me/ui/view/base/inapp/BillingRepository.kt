@@ -117,7 +117,6 @@ class BillingRepository @Inject constructor(
 //        playStoreBillingClient?.queryProductDetailsAsync(queryProductDetailsParams) {
 //                billingResult,
 //                productDetailsList ->
-//            Log.e("jigarLogs","productDetailsList = "+Gson().toJson(productDetailsList))
 //            if (productDetailsList.isNotEmpty()) {
 //                CoroutineScope(Job() + Dispatchers.IO).launch {
 //                    inAppSKUDB.saveInAppSKU(productDetailsList)

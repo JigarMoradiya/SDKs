@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "884602254815",
+    "firebase_url": "https://abacusmaster-ce84a.firebaseio.com",
+    "project_id": "abacusmaster-ce84a",
+    "storage_bucket": "abacusmaster-ce84a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:884602254815:android:4ff6e9d299018c3e",
+        "android_client_info": {
+          "package_name": "com.abacus.puzzle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "884602254815-fscadb7gdq4g4gfvk9cts4sh02j194hb.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "884602254815-fscadb7gdq4g4gfvk9cts4sh02j194hb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCo7RyGXNowFsCRzfeIewbr271Et4ht19o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -11,8 +11,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/box_sudoku_outer"
+            android:layout_margin="0.5dp"
             android:orientation="vertical"
-            android:padding="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="V,3:2"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,14 +35,17 @@
                         android:id="@+id/recyclerView_0"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt000"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        android:layout_marginStart="0.5dp"
+                        android:layout_marginTop="0.5dp"
+                        android:layout_marginEnd="0.5dp"
+                        android:layout_marginBottom="0.5dp"
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -58,7 +61,6 @@
                         android:id="@+id/txt0"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
@@ -79,14 +81,14 @@
                         android:id="@+id/recyclerView_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt111"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -126,14 +128,14 @@
                         android:id="@+id/recyclerView_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt222"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -180,14 +182,14 @@
                         android:id="@+id/recyclerView_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt333"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -203,7 +205,7 @@
                         android:id="@+id/txt3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
@@ -222,14 +224,14 @@
                         android:id="@+id/recyclerView_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt444"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -245,7 +247,7 @@
                         android:id="@+id/txt4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
@@ -264,14 +266,14 @@
                         android:id="@+id/recyclerView_5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt555"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -287,7 +289,7 @@
                         android:id="@+id/txt5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"

@@ -54,7 +54,6 @@ class ExamHistoryListAdapter(
             data.examDetails.size
         }
             holder.binding.txtTotalQue.text = totalQuestion.toString()
-
         val totalRight = data.getTotalRightAns()
         holder.binding.txtRightQue.text = totalRight.toString()
         val percentage : Float = ((totalRight.toFloat() * 5) / totalQuestion.toFloat())

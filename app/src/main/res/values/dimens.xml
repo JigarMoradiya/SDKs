@@ -78,7 +78,20 @@
     <dimen name="buttonSize24">44dp</dimen>
     <dimen name="button_margin">4dp</dimen>
 
-    <dimen name="button_height_small_text_size">16sp</dimen>
-    <dimen name="button_height_small">40dp</dimen>
+
+    <dimen name="button_elevation">8dp</dimen>
     <dimen name="button_height_large">48dp</dimen>
+
+    <dimen name="button_medium_text_size">15sp</dimen>
+    <dimen name="button_medium_height">40dp</dimen>
+    <dimen name="button_medium_corner">20dp</dimen>
+    <dimen name="button_medium_padding_lr">24dp</dimen>
+
+    <dimen name="button_small_text_size">12sp</dimen>
+    <dimen name="button_small_height">32dp</dimen>
+    <dimen name="button_small_corner">16dp</dimen>
+    <dimen name="button_small_padding_lr">12dp</dimen>
+
+    <dimen name="icon_card_height">36dp</dimen>
+    <dimen name="icon_card_corner">18dp</dimen>
 </resources>

@@ -6,7 +6,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardHint"
-        cardColor="@{3}"
+        app:cardBackgroundColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/activity_padding12"
@@ -73,22 +73,14 @@
 
             </ScrollView>
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/txtClose"
+                style="@style/btnSmall"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_24sdp"
                 android:layout_above="@+id/spaceBottom"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/activity_padding4"
-                android:background="@drawable/button_background_rounded"
-                android:elevation="@dimen/_8sdp"
-                android:fontFamily="@font/font_bold"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/activity_padding12"
-                android:text="@string/close"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textSizeSmall"
-                app:textAllCaps="true" />
+                android:text="@string/close"/>
 
             <androidx.legacy.widget.Space
                 android:layout_width="match_parent"

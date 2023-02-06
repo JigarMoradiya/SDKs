@@ -72,6 +72,7 @@ class SudokuPlay6Fragment : BaseFragment(), SudokuCompleteDialog.SudokuCompleteD
         binding = FragmentSudokuPlay6by6Binding.inflate(inflater, container, false)
         initView()
         initListener()
+        adsBanner()
         return binding.root
     }
 

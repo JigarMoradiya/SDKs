@@ -2,6 +2,7 @@ package com.jigar.me.ui.view.base
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AlertDialog

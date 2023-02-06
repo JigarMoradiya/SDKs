@@ -59,7 +59,7 @@
             android:scrollbars="none"
             android:overScrollMode="never"
             android:paddingHorizontal="@dimen/activity_padding8"
-            app:layout_constraintBottom_toTopOf="@+id/tvNotes"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardBack">
@@ -278,24 +278,6 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="0dp"
-            android:padding="@dimen/activity_padding16"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:id="@+id/tvNotes"
-            android:fontFamily="@font/font_semibold"
-            android:gravity="center_vertical"
-            android:linksClickable="true"
-            android:text="@string/material_customization"
-            android:textColor="@color/red"
-            android:textColorLink="@color/colorHyperlinkBlue"
-            android:textSize="@dimen/textSizeMedium" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

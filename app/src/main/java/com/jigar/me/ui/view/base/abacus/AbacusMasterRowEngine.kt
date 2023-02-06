@@ -79,7 +79,6 @@ class AbacusMasterRowEngine(
         beadDrawables_eyes_smaile = ArrayList()
         theam = AppPreferencesHelper(context,AppConstants.PREF_NAME)
             .getCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-        Log.e("jigarLogs","setTempTheme theam1 = "+theam)
         when {
             theam.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true) -> {
                 beadDrawables_eyes.add(ContextCompat.getDrawable(context, R.drawable.poligon_gray))

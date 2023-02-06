@@ -28,7 +28,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/simpleRatingBar"
                 android:text="@string/result" />
 
-            <com.willy.ratingbar.ScaleRatingBar
+            <com.willy.ratingbar.BaseRatingBar
                 android:id="@+id/simpleRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -49,7 +49,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-            </com.willy.ratingbar.ScaleRatingBar>
+            </com.willy.ratingbar.BaseRatingBar>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearTotalQuestion"
@@ -248,19 +248,10 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGiveExamAgain"
                 android:layout_width="180dp"
-                android:layout_height="@dimen/button_height_small"
-                android:layout_gravity="center_horizontal"
-                android:backgroundTint="@color/colorButton"
-                android:fontFamily="@font/font_bold"
-                android:insetTop="0dp"
-                android:insetBottom="0dp"
-                android:letterSpacing="0"
-                android:paddingVertical="0dp"
-                android:text="@string/give_exam_again"
+                style="@style/btnMedium"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_height_small_text_size"
-                app:cornerRadius="@dimen/button_corner_radius"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/give_exam_again"
                 android:layout_marginTop="@dimen/activity_padding20"
                 android:layout_marginEnd="@dimen/activity_padding8"
                 app:layout_constraintEnd_toStartOf="@+id/btnCheckResult"
@@ -271,22 +262,12 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCheckResult"
                 android:layout_width="180dp"
-                android:layout_height="@dimen/button_height_small"
+                style="@style/btnMedium"
+                android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/activity_padding20"
-                android:backgroundTint="@color/colorButton"
-                android:fontFamily="@font/font_bold"
-                android:insetTop="0dp"
                 android:layout_marginStart="@dimen/activity_padding8"
-                android:insetBottom="0dp"
-                android:letterSpacing="0"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="0dp"
                 android:text="@string/checkResult"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_height_small_text_size"
-                app:cornerRadius="@dimen/button_corner_radius"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnGiveExamAgain"
@@ -300,14 +281,18 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/font_bold"
                 android:includeFontPadding="false"
-                android:padding="@dimen/activity_padding16"
+                android:padding="@dimen/activity_padding8"
                 android:text="@string/please_close"
                 android:textColor="@color/colorListingHeading"
-                android:textSize="@dimen/textSizeRegular"
+                android:textSize="@dimen/textSizeMedium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnCheckResult" />
 
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvClose"
+                android:layout_height="@dimen/activity_padding8"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

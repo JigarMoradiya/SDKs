@@ -138,17 +138,12 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtTitle"
-                txtColorApp="@{0}"
+                style="@style/mainTitle"
                 android:layout_alignParentTop="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:fontFamily="@font/font_bold"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="@dimen/activity_padding12"
-                android:shadowColor="@color/colorHeadingBlack_00"
-                android:shadowRadius="1"
-                android:textSize="@dimen/textSizeLarge" />
+                android:gravity="center_vertical" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTable"
@@ -157,6 +152,7 @@
                 android:layout_margin="@dimen/_1sdp"
                 android:elevation="@dimen/card_elevation"
                 android:visibility="invisible"
+                tools:visibility="visible"
                 app:cardBackgroundColor="@color/light_math_table"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardMaxElevation="@dimen/card_elevation"
@@ -175,7 +171,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/adView"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <FrameLayout
                     android:id="@+id/flAbacus"
@@ -205,7 +202,8 @@
                     android:id="@+id/relativeQueNumber"
                     android:layout_width="@dimen/_270sdp"
                     android:layout_height="@dimen/_200sdp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -231,11 +229,12 @@
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardHint"
-                    cardColor="@{@color/blue_300}"
+                    app:cardBackgroundColor="@color/blue_300"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_1sdp"
                     android:visibility="gone"
+                    tools:visibility="visible"
                     app:cardCornerRadius="@dimen/_8sdp"
                     app:cardElevation="@dimen/card_elevation"
                     app:cardMaxElevation="@dimen/card_elevation"
@@ -262,7 +261,7 @@
                     tools:visibility="visible">
 
                     <com.google.android.material.card.MaterialCardView
-                        cardColor="@{@color/orange_600}"
+                        app:cardBackgroundColor="@color/orange_600"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/activity_padding4"
@@ -338,7 +337,6 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cc"
-                        cardColor="@{3}"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"

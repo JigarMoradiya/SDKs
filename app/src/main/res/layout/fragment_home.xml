@@ -19,11 +19,12 @@
         android:id="@+id/cardAboutUs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_padding8"
+        android:layout_margin="@dimen/_1sdp"
         app:cardBackgroundColor="@color/light_about_us"
         app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/card_elevation4"
-        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -39,11 +40,12 @@
         android:id="@+id/cardSettingTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_padding8"
+        android:layout_margin="@dimen/_1sdp"
         app:cardBackgroundColor="@color/light_setting"
         app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/card_elevation4"
-        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toStartOf="@+id/cardYoutube"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -60,11 +62,12 @@
         android:id="@+id/cardYoutube"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_padding8"
+        android:layout_margin="@dimen/_1sdp"
         app:cardBackgroundColor="@color/light_youtube"
         app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/card_elevation4"
-        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toStartOf="@+id/cardPurchase"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -80,11 +83,12 @@
         android:id="@+id/cardPurchase"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_padding8"
+        android:layout_margin="@dimen/_1sdp"
         app:cardBackgroundColor="@color/light_purchase"
         app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/card_elevation4"
-        app:layout_constraintBottom_toBottomOf="@+id/logoBanner"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -111,6 +115,7 @@
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -120,10 +125,10 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAbacusStarter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardAbacusStarter"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -137,10 +142,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAbacusNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardAbacusNumber"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -154,10 +159,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardAddition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardAddition"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -171,10 +176,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardSubtractions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardSubtractions"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -189,10 +194,10 @@
 
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardMultiplication"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardMultiplication"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -215,10 +220,10 @@
 
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardDivision"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardDivision"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -232,10 +237,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardPracticeMaterial"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardPracticeMaterial"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -249,10 +254,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardExam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardExam"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -266,10 +271,10 @@
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardSudoku"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardSudoku"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">
@@ -284,10 +289,10 @@
 
 
                 <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardNumberSequence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/home_menu_margin"
-                    android:id="@+id/cardNumberSequence"
                     app:cardBackgroundColor="@color/home_menu_icon_bg"
                     app:cardCornerRadius="@dimen/home_menu_corner"
                     app:cardElevation="@dimen/home_menu_elevation">

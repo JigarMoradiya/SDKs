@@ -37,7 +37,7 @@
                     android:id="@+id/txtSelectLevel"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="@dimen/activity_padding16"
                     android:gravity="center"
                     android:text="@string/select_sudoku_child_level"
                     android:textColor="@color/colorBlueDark"
@@ -50,10 +50,10 @@
                     android:id="@+id/txtDesc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/activity_padding12"
                     android:alpha="0.8"
                     android:gravity="center"
-                    android:lineSpacingExtra="@dimen/_4sdp"
+                    android:lineSpacingExtra="2sp"
                     android:paddingHorizontal="@dimen/activity_padding16"
                     android:text="@string/sudoku_description"
                     android:textColor="@color/black"
@@ -65,7 +65,7 @@
                     android:id="@+id/rg"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="@dimen/activity_padding12"
                     android:gravity="center"
                     android:orientation="horizontal"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -78,12 +78,10 @@
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorBlueDark"
                         android:checked="true"
-                        android:fontFamily="@font/font_bold"
+                        android:fontFamily="@font/font_extra_bold"
                         android:includeFontPadding="false"
-                        android:padding="6dp"
-                        android:shadowColor="@color/colorHeadingBlack_00"
-                        android:shadowRadius="1"
-                        android:text="Easy"
+                        android:padding="@dimen/activity_padding6"
+                        android:text="@string/easy"
                         android:textColor="@color/colorBlueDark"
                         android:textSize="@dimen/textSizeMedium" />
 
@@ -94,12 +92,10 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginEnd="16dp"
                         android:buttonTint="@color/colorBlueDark"
-                        android:fontFamily="@font/font_bold"
+                        android:fontFamily="@font/font_extra_bold"
                         android:includeFontPadding="false"
-                        android:padding="6dp"
-                        android:shadowColor="@color/colorHeadingBlack_00"
-                        android:shadowRadius="1"
-                        android:text="Medium"
+                        android:padding="@dimen/activity_padding6"
+                        android:text="@string/medium"
                         android:textColor="@color/colorBlueDark"
                         android:textSize="@dimen/textSizeMedium" />
 
@@ -109,12 +105,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
                         android:buttonTint="@color/colorBlueDark"
-                        android:fontFamily="@font/font_bold"
+                        android:fontFamily="@font/font_extra_bold"
                         android:includeFontPadding="false"
-                        android:padding="6dp"
-                        android:shadowColor="@color/colorHeadingBlack_00"
-                        android:shadowRadius="1"
-                        android:text="Hard"
+                        android:padding="@dimen/activity_padding6"
+                        android:text="@string/hard"
                         android:textColor="@color/colorBlueDark"
                         android:textSize="@dimen/textSizeMedium" />
 
@@ -123,34 +117,24 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:buttonTint="@color/colorBlueDark"
-                        android:fontFamily="@font/font_bold"
+                        android:fontFamily="@font/font_extra_bold"
                         android:includeFontPadding="false"
-                        android:padding="6dp"
-                        android:shadowColor="@color/colorHeadingBlack_00"
-                        android:shadowRadius="1"
-                        android:text="Very Hard"
+                        android:padding="@dimen/activity_padding6"
+                        android:text="@string/very_hard"
                         android:textColor="@color/colorBlueDark"
                         android:textSize="@dimen/textSizeMedium" />
 
                 </RadioGroup>
 
-                <com.google.android.material.textview.MaterialTextView
+                <com.google.android.material.button.MaterialButton
                     android:id="@+id/txtStart"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_24sdp"
+                    style="@style/btnMedium"
                     android:layout_marginTop="12dp"
-                    android:background="@drawable/button_background_rounded"
-                    android:elevation="@dimen/_8sdp"
-                    android:fontFamily="@font/font_bold"
-                    android:gravity="center"
-                    android:paddingHorizontal="@dimen/screen_margin"
                     android:text="@string/let_s_play"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/textSizeSmall"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/rg"
-                    app:textAllCaps="true" />
+                    app:layout_constraintTop_toBottomOf="@+id/rg"/>
 
 
                 <androidx.legacy.widget.Space

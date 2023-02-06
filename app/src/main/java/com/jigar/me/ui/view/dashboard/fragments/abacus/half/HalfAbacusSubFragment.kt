@@ -16,7 +16,9 @@ import com.jigar.me.ui.view.base.abacus.AbacusMasterCompleteListener
 import com.jigar.me.ui.view.base.abacus.AbacusMasterView
 import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
 import com.jigar.me.utils.*
+import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.onClick
+import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import me.samlss.lighter.Lighter
 import me.samlss.lighter.interfaces.OnLighterListener
@@ -107,7 +109,6 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
 
     private fun setBead() {
         val theam: String = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg)
-        Log.e("jigarLogs"," = setTempTheme = "+theam)
         when (theam) {
             AppConstants.Settings.theam_eyes -> {
                 val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_eyes, requireActivity())
@@ -288,14 +289,14 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     }
     fun showResetToContinue(type: Boolean) {
         if (type) {
-            binding.ResettoContinue.visibility = View.VISIBLE
+            binding.ResettoContinue.show()
             if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
                 startTimerForToolTips()
             }else{
                 CommonUtils.blinkView(binding.ivReset,3)
             }
         } else {
-            binding.ResettoContinue.visibility = View.GONE
+            binding.ResettoContinue.hide()
         }
     }
 
@@ -396,7 +397,7 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     private fun setCurrentValue(strCurVal: String) {
         when {
             isDisplayAbacusNumber -> {
-                binding.tvCurrentVal.visibility = View.VISIBLE
+                binding.tvCurrentVal.show()
                 binding.tvCurrentVal.text = strCurVal
             }
             else -> {

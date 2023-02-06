@@ -53,13 +53,13 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         setAbacus()
         setSwitchs(true)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            binding.txtResetEveryTime.setPadding(0,16.dp,0,0)
             try {
+                binding.txtResetEveryTime.setPadding(0,16.dp,0,0)
                 binding.txtRangeLable?.setPadding(0,16.dp,0,0)
                 binding.txtRandom?.setPadding(0,16.dp,0,0)
+                binding.txtStartWith1.setPadding(0,16.dp,0,0)
             } catch (e: Exception) {
             }
-            binding.txtStartWith1.setPadding(0,16.dp,0,0)
         }
     }
 

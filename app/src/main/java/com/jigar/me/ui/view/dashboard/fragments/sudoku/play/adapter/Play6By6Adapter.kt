@@ -100,7 +100,7 @@ class Play6By6Adapter(
                     if (temp_sudoku[0].defaultSet.equals("Y",true)) {
                         txt.setBackgroundColor(ContextCompat.getColor(con,R.color.main_bg_not_empty))
                         txt.setTextColor(ContextCompat.getColor(con,R.color.text_color_not_empty))
-                        txt.textSize = 18f
+                        txt.textSize = 22f
                         txt.show()
                         recyclerView.hide()
                         txt_pos.hide()
@@ -113,10 +113,10 @@ class Play6By6Adapter(
                                 txt.setBackgroundColor(ContextCompat.getColor(con,R.color.empty_bg))
                             }
                             txt.text = temp_sudoku[0].notes
-                            recyclerView.visibility = View.GONE
-                            txt.visibility = View.VISIBLE
-                            txt_pos.visibility = View.GONE
-                            txt_bg.visibility = View.GONE
+                            recyclerView.hide()
+                            txt.show()
+                            txt_pos.hide()
+                            txt_bg.hide()
                             txt.setTextColor(ContextCompat.getColor(con,R.color.text_color_empty))
                             txt.textSize = 10f
                             txt.setOnClickListener { view ->
@@ -132,10 +132,10 @@ class Play6By6Adapter(
                                 }
                             }
                         } else {
-                            recyclerView.visibility = View.GONE
-                            txt.visibility = View.VISIBLE
-                            txt_pos.visibility = View.GONE
-                            txt_bg.visibility = View.GONE
+                            recyclerView.hide()
+                            txt.show()
+                            txt_pos.hide()
+                            txt_bg.hide()
                             txt.text = ""
                             if (prefManager.getCustomParam(SudukoConst.SelectedBox, "")
                                     .equals(position.toString() + str, ignoreCase = true)
@@ -177,10 +177,10 @@ class Play6By6Adapter(
             val temp_sudoku: List<SudukoPlay> =
                 dataManager.getRoomID_CellPosition_SudokuPlay(roomId, position.toString() + str)
             CoroutineScope(Dispatchers.Main).launch {
-                recyclerView.visibility = View.GONE
-                txt.visibility = View.VISIBLE
-                txt_bg_wrong.visibility = View.VISIBLE
-                txt_bg_main.visibility = View.VISIBLE
+                recyclerView.hide()
+                txt.show()
+                txt_bg_wrong.show()
+                txt_bg_main.show()
 
                 if (temp_sudoku.isNotEmpty()) {
                     var setvalue = ""
@@ -195,7 +195,7 @@ class Play6By6Adapter(
                     if (temp_sudoku[0].defaultSet.equals("Y",true)) {
                         txt.setBackgroundColor(ContextCompat.getColor(con,R.color.main_bg_not_empty))
                         txt.setTextColor(ContextCompat.getColor(con,R.color.text_color_not_empty))
-                        txt.textSize = 18f
+                        txt.textSize = 22f
                         if (txt.text.toString().isNotEmpty()) {
                             CoroutineScope(Dispatchers.Default).launch {
                                 val list_answer_temp: List<SudukoAnswerStatus> =
@@ -204,12 +204,12 @@ class Play6By6Adapter(
                                     if (list_answer_temp.isNotEmpty()) {
                                         txt_bg_main.setBackgroundColor(ContextCompat.getColor(con,R.color.main_bg_not_empty))
                                         txt.setBackgroundColor(ContextCompat.getColor(con,R.color.transprent_bg))
-                                        txt_bg_wrong.visibility = View.VISIBLE
+                                        txt_bg_wrong.show()
                                         txt_bg_wrong.setBackgroundResource(R.drawable.round)
                                         txt.setTextColor(ContextCompat.getColor(con,R.color.text_color_wrong))
                                     } else {
                                         txt_bg_main.setBackgroundColor(ContextCompat.getColor(con,R.color.transprent_bg))
-                                        txt_bg_wrong.visibility = View.GONE
+                                        txt_bg_wrong.hide()
                                     }
                                 }
 
@@ -219,14 +219,14 @@ class Play6By6Adapter(
                         }
                     } else {
 
-                        txt.textSize = 18f
+                        txt.textSize = 22f
                         txt.setTextColor(ContextCompat.getColor(con,R.color.text_color_empty))
                         if (prefManager.getCustomParam(SudukoConst.SelectedBox, "")
                                 .equals(temp_sudoku[0].cellPosition, ignoreCase = true)
                         ) {
                             txt.setBackgroundColor(ContextCompat.getColor(con,R.color.bolx_selected_bg))
                             txt_bg_main.setBackgroundColor(ContextCompat.getColor(con,R.color.transprent_bg))
-                            txt_bg_wrong.visibility = View.GONE
+                            txt_bg_wrong.hide()
                         } else {
                             txt.setBackgroundColor(ContextCompat.getColor(con,R.color.empty_bg))
                         }
@@ -239,18 +239,18 @@ class Play6By6Adapter(
                                         txt_bg_main.setBackgroundColor(ContextCompat.getColor(con,R.color.empty_bg)) // new
                                         txt.setBackgroundColor(ContextCompat.getColor(con,R.color.transprent_bg))
                                         txt_bg_wrong.setBackgroundResource(R.drawable.round)
-                                        txt_bg_wrong.visibility = View.VISIBLE
+                                        txt_bg_wrong.show()
                                         txt.setTextColor(ContextCompat.getColor(con,R.color.text_color_wrong))
                                         if (prefManager.getCustomParam(SudukoConst.SelectedBox, "")
                                                 .equals(temp_sudoku[0].cellPosition, ignoreCase = true)
                                         ) {
                                             txt_bg_main.setBackgroundColor(ContextCompat.getColor(con,R.color.bolx_selected_bg))
                                             txt.setBackgroundColor(ContextCompat.getColor(con,R.color.transprent_bg))
-                                            txt_bg_wrong.visibility = View.VISIBLE
+                                            txt_bg_wrong.show()
                                         }
                                     } else {
                                         txt_bg_main.setBackgroundColor(ContextCompat.getColor(con,R.color.transprent_bg))
-                                        txt_bg_wrong.visibility = View.GONE
+                                        txt_bg_wrong.hide()
                                     }
                                 }
                             }
@@ -262,10 +262,10 @@ class Play6By6Adapter(
                                 txt.setTextColor(ContextCompat.getColor(con,R.color.text_color_empty))
                                 //                        txt.setTypeface(txt.getTypeface(), Typeface.BOLD);
                                 txt.textSize = 10f
-                                txt.visibility = View.VISIBLE
+                                txt.show()
                                 txt.setBackgroundColor(ContextCompat.getColor(con,R.color.empty_bg))
                                 txt_bg_main.setBackgroundColor(ContextCompat.getColor(con,R.color.transprent_bg))
-                                txt_bg_wrong.visibility = View.GONE
+                                txt_bg_wrong.hide()
                                 if (prefManager.getCustomParam(SudukoConst.SelectedBox, "")
                                         .equals(temp_sudoku[0].cellPosition, ignoreCase = true)
                                 ) {

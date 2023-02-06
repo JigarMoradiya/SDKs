@@ -37,7 +37,35 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+    <style name="btnSmall">
+        <item name="fontFamily">@font/font_bold</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:includeFontPadding">false</item>
 
+        <item name="android:textSize">@dimen/button_small_text_size</item>
+        <item name="android:textColor">@color/btn_color_text</item>
+        <item name="android:backgroundTint">@color/btn_color_bg</item>
+        <item name="android:layout_height">@dimen/button_small_height</item>
+        <item name="cornerRadius">@dimen/button_small_corner</item>
+        <item name="android:paddingStart">@dimen/button_small_padding_lr</item>
+        <item name="android:paddingEnd">@dimen/button_small_padding_lr</item>
+    </style>
+    <style name="btnMedium">
+        <item name="fontFamily">@font/font_bold</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:letterSpacing">0</item>
+
+        <item name="android:textSize">@dimen/button_medium_text_size</item>
+        <item name="android:textColor">@color/btn_color_text</item>
+        <item name="android:backgroundTint">@color/btn_color_bg</item>
+        <item name="android:layout_height">@dimen/button_medium_height</item>
+        <item name="cornerRadius">@dimen/button_medium_corner</item>
+        <item name="android:paddingStart">@dimen/button_medium_padding_lr</item>
+        <item name="android:paddingEnd">@dimen/button_medium_padding_lr</item>
+    </style>
 
     <style name="MyRadioButtonCurrency" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">#80FFFFFF</item>

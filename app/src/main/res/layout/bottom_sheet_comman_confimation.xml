@@ -90,21 +90,11 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnYes"
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height_small"
             android:layout_gravity="center_horizontal"
+            style="@style/btnMedium"
             android:layout_marginTop="@dimen/activity_padding16"
-            android:backgroundTint="@color/colorButton"
-            android:fontFamily="@font/font_bold"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:letterSpacing="0"
-            android:paddingHorizontal="32dp"
-            android:paddingVertical="0dp"
             android:text="@string/yes_i_want_to_close"
             android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/button_height_small_text_size"
-            app:cornerRadius="@dimen/button_corner_radius"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
@@ -116,13 +106,18 @@
             android:layout_gravity="center"
             android:fontFamily="@font/font_bold"
             android:includeFontPadding="false"
-            android:padding="@dimen/activity_padding16"
+            android:padding="@dimen/activity_padding8"
             android:text="@string/no_i_don_t_want"
             android:textColor="@color/colorListingHeading"
-            android:textSize="@dimen/textSizeRegular"
+            android:textSize="@dimen/textSizeMedium"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnYes" />
+
+        <androidx.legacy.widget.Space
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvNo"
+            android:layout_height="@dimen/activity_padding8"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

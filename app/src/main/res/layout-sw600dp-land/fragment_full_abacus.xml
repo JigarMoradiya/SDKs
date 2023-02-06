@@ -273,6 +273,8 @@
                 android:layout_marginTop="@dimen/two"
                 android:gravity="center"
                 android:text="0"
+                android:includeFontPadding="false"
+                app:fontFamily="@font/font_semibold"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_6sdp" />
 

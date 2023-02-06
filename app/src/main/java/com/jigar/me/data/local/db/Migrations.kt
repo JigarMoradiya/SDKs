@@ -1,4 +1,4 @@
-package com.jigar.kotlin.data.local.db
+package com.jigar.me.data.local.db
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase

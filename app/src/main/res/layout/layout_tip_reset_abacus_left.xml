@@ -36,15 +36,15 @@
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/txtTitle"
                 android:textColor="@color/white"
-                android:shadowColor="@color/colorPrimaryDark"
-                android:shadowRadius="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/font_bold"
+                android:fontFamily="@font/font_extra_bold"
+                android:lineSpacingExtra="2sp"
+                android:letterSpacing="0.05"
                 android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="@string/reset_to_go_next"
-                android:textSize="@dimen/textSizeLarge" />
+                android:padding="@dimen/activity_padding8"
+                style="@style/mainTitle"
+                android:text="@string/reset_to_go_next"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

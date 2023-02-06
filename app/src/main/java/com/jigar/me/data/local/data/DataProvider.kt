@@ -265,7 +265,7 @@ object DataProvider {
         val listCounter: MutableList<Int> = arrayListOf()
         var totalQuestions = 10
         var countQuestions = 6
-        var endNumber = 5
+        var endNumber = 6
         val begginerExamLevel1 = 3
         val begginerExamLevel2 = 6
         val begginerExamLevel3 = 10

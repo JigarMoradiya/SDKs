@@ -11,8 +11,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@drawable/box_sudoku_outer"
+            android:layout_margin="0.5dp"
             android:orientation="vertical"
-            android:padding="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="V,1:1"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,14 +35,13 @@
                         android:id="@+id/recyclerView_0"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt000"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -52,16 +51,21 @@
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:textColor="@color/black" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt0"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+                        android:layout_marginStart="0.5dp"
+                        android:layout_marginTop="0.5dp"
+                        android:layout_marginEnd="0.5dp"
+                        android:layout_marginBottom="0.5dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:tag="0"
                         android:textColor="@color/black" />
 
@@ -79,14 +83,15 @@
                         android:id="@+id/recyclerView_1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt111"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
+                        android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -95,6 +100,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
+                        android:includeFontPadding="false"
                         android:gravity="center"
                         android:textColor="@color/black" />
 
@@ -102,10 +108,11 @@
                         android:id="@+id/txt1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:tag="1"
                         android:textColor="@color/black" />
 
@@ -123,14 +130,15 @@
                         android:id="@+id/recyclerView_2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt222"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
+                        android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -139,6 +147,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
+                        android:includeFontPadding="false"
                         android:gravity="center"
                         android:textColor="@color/black" />
 
@@ -146,8 +155,9 @@
                         android:id="@+id/txt2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:layout_weight="1"
+                        android:includeFontPadding="false"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
                         android:tag="2"
@@ -174,14 +184,15 @@
                         android:id="@+id/recyclerView_3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt333"
+                        android:includeFontPadding="false"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -191,13 +202,15 @@
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:textColor="@color/black" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt3"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
+                        android:includeFontPadding="false"
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
@@ -217,14 +230,15 @@
                         android:id="@+id/recyclerView_4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt444"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
+                        android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -233,6 +247,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
+                        android:includeFontPadding="false"
                         android:gravity="center"
                         android:textColor="@color/black" />
 
@@ -240,7 +255,8 @@
                         android:id="@+id/txt4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
+                        android:includeFontPadding="false"
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
@@ -260,14 +276,15 @@
                         android:id="@+id/recyclerView_5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt555"
+                        android:includeFontPadding="false"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -277,16 +294,18 @@
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:textColor="@color/black" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt5"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:tag="5"
                         android:textColor="@color/black" />
 
@@ -311,14 +330,15 @@
                         android:id="@+id/recyclerView_6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt666"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
+                        android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -327,6 +347,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
+                        android:includeFontPadding="false"
                         android:gravity="center"
                         android:textColor="@color/black" />
 
@@ -334,11 +355,12 @@
                         android:id="@+id/txt6"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:layout_weight="1"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
                         android:tag="6"
+                        android:includeFontPadding="false"
                         android:textColor="@color/black" />
 
                 </RelativeLayout>
@@ -354,14 +376,15 @@
                         android:id="@+id/recyclerView_7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt777"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
+                        android:includeFontPadding="false"
                         android:textColor="@color/black"
                         android:textSize="8dp" />
 
@@ -371,14 +394,16 @@
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
                         android:gravity="center"
+                        android:includeFontPadding="false"
                         android:textColor="@color/black" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt7"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:layout_weight="1"
+                        android:includeFontPadding="false"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
                         android:tag="7"
@@ -397,19 +422,21 @@
                         android:id="@+id/recyclerView_8"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txt888"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
+
                         android:textColor="@color/black"
+                        android:includeFontPadding="false"
                         android:textSize="8dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/txtbg8"
+                        android:includeFontPadding="false"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="6dp"
@@ -420,8 +447,8 @@
                         android:id="@+id/txt8"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="0.5dp"
                         android:layout_weight="1"
+                        android:includeFontPadding="false"
                         android:fontFamily="@font/font_medium"
                         android:gravity="center"
                         android:tag="8"

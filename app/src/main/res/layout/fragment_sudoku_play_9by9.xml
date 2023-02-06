@@ -31,52 +31,38 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
-            android:textColor="@color/textColor0"
+            style="@style/mainTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/font_bold"
-            android:gravity="center_vertical"
-            android:paddingStart="@dimen/activity_padding4"
-            android:paddingEnd="@dimen/activity_padding4"
-            android:shadowColor="@color/colorHeadingBlack_00"
-            android:shadowRadius="1"
+            android:layout_marginHorizontal="@dimen/title_margin"
             android:text="@string/sudoku"
-            android:textSize="@dimen/textSizeLarge"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="@+id/cardBack"/>
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtDesc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:fontFamily="@font/font_semibold"
             android:gravity="center_vertical"
+            android:lineSpacingExtra="@dimen/_2sdp"
             android:paddingHorizontal="@dimen/activity_padding16"
             android:text="@string/sudoku_description"
             android:textColor="@color/blue_original"
-            android:lineSpacingExtra="@dimen/_2sdp"
             android:textSize="@dimen/textSizeSmall"
+            app:fontFamily="@font/font_semibold"
+            app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintEnd_toStartOf="@+id/txtTimer"
             app:layout_constraintStart_toEndOf="@+id/txtTitle"
-            app:layout_constraintTop_toTopOf="@+id/cardBack"
-            app:layout_constraintBottom_toBottomOf="@+id/cardBack"/>
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTimer"
-            android:textColor="@color/textColor1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/screen_margin_half"
-            android:fontFamily="@font/font_bold"
-            android:gravity="center"
-            android:includeFontPadding="false"
-            android:maxLines="1"
-            android:shadowColor="@color/colorHeadingBlack_00"
-            android:shadowRadius="1"
-            android:singleLine="true"
+            android:layout_marginEnd="@dimen/activity_padding12"
+            style="@style/mainTitle"
             android:text="Time : 0:00"
-            android:textSize="@dimen/textSizeLarge"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/cardBack" />
@@ -89,10 +75,10 @@
             app:cardCornerRadius="@dimen/_12sdp"
             app:cardElevation="@dimen/card_elevation2"
             app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toStartOf="@+id/gridView"
-            app:layout_constraintBottom_toBottomOf="@+id/gridView"
+            app:layout_constraintBottom_toBottomOf="@+id/relSudoku"
+            app:layout_constraintEnd_toStartOf="@+id/relSudoku"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/gridView">
+            app:layout_constraintTop_toTopOf="@+id/relSudoku">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
@@ -103,50 +89,57 @@
                 android:paddingEnd="@dimen/activity_padding8">
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgVolume"
                     android:layout_width="@dimen/_24sdp"
                     android:layout_height="@dimen/_24sdp"
                     android:padding="@dimen/activity_padding4"
-                    app:tint="@color/colorOrange"
-                    android:id="@+id/imgVolume"
-                    app:srcCompat="@drawable/ic_volume_on" />
+                    app:srcCompat="@drawable/ic_volume_on"
+                    app:tint="@color/colorOrange" />
 
                 <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtVolume"
+                    android:layout_width="@dimen/_54sdp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_bold"
                     android:text="@string/volume_on"
-                    android:id="@+id/txtVolume"
-                    android:layout_width="@dimen/_54sdp"
                     android:textColor="@color/colorOrange"
-                    android:textSize="@dimen/textSizeSmall"/>
+                    android:textSize="@dimen/textSizeSmall" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </com.google.android.material.card.MaterialCardView>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/gridView"
+
+        <RelativeLayout
+            android:id="@+id/relSudoku"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:overScrollMode="never"
-            android:scrollbars="none"
-            android:visibility="visible"
-            android:layout_marginBottom="@dimen/activity_padding8"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="V,1:1"
             app:layout_constraintEnd_toStartOf="@+id/linearRight"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardBack"
-            app:spanCount="3"
-            tools:itemCount="9"
-            tools:listitem="@layout/raw_layout_sudoku_play_9by9" />
+            android:padding="@dimen/activity_padding8"
+            app:layout_constraintTop_toBottomOf="@+id/cardBack">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/gridView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:layout_centerInParent="true"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="3"
+                tools:itemCount="9"
+                tools:listitem="@layout/raw_layout_sudoku_play_9by9" />
+        </RelativeLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/linearRight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginEnd="@dimen/activity_padding16"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/gridView">
+            app:layout_constraintTop_toTopOf="@+id/relSudoku">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
@@ -224,8 +217,8 @@
                     android:text="@string/hint"
                     android:textColor="@color/numbercolor"
                     android:textSize="14sp"
-                    app:fontFamily="@font/font_bold"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    app:fontFamily="@font/font_bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -303,8 +296,8 @@
                     android:text="@string/notes"
                     android:textColor="@color/numbercolor"
                     android:textSize="14sp"
-                    app:fontFamily="@font/font_bold"
-                    android:visibility="visible" />
+                    android:visibility="visible"
+                    app:fontFamily="@font/font_bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
 

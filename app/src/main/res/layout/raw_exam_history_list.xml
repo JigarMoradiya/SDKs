@@ -42,7 +42,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
-            <com.willy.ratingbar.ScaleRatingBar
+            <com.willy.ratingbar.BaseRatingBar
                 android:id="@+id/simpleRatingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
 
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtDesc">
-            </com.willy.ratingbar.ScaleRatingBar>
+            </com.willy.ratingbar.BaseRatingBar>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearTotalQuestion"
@@ -132,19 +132,14 @@
                     android:textSize="@dimen/textSizeExtraSmall" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/txtCheckResult"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_24sdp"
-                android:background="@drawable/button_background_rounded"
+                style="@style/btnSmall"
+                android:letterSpacing="0"
                 android:elevation="@dimen/_2sdp"
                 android:layout_margin="@dimen/_2sdp"
-                android:fontFamily="@font/font_bold"
-                android:gravity="center"
-                android:paddingHorizontal="@dimen/screen_margin"
                 android:text="@string/check_result"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textSizeExtraSmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"

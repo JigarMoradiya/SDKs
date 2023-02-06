@@ -5,6 +5,11 @@
     <color name="colorPrimary">#3949AB</color>
     <color name="colorPrimaryDark">#1A237E</color>
     <color name="colorAccent">#FF6F00</color>
+
+    <color name="white">#ffffff</color>
+    <color name="btn_color_bg">@color/colorAccent</color>
+    <color name="btn_color_text">@color/white</color>
+
     <color name="card_bg">#f3f3f3</color>
 
     <color name="textColor0">#3949AB</color>
@@ -18,7 +23,6 @@
 
     <color name="colorHyperlinkBlue">#0000EE</color>
 
-    <color name="white">#ffffff</color>
     <color name="home_menu_icon_bg">#f1f1f1</color>
     <color name="white40">#40ffffff</color>
     <color name="white80">#80ffffff</color>
@@ -93,7 +97,7 @@
     <color name="green_600" tools:ignore="MissingDefaultResource">#43A047</color>
     <color name="colorHeadingBlack_61">#616161</color>
     <color name="red_600">#E53935</color>
-    <color name="red">#d40e3a</color>
+    <color name="red">#EE0000</color>
     <color name="redDark">#A30125</color>
     <color name="black_text">#616161</color>
     <color name="purple_A700">#AA00FF</color>

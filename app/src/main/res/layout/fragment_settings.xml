@@ -66,12 +66,12 @@
             android:id="@+id/cardBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_1sdp"
-            android:elevation="@dimen/card_elevation"
             app:cardBackgroundColor="@color/light_back"
             app:cardCornerRadius="@dimen/_16sdp"
-            app:cardMaxElevation="@dimen/card_elevation"
             app:cardUseCompatPadding="true"
+            app:cardMaxElevation="@dimen/card_elevation"
+            app:cardElevation="@dimen/card_elevation"
+            android:layout_margin="@dimen/_1sdp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -87,11 +87,11 @@
             android:id="@+id/cardPurchase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_1sdp"
-            android:elevation="@dimen/card_elevation"
             app:cardBackgroundColor="@color/light_purchase"
             app:cardCornerRadius="@dimen/_16sdp"
             app:cardMaxElevation="@dimen/card_elevation"
+            app:cardElevation="@dimen/card_elevation"
+            android:layout_margin="@dimen/_1sdp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -112,7 +112,7 @@
             android:layout_marginHorizontal="@dimen/title_margin"
             android:text="@string/txt_setting_title"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
-            app:layout_constraintEnd_toEndOf="@+id/cardPurchase"
+            app:layout_constraintEnd_toStartOf="@+id/cardPurchase"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
             app:layout_constraintTop_toTopOf="@+id/cardBack" />
 

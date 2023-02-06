@@ -121,15 +121,9 @@ class SudokuPlay4Fragment : BaseFragment(), SudokuCompleteDialog.SudokuCompleteD
                     delay(300)
                     ads()
                 }
-//                        } else {
-//                            HintRemove()
-//                        }
             } else {
                 showToast(R.string.txt_select_box)
             }
-//            } else {
-//                showMessage(R.string.Hint_come)
-//            }
         }
         binding.txt0.onClick { setValueNumberClick("0") }
         binding.txt1.onClick { setValueNumberClick("1") }

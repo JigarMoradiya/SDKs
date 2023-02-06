@@ -82,19 +82,13 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-            <com.google.android.material.textview.MaterialTextView
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnYes"
-                android:textColor="@color/textColor0"
+                style="@style/btnSmall"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_padding4"
-                android:layout_marginTop="@dimen/screen_margin"
-                android:layout_marginEnd="@dimen/activity_padding4"
-                android:background="?attr/selectableItemBackground"
-                android:fontFamily="@font/font_semibold"
-                android:padding="@dimen/activity_padding8"
                 android:text="@string/txtOk"
-                android:textSize="@dimen/textSizeLarge"
+                android:layout_marginTop="@dimen/activity_padding12"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearTotalTime"
                 app:textAllCaps="true" />
@@ -102,7 +96,7 @@
 
             <androidx.legacy.widget.Space
                 android:layout_width="0dp"
-                android:layout_height="@dimen/activity_padding8"
+                android:layout_height="@dimen/activity_padding16"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnYes" />

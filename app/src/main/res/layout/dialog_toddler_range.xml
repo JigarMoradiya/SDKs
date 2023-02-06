@@ -90,23 +90,12 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnYes"
+                style="@style/btnMedium"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/button_height_small"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/activity_padding20"
-                android:backgroundTint="@color/colorButton"
-                android:fontFamily="@font/font_bold"
-                android:insetTop="0dp"
-                android:layout_marginStart="@dimen/activity_padding8"
-                android:insetBottom="0dp"
-                android:letterSpacing="0"
-                android:paddingHorizontal="32dp"
-                android:paddingVertical="0dp"
                 android:text="@string/submit"
                 android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="@dimen/button_height_small_text_size"
-                app:cornerRadius="@dimen/button_corner_radius"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/layout_edt_to" />
@@ -119,14 +108,18 @@
                 android:layout_gravity="center"
                 android:fontFamily="@font/font_bold"
                 android:includeFontPadding="false"
-                android:padding="@dimen/activity_padding16"
+                android:padding="@dimen/activity_padding8"
                 android:text="@string/txtCancel"
                 android:textColor="@color/colorListingHeading"
-                android:textSize="@dimen/textSizeRegular"
+                android:textSize="@dimen/textSizeMedium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/btnYes" />
 
+            <androidx.legacy.widget.Space
+                android:layout_width="match_parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnNo"
+                android:layout_height="@dimen/activity_padding8"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>

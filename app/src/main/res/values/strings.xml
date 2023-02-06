@@ -3,6 +3,7 @@
 <!--    <string name="app_name">Abacus child learning application</string>-->
     <string name="download_folder">Abacus Downloads</string>
     <string name="txt_mail">info.brainapptech@gmail.com</string>
+    <string name="material_customization">If you want any customization on material like change to Logo, add watermark, etc.. you can contact us on info.brainapptech@gmail.com</string>
     <string name="privacy_policy_text">Here we declare the Privacy Policy for Abacus - Child Learning Application android mobile application.\n\nAbacus - Child Learning Application is a mathematical tools used for calculation. This app will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\nAbacus is suitable for children age 5 and up, who know about numbers and some basic addition and subtraction.\n\n<b>All application data collocting by Brainapptech Team and we are responsible for that if any issue regarding to data. Content not have any violent, sexual or nudity and drugs so all the people can use it and special kids below 9 year.</b>\n\n<b><font color='#FF0000'>Benefits of Abacus - Child Learning Application : </font></b>\n- Boosting the calculation skills making them better and faster.<br />- Sharpens concentration and comprehension.\n- Increases endurance for stress and pressure.<br />- It helps in better reading and writing.\n- Sharpens listening skills.\n- One of major benefits of Abacus program is that it makes mathematics meaningful, useful and fun for the children.\n- Specially this Abacus program is very effective for those who do not like studying math.\n\n<b><font color='#0000EE'>Give exam</font></b> as per your children level and determine result.\n<b><font color='#0000EE'>Download practice material</font></b> available, its not only math your kids can learn all about around us.\n- Kids can <b><font color='#0000EE'>learn about Pets animals, Farm animals, Mammal animals, Sea animals, Wild animals, Birds, Fruits, Vegetables, Shapes,</font></b> etc..\n- <b><font color='#0000EE'>Count the objects, Fill the blank, Less than &amp; Greater than &amp; Equals, Odds &amp; Evens number.</font></b>\n- Know about Abacus, Identify beads of abacus, Draw beads of abacus.\n- Learn about Number, Addition &amp; Subtraction, Multiplication &amp; Division.\n\nApplication contain ads but its not harmfull to child. We contolled ads to showing in application. We blocked all the Sensitive Categories ads which can harmfull to kids.\n\nWe are responsible for all content which are showing in application and we declare in Privacy Policy.\n\nIn application following permission is used.\n1) INTERNET - For data load and ads loading.\n\nBest Regarding,\nBrainapptech Team.</string>
     <string name="default_notification_channel_id">abacus_public_notification</string>
 
@@ -63,9 +64,9 @@
     <string name="PrivacyPolicy">Privacy Policy</string>
     <string name="PrivacyPolicy_"><font color='#0000EE'><u>Privacy Policy</u></font></string>
     <!--  Comman  -->
-    <string name="txtOk">OK</string>
+    <string name="txtOk">Okay</string>
     <string name="txtYES">YES</string>
-    <string name="txtCancel">CANCEL</string>
+    <string name="txtCancel">Cancel</string>
     <string name="txtNo">NO</string>
     <string name="notification">Notification</string>
 
@@ -97,8 +98,7 @@
 
     <!--  Page list  -->
     <string name="unlimited">unlimited</string>
-    <string name="lesson">Lesson</string>
-    <string name="lessons_of">Lessons of</string>
+    <string name="lessons_of">Pages of</string>
 
     <!--  Abacus  -->
     <string name="language_not_supported">This language is not supported!</string>
@@ -198,7 +198,6 @@
     <string name="download_txt5">- Kids can learn about Pets animals, Farm animals, Mammal animals, Sea animals, Wild animals, Birds, Fruits, Vegetables, Shapes, etc..</string>
     <string name="download_txt6"><![CDATA[- Learn about Number, Addition & Subtraction, Multiplication & Division.]]></string>
     <string name="download_txt7">More material coming soon...</string>
-    <string name="material_customization">If you want any customization on material like change to Logo, add watermark, etc.. you can contact us on brainapptech@gmail.com</string>
 
     <!--  Tutorial  -->
 
@@ -332,5 +331,12 @@
     <string name="no_i_don_t_want">No, I don\'t want</string>
     <string name="please_close">Please close</string>
     <string name="submit">Submit</string>
+    <string name="_4_by_4_sudoku">4 By 4 Sudoku</string>
+    <string name="_6_by_6_sudoku">6 By 6 Sudoku</string>
+    <string name="_9_by_9_sudoku">9 By 9 Sudoku</string>
+    <string name="medium">Medium</string>
+    <string name="easy">Easy</string>
+    <string name="hard">Hard</string>
+    <string name="very_hard">Very Hard</string>
 
 </resources>
