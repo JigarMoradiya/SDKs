@@ -68,15 +68,6 @@ object AppConstants {
         }
     }
 
-    annotation class rateSetting {
-        companion object {
-            const val shouldShowRatePopup: String = "RatePopup"
-            const val PREF_KEY_IS_RATED: String = "is_rated"
-            const val PREF_KEY_IS_ALREADY_RATED: String = "is_already_rated"
-            const val PREF_KEY_RATE_DIALOG_COUNT: String = "rate_dialog_count"
-        }
-    }
-
     annotation class AbacusProgress {
         companion object {
             var PREF_PAGE_SUM = "pageSum"
@@ -96,6 +87,7 @@ object AppConstants {
             var Discount = "Discount"
             var Ads = "Ads"
             var reset = "reset"
+            var versionCode = "VersionCode"
             var resetImage = "resetImage"
             var Privacy_Policy_data = "Privacy_Policy_data"
 

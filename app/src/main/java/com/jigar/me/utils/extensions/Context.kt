@@ -140,8 +140,7 @@ fun Context.shareIntent(msg : String) {
     startActivity(sharingIntent)
 }
 
- fun Context.openYoutube() {
-     val url = AppConstants.YOUTUBE_URL
+ fun Context.openYoutube(url : String = AppConstants.YOUTUBE_URL) {
      val i = Intent(Intent.ACTION_VIEW)
      i.data = Uri.parse(url)
      startActivity(i)

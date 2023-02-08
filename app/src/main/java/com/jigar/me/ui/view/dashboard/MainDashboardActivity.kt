@@ -3,6 +3,7 @@ package com.jigar.me.ui.view.dashboard
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
@@ -21,6 +22,7 @@ import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.extensions.hide
+import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -75,6 +77,7 @@ class MainDashboardActivity : BaseActivity(){
     private fun initViews() {
         setNavigationGraph()
         onMainActivityBack()
+
     }
 
 
@@ -82,7 +85,7 @@ class MainDashboardActivity : BaseActivity(){
     private fun initListener() {
 
     }
-    fun setPurchase(listData: List<InAppPurchaseDetails>) {
+    private fun setPurchase(listData: List<InAppPurchaseDetails>) {
         with(prefManager){
             setCustomParam(AppConstants.Purchase.Purchase_All, "N")
             setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
@@ -125,10 +128,6 @@ class MainDashboardActivity : BaseActivity(){
         when (id) {
             R.id.homeFragment -> {
                 binding.toolbar.hide()
-            }
-            R.id.pageFragment -> {
-                binding.toolbar.title = "Pages"
-                showOnlyBackArrow()
             }
             else ->{
                 binding.toolbar.hide()

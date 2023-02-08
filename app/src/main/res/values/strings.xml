@@ -132,9 +132,13 @@
     <string name="txt_page_completed_already">You already completed this page.\nIf want to more abacus then you need to buy purchase paid plan.</string>
     <string name="txt_page_completed_free">If you want more abacus then you need to buy purchase plan.</string>
 
+    <string name="new_version_msg">New version is available on playstore.\nTo continue, please update application.</string>
+    <string name="app_update">New Update!</string>
+
     <string name="yes_i_want_to_start">Yes, I want to start</string>
     <string name="yes_i_m_sure">Yes, I\'m sure</string>
     <string name="yes_i_want_to_purchase">Yes, I want to Purchase</string>
+    <string name="yes_i_want_to_update">Yes, I want to Update</string>
     <string name="no_purchase_later">No, I will Purchase later</string>
     <string name="no_thanks">No, thanks</string>
     <string name="no_please_continue">No, please continue</string>

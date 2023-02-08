@@ -20,7 +20,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
-            android:name=".ui.view.dashboard.MainDashboardActivity"
+            android:name=".ui.view.login.LoginDashboardActivity"
             android:exported="true"
             android:screenOrientation="sensorLandscape"
             android:theme="@style/AppTheme.NoActionBar" >
@@ -30,6 +30,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.view.dashboard.MainDashboardActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
@@ -71,8 +77,12 @@
 
         <!-- Notification -->
         <meta-data
+            android:name="com.onesignal.NotificationOpened.DEFAULT"
+            android:value="DISABLE" />
+
+        <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/logo" />
+            android:resource="@drawable/logo_small" />
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorPrimary" />

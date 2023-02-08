@@ -11,6 +11,22 @@ object Constants {
     const val examLevelIntermediate = "Intermediate"
     const val examLevelExpert = "Expert"
 
+    const val notificationTypeStarter = "starter"
+    const val notificationTypeNumber = "number"
+    const val notificationTypeAddition = "addition"
+    const val notificationTypeSubtraction = "subtraction"
+    const val notificationTypeMultiplication = "multiplication"
+    const val notificationTypeDivision = "division"
+    const val notificationTypeMaterial = "material"
+    const val notificationTypeMaterialMath = "material_math"
+    const val notificationTypeMaterialNursery = "material_nursery"
+    const val notificationTypeExam = "exam"
+    const val notificationTypeSudoku = "sudoku"
+    const val notificationTypeNumberSequence = "number_sequence"
+    const val notificationTypeSetting = "setting"
+    const val notificationTypePurchase = "purchase"
+    const val notificationTypeYoutube = "youtube"
+
     const val bottomSheetWidthBaseOnRatio6 = 6
     const val bottomSheetWidthBaseOnRatio5 = 5
     const val bottomSheetWidthBaseOnRatio4 = 4

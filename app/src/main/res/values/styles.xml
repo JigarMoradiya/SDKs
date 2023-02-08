@@ -26,14 +26,14 @@
 
     <style name="mainTitle" parent="TextAppearance.AppCompat.Title">
         <item name="fontFamily">@font/font_extra_bold</item>
-        <item name="android:textSize">@dimen/textSize18</item>
+        <item name="android:textSize">@dimen/textSizeExtraLarge</item>
         <item name="android:textColor">@color/colorPrimaryDark</item>
         <item name="android:includeFontPadding">false</item>
     </style>
 
     <style name="mainTitleSmall" parent="TextAppearance.AppCompat.Title">
         <item name="fontFamily">@font/font_extra_bold</item>
-        <item name="android:textSize">@dimen/textSizeRegular</item>
+        <item name="android:textSize">@dimen/textSizeMedium</item>
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:includeFontPadding">false</item>
     </style>

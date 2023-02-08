@@ -2,17 +2,30 @@ package com.jigar.me
 
 import android.app.Activity
 import android.app.Application
+import android.app.Notification
+import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.hilt.work.HiltWorkerFactory
+import androidx.navigation.NavDeepLinkBuilder
 import androidx.work.Configuration
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.gson.Gson
+import com.jigar.me.data.model.NotificationData
 import com.jigar.me.internal.service.download.CustomFileDownloader
 import com.jigar.me.internal.service.download.FileDownloadNotificationManager
+import com.jigar.me.ui.view.dashboard.MainDashboardActivity
+import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
+import com.jigar.me.utils.extensions.openYoutube
+import com.onesignal.OSNotificationAction
+import com.onesignal.OneSignal
+//import com.onesignal.OSNotificationAction
+//import com.onesignal.OneSignal
 import com.tonyodev.fetch2.Fetch
 import com.tonyodev.fetch2.FetchConfiguration
 import com.tonyodev.fetch2core.Downloader
@@ -76,6 +89,8 @@ class MyApplication : Application(),Configuration.Provider {
         MobileAds.initialize(this)
         analytics = FirebaseAnalytics.getInstance(this@MyApplication)
 
+        oneSignal()
+
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
@@ -119,6 +134,117 @@ class MyApplication : Application(),Configuration.Provider {
         }
 
 
+    }
+
+    private fun oneSignal() {
+        // Enable verbose OneSignal logging to debug issues if needed.
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.VERBOSE, OneSignal.LOG_LEVEL.NONE)
+
+        // OneSignal Initialization
+        OneSignal.initWithContext(this)
+        OneSignal.setAppId(BuildConfig.ONE_SIGNAL)
+
+        OneSignal.setNotificationOpenedHandler { result ->
+            Log.d("notification_data", result.toString())
+            val additional_data = result.notification.additionalData.toString()
+            Log.e("jigarLogs","action = "+additional_data)
+            if (additional_data.isNotEmpty()) {
+                val notification = Gson().fromJson(additional_data, NotificationData::class.java)
+
+                if (notification != null) {
+                    when (notification.type) {
+                        Constants.notificationTypeStarter -> {
+                            moveToDestination(R.id.fullAbacusFragment)
+                        }
+                        Constants.notificationTypeNumber -> {
+                            moveToPages(AppConstants.HomeClicks.Menu_Number,getString(R.string.Number))
+                        }
+                        Constants.notificationTypeAddition -> {
+                            moveToPages(AppConstants.HomeClicks.Menu_Addition,getString(R.string.Addition))
+                        }
+                        Constants.notificationTypeSubtraction -> {
+                            moveToPages(AppConstants.HomeClicks.Menu_Addition_Subtraction,getString(R.string.AdditionSubtraction))
+                        }
+                        Constants.notificationTypeMultiplication -> {
+                            moveToPages(AppConstants.HomeClicks.Menu_Multiplication,getString(R.string.Multiplication))
+                        }
+                        Constants.notificationTypeDivision -> {
+                            moveToPages(AppConstants.HomeClicks.Menu_Division,getString(R.string.Division))
+                        }
+                        Constants.notificationTypeMaterial -> {
+                            moveToDestination(R.id.materialHomeFragment)
+                        }
+                        Constants.notificationTypeMaterialMath -> {
+                            moveToPractiseMaterialType(AppConstants.Extras_Comman.DownloadType_Maths)
+                        }
+                        Constants.notificationTypeMaterialNursery -> {
+                            moveToPractiseMaterialType(AppConstants.Extras_Comman.DownloadType_Nursery)
+                        }
+                        Constants.notificationTypeExam -> {
+                            moveToDestination(R.id.examHomeFragment)
+                        }
+                        Constants.notificationTypeSudoku -> {
+                            moveToDestination(R.id.sudokuHomeFragment)
+                        }
+                        Constants.notificationTypeNumberSequence -> {
+                            moveToDestination(R.id.puzzleNumberHomeFragment)
+                        }
+                        Constants.notificationTypeSetting -> {
+                            moveToDestination(R.id.settingsFragment)
+                        }
+                        Constants.notificationTypePurchase -> {
+                            moveToDestination(R.id.purchaseFragment)
+                        }
+                        Constants.notificationTypeYoutube -> {
+                            this.openYoutube(notification.youtube_url)
+                        }
+                        else -> {
+                            moveToDestination(R.id.homeFragment)
+                        }
+                    }
+                }
+
+            }
+        }
+
+
+        OneSignal.setNotificationWillShowInForegroundHandler {
+
+        }
+    }
+
+    private fun moveToPages(from : Int, title : String) {
+        val args = Bundle()
+        args.putInt("from", from)
+        args.putString("title", title)
+
+        NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.main_navigation_graph)
+            .setDestination(R.id.pageFragment)
+            .setArguments(args)
+            .setComponentName(MainDashboardActivity::class.java)
+            .createTaskStackBuilder().getPendingIntent(1,if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT })!!
+            .send()
+    }
+    private fun moveToPractiseMaterialType(downloadType : String) {
+        val args = Bundle()
+        args.putString("downloadType", downloadType)
+
+        NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.main_navigation_graph)
+            .setDestination(R.id.materialDownloadFragment)
+            .setArguments(args)
+            .setComponentName(MainDashboardActivity::class.java)
+            .createTaskStackBuilder().getPendingIntent(1,if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT })!!
+            .send()
+    }
+    private fun moveToDestination(id : Int) {
+        NavDeepLinkBuilder(this)
+            .setGraph(R.navigation.main_navigation_graph)
+            .setDestination(id)
+            .setComponentName(MainDashboardActivity::class.java)
+            .createTaskStackBuilder().getPendingIntent(1,if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT })!!
+            .send()
     }
 
 }

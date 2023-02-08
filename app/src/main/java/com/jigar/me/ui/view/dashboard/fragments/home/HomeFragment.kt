@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -36,6 +37,7 @@ import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.databinding.FragmentHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.inapp.BillingRepository
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.extensions.*
@@ -72,6 +74,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
     private fun initViews() {
         getTrackData()
         setViewPager()
+        getFBConstant()
     }
 
     private fun setViewPager() {
@@ -298,4 +301,70 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
         })
     }
 
+    private fun getFBConstant() {
+        val databaseReference = FirebaseDatabase.getInstance().reference
+            .child(AppConstants.AbacusProgress.Settings)
+        databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    val mapMessage = dataSnapshot.value as HashMap<*, *>?
+                    val reset = mapMessage!![AppConstants.AbacusProgress.reset] as Long
+                    val versionCode = mapMessage[AppConstants.AbacusProgress.versionCode] as Long
+                    val discount = mapMessage[AppConstants.AbacusProgress.Discount] as Long
+                    val resetImage = mapMessage[AppConstants.AbacusProgress.resetImage] as Long
+                    val privacyPolicy = mapMessage[AppConstants.AbacusProgress.Privacy_Policy_data] as String
+                    val baseUrl = mapMessage[AppConstants.AbacusProgress.BaseUrl] as String
+                    val ads = mapMessage[AppConstants.AbacusProgress.Ads] as String
+                    with(prefManager){
+                        setBaseUrl(baseUrl)
+                        setCustomParam(AppConstants.AbacusProgress.Privacy_Policy_data,privacyPolicy)
+                        setCustomParam(AppConstants.AbacusProgress.Ads,ads)
+                        setCustomParamInt(AppConstants.AbacusProgress.Discount,discount.toInt())
+
+                        if (reset.toInt() > getCustomParamInt(AppConstants.AbacusProgress.reset, 0)) {
+                            setCustomParamInt(AppConstants.AbacusProgress.reset, reset.toInt())
+                            setCustomParam(AppConstants.Extras_Comman.Level + "2","")
+                            setCustomParam(AppConstants.Extras_Comman.Level + "3","")
+                        }
+
+                        if (resetImage.toInt() > getCustomParamInt(AppConstants.AbacusProgress.resetImage, 0)) {
+                            setCustomParamInt(AppConstants.AbacusProgress.resetImage, resetImage.toInt())
+                            setCustomParam(AppConstants.Extras_Comman.DownloadType+"_"+AppConstants.Extras_Comman.DownloadType_Maths, "")
+                            setCustomParam(AppConstants.Extras_Comman.DownloadType+"_"+AppConstants.Extras_Comman.DownloadType_Nursery, "")
+                        }
+
+                        checkVersion(versionCode)
+
+                    }
+                }
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {
+
+            }
+        })
+    }
+
+    private fun checkVersion(versionCode: Long) {
+        try {
+            val pInfo =
+                requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
+            val version = pInfo.longVersionCode
+            if (versionCode > version){
+                CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.app_update),getString(R.string.new_version_msg)
+                    ,getString(R.string.yes_i_want_to_update),getString(R.string.no_thanks), icon = R.drawable.ic_alert,
+                    clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                        override fun onConfirmationYesClick(bundle: Bundle?) {
+                            requireContext().openPlayStore()
+                        }
+                        override fun onConfirmationNoClick(bundle: Bundle?){
+                            requireActivity().finish()
+                        }
+                    })
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            e.printStackTrace()
+        }
+
+    }
 }

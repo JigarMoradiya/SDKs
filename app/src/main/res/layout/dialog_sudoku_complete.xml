@@ -51,7 +51,7 @@
                     android:id="@+id/txtTotalTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/screen_margin"
+                    android:layout_marginTop="@dimen/activity_padding12"
                     android:fontFamily="@font/font_bold"
                     android:gravity="center"
                     tools:text="10m 20s"

@@ -38,7 +38,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="@dimen/activity_padding16"
             android:layout_marginEnd="@dimen/activity_padding16"
-            android:elevation="@dimen/screen_margin_half"
+            android:elevation="@dimen/activity_padding6"
             android:indeterminate="false"
             android:max="20"
             android:progress="3"
@@ -108,7 +108,7 @@
                     android:id="@+id/txtTapCorrectAns"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/screen_margin_half"
+                    android:layout_marginTop="@dimen/activity_padding6"
                     android:fontFamily="@font/font_extra_bold"
                     android:gravity="center"
                     android:paddingVertical="@dimen/activity_padding4"
@@ -180,7 +180,7 @@
                 <androidx.legacy.widget.Space
                     android:id="@+id/dividerAnswer"
                     android:layout_width="wrap_content"
-                    android:layout_height="@dimen/screen_margin_half"
+                    android:layout_height="@dimen/activity_padding6"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/cardAnswer1" />
@@ -219,7 +219,7 @@
                     android:layout_width="@dimen/exam_option_width"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/activity_padding4"
-                    android:layout_marginStart="@dimen/screen_margin_half"
+                    android:layout_marginStart="@dimen/activity_padding6"
                     app:cardBackgroundColor="@color/colorTint"
                     app:cardCornerRadius="@dimen/card_corner_radius4"
                     app:cardElevation="@dimen/card_elevation4"
@@ -248,7 +248,7 @@
                     android:id="@+id/cardSkip"
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/screen_margin"
+                    android:layout_margin="@dimen/activity_padding12"
                     app:cardBackgroundColor="@color/card_bg"
                     app:cardCornerRadius="@dimen/card_corner_radius4"
                     app:cardElevation="@dimen/card_elevation4"
@@ -276,7 +276,7 @@
 
                 <androidx.legacy.widget.Space
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/screen_margin_half"
+                    android:layout_height="@dimen/activity_padding6"
                     app:layout_constraintTop_toBottomOf="@+id/cardSkip"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
