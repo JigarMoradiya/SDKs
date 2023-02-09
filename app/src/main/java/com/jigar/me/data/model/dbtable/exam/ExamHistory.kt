@@ -2,6 +2,7 @@ package com.jigar.me.data.model.dbtable.exam
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import com.jigar.me.data.local.data.BeginnerExamPaper
 import com.jigar.me.data.local.data.BeginnerExamQuestionType
 import com.jigar.me.utils.Calculator
@@ -57,4 +58,10 @@ data class ExamHistory(
     }
 }
 
-data class DailyExamData(var abacus_id: String = "",var questions: String = "",var userAnswer: String = "")
+data class DailyExamData(
+    @SerializedName("abacus_id")
+    var abacus_id: String = "",
+    @SerializedName("questions")
+    var questions: String = "",
+    @SerializedName("userAnswer")
+    var userAnswer: String = "")

@@ -1,6 +1,7 @@
 package com.jigar.me.ui.view.dashboard.fragments.page
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -79,32 +80,32 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
             } else if (from == AppConstants.HomeClicks.Menu_Division) {
                 fillDivisionPages()
             } else if (from == AppConstants.HomeClicks.Menu_Addition) {
-                if (listAdditionSubtractionsPages.isEmpty()) {
-                    if (prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, "").isEmpty()) {
+//                if (listAdditionSubtractionsPages.isEmpty()) {
+//                    if (prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, "").isEmpty()) {
                         apiViewModel.getPages(from)
-                    } else {
-                        val type = object : TypeToken<List<AdditionSubtractionCategory>>() {}.type
-                        val listTemp: List<AdditionSubtractionCategory> =
-                            Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, ""),type)
-                        setAdditionSubtractionPages(listTemp)
-                    }
-                } else {
-                    setAdditionSubtractionPages(listAdditionSubtractionsPages)
-                }
+//                    } else {
+//                        val type = object : TypeToken<List<AdditionSubtractionCategory>>() {}.type
+//                        val listTemp: List<AdditionSubtractionCategory> =
+//                            Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, ""),type)
+//                        setAdditionSubtractionPages(listTemp)
+//                    }
+//                } else {
+//                    setAdditionSubtractionPages(listAdditionSubtractionsPages)
+//                }
 
             } else if (from == AppConstants.HomeClicks.Menu_Addition_Subtraction) {
-                if (listAdditionSubtractionsPages.isEmpty()) {
-                    if (prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, "").isEmpty()) {
+//                if (listAdditionSubtractionsPages.isEmpty()) {
+//                    if (prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, "").isEmpty()) {
                         apiViewModel.getPages(from)
-                    } else {
-                        val type = object : TypeToken<List<AdditionSubtractionCategory>>() {}.type
-                        val listTemp: List<AdditionSubtractionCategory> =
-                            Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, ""),type)
-                        setAdditionSubtractionPages(listTemp)
-                    }
-                } else {
-                    setAdditionSubtractionPages(listAdditionSubtractionsPages)
-                }
+//                    } else {
+//                        val type = object : TypeToken<List<AdditionSubtractionCategory>>() {}.type
+//                        val listTemp: List<AdditionSubtractionCategory> =
+//                            Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, ""),type)
+//                        setAdditionSubtractionPages(listTemp)
+//                    }
+//                } else {
+//                    setAdditionSubtractionPages(listAdditionSubtractionsPages)
+//                }
 
             }
         } else {

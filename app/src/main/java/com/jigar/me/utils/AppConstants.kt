@@ -180,7 +180,7 @@ object AppConstants {
             var isType_random = "isType_random"
 
             var examGivenCount = "examGivenCount"
-            var examLevel = "examLevel"
+
             var examLevelLable = "examLevelLable"
             var examResult = "ExamResult"
 
@@ -193,7 +193,8 @@ object AppConstants {
 
             var tour = "tour"
 
-            var Level = "LevelNew" // level page store
+            var Level = "LevelNews" // level page store
+            var examLevel = "examLevels" // exam store
         }
     }
 

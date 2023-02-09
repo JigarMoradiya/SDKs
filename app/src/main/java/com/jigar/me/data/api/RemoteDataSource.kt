@@ -1,12 +1,25 @@
 package com.jigar.me.data.api
 
 import android.content.Context
-import okhttp3.OkHttpClient
+import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParser
+import com.jigar.me.BuildConfig
+import com.jigar.me.data.model.MainAPIResponseArray
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.ResponseBody.Companion.toResponseBody
+import org.json.JSONObject
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
+import java.net.SocketTimeoutException
+import java.net.UnknownHostException
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import javax.net.ssl.SSLException
 
 class RemoteDataSource @Inject constructor() {
 
@@ -20,14 +33,21 @@ class RemoteDataSource @Inject constructor() {
     }
 
     private fun getClient(context: Context,base_url: String?,): Retrofit? {
-
-        client = OkHttpClient.Builder()
-//                .addInterceptor(Interceptor { chain ->
-//                    forwardNext(context, chain)!!
-//                })
+        client = if (BuildConfig.DEBUG){
+            OkHttpClient.Builder()
+                .addInterceptor(Interceptor { chain ->
+                    forwardNext(context, chain)!!
+                })
                 .readTimeout(1, TimeUnit.MINUTES)
                 .connectTimeout(1, TimeUnit.MINUTES)
                 .build()
+        }else{
+            OkHttpClient.Builder()
+                .readTimeout(1, TimeUnit.MINUTES)
+                .connectTimeout(1, TimeUnit.MINUTES)
+                .build()
+        }
+
         retrofit = Retrofit.Builder()
             .baseUrl(base_url)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -39,7 +59,7 @@ class RemoteDataSource @Inject constructor() {
     }
 
 
-    /*@Throws(IOException::class)
+    @Throws(IOException::class)
     fun forwardNext(context: Context, chain: Interceptor.Chain): Response? {
         val request: Request = chain.request()
         Log.e("post_request", request.url.toString() + "")
@@ -110,7 +130,7 @@ class RemoteDataSource @Inject constructor() {
                 )
             }
             is SSLException -> {
-                handleForbiddenResponse()
+//                handleForbiddenResponse()
                 return createEmptyResponse(
                     chain,
                     "Something went wrong, Please try after sometime"
@@ -129,10 +149,10 @@ class RemoteDataSource @Inject constructor() {
     private fun createEmptyResponse(chain: Interceptor.Chain, errorMessage: String): Response? {
         val mediaType = "application/json".toMediaType()
 
-        val error = com.jigar.me.data.model.Error()
-        error.message = errorMessage
+//        val error = com.jigar.me.data.model.Error()
+//        error.message = errorMessage
 
-        val mainAPIResponse = MainAPIResponseArray(errorMessage,false,null)
+        val mainAPIResponse = MainAPIResponseArray("empty response",false,null)
         val responseBody = Gson().toJson(mainAPIResponse).toResponseBody(mediaType)
 
         return Response.Builder()
@@ -143,7 +163,7 @@ class RemoteDataSource @Inject constructor() {
             .body(responseBody)
             .build()
 
-    }*/
+    }
 
 
 }

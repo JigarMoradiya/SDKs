@@ -147,7 +147,6 @@ class MyApplication : Application(),Configuration.Provider {
         OneSignal.setNotificationOpenedHandler { result ->
             Log.d("notification_data", result.toString())
             val additional_data = result.notification.additionalData.toString()
-            Log.e("jigarLogs","action = "+additional_data)
             if (additional_data.isNotEmpty()) {
                 val notification = Gson().fromJson(additional_data, NotificationData::class.java)
 

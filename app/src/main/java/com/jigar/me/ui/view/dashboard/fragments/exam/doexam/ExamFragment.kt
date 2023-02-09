@@ -167,6 +167,7 @@ class ExamFragment : BaseFragment(),
     }
 
     private fun setExamPaper() {
+
         if (currentQuestionPos >= list_abacus.size) {
             completePopup()
         } else {

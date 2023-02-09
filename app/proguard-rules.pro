@@ -115,27 +115,11 @@
     volatile <fields>;
 }
 
-
-#zoom
--keep class  us.zoom.**{*;}
--keep class  com.zipow.**{*;}
--keep class  us.zipow.**{*;}
--keep class  org.webrtc.**{*;}
--keep class  us.google.protobuf.**{*;}
-
-
-###---------------Begin: proguard configuration for ButterKnife  ----------
-# For Butterknife:
--keep class butterknife.** { *; }
--dontwarn butterknife.internal.**
-
 # Version 7
 -keep class **$$ViewBinder { *; }
 # Version 8
 -keep class **_ViewBinding { *; }
 
--keepclasseswithmembernames class * { @butterknife.* <fields>; }
--keepclasseswithmembernames class * { @butterknife.* <methods>; }
 ###---------------End: proguard configuration for ButterKnife  ----------
 
 -assumenosideeffects class android.util.Log {
@@ -174,19 +158,6 @@
 #
 
 
-
-
-# Request handlers defined in request.handlers
--keep class com.amazonaws.services.**.*Handler
-# The following are referenced but aren't required to run
--dontwarn com.fasterxml.jackson.**
--dontwarn org.apache.commons.logging.**
-# Android 6.0 release removes support for the Apache HTTP client
--dontwarn org.apache.http.**
-# The SDK has several references of Apache HTTP client
--dontwarn com.amazonaws.http.**
--dontwarn com.amazonaws.metrics.**
--dontwarn com.amazonaws.mobile.**
 
 
 -keep class * extends androidx.fragment.app.Fragment{}
