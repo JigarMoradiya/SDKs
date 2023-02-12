@@ -38,7 +38,7 @@
                 app:srb_starWidth="32dp"
                 app:srb_starHeight="32dp"
                 android:layout_marginTop="@dimen/activity_padding8"
-                app:srb_starPadding="@dimen/activity_padding12"
+                app:srb_starPadding="@dimen/activity_padding6"
                 app:srb_stepSize="0.1"
                 app:srb_isIndicator="true"
                 app:srb_clickable="false"

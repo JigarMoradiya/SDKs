@@ -107,6 +107,8 @@
     <string name="txt_purchase">Purchase</string>
     <string name="txt_purchased">Purchased</string>
     <string name="txt_purchase_Now">Purchase Now</string>
+    <string name="txt_subscribed">Subscribed</string>
+    <string name="txt_subscribe_Now">Subscribe Now</string>
 
     <string name="txt_page_full_abacus_not_purchased">Sorry you can"'"t access this feature.\nIf you want use this feature then you need to purchase paid plan.</string>
     <string name="txt_page_practise_material_not_purchased">Sorry you can"'"t download this material.\nIf you want download this material then you need to purchase paid plan.</string>
@@ -342,5 +344,10 @@
     <string name="easy">Easy</string>
     <string name="hard">Hard</string>
     <string name="very_hard">Very Hard</string>
+    <string name="select_your_exercise">Select your Exercise</string>
+    <string name="clear_each_exercise_to_get_80_of_3_times_in_a_row">To clear each exercise, get 80% of 3 times in a row.</string>
+    <string name="start_exercise">Start Exercise</string>
+    <string name="next">Next</string>
+    <string name="answer">Answer :</string>
 
 </resources>

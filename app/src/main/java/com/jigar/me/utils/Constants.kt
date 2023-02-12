@@ -49,6 +49,9 @@ object Constants {
     var Col_Space_full_default = 25F
     var Col_Space_full_polygon = 15F
 
+    var Col_Space_exercise_polygon = 10F
+    var Col_Space_exercise_default = 25F
+
     var Que = "Que"
     var Sign = "Sign"
     var Hint = "Hint"

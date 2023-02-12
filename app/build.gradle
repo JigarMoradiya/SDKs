@@ -17,8 +17,8 @@ android {
         applicationId 'com.jigar.me'
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 68
-        versionName "6.0.8"
+        versionCode 70
+        versionName "7.0.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -151,7 +151,7 @@ dependencies {
     implementation 'com.fathzer:javaluator:3.0.2'
 
     // In App Purchase
-    implementation 'com.android.billingclient:billing:5.0.0'
+    implementation 'com.android.billingclient:billing:5.1.0'
 
     // App Auto Update
     implementation 'com.google.android.play:core:1.10.3'

@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -246,6 +247,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
             }
             AppConstants.HomeClicks.Menu_AboutUs -> {
                 mNavController.navigate(R.id.action_homeFragment_to_aboutFragment)
+//                mNavController.navigate(R.id.action_homeFragment_to_exerciseHomeFragment)
             }
             AppConstants.HomeClicks.Menu_Share -> {
                 val msg = "Abacus child learning application!\n" +
@@ -349,7 +351,12 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
         try {
             val pInfo =
                 requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
-            val version = pInfo.longVersionCode
+            val version = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P){
+                pInfo.longVersionCode
+            }else{
+                pInfo.versionCode.toLong()
+            }
+
             if (versionCode > version){
                 CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.app_update),getString(R.string.new_version_msg)
                     ,getString(R.string.yes_i_want_to_update),getString(R.string.no_thanks), icon = R.drawable.ic_alert,

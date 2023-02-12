@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -8,6 +7,17 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="editTextStyle">@style/App_EditTextStyle</item>
         <item name="android:windowTranslucentStatus">true</item>
+    </style>
+    <style name="CustomCardViewRightCornerStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_right_corners</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_right_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/card_corner_radius12</item>
+        <item name="cornerSizeBottomRight">@dimen/card_corner_radius12</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
     <style name="BottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
@@ -37,11 +47,27 @@
         <item name="android:textColor">@color/colorAccent</item>
         <item name="android:includeFontPadding">false</item>
     </style>
+    <style name="btnExtraSmall">
+        <item name="fontFamily">@font/font_semibold</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:letterSpacing">0</item>
+
+        <item name="android:textSize">@dimen/button_extra_small_text_size</item>
+        <item name="android:textColor">@color/btn_color_text</item>
+        <item name="android:backgroundTint">@color/btn_color_bg</item>
+        <item name="android:layout_height">@dimen/button_extra_small_height</item>
+        <item name="cornerRadius">@dimen/button_extra_small_corner</item>
+        <item name="android:paddingStart">@dimen/button_extra_small_padding_lr</item>
+        <item name="android:paddingEnd">@dimen/button_extra_small_padding_lr</item>
+    </style>
     <style name="btnSmall">
         <item name="fontFamily">@font/font_bold</item>
         <item name="android:insetTop">0dp</item>
         <item name="android:insetBottom">0dp</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:letterSpacing">0</item>
 
         <item name="android:textSize">@dimen/button_small_text_size</item>
         <item name="android:textColor">@color/btn_color_text</item>

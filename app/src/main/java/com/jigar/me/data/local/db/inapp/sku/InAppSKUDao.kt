@@ -12,7 +12,7 @@ import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 @Dao
 interface InAppSKUDao {
 //    @Query("SELECT SKU.*,CASE WHEN (P.orderId IS NULL) THEN 0 ELSE 1 END as isPurchase,CASE WHEN (P.orderId IS NULL) THEN '' ELSE P.orderId END as orderId,P.purchaseTime FROM tableInAppSKU as SKU LEFT JOIN tableInAppPurchase as P ON (SKU.sku = P.sku AND P.purchaseState = 1) WHERE SKU.type = '${BillingClient.ProductType.INAPP}'  ORDER BY SKU.price_amount_micros DESC")
-    @Query("SELECT SKU.*,CASE WHEN (P.orderId IS NULL) THEN 0 ELSE 1 END as isPurchase,CASE WHEN (P.orderId IS NULL) THEN '' ELSE P.orderId END as orderId,P.purchaseTime FROM tableInAppSKU as SKU LEFT JOIN tableInAppPurchase as P ON (SKU.sku = P.sku AND P.purchaseState = 1) ORDER BY SKU.price_amount_micros DESC")
+    @Query("SELECT SKU.*,CASE WHEN (P.orderId IS NULL) THEN 0 ELSE 1 END as isPurchase,CASE WHEN (P.orderId IS NULL) THEN '' ELSE P.orderId END as orderId,P.purchaseTime FROM tableInAppSKU as SKU LEFT JOIN tableInAppPurchase as P ON (SKU.sku = P.sku AND P.purchaseState = 1) ORDER BY SKU.type DESC, SKU.price_amount_micros DESC")
     fun getInAppSku(): LiveData<List<InAppSkuDetails>>
 
     @Query("SELECT SKU.*,CASE WHEN (P.orderId IS NULL) THEN 0 ELSE 1 END as isPurchase,CASE WHEN (P.orderId IS NULL) THEN '' ELSE P.orderId END as orderId,P.purchaseTime FROM tableInAppSKU as SKU LEFT JOIN tableInAppPurchase as P ON (SKU.sku = P.sku AND P.purchaseState = 1) WHERE SKU.sku = :sku AND SKU.type = '${BillingClient.ProductType.INAPP}' ORDER BY SKU.price_amount_micros DESC")
@@ -25,9 +25,23 @@ interface InAppSKUDao {
     fun insertOrUpdate(skuDetails: MutableList<ProductDetails>) = skuDetails.apply {
         skuDetails.map {
             val originalJson = Gson().toJson(it)
-            val detail = InAppSkuDetails(it.productId, it.productType, it.oneTimePurchaseOfferDetails?.formattedPrice,
-                it.oneTimePurchaseOfferDetails?.priceAmountMicros, it.oneTimePurchaseOfferDetails?.priceCurrencyCode, it.title, it.description, originalJson)
-            insert(detail)
+            if (it.productType == BillingClient.ProductType.INAPP){
+                val detail = InAppSkuDetails(it.productId, it.productType, it.oneTimePurchaseOfferDetails?.formattedPrice,
+                    it.oneTimePurchaseOfferDetails?.priceAmountMicros, it.oneTimePurchaseOfferDetails?.priceCurrencyCode,
+                    it.title, it.description, originalJson, offerToken = "")
+                insert(detail)
+            }else{
+                if (!it.subscriptionOfferDetails.isNullOrEmpty()){
+                    val offerDetail = it.subscriptionOfferDetails?.first()
+                    if (!offerDetail?.pricingPhases?.pricingPhaseList.isNullOrEmpty()){
+                        val data = offerDetail?.pricingPhases?.pricingPhaseList?.first()
+                        val detail = InAppSkuDetails(it.productId, it.productType, data?.formattedPrice,
+                            data?.priceAmountMicros, data?.priceCurrencyCode,
+                            it.title, it.description, originalJson, offerToken = offerDetail?.offerToken, billingPeriod = data?.billingPeriod)
+                        insert(detail)
+                    }
+                }
+            }
         }
     }
 

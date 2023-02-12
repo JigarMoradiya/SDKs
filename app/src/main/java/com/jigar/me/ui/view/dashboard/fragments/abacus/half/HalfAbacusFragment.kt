@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.core.view.isVisible
@@ -306,7 +307,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             binding.tvAnsNumber.text = ""
             abacus_type = 0
             number = if (isRandom) {
-                DataProvider.genrateSingleDigit(From, To)
+                DataProvider.generateSingleDigit(From, To)
             } else {
                 prefManager.getCustomParamInt(pageId + "value", From)
             }
@@ -438,6 +439,9 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 //set table
                 setTableDataAndVisiblilty()
                 abacusFragment?.setQuestionAndDividerLength(queLength, finalAnsLength)
+
+                Log.e("jigarLogs","topPositions : "+Gson().toJson(topPositions))
+                Log.e("jigarLogs","bottomPositions : "+Gson().toJson(bottomPositions))
 
                 abacusFragment?.setSelectedPositions(
                     topPositions,
@@ -696,8 +700,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
                     val finalAnsLength = finalAns.toString().length
                     val queLength = question.length
-
-                    /*set question as selected*/
 
                     /*set question as selected*/
                     val totalLength = queLength + finalAnsLength - 1

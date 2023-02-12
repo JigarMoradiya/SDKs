@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.jigar.me.R
 import com.jigar.me.databinding.FragmentFullAbacusBinding
 import com.jigar.me.ui.view.base.BaseFragment
@@ -24,6 +25,8 @@ import com.jigar.me.utils.extensions.isNetworkAvailable
 import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.util.*
 
 @AndroidEntryPoint
@@ -199,13 +202,14 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             }
             total_count = getCustomParamInt(AppConstants.Settings.Toddler_No_Count,1)
             binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
-            Handler(Looper.getMainLooper()).postDelayed(
-                {
-                    binding.relAbacus.show()
-                    if (isSpeak) {
-                        speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
-                    }
-                },500)
+
+            lifecycleScope.launch {
+                delay(500)
+                binding.relAbacus.show()
+                if (isSpeak) {
+                    speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
+                }
+            }
         }
     }
 
@@ -288,12 +292,13 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                     total_count = 1
                 }
                 setCustomParamInt(AppConstants.Settings.Toddler_No_Count,total_count)
-                Handler(Looper.getMainLooper()).postDelayed({
+                lifecycleScope.launch {
+                    delay(500)
                     if (getCustomParam(AppConstants.Settings.SW_Reset,"") == "Y") {
                         resetAbacus()
                     }
                     speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
-                }, 500)
+                }
                 binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
             }
         }

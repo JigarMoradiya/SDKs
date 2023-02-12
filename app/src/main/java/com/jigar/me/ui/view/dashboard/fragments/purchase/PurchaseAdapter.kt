@@ -8,11 +8,16 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
+import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.databinding.RawPagelistChildBinding
 import com.jigar.me.databinding.RawPurchaseBinding
+import com.jigar.me.ui.view.base.inapp.BillingRepository
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month1
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Weekly
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_level1_lifetime
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_level2_lifetime
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_material_maths
@@ -47,11 +52,18 @@ class PurchaseAdapter(
         with(holder){
             val context = binding.cardMain.context
             binding.sku = data
-            val color = when (data.sku) {
+            val colorList = DataProvider.getColorsList()
+            val colorPosition = (position % colorList.size)
+            binding.btnRecommended.show()
+            binding.spaceTop.show()
+            when (data.sku) {
+                PRODUCT_ID_Subscription_Month3 -> {
+                    binding.btnRecommended.text = context.getString(R.string.recommended)
+                }
+                PRODUCT_ID_Subscription_Weekly -> {
+                    binding.btnRecommended.text = context.getString(R.string.hot)
+                }
                 PRODUCT_ID_All_lifetime -> {
-                    binding.btnRecommended.show()
-                    binding.spaceTop.show()
-                    binding.btnRecommended.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,R.color.dark_bg_red))
                     binding.btnRecommended.text = context.getString(R.string.recommended)
 
                     val pricee = (data.price?:"").replace(".","")
@@ -75,7 +87,7 @@ class PurchaseAdapter(
                                 data.price_amount_micros?:0L
                             }
                             val originalPrice = 100 * discountedPrice / tempPer
-                            binding.txtOriginalPrice.setText("$newString$originalPrice.00")
+                            binding.txtOriginalPrice.text = "$newString$originalPrice.00"
 
                         } catch (e: NumberFormatException) {
                         }
@@ -83,52 +95,23 @@ class PurchaseAdapter(
                         binding.txtDiscount.hide()
                         binding.txtOriginalPrice.hide()
                     }
-                    ContextCompat.getColor(context,R.color.light_bg_red)
                 }
                 PRODUCT_ID_level2_lifetime -> {
-                    binding.btnRecommended.show()
-                    binding.spaceTop.show()
-                    binding.btnRecommended.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,R.color.dark_bg_blue))
                     binding.btnRecommended.text = context.getString(R.string.favourite)
-                    ContextCompat.getColor(context,R.color.light_bg_blue)
                 }
                 PRODUCT_ID_level1_lifetime -> {
-                    binding.btnRecommended.show()
-                    binding.spaceTop.show()
-                    binding.btnRecommended.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,R.color.dark_bg_orange))
                     binding.btnRecommended.text = context.getString(R.string.hot)
-                    ContextCompat.getColor(context,R.color.light_bg_orange)
                 }
                 PRODUCT_ID_material_nursery -> {
-                    binding.btnRecommended.show()
-                    binding.spaceTop.show()
-                    binding.btnRecommended.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,R.color.dark_bg_purple))
-                    binding.btnRecommended.text = context.getString(R.string.new_)
-                    ContextCompat.getColor(context,R.color.light_bg_purple)
-                }
-                PRODUCT_ID_material_maths -> {
-                    binding.btnRecommended.show()
-                    binding.spaceTop.show()
-                    binding.btnRecommended.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,R.color.dark_bg_tin))
-                    binding.btnRecommended.text = context.getString(R.string.new_)
-                    ContextCompat.getColor(context,R.color.light_bg_tin)
+                    binding.btnRecommended.text = context.getString(R.string.hot)
                 }
                 else -> {
                     binding.btnRecommended.hide()
                     binding.spaceTop.hide()
-                    when (position) {
-                        0 -> ContextCompat.getColor(context,R.color.light_bg_red)
-                        1 -> ContextCompat.getColor(context,R.color.light_bg_blue)
-                        2 -> ContextCompat.getColor(context,R.color.light_bg_orange)
-                        3 -> ContextCompat.getColor(context,R.color.light_bg_pink)
-                        4 -> ContextCompat.getColor(context,R.color.light_bg_green)
-                        5 -> ContextCompat.getColor(context,R.color.light_bg_purple)
-                        6 -> ContextCompat.getColor(context,R.color.light_bg_tin)
-                        else -> ContextCompat.getColor(context,R.color.light_bg_other)
-                    }
                 }
             }
-            binding.cardColor = color
+            binding.btnRecommended.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,colorList[colorPosition].darkColor))
+            binding.cardColor = ContextCompat.getColor(context,colorList[colorPosition].color)
         }
 
     }

@@ -307,7 +307,7 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <com.jigar.me.utils.widget.CustomViewPager
+            <com.jigar.me.utils.widget.viewpager.CustomViewPagerSpeed
                 android:id="@+id/viewPager"
                 android:layout_width="@dimen/_280sdp"
                 android:layout_height="@dimen/_60sdp"

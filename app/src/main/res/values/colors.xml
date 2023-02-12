@@ -110,8 +110,11 @@
     <color name="light_bg_red">#EC5D6E</color>
     <color name="dark_bg_red">#BD4F5C</color>
     <color name="light_bg_green">#49C183</color>
+    <color name="dark_bg_green">#22774B</color>
     <color name="light_bg_blue">#7080F6</color>
     <color name="dark_bg_blue">#5662BA</color>
+    <color name="light_bg_blue1">#70A6F6</color>
+    <color name="dark_bg_blue1">#5683BA</color>
     <color name="light_bg_pink">#F670D0</color>
     <color name="dark_bg_pink">#C659A7</color>
     <color name="light_bg_purple">#936FDC</color>
@@ -121,6 +124,38 @@
     <color name="light_bg_other">#69CCB5</color>
     <color name="light_bg_tin">#5EBDCA</color>
     <color name="dark_bg_tin">#4E9CA6</color>
+
+    <color name="color1">#E57373</color>
+    <color name="darkColor1">#C62828</color>
+    <color name="color2">#F06292</color>
+    <color name="darkColor2">#AD1457</color>
+    <color name="color3">#BA68C8</color>
+    <color name="darkColor3">#6A1B9A</color>
+    <color name="color4">#9575CD</color>
+    <color name="darkColor4">#4527A0</color>
+    <color name="color5">#7986CB</color>
+    <color name="darkColor5">#283593</color>
+    <color name="color6">#64B5F6</color>
+    <color name="darkColor6">#1565C0</color>
+    <color name="color7">#4FC3F7</color>
+    <color name="darkColor7">#0277BD</color>
+    <color name="color8">#4DD0E1</color>
+    <color name="darkColor8">#00838F</color>
+    <color name="color9">#4DB6AC</color>
+    <color name="darkColor9">#00695C</color>
+    <color name="color10">#81C784</color>
+    <color name="darkColor10">#2E7D32</color>
+    <color name="color11">#AED581</color>
+    <color name="darkColor11">#558B2F</color>
+    <color name="color12">#DCE775</color>
+    <color name="darkColor12">#9E9D24</color>
+    <color name="color13">#FFD54F</color>
+    <color name="darkColor13">#FF8F00</color>
+    <color name="color14">#FFB74D</color>
+    <color name="darkColor14">#EF6C00</color>
+    <color name="color15">#FF8A65</color>
+    <color name="darkColor15">#B71C1C</color>
+
 
     <!--  math puzzle  -->
     <color name="black">#000</color>

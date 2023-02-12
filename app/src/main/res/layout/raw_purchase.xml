@@ -14,6 +14,7 @@
             type="com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails" />
 
         <import type="android.view.View" />
+        <import type="androidx.core.text.HtmlCompat"/>
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -91,7 +92,7 @@
                 android:gravity="center"
                 android:lines="3"
                 android:lineSpacingMultiplier="1.1"
-                android:text="@{sku.description}"
+                android:text="@{HtmlCompat.fromHtml(sku.getDesc(),HtmlCompat.FROM_HTML_MODE_COMPACT)}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSizeMedium"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -183,6 +184,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtOrderId"
                 app:purchaseTime="@{sku.purchaseTime}"
+                app:billingPeriod="@{sku.billingPeriod}"
+                app:productType="@{sku.type}"
                 tools:text="Purchased ON : 06 April 2020" />
 
 
@@ -196,7 +199,7 @@
                 app:fontFamily="@font/font_bold"
                 android:gravity="center"
                 android:paddingHorizontal="@dimen/activity_padding12"
-                android:text="@{sku.isPurchase?@string/txt_purchased:@string/txt_purchase_Now}"
+                android:text="@{sku.isSubscriptionPlan()?sku.isPurchase?@string/txt_subscribed:@string/txt_subscribe_Now:sku.isPurchase?@string/txt_purchased:@string/txt_purchase_Now}"
                 android:textSize="@dimen/textSizeMedium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

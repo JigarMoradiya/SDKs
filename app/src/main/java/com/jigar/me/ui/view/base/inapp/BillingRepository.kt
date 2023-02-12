@@ -15,7 +15,9 @@ import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productList
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productListSubscription
 import com.jigar.me.utils.AppConstants
+import com.jigar.me.utils.extensions.isNotNullOrEmpty
 import kotlinx.coroutines.*
 import java.lang.reflect.Type
 import java.util.*
@@ -103,28 +105,16 @@ class BillingRepository @Inject constructor(
     }
 
     private fun queryProductDetailsAsync() {
-//        val queryProductDetailsParams =
-//            QueryProductDetailsParams.newBuilder()
-//                .setProductList(
-//                    arrayListOf(
-//                        QueryProductDetailsParams.Product.newBuilder()
-//                            .setProductId(PRODUCT_ID_Subscription_Month3)
-//                            .setProductType(BillingClient.ProductType.SUBS)
-//                            .build())
-//                )
-//                .build()
-//
-//        playStoreBillingClient?.queryProductDetailsAsync(queryProductDetailsParams) {
-//                billingResult,
-//                productDetailsList ->
-//            if (productDetailsList.isNotEmpty()) {
-//                CoroutineScope(Job() + Dispatchers.IO).launch {
-//                    inAppSKUDB.saveInAppSKU(productDetailsList)
-//                }
-//            }
-//            // check billingResult
-//            // process returned productDetailsList
-//        }
+        val paramsSubscription = QueryProductDetailsParams.newBuilder().setProductList(productListSubscription)
+        playStoreBillingClient?.queryProductDetailsAsync(paramsSubscription.build()) { billingResult, productDetailsList ->
+            if (productDetailsList.isNotEmpty()) {
+                CoroutineScope(Job() + Dispatchers.IO).launch {
+                    inAppSKUDB.saveInAppSKU(productDetailsList)
+                }
+            }
+            // check billingResult
+            // process returned productDetailsList
+        }
 
         val params = QueryProductDetailsParams.newBuilder().setProductList(productList)
 
@@ -151,17 +141,13 @@ class BillingRepository @Inject constructor(
 
     fun launchBillingFlow(activity: Activity, skuDetails: InAppSkuDetails) {
         val productDetails : ProductDetails = Gson().fromJson(skuDetails.originalJson, ProductDetails::class.java)
-        val offerToken = if (!productDetails.subscriptionOfferDetails.isNullOrEmpty()){
-            productDetails.subscriptionOfferDetails?.first()?.offerToken?:""
-        }else{""}
-
         val productDetailsParamsList = listOf(
             BillingFlowParams.ProductDetailsParams.newBuilder()
                 // retrieve a value for "productDetails" by calling queryProductDetailsAsync()
                 .setProductDetails(productDetails)
                 // to get an offer token, call ProductDetails.subscriptionOfferDetails()
                 // for a list of offers that are available to the user
-                .setOfferToken(offerToken)
+                .setOfferToken(skuDetails.offerToken?:"")
                 .build()
         )
 
@@ -172,14 +158,25 @@ class BillingRepository @Inject constructor(
         // Launch the billing flow
         playStoreBillingClient?.launchBillingFlow(activity, billingFlowParams)
     }
-    fun queryPurchasesAsync() {
+    private fun queryPurchasesAsync() {
         Log.d(LOG_TAG, "queryPurchasesAsync called")
+        playStoreBillingClient?.queryPurchasesAsync(
+            QueryPurchasesParams.newBuilder()
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+        ) { billingResult, purchaseList ->
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && productList.isNotNullOrEmpty()){
+                processPurchasesNew(purchaseList)
+            }
+        }
         playStoreBillingClient?.queryPurchasesAsync(
             QueryPurchasesParams.newBuilder()
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build()
         ) { billingResult, purchaseList ->
-            processPurchasesNew(purchaseList)
+            if (billingResult.responseCode == BillingClient.BillingResponseCode.OK && productList.isNotNullOrEmpty()){
+                processPurchasesNew(purchaseList)
+            }
         }
     }
 
@@ -312,7 +309,7 @@ class BillingRepository @Inject constructor(
 
     object AbacusSku {
 
-//        const val PRODUCT_ID_All_lifetime = "android.test.purchased"
+        const val PRODUCT_ID_Test = "android.test.purchased"
         const val PRODUCT_ID_All_lifetime_old = "com.abacus.puzzle.onetime"
 
 
@@ -325,13 +322,13 @@ class BillingRepository @Inject constructor(
         const val PRODUCT_ID_material_maths = "kids.material.maths.abacus"
         const val PRODUCT_ID_material_nursery = "kids.material.nursery"
 
+        const val PRODUCT_ID_Subscription_Weekly_Test1 = "com.abacus.puzzle.week.test1"
+        const val PRODUCT_ID_Subscription_Weekly_Test2 = "com.abacus.puzzle.week.test2"
+        const val PRODUCT_ID_Subscription_Weekly = "com.abacus.puzzle.week"
+        const val PRODUCT_ID_Subscription_Month1 = "com.abacus.puzzle.1month"
         const val PRODUCT_ID_Subscription_Month3 = "com.abacus.puzzle.3month"
 
         val productList: ArrayList<QueryProductDetailsParams.Product> = arrayListOf(
-//            QueryProductDetailsParams.Product.newBuilder()
-//                .setProductId(PRODUCT_ID_Subscription_Month3)
-//                .setProductType(BillingClient.ProductType.SUBS)
-//                .build(),
             QueryProductDetailsParams.Product.newBuilder()
                 .setProductId(PRODUCT_ID_All_lifetime)
                 .setProductType(BillingClient.ProductType.INAPP)
@@ -360,6 +357,29 @@ class BillingRepository @Inject constructor(
                 .setProductId(PRODUCT_ID_material_nursery)
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build())
+
+        val productListSubscription: ArrayList<QueryProductDetailsParams.Product> = arrayListOf(
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build(),
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build(),
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(PRODUCT_ID_Subscription_Weekly)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build(),
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(PRODUCT_ID_Subscription_Month1)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build(),
+            QueryProductDetailsParams.Product.newBuilder()
+                .setProductId(PRODUCT_ID_Subscription_Month3)
+                .setProductType(BillingClient.ProductType.SUBS)
+                .build()
+            )
 
     }
 

@@ -2,6 +2,8 @@ package com.jigar.me.data.local.data
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
+import com.jigar.me.R
 import com.jigar.me.data.model.pages.*
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
@@ -10,9 +12,82 @@ import com.jigar.me.utils.sudoku.SudokuConst4
 import com.jigar.me.utils.sudoku.SudokuConst6
 import com.jigar.me.utils.sudoku.SudukoConst
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.random.Random.Default.nextInt
 
 
 object DataProvider {
+    /* sudoku */
+    fun getExerciseList(context: Context) : ArrayList<ExerciseLevel>{
+        val list = ArrayList<ExerciseLevel>()
+        val listAddition = ArrayList<ExerciseLevelDetail>()
+        with(listAddition){
+            add(ExerciseLevelDetail(5,5,2,5))
+            add(ExerciseLevelDetail(10,10,2,10))
+            add(ExerciseLevelDetail(5,5,3,5))
+            add(ExerciseLevelDetail(10,10,3,10))
+            add(ExerciseLevelDetail(5,5,4,5))
+            add(ExerciseLevelDetail(10,10,4,10))
+            add(ExerciseLevelDetail(5,5,5,5))
+            add(ExerciseLevelDetail(10,10,5,10))
+            add(ExerciseLevelDetail(5,5,6,5))
+            add(ExerciseLevelDetail(10,10,6,10))
+        }
+        val listMultiplication = ArrayList<ExerciseLevelDetail>()
+        with(listMultiplication){
+            add(ExerciseLevelDetail(5,0,3,3))
+            add(ExerciseLevelDetail(10,0,3,5))
+            add(ExerciseLevelDetail(5,0,4,3))
+            add(ExerciseLevelDetail(10,0,4,5))
+            add(ExerciseLevelDetail(5,0,5,3))
+            add(ExerciseLevelDetail(10,0,5,5))
+            add(ExerciseLevelDetail(5,0,6,3))
+            add(ExerciseLevelDetail(10,0,6,5))
+            add(ExerciseLevelDetail(5,0,7,3))
+            add(ExerciseLevelDetail(10,0,7,5))
+        }
+        val listDivision = ArrayList<ExerciseLevelDetail>()
+        with(listDivision){
+            add(ExerciseLevelDetail(5,0,4,3))
+            add(ExerciseLevelDetail(5,0,4,2))
+            add(ExerciseLevelDetail(10,0,4,6))
+            add(ExerciseLevelDetail(10,0,4,4))
+            add(ExerciseLevelDetail(5,0,5,3))
+            add(ExerciseLevelDetail(5,0,5,2))
+            add(ExerciseLevelDetail(10,0,5,6))
+            add(ExerciseLevelDetail(10,0,5,4))
+            add(ExerciseLevelDetail(10,0,6,6))
+            add(ExerciseLevelDetail(10,0,6,4))
+        }
+        with(list) {
+            add(ExerciseLevel("1",context.getString(R.string.AdditionSubtraction),listAddition))
+            add(ExerciseLevel("2",context.getString(R.string.Multiplication),listMultiplication))
+            add(ExerciseLevel("3",context.getString(R.string.Division),listDivision))
+        }
+        return list
+    }
+    /* purchase colors */
+    fun getColorsList() : ArrayList<ColorData>{
+        val list = ArrayList<ColorData>()
+        with(list) {
+            add(ColorData(R.color.color3,R.color.darkColor3))
+            add(ColorData(R.color.color1,R.color.darkColor1))
+            add(ColorData(R.color.color2,R.color.darkColor2))
+            add(ColorData(R.color.color5,R.color.darkColor5))
+            add(ColorData(R.color.color4,R.color.darkColor4))
+            add(ColorData(R.color.color6,R.color.darkColor6))
+            add(ColorData(R.color.color9,R.color.darkColor9))
+            add(ColorData(R.color.color8,R.color.darkColor8))
+            add(ColorData(R.color.color10,R.color.darkColor10))
+            add(ColorData(R.color.color7,R.color.darkColor7))
+            add(ColorData(R.color.color11,R.color.darkColor11))
+//            add(ColorData(R.color.color12,R.color.darkColor12))
+            add(ColorData(R.color.color13,R.color.darkColor13))
+            add(ColorData(R.color.color14,R.color.darkColor14))
+            add(ColorData(R.color.color15,R.color.darkColor15))
+        }
+        return list
+    }
     /* sudoku */
     fun getGridList() : ArrayList<String>{
         val list_grid = ArrayList<String>()
@@ -601,8 +676,88 @@ object DataProvider {
         return listCategory
     }
 
-    fun genrateSingleDigit(min: Int, max: Int): Int {// min = to
+    fun generateSingleDigit(min: Int, max: Int): Int {// min = to
         return  Random().nextInt(max - min + 1) + min
+    }
+
+    private fun generateSign(): Int {
+        return nextInt(0, 2)
+    }
+    private fun generateTotalMinusSign(): Int {
+        return nextInt(1, 5)
+    }
+
+    fun generateAdditionSubExercise(child: ExerciseLevelDetail) : MutableList<ExerciseList>{
+        val listExercise: MutableList<ExerciseList> = arrayListOf()
+        val max = if (child.digits == 3){
+            999
+        }else if (child.digits == 4){
+            9999
+        }else if (child.digits == 5){
+            99999
+        }else if (child.digits == 6){
+            999999
+        }else{
+            99
+        }
+        val min = if (child.digits == 3){
+            100
+        }else if (child.digits == 4){
+            1000
+        }else if (child.digits == 5){
+            10000
+        }else if (child.digits == 6){
+            100000
+        }else{
+            10
+        }
+
+        for (j in 0 until child.totalQue){
+            var maxMinusSignCount = 2
+            if (child.queLines > 5){
+                maxMinusSignCount = generateTotalMinusSign()
+            }else{
+                val index = generateSign()
+                if (index == 0){
+                    maxMinusSignCount = 1
+                }
+            }
+            var answer = 0
+            var minusSignCount = 0
+            var question = ""
+            for (i in 0 until child.queLines){
+                if (i == 0){
+                    answer = generateSingleDigit(min, max)
+                    question = answer.toString()
+                }else{
+                    if (minusSignCount == maxMinusSignCount){
+                        val nextValues = generateSingleDigit(min, max)
+                        question = "$question+$nextValues"
+                        answer += nextValues
+                    }else{
+                        val index = generateSign()
+                        if (index == 0 || answer < min) { // 0 = add +
+                            val nextValues = generateSingleDigit(min, max)
+                            question = "$question+$nextValues"
+                            answer += nextValues
+                        }else{ // minus -
+                            minusSignCount++
+                            val nextValues = if ((answer + 1) > max){
+                                nextInt(min, max)
+                            }else{
+                                nextInt(min, answer + 1)
+                            }
+                            question = "$question-$nextValues"
+                            answer -= nextValues
+                        }
+                    }
+
+                }
+            }
+            listExercise.add(ExerciseList(question,answer))
+            Log.e("jigarLogs","answer = "+answer+" question = "+question)
+        }
+        return listExercise
     }
 
     fun genrateMultiplication(

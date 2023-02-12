@@ -184,7 +184,7 @@
                         android:shadowRadius="4"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize20"
+                        android:textSize="@dimen/textSize18"
                         tools:text="12" />
 
 
@@ -215,7 +215,7 @@
                         android:shadowRadius="4"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize20"
+                        android:textSize="@dimen/textSize18"
                         tools:text="49" />
 
 
@@ -246,7 +246,7 @@
                         android:shadowRadius="4"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize20"
+                        android:textSize="@dimen/textSize18"
                         tools:text="57" />
 
 
@@ -278,7 +278,7 @@
                         android:shadowRadius="4"
                         android:singleLine="true"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/textSize20"
+                        android:textSize="@dimen/textSize18"
                         tools:text="83" />
 
 

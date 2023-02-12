@@ -16,5 +16,6 @@ data class InAppPurchaseDetails(
     val purchaseState: Int?,
     val acknowledged: Boolean?,
     val signature: String?,
-    val originalJson: String?
+    val originalJson: String?,
+    var isAutoRenewing : Boolean = false
 )

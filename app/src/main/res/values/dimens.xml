@@ -50,6 +50,7 @@
     <dimen name="card_elevation4">@dimen/_4sdp</dimen>
     <dimen name="card_corner_radius">@dimen/_6sdp</dimen>
     <dimen name="card_corner_radius4">@dimen/_4sdp</dimen>
+    <dimen name="card_corner_radius12">@dimen/_12sdp</dimen>
 
     <!--Text Size-->
     <dimen name="textSizeVeryExtraSmall">@dimen/_7sdp</dimen>
@@ -60,8 +61,8 @@
     <dimen name="textSizeLarge">@dimen/_12sdp</dimen>
     <dimen name="textSizeExtraLarge">@dimen/_13sdp</dimen>
     <dimen name="textSizeSuperExtraLarge">@dimen/_14sdp</dimen>
-    <dimen name="textSize18">@dimen/_16sdp</dimen>
-    <dimen name="textSize20">@dimen/_18sdp</dimen>
+    <dimen name="textSize16">@dimen/_16sdp</dimen>
+    <dimen name="textSize18">@dimen/_18sdp</dimen>
     <dimen name="textSizeAbacusNumber">@dimen/_80sdp</dimen>
 
     <!-- Profile Image Sizes   -->
@@ -86,5 +87,10 @@
     <dimen name="button_small_height">@dimen/_24sdp</dimen>
     <dimen name="button_small_corner">@dimen/_12sdp</dimen>
     <dimen name="button_small_padding_lr">@dimen/_10sdp</dimen>
+
+    <dimen name="button_extra_small_text_size">@dimen/_9sdp</dimen>
+    <dimen name="button_extra_small_height">@dimen/_20sdp</dimen>
+    <dimen name="button_extra_small_corner">@dimen/_10sdp</dimen>
+    <dimen name="button_extra_small_padding_lr">@dimen/_6sdp</dimen>
 
 </resources>

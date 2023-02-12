@@ -41,7 +41,6 @@
     @retrofit.http.* <methods>;
 }
 
-
 -keep class com.google.gson.** { *; }
 -keep class com.google.inject.** { *; }
 -keep class org.apache.http.** { *; }
@@ -129,35 +128,6 @@
   public static *** i(...);
   public static *** e(...);
 }
-
-
--keep class com.facebook.** {
-   *;
-}
-
-#-keepattributes Signature
-#-keep class com.google.* {*;}
-#-keep class com.google.impl.* {*;}
-#-keep class com.google.firebase.* {*;}
-#-keep class com.google.googlesignin.** { *; }
-#-keepnames class com.google.googlesignin.* { *; }
-#-keep class com.google.gms.** {*;}
-#-keep class com.google.android.gms.auth.** { *; }
-#-keep class com.google.android.* {*;}
-#-keep class com.google.unity.* {*;}
-
-
-#appsync
-# Class names are needed in reflection
-#-keepnames class com.amazonaws.**
-#-keepnames class com.amazon.**
-
-#-keepclassmembers class com.example.iiifa_fan_android.fragment.** {*;}
-#-keepclassmembers class com.example.iiifa_fan_android.type.** {*;}
-#
-#
-
-
 
 
 -keep class * extends androidx.fragment.app.Fragment{}

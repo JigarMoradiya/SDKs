@@ -18,4 +18,20 @@ object Migrations {
         }
     }
 
+    val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE tableInAppSKU ADD COLUMN offerToken TEXT;")
+        }
+    }
+    val MIGRATION_4_5 = object : Migration(4, 5) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE tableInAppPurchase ADD COLUMN isAutoRenewing INTEGER not null default 0;")
+        }
+    }
+    val MIGRATION_5_6 = object : Migration(5, 6) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE tableInAppSKU ADD COLUMN billingPeriod TEXT;")
+        }
+    }
+
 }

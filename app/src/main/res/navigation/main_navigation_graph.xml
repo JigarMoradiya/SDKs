@@ -33,7 +33,14 @@
         <action
             android:id="@+id/action_homeFragment_to_sudokuHomeFragment"
             app:destination="@id/sudokuHomeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_exerciseHomeFragment"
+            app:destination="@id/exerciseHomeFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/exerciseHomeFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.exercise.ExerciseHomeFragment"></fragment>
 
     <fragment
         android:id="@+id/sudokuHomeFragment"

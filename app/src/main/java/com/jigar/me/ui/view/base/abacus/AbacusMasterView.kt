@@ -98,16 +98,16 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                     var c: Canvas? = null
                     try {
                         clearTempBeads()
-                        c = mSurfaceHolder!!.lockCanvas(null)
-                        synchronized(mSurfaceHolder!!) { doDraw(c) }
+                        c = mSurfaceHolder?.lockCanvas(null)
+                        mSurfaceHolder?.let { synchronized(it) { doDraw(c) } }
                     } catch (e: IllegalArgumentException) {
                         e.printStackTrace()
                     } finally {
-                        if (c != null) mSurfaceHolder!!.unlockCanvasAndPost(c)
+                        if (c != null) mSurfaceHolder?.unlockCanvasAndPost(c)
                         if (isSingleDraw) {
                             isSingleDraw = false
                             if (onSingleDrawingCompletedListener != null) {
-                                onSingleDrawingCompletedListener!!.onSingleDrawingCompleted()
+                                onSingleDrawingCompletedListener?.onSingleDrawingCompleted()
                                 onSingleDrawingCompletedListener = null
                             } else {
                                 isSleep = true
@@ -215,11 +215,8 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
 
     private fun doDraw(canvas: Canvas?) {
         try {
-//        canvas.drawColor(getResources().getColor(R.color.colorHeadingBlack_00));
-//            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
-//            canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.MULTIPLY);
-            canvas!!.drawColor(0, PorterDuff.Mode.CLEAR)
-            if (engine != null) engine!!.draw(canvas)
+            canvas?.drawColor(0, PorterDuff.Mode.CLEAR)
+            if (engine != null) engine?.draw(canvas)
         } catch (e: Exception) {
         }
     }
@@ -227,18 +224,18 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     @Synchronized
     private fun showReadout() {
         if (onBeadShiftListener != null) {
-            onBeadShiftListener!!.onBeadShift(this, engine!!.getRowValue())
+            engine?.getRowValue()?.let { onBeadShiftListener?.onBeadShift(this, it) }
         }
     }
 
     fun saveState(state: Bundle) {
-        beadState = engine!!.getState()
+        beadState = engine?.getState()
         state.putSerializable("beadState", beadState)
     }
 
     fun restoreState(state: Bundle) {
         beadState = state.getSerializable("beadState") as AbacusMasterEngine.BeadState?
-        engine!!.setState(beadState!!)
+        beadState?.let { engine?.setState(it) }
     }
 
     override fun surfaceChanged(
@@ -249,22 +246,27 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             if (selectedPositions == null) {
                 selectedPositions = ArrayList()
                 for (i in 0 until noOfColumn) {
-                    selectedPositions!!.add(-1)
+                    selectedPositions?.add(-1)
                 }
             }
-            engine = AbacusMasterEngine(
-                selectedPositions!!, noOfColumn, noOfBeads, singleBeadValue,
-                context, roadDrawable, selectedBeadDrawable, beadDrawables, isBeadStackFromBottom,
-                colSpacing, noOfRows_used
-            )
-            if (beadState != null) {
-                engine!!.setState(beadState!!)
-            } else if (defaultState == null) {
-                /*first time surface changed*/
-                defaultState = engine!!.getState()
+            if (selectedPositions != null){
+                selectedPositions?.let{
+                    engine = AbacusMasterEngine(
+                        it, noOfColumn, noOfBeads, singleBeadValue,
+                        context, roadDrawable, selectedBeadDrawable, beadDrawables, isBeadStackFromBottom,
+                        colSpacing, noOfRows_used
+                    )
+                }
+                if (beadState != null) {
+                    engine?.setState(beadState!!)
+                } else if (defaultState == null) {
+                    /*first time surface changed*/
+                    defaultState = engine?.getState()
+                }
+                showReadout()
+                startDrawing(holder)
             }
-            showReadout()
-            startDrawing(holder)
+
         } catch (e: Exception) {
         }
     }
@@ -276,7 +278,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
         synchronized(this) {
             this.selectedPositions = selectedPositions
             if (engine != null) {
-                engine!!.setSelectedPositions(selectedPositions!!)
+                engine?.setSelectedPositions(selectedPositions!!)
             }
             if (thread != null) {
                 thread?.drawOneTime(object : OnSingleDrawingCompletedListener {
@@ -284,9 +286,9 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                         val handler = Handler(Looper.getMainLooper())
                         handler.postDelayed(
                             {
-                                defaultState = engine!!.getState()
+                                defaultState = engine?.getState()
                                 showReadout() //refresh abacus value
-                                thread!!.setSleep(true)
+                                thread?.setSleep(true)
                                 setPositionCompleteListener?.onSetPositionComplete()
                             }, 10
                         )
@@ -307,8 +309,8 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             thread?.interrupt()
         }
         thread = DrawThread(holder)
-        thread!!.start()
-        thread!!.drawOneTime()
+        thread?.start()
+        thread?.drawOneTime()
     }
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
@@ -320,7 +322,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     private fun stopDrawing() {
         try {
             val retry = true
-            thread!!.stopDrawing()
+            thread?.stopDrawing()
         } catch (e: Exception) {
             e.printStackTrace()
         }
