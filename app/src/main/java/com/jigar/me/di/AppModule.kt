@@ -2,8 +2,8 @@ package com.jigar.me.di
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.room.Room
-import androidx.work.CoroutineWorker
 import com.jigar.me.BuildConfig
 import com.jigar.me.data.api.AppApi
 import com.jigar.me.data.api.RemoteDataSource
@@ -97,7 +97,9 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAppApi(@ApplicationContext context: Context,remoteDataSource: RemoteDataSource): AppApi {
-        return remoteDataSource.buildApi(AppApi::class.java, context, BuildConfig.API_MODULE)
+        val prefManager = AppPreferencesHelper(context, AppConstants.PREF_NAME)
+        return remoteDataSource.buildApi(AppApi::class.java, context, prefManager.getBaseUrl())
+//        return remoteDataSource.buildApi(AppApi::class.java, context, BuildConfig.API_MODULE)
     }
 
 }

@@ -35,8 +35,7 @@ class MaterialDownloadFragment : BaseFragment(), MaterialDownloadAdapter.OnItemC
     private val appViewModel by viewModels<AppViewModel>()
 
     private var listDownloadMaterial: List<DownloadMaterialData> = ArrayList()
-    private val materialDownloadAdapter: MaterialDownloadAdapter =
-        MaterialDownloadAdapter(arrayListOf(), this)
+    private lateinit var materialDownloadAdapter: MaterialDownloadAdapter
     private lateinit var overlayView: ImageOverlayView
     private var listImages: List<ImageData> = ArrayList()
 
@@ -121,7 +120,7 @@ class MaterialDownloadFragment : BaseFragment(), MaterialDownloadAdapter.OnItemC
 
     private fun initView() {
         inAppViewModel.inAppInit()
-
+        materialDownloadAdapter = MaterialDownloadAdapter(listDownloadMaterial,prefManager, this)
         binding.recyclerviewMaterial.adapter = materialDownloadAdapter
         overlayView = ImageOverlayView(requireContext())
         if (downloadType == AppConstants.Extras_Comman.DownloadType_Nursery){

@@ -21,6 +21,7 @@
     <string name="banner_ad_unit_id_exam_result">ca-app-pub-5759468493922763/3513719503</string>
     <string name="banner_ad_unit_id_sudoku">ca-app-pub-5759468493922763/7314067633</string>
     <string name="banner_ad_unit_id_number_puzzle">ca-app-pub-5759468493922763/4809269700</string>
+    <string name="banner_ad_unit_id_exercise">ca-app-pub-5759468493922763/8230392936</string>
 
     <string name="interstitial_ad_unit_id_exam_complete_show_result">ca-app-pub-5759468493922763/2660158056</string>
     <string name="interstitial_ad_unit_id_exam_complete_close">ca-app-pub-5759468493922763/6703027611</string>
@@ -30,6 +31,7 @@
     <string name="interstitial_ad_unit_id_sudoku">ca-app-pub-5759468493922763/1552149652</string>
     <string name="interstitial_ad_unit_id_number_puzzle_step">ca-app-pub-5759468493922763/9842104535</string>
     <string name="interstitial_ad_unit_id_number_puzzle_complete">ca-app-pub-5759468493922763/8865980504</string>
+    <string name="interstitial_ad_unit_id_exercise">ca-app-pub-5759468493922763/3939794135</string>
 
     <integer-array name="bead_top">
         <item>@drawable/egg0</item>
@@ -81,6 +83,7 @@
     <string name="Division">Division</string>
     <string name="title_purchase">Application\'s Purchase Store</string>
     <string name="leave_exam_alert">Leave Exam</string>
+    <string name="leave_exercise_alert">Leave Exercise</string>
     <string name="downloadMaterial">Practice Material</string>
 
     <!--  Full abacus  -->
@@ -122,6 +125,7 @@
     <string name="txt_reset_page_alert">Are you sure want to reset this page progress and start again?</string>
 
     <string name="leave_exam_msg">Are you sure want to leave this exam without complete?</string>
+    <string name="leave_exercise_msg">Are you sure want to leave this exercise without complete?</string>
 
     <!--  purchased and page already completed  -->
     <string name="txt_page_complete">Page Completed</string>
@@ -279,6 +283,7 @@
     <string name="view_material">View Material</string>
     <string name="nursery_class_material">Nursery Class Material</string>
     <string name="recommended">Recommended</string>
+    <string name="popular">Popular</string>
     <string name="favourite">Favourite</string>
     <string name="hot">Hot</string>
     <string name="new_">New</string>
@@ -325,7 +330,7 @@
     <string name="volume_on">Volume ON</string>
     <string name="volume_off">Volume OFF</string>
     <string name="number_sequences_puzzle_volume">Number sequence puzzle volume</string>
-    <string name="congratulations">Congratulations…</string>
+
     <string name="continue_to_play_game">Continue to Play</string>
     <string name="no_i_want_to_close">No, I want to close</string>
     <string name="you_completed_this_puzzle_in_moves">You completed this puzzle in %1$s moves</string>
@@ -349,5 +354,17 @@
     <string name="start_exercise">Start Exercise</string>
     <string name="next">Next</string>
     <string name="answer">Answer :</string>
-
+    <string name="result_of_exercise">Result of Exercise</string>
+    <string name="fail_to_got_80">Fail to got 80% for clear this exercise.</string>
+    <string name="better_luck_for_next_time">Better luck for next time..</string>
+    <string name="congratulations">Congratulations…</string>
+    <string name="unstoppable_great_job">Unstoppable! Great job</string>
+    <string name="you_are_so_intelligent">You are so intelligent</string>
+    <string name="you_are_so_genius">You are so genius</string>
+    <string name="you_are_brilliant">You are brilliant</string>
+    <string name="you_are_glorious">You are glorious</string>
+    <string name="you_are_clever">You are clever</string>
+    <string name="you_are_on_the_right_track">You are on the right track</string>
+    <string name="good_job">Good job</string>
+    <string name="not_bad">Not bad</string>
 </resources>

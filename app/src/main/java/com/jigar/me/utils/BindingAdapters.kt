@@ -2,6 +2,7 @@ package com.jigar.me.utils
 
 import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.Log
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
@@ -15,7 +16,9 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.textview.MaterialTextView
 import com.jigar.me.R
 import java.text.SimpleDateFormat
+import java.time.Period
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @BindingAdapter("icons")
 fun setIcons(view: AppCompatImageView, icons: Int?) {
@@ -67,14 +70,40 @@ fun purchaseTime(view: MaterialTextView,productType : String, purchaseTime: Long
         if (productType == BillingClient.ProductType.SUBS){
             val calendarEnd = Calendar.getInstance()
             calendarEnd.timeInMillis = purchaseTime
-            if (billingPeriod.equals("p1m",true)){
-                calendarEnd.add(Calendar.MONTH,1)
-            }else if (billingPeriod.equals("p3m",true)){
-                calendarEnd.add(Calendar.MONTH,3)
-            }else if (billingPeriod.equals("p6m",true)){
-                calendarEnd.add(Calendar.MONTH,6)
-            }else if (billingPeriod.equals("p1w",true)){
-                calendarEnd.add(Calendar.WEEK_OF_MONTH,1)
+
+            val dateDiff = System.currentTimeMillis() - calendar.timeInMillis
+            val day: Long = TimeUnit.MILLISECONDS.toDays(dateDiff)
+            if (billingPeriod.equals("p1w",true)){
+                var weeks = day/7
+                val week = day%7
+                if (week > 0){
+                    weeks += 1
+                }
+                calendarEnd.add(Calendar.WEEK_OF_MONTH,weeks.toInt())
+            }else{
+                val months = if (billingPeriod.equals("p1m",true)){
+                    var months = day/30
+                    val month = day%30
+                    if (month > 0){
+                        months += 1
+                    }
+                    months
+                }else if (billingPeriod.equals("p3m",true)){
+                    var months = day/90
+                    val month = day%90
+                    if (month > 0){
+                        months += 3
+                    }
+                    months
+                }else{ // if (billingPeriod.equals("p6m",true))
+                    var months = day/180
+                    val month = day%180
+                    if (month > 0){
+                        months += 6
+                    }
+                    months
+                }
+                calendarEnd.add(Calendar.MONTH,months.toInt())
             }
             view.text = HtmlCompat.fromHtml("<b>Subscribed ON : </b>${formatter.format(calendar.time)}<br/><b>Expire ON : </b>${formatter.format(calendarEnd.time)}",HtmlCompat.FROM_HTML_MODE_COMPACT)
         }else{

@@ -21,7 +21,9 @@ import com.jigar.me.internal.service.download.FileDownloadNotificationManager
 import com.jigar.me.ui.view.dashboard.MainDashboardActivity
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
+import com.jigar.me.utils.extensions.openPlayStore
 import com.jigar.me.utils.extensions.openYoutube
+import com.jigar.me.utils.extensions.shareIntent
 import com.onesignal.OSNotificationAction
 import com.onesignal.OneSignal
 //import com.onesignal.OSNotificationAction
@@ -173,6 +175,9 @@ class MyApplication : Application(),Configuration.Provider {
                         Constants.notificationTypeMaterial -> {
                             moveToDestination(R.id.materialHomeFragment)
                         }
+                        Constants.notificationTypeExercise -> {
+                            moveToDestination(R.id.exerciseHomeFragment)
+                        }
                         Constants.notificationTypeMaterialMath -> {
                             moveToPractiseMaterialType(AppConstants.Extras_Comman.DownloadType_Maths)
                         }
@@ -196,6 +201,12 @@ class MyApplication : Application(),Configuration.Provider {
                         }
                         Constants.notificationTypeYoutube -> {
                             this.openYoutube(notification.youtube_url)
+                        }
+                        Constants.notificationTypeRate -> {
+                            this.openPlayStore()
+                        }
+                        Constants.notificationTypeShare -> {
+                            this.shareIntent()
                         }
                         else -> {
                             moveToDestination(R.id.homeFragment)

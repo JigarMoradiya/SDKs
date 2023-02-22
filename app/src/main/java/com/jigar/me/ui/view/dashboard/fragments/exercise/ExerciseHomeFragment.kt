@@ -1,6 +1,7 @@
 package com.jigar.me.ui.view.dashboard.fragments.exercise
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,11 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.gson.Gson
 import com.jigar.me.R
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.local.data.ExerciseLevel
@@ -16,91 +22,244 @@ import com.jigar.me.data.local.data.ExerciseList
 import com.jigar.me.databinding.FragmentExerciseHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
+import com.jigar.me.ui.view.base.abacus.AbacusMasterSound
 import com.jigar.me.ui.view.base.abacus.AbacusMasterView
 import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
+import com.jigar.me.ui.view.confirm_alerts.dialogs.ExerciseCompleteDialog
 import com.jigar.me.ui.view.dashboard.fragments.exercise.adapter.ExerciseAdditionSubtractionAdapter
-import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.Constants
-import com.jigar.me.utils.ViewUtils
-import com.jigar.me.utils.extensions.hide
-import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.show
+import com.jigar.me.ui.view.dashboard.fragments.exercise.adapter.ExerciseLevelPagerAdapter
+import com.jigar.me.utils.*
+import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAbacusValueChangeListener,
-    ExerciseLevelPagerAdapter.OnItemClickListener {
+    ExerciseLevelPagerAdapter.OnItemClickListener,
+    ExerciseCompleteDialog.ExerciseCompleteDialogInterface {
     private lateinit var binding: FragmentExerciseHomeBinding
     private var valuesAnswer: Int = -1
     private var currentSumVal = 0f
+    private var totalTimeLeft = 0L
     private var isPurchased = false
+    private var isKeyboardValueText = false
     private var theam = AppConstants.Settings.theam_Egg
     private var isResetRunning = false
     private lateinit var exerciseLevelPagerAdapter: ExerciseLevelPagerAdapter
     private lateinit var exerciseAdditionSubtractionAdapter: ExerciseAdditionSubtractionAdapter
     private var listExerciseAdditionSubtractionQuestion = arrayListOf<String>()
+    private var listKeyboardAnswer = arrayListOf<String>()
     private var listExerciseAdditionSubtraction : MutableList<ExerciseList> = arrayListOf()
     private var exercisePosition = 0
-    private var currentLevel: ExerciseLevel? = null
+    private var timer: CountDownTimer? = null
+    private var currentChildData : ExerciseLevelDetail? = null
+    private var currentParentData: ExerciseLevel? = null
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentExerciseHomeBinding.inflate(inflater, container, false)
         initViews()
         initListener()
+        ads()
         return binding.root
     }
-
+    private fun ads() {
+        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" // local
+            && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" && // if yes in firebase
+            (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") != "Y" // if not purchased
+                    && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y")) {
+            showAMBannerAds(binding.adView,getString(R.string.banner_ad_unit_id_exercise))
+        }
+    }
     private fun initViews() {
         exerciseAdditionSubtractionAdapter = ExerciseAdditionSubtractionAdapter(listExerciseAdditionSubtractionQuestion)
         binding.recyclerviewExercise.adapter = exerciseAdditionSubtractionAdapter
 
-        exerciseLevelPagerAdapter = ExerciseLevelPagerAdapter(DataProvider.getExerciseList(requireContext()),this@ExerciseHomeFragment)
+        exerciseLevelPagerAdapter = ExerciseLevelPagerAdapter(DataProvider.getExerciseList(requireContext()),prefManager,this@ExerciseHomeFragment)
         binding.viewPager.adapter = exerciseLevelPagerAdapter
         binding.indicatorPager.attachToPager(binding.viewPager)
         setAbacus()
     }
-
     private fun initListener() {
-        binding.ivReset.onClick { resetClick()}
+        binding.imgEarse.onClick {
+            if (listKeyboardAnswer.isNotNullOrEmpty()){
+                listKeyboardAnswer.removeAt(listKeyboardAnswer.lastIndex)
+                setKeyboardAnswer()
+            }
+        }
+        binding.txtAllClear.onClick {
+            if (listKeyboardAnswer.isNotNullOrEmpty()){
+                listKeyboardAnswer.clear()
+                setKeyboardAnswer()
+            }
+        }
+        binding.imgBack.onClick { exerciseLeaveAlert() }
+        binding.txt0.onClick { addKeyboardValue("0") }
+        binding.txt1.onClick { addKeyboardValue("1") }
+        binding.txt2.onClick { addKeyboardValue("2") }
+        binding.txt3.onClick { addKeyboardValue("3") }
+        binding.txt4.onClick { addKeyboardValue("4") }
+        binding.txt5.onClick { addKeyboardValue("5") }
+        binding.txt6.onClick { addKeyboardValue("6") }
+        binding.txt7.onClick { addKeyboardValue("7") }
+        binding.txt8.onClick { addKeyboardValue("8") }
+        binding.txt9.onClick { addKeyboardValue("9") }
+
+
+        binding.ivReset.onClick { resetClick() }
         binding.txtNext.onClick {
-            if (currentLevel?.id == "1"){
-                if (exercisePosition < listExerciseAdditionSubtraction.lastIndex){
-                    binding.ivReset.performClick()
-                    listExerciseAdditionSubtraction[exercisePosition].userAnswer = binding.tvAnswer.text.toString()
-                    exercisePosition++
-                    setAddSubQuestion()
+                if (!binding.tvAnswer.text.toString().isNullOrEmpty() && binding.tvAnswer.text.toString() != "0"){
+                    listExerciseAdditionSubtraction[exercisePosition].userAnswer = binding.tvAnswer.text.toString().toInt()
                 }
-            }
+                if (listKeyboardAnswer.isNotNullOrEmpty()){
+                    binding.txtAllClear.performClick()
+                }else{
+                    binding.ivReset.performClick()
+                }
+
+                if (exercisePosition < listExerciseAdditionSubtraction.lastIndex){
+                    exercisePosition++
+                    setQuestions()
+                }else{
+                    openCompleteDialog()
+                }
+
         }
     }
 
-    override fun onExerciseStartClick(data: ExerciseLevel, child: ExerciseLevelDetail?) {
-//        Log.e("jigarLogs","data = "+ Gson().toJson(data))
-//        Log.e("jigarLogs","child = "+ Gson().toJson(child))
-        child?.let {
-            if (data.id == "1"){
-                exercisePosition = 0
-                listExerciseAdditionSubtraction = DataProvider.generateAdditionSubExercise(it)
-                binding.linearExerciseAddSub.show()
-                binding.linearLevel.hide()
-                setAddSubQuestion()
+    private fun addKeyboardValue(value : String){
+        if (value == "0"){
+            if (listKeyboardAnswer.isNotEmpty()){
+                listKeyboardAnswer.add(value)
             }
+        }else{
+            listKeyboardAnswer.add(value)
+        }
+        setKeyboardAnswer()
+
+    }
+
+    private fun setKeyboardAnswer() {
+        AbacusMasterSound.playTap(requireContext())
+        isKeyboardValueText = true
+        if (listKeyboardAnswer.isNotEmpty()){
+            binding.tvAnswer.text = listKeyboardAnswer.joinToString("")
+        }else{
+            binding.tvAnswer.text = "0"
+        }
+
+        if (!binding.tvCurrentVal.text.equals("0")){
+            binding.ivReset.performClick()
         }
     }
 
-    private fun setAddSubQuestion() {
+    override fun exerciseCompleteCloseDialog() {
+        val currentPos = binding.viewPager.currentItem
+        val list = exerciseLevelPagerAdapter.listData
+        exerciseLevelPagerAdapter = ExerciseLevelPagerAdapter(list,prefManager,this@ExerciseHomeFragment)
+        binding.viewPager.adapter = exerciseLevelPagerAdapter
+        binding.viewPager.currentItem = currentPos
+
+        binding.linearExerciseAddSub.hide()
+        binding.linearTime.hide()
+        binding.linearLevel.show()
+        binding.imgBack.show()
+    }
+    override fun onExerciseStartClick() {
+        val parentData = exerciseLevelPagerAdapter.listData[binding.viewPager.currentItem]
+        val childData = parentData.list[parentData.selectedChildPos]
+        currentChildData = childData
+        currentParentData = parentData
+
+        exercisePosition = 0
+        binding.linearExerciseAddSub.show()
+        binding.linearTime.show()
+        binding.linearLevel.hide()
+        binding.imgBack.hide()
+        resetClick()
+        when (parentData.id) {
+            "1" -> {
+                binding.recyclerviewExercise.show()
+                binding.txtMultiplication.hide()
+                listExerciseAdditionSubtraction = DataProvider.generateAdditionSubExercise(childData)
+                setQuestions()
+            }
+            "2" -> {
+                binding.recyclerviewExercise.hide()
+                binding.txtMultiplication.show()
+                listExerciseAdditionSubtraction = DataProvider.generateMultiplicationExercise(childData)
+                setQuestions()
+            }
+            "3" -> {
+                binding.recyclerviewExercise.hide()
+                binding.txtMultiplication.show()
+                listExerciseAdditionSubtraction = DataProvider.generateDivisionExercise(childData)
+
+                setQuestions()
+            }
+        }
+        totalTimeLeft = TimeUnit.MINUTES.toMillis(childData.totalTime.toLong())
+//                totalTimeLeft = TimeUnit.MINUTES.toMillis(1L)
+        startTimer()
+    }
+
+    private fun startTimer() {
+        timer = object: CountDownTimer(totalTimeLeft, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+                totalTimeLeft = millisUntilFinished
+                val time = DateTimeUtils.displayDurationHourMinSec(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
+                binding.txtTimer.text = time
+            }
+
+            override fun onFinish() {
+                openCompleteDialog()
+            }
+        }
+        timer?.start()
+    }
+
+    private fun openCompleteDialog() {
+        PlaySound.play(requireContext(), PlaySound.number_puzzle_win)
+        binding.txtNext.isEnabled = false
+        binding.txtTimer.text = "00:00"
+        timer?.cancel()
+        newInterstitialAdCompleteExercise()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer?.cancel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (binding.linearExerciseAddSub.isVisible){
+            timer?.start()
+        }
+    }
+
+    private fun setQuestions() {
         if (listExerciseAdditionSubtraction.lastIndex >= exercisePosition){
+            binding.txtNext.isEnabled = true
             valuesAnswer = listExerciseAdditionSubtraction[exercisePosition].answer
             binding.txtQueLabel.text = "Q".plus((exercisePosition+1))
-            val question = listExerciseAdditionSubtraction[exercisePosition].question.replace("+","+ ").replace("-","- ")
-            val list = question.split(" ")
-            list.map {
-                listExerciseAdditionSubtractionQuestion.add(it)
-            }
-            exerciseAdditionSubtractionAdapter.notifyDataSetChanged()
-        }
 
+            if (currentParentData?.id == "1"){
+                val question = listExerciseAdditionSubtraction[exercisePosition].question.replace("+"," +").replace("-"," -")
+                val list = question.split(" ")
+                listExerciseAdditionSubtractionQuestion.clear()
+                list.map {
+                    listExerciseAdditionSubtractionQuestion.add(it)
+                }
+                exerciseAdditionSubtractionAdapter.currentStep = 0
+                exerciseAdditionSubtractionAdapter.notifyDataSetChanged()
+            }else if (currentParentData?.id == "2"){
+                binding.txtMultiplication.text = listExerciseAdditionSubtraction[exercisePosition].question.replace("x"," x ").plus(" = ?")
+            }else{
+                binding.txtMultiplication.text = listExerciseAdditionSubtraction[exercisePosition].question.replace("/"," ÷ ").plus(" = ?")
+            }
+
+        }
     }
 
     private fun resetClick() {
@@ -157,7 +316,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     override fun onBeadShift(abacusView: AbacusMasterView, rowValue: IntArray) {
         val singleBeadWeight = abacusView.singleBeadValue
         var accumulator = 0
-
         when (abacusView.id) {
             R.id.abacusTop -> if (binding.abacusBottom.engine != null) {
                 val bottomVal = binding.abacusBottom.engine!!.getValue()
@@ -172,7 +330,10 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 val strCurVal = intSumVal.toString()
                 currentSumVal = java.lang.Float.valueOf(strCurVal)
                 binding.tvCurrentVal.text = strCurVal
-                binding.tvAnswer.text = strCurVal
+                if (!isKeyboardValueText){
+                    listKeyboardAnswer.clear()
+                    binding.tvAnswer.text = strCurVal
+                }
                 onAbacusValueChange(abacusView, currentSumVal)
             }
             R.id.abacusBottom -> if (binding.abacusTop.engine != null) {
@@ -188,22 +349,28 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 val strCurVal = intSumVal.toString()
                 currentSumVal = java.lang.Float.valueOf(strCurVal)
                 binding.tvCurrentVal.text = strCurVal
-                binding.tvAnswer.text = strCurVal
+                if (!isKeyboardValueText){
+                    binding.tvAnswer.text = strCurVal
+                    listKeyboardAnswer.clear()
+                }
                 onAbacusValueChange(abacusView, currentSumVal)
             }
         }
     }
 
     override fun onAbacusValueChange(abacusView: View, sum: Float) {
-        with(prefManager){
-            if (!binding.linearLevel.isVisible){
-                Log.e("jigarLogs","sum = "+sum+" valuesAnswer = "+valuesAnswer)
-                if (sum.toInt() == valuesAnswer) {
-
-                }
-            }
-
+        lifecycleScope.launch {
+            delay(1000)
+            isKeyboardValueText = false
         }
+//        with(prefManager){
+//
+//            if (!binding.linearLevel.isVisible){
+//                if (sum.toInt() == valuesAnswer) {
+//
+//                }
+//            }
+//        }
 
     }
 
@@ -220,5 +387,61 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         binding.abacusBottom.reset()
     }
 
+    // exercise leave listener
+    fun exerciseLeaveAlert() {
+        if (binding.linearExerciseAddSub.isVisible){
+            CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.leave_exercise_alert),getString(R.string.leave_exercise_msg)
+                ,getString(R.string.yes_i_m_sure),getString(R.string.no_please_continue), icon = R.drawable.ic_alert,
+                clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                    override fun onConfirmationYesClick(bundle: Bundle?) {
+                        binding.linearExerciseAddSub.hide()
+                        binding.linearTime.hide()
+                        binding.linearLevel.show()
+                        binding.imgBack.show()
+                    }
+                    override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+                })
+        }else{
+            mNavController.navigateUp()
+        }
 
+    }
+
+    private fun newInterstitialAdCompleteExercise() {
+//        if (true){
+        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
+            prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&
+            (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") != "Y" && // purchase not
+                    prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y")
+        ){
+            val adRequest = AdRequest.Builder().build()
+            showLoading()
+            InterstitialAd.load(requireContext(),getString(R.string.interstitial_ad_unit_id_exercise), adRequest, object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    hideLoading()
+                    showCompleteDialog()
+                }
+
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    hideLoading()
+                    // Show the ad if it's ready. Otherwise toast and reload the ad.
+                    interstitialAd.show(requireActivity())
+                    lifecycleScope.launch {
+                        delay(400)
+                        showCompleteDialog()
+                    }
+                }
+
+            })
+        }else{
+            showCompleteDialog()
+        }
+
+    }
+
+    private fun showCompleteDialog() {
+        if (ExerciseCompleteDialog.alertdialog?.isShowing != true){
+            ExerciseCompleteDialog.showPopup(requireContext(),listExerciseAdditionSubtraction,prefManager,currentParentData,currentChildData,this@ExerciseHomeFragment)
+        }
+    }
 }

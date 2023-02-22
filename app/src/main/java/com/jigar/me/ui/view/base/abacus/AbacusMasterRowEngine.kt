@@ -271,10 +271,10 @@ class AbacusMasterRowEngine(
 
             if (isBeadStackFromBottom) {
                 val temp = beads[i] + 2
-                Log.e("jigarLogs","i = "+i)
-                Log.e("jigarLogs","beads = "+beads[i])
-                Log.e("jigarLogs","temp = "+temp)
-                Log.e("jigarLogs","tempvalue = "+tempvalue)
+//                Log.e("jigarLogs","i = "+i)
+//                Log.e("jigarLogs","beads = "+beads[i])
+//                Log.e("jigarLogs","temp = "+temp)
+//                Log.e("jigarLogs","tempvalue = "+tempvalue)
                 beadDrawable = if (tempvalue > temp && tempvalue != -1) {
                     beadDrawables_eyes_smaile[drawablePos]!!
                 } else {
@@ -300,7 +300,7 @@ class AbacusMasterRowEngine(
 //                    }
 //                }
             } else {
-                Log.e("jigarLogs","Top beads = "+beads[i])
+//                Log.e("jigarLogs","Top beads = "+beads[i])
                 if (beads[i] > 0) {
                     when {
                         theam.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true) -> {

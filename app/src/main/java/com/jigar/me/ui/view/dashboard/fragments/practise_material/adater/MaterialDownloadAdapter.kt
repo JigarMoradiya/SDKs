@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
 import com.jigar.me.data.model.ImageData
 import com.jigar.me.data.model.DownloadMaterialData
+import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.databinding.RawDownloadmaterialChildBinding
 import com.jigar.me.databinding.RawDownloadmaterialParentBinding
 import com.jigar.me.utils.AppConstants
@@ -14,6 +15,7 @@ import com.jigar.me.utils.extensions.show
 
 class MaterialDownloadAdapter(
     private var listData: List<DownloadMaterialData>,
+    val prefManager : AppPreferencesHelper,
     private val mListener: OnItemClickListener
 ) : RecyclerView.Adapter<MaterialDownloadAdapter.FormViewHolder>() {
     interface OnItemClickListener {
@@ -41,7 +43,7 @@ class MaterialDownloadAdapter(
             txtTitle.text = data.groupName
             holder.binding.txtTotal.text = "(${data.imagesList.size} ${holder.binding.txtTotal.context.getString(R.string.worksheet)})"
 
-            val materialImagesListAdapter = ImageListAdapter(data.imagesList,position,mListener,data)
+            val materialImagesListAdapter = ImageListAdapter(data.imagesList,position,mListener,data,prefManager)
             recyclerViewImages.adapter = materialImagesListAdapter
 
             if (downloadType == AppConstants.Extras_Comman.DownloadType_Nursery) {
@@ -69,7 +71,8 @@ class MaterialDownloadAdapter(
         private var listData: List<ImageData>,
         private val parentPos: Int,
         private val mListener: OnItemClickListener,
-        private val parentData: DownloadMaterialData
+        private val parentData: DownloadMaterialData,
+        val prefManager : AppPreferencesHelper
     ) : RecyclerView.Adapter<ImageListAdapter.FormViewHolder>() {
 
         override fun onCreateViewHolder(
@@ -82,7 +85,7 @@ class MaterialDownloadAdapter(
         override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
             val data = listData[position]
             holder.binding.data = data
-            holder.binding.imagePath = parentData.imagePath
+            holder.binding.imagePath = prefManager.getCustomParam(AppConstants.AbacusProgress.iPath,"")+parentData.imagePath
             holder.binding.root.setOnClickListener {
                 mListener.onItemClick(parentPos,position)
             }

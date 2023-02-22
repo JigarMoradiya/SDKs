@@ -3,6 +3,7 @@ package com.jigar.me.data.pref
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import com.jigar.me.utils.AppConstants
 import javax.inject.Inject
 
 
@@ -41,10 +42,10 @@ class AppPreferencesHelper @Inject constructor(
         putBoolean(paramName, paramValue)
     }
 
-    override fun getBaseUrl(): String = mPrefs.getString(PREF_KEY_ACCESS_TOKEN, "").toString()
+    override fun getBaseUrl(): String = mPrefs.getString(PREF_KEY_BASE_URL, AppConstants.TEMP_BASE_URL).toString()
 
     override fun setBaseUrl(baseUrl: String) = mPrefs.edit {
-        putString(PREF_KEY_ACCESS_TOKEN, baseUrl)
+        putString(PREF_KEY_BASE_URL, baseUrl)
     }
 
     override fun getFCMID(): String = mPrefs.getString(PREF_KEY_FCMID, "").toString()

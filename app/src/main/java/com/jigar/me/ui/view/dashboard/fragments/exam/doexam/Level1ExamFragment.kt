@@ -188,11 +188,11 @@ class Level1ExamFragment : BaseFragment(),
                 if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Additions){
                     val str = getString(R.string.additions_of)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
                     mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
-                    mBinding.imgSign.setImageResource(R.drawable.ic_sign_plus)
+                    mBinding.imgSign.setImageResource(R.drawable.cal_plus)
                 }else if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Subtractions){
                     val str = getString(R.string.subtraction_of)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
                     mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
-                    mBinding.imgSign.setImageResource(R.drawable.ic_sign_minus)
+                    mBinding.imgSign.setImageResource(R.drawable.cal_minus)
                 }
                 val list1ImageCount = listExam[currentQuestionPos].value.toInt()
                 val list2ImageCount = listExam[currentQuestionPos].value2.toInt()

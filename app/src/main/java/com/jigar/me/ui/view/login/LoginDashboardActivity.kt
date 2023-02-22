@@ -13,9 +13,12 @@ import com.jigar.me.R
 import com.jigar.me.databinding.ActivityLoginDashboardBinding
 import com.jigar.me.ui.view.base.BaseActivity
 import com.jigar.me.ui.view.dashboard.MainDashboardActivity
+import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -25,6 +28,7 @@ class LoginDashboardActivity : BaseActivity(){
     lateinit var navHostFragment: NavHostFragment
     var selectedFragment: Int = -1
     lateinit var binding: ActivityLoginDashboardBinding
+    private val appViewModel by viewModels<AppViewModel>()
     companion object {
         fun getInstance(context: Context?) {
             Intent(context, LoginDashboardActivity::class.java).apply {
@@ -45,6 +49,10 @@ class LoginDashboardActivity : BaseActivity(){
     }
 
     private fun initObserver() {
+        CoroutineScope(Dispatchers.Main).launch{
+            appViewModel.deleteInAppPurchase()
+            appViewModel.deleteInAppSKU()
+        }
     }
 
     private fun setNavigationGraph() {

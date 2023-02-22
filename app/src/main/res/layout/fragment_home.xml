@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -10,31 +11,30 @@
         android:layout_height="@dimen/_44sdp"
         android:layout_marginStart="@dimen/activity_padding8"
         android:adjustViewBounds="true"
-        android:paddingVertical="@dimen/activity_padding4"
+        android:paddingVertical="@dimen/activity_padding6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logo_banner" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardAboutUs"
+    <com.jigar.me.utils.widget.viewpager.CustomViewPagerSpeed
+        android:id="@+id/viewPager"
+        android:layout_width="@dimen/_205sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:overScrollMode="never"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
+        android:id="@+id/indicatorPager"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_1sdp"
-        app:cardBackgroundColor="@color/light_about_us"
-        app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/card_elevation"
-        app:cardMaxElevation="@dimen/card_elevation"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
-            android:padding="@dimen/activity_padding8"
-            app:srcCompat="@drawable/ic_about_us_new" />
-
-    </com.google.android.material.card.MaterialCardView>
+        android:layout_marginTop="@dimen/_2sdp"
+        app:layout_constraintEnd_toEndOf="@+id/viewPager"
+        app:layout_constraintStart_toStartOf="@+id/viewPager"
+        app:layout_constraintTop_toBottomOf="@+id/viewPager"
+        app:spi_dotSelectedColor="@color/colorPrimary"
+        app:spi_looped="true" />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardSettingTop"
@@ -46,7 +46,7 @@
         app:cardElevation="@dimen/card_elevation"
         app:cardMaxElevation="@dimen/card_elevation"
         app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toStartOf="@+id/cardYoutube"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -57,274 +57,29 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardYoutube"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_1sdp"
-        app:cardBackgroundColor="@color/light_youtube"
-        app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/card_elevation"
-        app:cardMaxElevation="@dimen/card_elevation"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toStartOf="@+id/cardPurchase"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
-            android:padding="@dimen/activity_padding8"
-            app:srcCompat="@drawable/ic_youtube" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardPurchase"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_1sdp"
-        app:cardBackgroundColor="@color/light_purchase"
-        app:cardCornerRadius="@dimen/_16sdp"
-        app:cardElevation="@dimen/card_elevation"
-        app:cardMaxElevation="@dimen/card_elevation"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="@dimen/_32sdp"
-            android:layout_height="@dimen/_32sdp"
-            android:padding="@dimen/activity_padding8"
-            app:srcCompat="@drawable/ic_purchase" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <ScrollView
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:scrollbars="none"
+        android:layout_marginHorizontal="@dimen/_40sdp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoBanner">
 
-
-        <androidx.appcompat.widget.LinearLayoutCompat
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:scrollbars="none"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="7"
+            tools:itemCount="14"
+            tools:listitem="@layout/raw_home_menu" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardAbacusStarter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_starter" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardAbacusNumber"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_number" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardAddition"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_addition" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardSubtractions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_subtraction" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardMultiplication"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_multiplication" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardDivision"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_division" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardPracticeMaterial"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_material" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardExam"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_test" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardSudoku"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_sudoku" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/cardNumberSequence"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/home_menu_margin"
-                    app:cardBackgroundColor="@color/home_menu_icon_bg"
-                    app:cardCornerRadius="@dimen/home_menu_corner"
-                    app:cardElevation="@dimen/home_menu_elevation">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/home_menu_width"
-                        android:layout_height="@dimen/home_menu_height"
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/home_menu_number_sequence" />
-
-                </com.google.android.material.card.MaterialCardView>
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <com.jigar.me.utils.widget.viewpager.CustomViewPagerSpeed
-                android:id="@+id/viewPager"
-                android:layout_width="@dimen/_280sdp"
-                android:layout_height="@dimen/_60sdp"
-                android:layout_gravity="center"
-                android:overScrollMode="never"
-                android:scrollbars="none"
-                android:visibility="visible" />
-
-            <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
-                android:id="@+id/indicatorPager"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                app:spi_dotSelectedColor="@color/colorPrimary"
-                app:spi_looped="true" />
-        </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,14 +1,12 @@
 package com.jigar.me.ui.view.dashboard.fragments.exercise.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
 import com.jigar.me.databinding.RowExerciseQuestionLayoutBinding
-import com.jigar.me.utils.extensions.invisible
-import com.jigar.me.utils.extensions.layoutInflater
-import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.show
+import com.jigar.me.utils.extensions.*
 
 class ExerciseAdditionSubtractionAdapter(
     private var questions: List<String>
@@ -25,14 +23,31 @@ class ExerciseAdditionSubtractionAdapter(
         val data = questions[position]
         with(holder.binding){
             val context = root.context
-            if (currentStep == position){
-                tvQuestion.setTextColor(ContextCompat.getColor(context,R.color.darkColor11))
-                imgSymbol.setColorFilter(ContextCompat.getColor(context,R.color.darkColor11))
+            val que = data.replace("+","").replace("-","")
+            if (que.length > 4){
+                if (currentStep == position){
+                    tvQuestion1.setTextColor(ContextCompat.getColor(context,R.color.pink_400))
+                    imgSymbol.setColorFilter(ContextCompat.getColor(context,R.color.pink_400))
+                }else{
+                    tvQuestion1.setTextColor(ContextCompat.getColor(context,R.color.black))
+                    imgSymbol.setColorFilter(ContextCompat.getColor(context,R.color.black))
+                }
+                tvQuestion1.text = que
+                tvQuestion1.show()
+                tvQuestion.hide()
             }else{
-                tvQuestion.setTextColor(ContextCompat.getColor(context,R.color.black))
-                imgSymbol.setColorFilter(ContextCompat.getColor(context,R.color.black))
+                if (currentStep == position){
+                    tvQuestion.setTextColor(ContextCompat.getColor(context,R.color.pink_400))
+                    imgSymbol.setColorFilter(ContextCompat.getColor(context,R.color.pink_400))
+                }else{
+                    tvQuestion.setTextColor(ContextCompat.getColor(context,R.color.black))
+                    imgSymbol.setColorFilter(ContextCompat.getColor(context,R.color.black))
+                }
+                tvQuestion.text = que
+                tvQuestion1.hide()
+                tvQuestion.show()
             }
-            tvQuestion.text = data.replace("+","").replace("-","")
+
             if (data.contains("-")){
                 imgSymbol.show()
             }else{

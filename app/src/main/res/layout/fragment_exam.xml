@@ -85,7 +85,7 @@
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/txtAbacus"
-                        txtColorApp="@{@color/colorHeadingBlack_00}"
+                        android:textColor="@color/colorHeadingBlack_00"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/font_bold"
@@ -93,9 +93,9 @@
                         tools:text="5 + 5 = " />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:layout_width="@dimen/_22sdp"
-                        android:layout_height="@dimen/_22sdp"
-                        app:srcCompat="@drawable/ic_sign_question_mark"
+                        android:layout_width="@dimen/_18sdp"
+                        android:layout_height="@dimen/_18sdp"
+                        app:srcCompat="@drawable/cal_question"
                         android:tint="@color/red"
                         app:layout_constraintEnd_toStartOf="@+id/txtTapCorrectAns"
                         app:layout_constraintStart_toStartOf="parent"

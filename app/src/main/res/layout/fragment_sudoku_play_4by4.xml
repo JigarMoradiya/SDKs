@@ -152,7 +152,6 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-
                     android:layout_width="@dimen/sudoku_number_dimen"
                     android:layout_height="@dimen/sudoku_number_dimen"
                     android:layout_margin="0.5dp"

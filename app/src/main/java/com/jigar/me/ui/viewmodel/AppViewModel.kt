@@ -45,8 +45,12 @@ class AppViewModel @Inject constructor(private val apiRepository: ApiRepository,
 
     fun getInAppPurchase() = dbRepository.getInAppPurchase()
 
+
     fun getInAppSKUDetailLive(sku : String) = dbRepository.getInAppSKUDetailLive(sku)
     fun getInAppSKU() = dbRepository.getInAppSKU()
+
+    suspend fun deleteInAppSKU() = dbRepository.deleteInAppSKU()
+    suspend fun deleteInAppPurchase() = dbRepository.deleteInAppPurchase()
 
     fun getInAppSKUDetail(sku : String) : LiveData<List<InAppSkuDetails>>{
         val result = MutableLiveData<List<InAppSkuDetails>>()

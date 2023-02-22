@@ -43,11 +43,11 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/imgSign"
-                    android:layout_width="@dimen/_22sdp"
-                    android:layout_height="@dimen/_22sdp"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/activity_padding8"
                     android:layout_marginBottom="@dimen/activity_padding8"
-                    app:srcCompat="@drawable/ic_sign_plus"
+                    app:srcCompat="@drawable/cal_plus"
                     android:tint="@color/red"
                     android:visibility="gone"
                     tools:visibility="gone" />

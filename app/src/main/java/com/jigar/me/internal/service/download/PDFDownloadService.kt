@@ -14,6 +14,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.MyApplication
 import com.jigar.me.data.model.DownloadMaterialData
+import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.ui.view.dashboard.MainDashboardActivity
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
@@ -37,7 +38,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class PDFDownloadService : Service(), FetchObserver<Download> {
-
+    lateinit var prefManager : AppPreferencesHelper
     //Notification builder for updating count
     private lateinit var builder: NotificationCompat.Builder
     private val reqMap = HashMap<Int, Status>()
@@ -54,6 +55,7 @@ class PDFDownloadService : Service(), FetchObserver<Download> {
 
     override fun onCreate() {
         super.onCreate()
+        prefManager = AppPreferencesHelper(this, AppConstants.PREF_NAME)
         fetch = MyApplication.getFetchInstance()
         fetch.addListener(fetchListener)
         startForegroundService()
@@ -107,7 +109,7 @@ class PDFDownloadService : Service(), FetchObserver<Download> {
         if (listIndex < downloadList.size){
             GlobalScope.launch(Dispatchers.IO){
 
-                val url = downloadList[listIndex].pdf_path
+                val url = prefManager.getCustomParam(AppConstants.AbacusProgress.iPath,"")+downloadList[listIndex].pdf_path
                 val currentDateFormate =  DateTimeUtils.getDateString(Date(),DateTimeUtils.yyyy_MM_dd_HH_mm)
                 val filePath = downloadFilePath().plus("/").plus(downloadList[listIndex].groupName).plus("_").plus(currentDateFormate).plus(".pdf")
                 File(filePath).delete()

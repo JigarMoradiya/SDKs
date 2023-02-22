@@ -440,9 +440,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 setTableDataAndVisiblilty()
                 abacusFragment?.setQuestionAndDividerLength(queLength, finalAnsLength)
 
-                Log.e("jigarLogs","topPositions : "+Gson().toJson(topPositions))
-                Log.e("jigarLogs","bottomPositions : "+Gson().toJson(bottomPositions))
-
                 abacusFragment?.setSelectedPositions(
                     topPositions,
                     bottomPositions,

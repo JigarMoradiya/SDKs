@@ -58,10 +58,13 @@ class PurchaseAdapter(
             binding.spaceTop.show()
             when (data.sku) {
                 PRODUCT_ID_Subscription_Month3 -> {
-                    binding.btnRecommended.text = context.getString(R.string.recommended)
+                    binding.btnRecommended.text = context.getString(R.string.popular)
                 }
-                PRODUCT_ID_Subscription_Weekly -> {
+                PRODUCT_ID_Subscription_Weekly-> {
                     binding.btnRecommended.text = context.getString(R.string.hot)
+                }
+                PRODUCT_ID_Subscription_Month1 -> {
+                    binding.btnRecommended.text = context.getString(R.string.new_)
                 }
                 PRODUCT_ID_All_lifetime -> {
                     binding.btnRecommended.text = context.getString(R.string.recommended)

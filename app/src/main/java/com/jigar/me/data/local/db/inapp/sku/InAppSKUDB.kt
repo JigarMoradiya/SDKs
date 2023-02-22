@@ -20,4 +20,7 @@ class InAppSKUDB @Inject constructor(private val dao: InAppSKUDao) {
     fun getInAppSKUDetail(sku : String): List<InAppSkuDetails> {
         return dao.getInAppSkuDetail(sku)
     }
+    suspend fun deleteInAppSKU() = withContext(Dispatchers.IO) {
+        dao.deleteInAppSKU()
+    }
 }

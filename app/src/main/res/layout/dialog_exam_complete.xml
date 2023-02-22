@@ -247,7 +247,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGiveExamAgain"
-                android:layout_width="180dp"
+                android:layout_width="210dp"
                 style="@style/btnMedium"
                 android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"
@@ -261,7 +261,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCheckResult"
-                android:layout_width="180dp"
+                android:layout_width="210dp"
                 style="@style/btnMedium"
                 android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"

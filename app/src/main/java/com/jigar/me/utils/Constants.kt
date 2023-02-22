@@ -21,11 +21,14 @@ object Constants {
     const val notificationTypeMaterialMath = "material_math"
     const val notificationTypeMaterialNursery = "material_nursery"
     const val notificationTypeExam = "exam"
+    const val notificationTypeExercise = "exercise"
     const val notificationTypeSudoku = "sudoku"
     const val notificationTypeNumberSequence = "number_sequence"
     const val notificationTypeSetting = "setting"
     const val notificationTypePurchase = "purchase"
     const val notificationTypeYoutube = "youtube"
+    const val notificationTypeRate = "rate"
+    const val notificationTypeShare = "share"
 
     const val bottomSheetWidthBaseOnRatio6 = 6
     const val bottomSheetWidthBaseOnRatio5 = 5
@@ -49,8 +52,8 @@ object Constants {
     var Col_Space_full_default = 25F
     var Col_Space_full_polygon = 15F
 
-    var Col_Space_exercise_polygon = 10F
-    var Col_Space_exercise_default = 25F
+    var Col_Space_exercise_polygon = 5F
+    var Col_Space_exercise_default = 20F
 
     var Que = "Que"
     var Sign = "Sign"

@@ -16,4 +16,7 @@ class InAppPurchaseDB @Inject constructor(private val dao: InAppPurchaseDao) {
         return dao.getPurchases()
     }
 
+    suspend fun deleteInAppPurchase() = withContext(Dispatchers.IO) {
+        dao.deleteInAppPurchase()
+    }
 }

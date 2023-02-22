@@ -26,4 +26,7 @@ interface InAppPurchaseDao {
     @Query("SELECT * FROM tableInAppPurchase WHERE purchaseState = 1")
     fun getPurchases(): LiveData<List<InAppPurchaseDetails>>
 
+    @Query("DELETE FROM tableInAppPurchase")
+    suspend fun deleteInAppPurchase()
+
 }

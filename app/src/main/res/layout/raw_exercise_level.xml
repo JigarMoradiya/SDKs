@@ -17,7 +17,7 @@
             android:includeFontPadding="false"
             android:text="1"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="@dimen/textSize16"
+            android:textSize="@dimen/textSizeSuperExtraLarge"
             app:fontFamily="@font/font_semibold" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

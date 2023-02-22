@@ -19,8 +19,11 @@ class DBRepository @Inject constructor(
 ) : SafeApiCall {
 
     fun getInAppPurchase() = inAppPurchaseDB.getInAppPurchase()
+    suspend fun deleteInAppPurchase() = inAppPurchaseDB.deleteInAppPurchase()
+
     fun getInAppSKUDetailLive(sku : String) = inAppSKUDB.getInAppSKUDetailLive(sku)
     fun getInAppSKU() = inAppSKUDB.getInAppSKU()
+    suspend fun deleteInAppSKU() = inAppSKUDB.deleteInAppSKU()
     fun getInAppSKUDetail(sku : String) = inAppSKUDB.getInAppSKUDetail(sku)
 
     suspend fun saveExamResultDB(data: ExamHistory) = examHistoryDB.insert(data)

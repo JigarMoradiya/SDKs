@@ -9,7 +9,7 @@ object PlaySound {
     const val clap_click = "clap.wav"
     const val number_puzzle_win = "number_puzzle_win.wav"
     const val swap_sound = "number_puzzle_click.wav"
-    const val tap_sound = "number_puzzle_set_button.wav"
+
     private val player = MediaPlayer()
     fun playClickSound(context: Context) {
         play(context, abacus_click)

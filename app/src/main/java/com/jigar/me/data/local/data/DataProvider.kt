@@ -17,47 +17,70 @@ import kotlin.random.Random.Default.nextInt
 
 
 object DataProvider {
-    /* sudoku */
+    /* home menu */
+    fun getHomeMenuList() : ArrayList<HomeMenu>{
+        val list = ArrayList<HomeMenu>()
+        with(list){
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Starter,R.drawable.home_menu_starter))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Number,R.drawable.home_menu_number))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Addition,R.drawable.home_menu_addition))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Addition_Subtraction,R.drawable.home_menu_subtraction))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Multiplication,R.drawable.home_menu_multiplication))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Division,R.drawable.home_menu_division))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Exercise,R.drawable.home_menu_exercise))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_DailyExam,R.drawable.home_menu_exam))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_PractiseMaterial,R.drawable.home_menu_material))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Sudoku,R.drawable.home_menu_sudoku))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Number_Puzzle,R.drawable.home_menu_number_sequence))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Click_Youtube,R.drawable.home_menu_tutorial))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Purchase,R.drawable.home_menu_purchase))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_AboutUs,R.drawable.home_menu_about_us))
+        }
+        return list
+    }
+    /* exercise */
     fun getExerciseList(context: Context) : ArrayList<ExerciseLevel>{
         val list = ArrayList<ExerciseLevel>()
         val listAddition = ArrayList<ExerciseLevelDetail>()
         with(listAddition){
-            add(ExerciseLevelDetail(5,5,2,5))
-            add(ExerciseLevelDetail(10,10,2,10))
-            add(ExerciseLevelDetail(5,5,3,5))
-            add(ExerciseLevelDetail(10,10,3,10))
-            add(ExerciseLevelDetail(5,5,4,5))
-            add(ExerciseLevelDetail(10,10,4,10))
-            add(ExerciseLevelDetail(5,5,5,5))
-            add(ExerciseLevelDetail(10,10,5,10))
-            add(ExerciseLevelDetail(5,5,6,5))
-            add(ExerciseLevelDetail(10,10,6,10))
+            add(ExerciseLevelDetail("1",5,5,1,3))
+            add(ExerciseLevelDetail("2",10,10,1,5))
+            add(ExerciseLevelDetail("3",5,5,2,4))
+            add(ExerciseLevelDetail("4",10,10,2,8))
+            add(ExerciseLevelDetail("5",5,5,3,4))
+            add(ExerciseLevelDetail("6",10,10,3,8))
+            add(ExerciseLevelDetail("7",5,5,4,5))
+            add(ExerciseLevelDetail("8",10,10,4,10))
+            add(ExerciseLevelDetail("9",5,5,5,5))
+            add(ExerciseLevelDetail("10",10,10,5,10))
+            add(ExerciseLevelDetail("11",5,5,6,5))
+            add(ExerciseLevelDetail("12",10,10,6,10))
         }
         val listMultiplication = ArrayList<ExerciseLevelDetail>()
         with(listMultiplication){
-            add(ExerciseLevelDetail(5,0,3,3))
-            add(ExerciseLevelDetail(10,0,3,5))
-            add(ExerciseLevelDetail(5,0,4,3))
-            add(ExerciseLevelDetail(10,0,4,5))
-            add(ExerciseLevelDetail(5,0,5,3))
-            add(ExerciseLevelDetail(10,0,5,5))
-            add(ExerciseLevelDetail(5,0,6,3))
-            add(ExerciseLevelDetail(10,0,6,5))
-            add(ExerciseLevelDetail(5,0,7,3))
-            add(ExerciseLevelDetail(10,0,7,5))
+            add(ExerciseLevelDetail("13",5,0,3,3))
+            add(ExerciseLevelDetail("14",10,0,3,5))
+            add(ExerciseLevelDetail("15",5,0,4,3))
+            add(ExerciseLevelDetail("16",10,0,4,5))
+            add(ExerciseLevelDetail("17",5,0,5,3))
+            add(ExerciseLevelDetail("18",10,0,5,5))
+            add(ExerciseLevelDetail("19",5,0,6,3))
+            add(ExerciseLevelDetail("20",10,0,6,5))
+            add(ExerciseLevelDetail("21",5,0,7,3))
+            add(ExerciseLevelDetail("22",10,0,7,5))
         }
         val listDivision = ArrayList<ExerciseLevelDetail>()
         with(listDivision){
-            add(ExerciseLevelDetail(5,0,4,3))
-            add(ExerciseLevelDetail(5,0,4,2))
-            add(ExerciseLevelDetail(10,0,4,6))
-            add(ExerciseLevelDetail(10,0,4,4))
-            add(ExerciseLevelDetail(5,0,5,3))
-            add(ExerciseLevelDetail(5,0,5,2))
-            add(ExerciseLevelDetail(10,0,5,6))
-            add(ExerciseLevelDetail(10,0,5,4))
-            add(ExerciseLevelDetail(10,0,6,6))
-            add(ExerciseLevelDetail(10,0,6,4))
+            add(ExerciseLevelDetail("23",5,0,4,3))
+            add(ExerciseLevelDetail("24",5,0,4,2))
+            add(ExerciseLevelDetail("25",10,0,4,6))
+            add(ExerciseLevelDetail("26",10,0,4,4))
+            add(ExerciseLevelDetail("27",5,0,5,3))
+            add(ExerciseLevelDetail("28",5,0,5,2))
+            add(ExerciseLevelDetail("29",10,0,5,6))
+            add(ExerciseLevelDetail("30",10,0,5,4))
+            add(ExerciseLevelDetail("31",10,0,6,6))
+            add(ExerciseLevelDetail("32",10,0,6,4))
         }
         with(list) {
             add(ExerciseLevel("1",context.getString(R.string.AdditionSubtraction),listAddition))
@@ -680,16 +703,241 @@ object DataProvider {
         return  Random().nextInt(max - min + 1) + min
     }
 
-    private fun generateSign(): Int {
-        return nextInt(0, 2)
+    fun generateIndex(endNumber : Int = 2): Int {
+        return nextInt(0, endNumber)
     }
+
     private fun generateTotalMinusSign(): Int {
         return nextInt(1, 5)
+    }
+    fun generateDivisionExercise(child: ExerciseLevelDetail) : MutableList<ExerciseList>{
+        return generateDivision(child)
+    }
+    fun generateMultiplicationExercise(child: ExerciseLevelDetail) : MutableList<ExerciseList>{
+        var listExercise: MutableList<ExerciseList> = arrayListOf()
+        if (child.digits == 3 && child.totalQue == 5){
+            listExercise.addAll(generateMulDigit3Que5(child))
+        }else{
+            listExercise = generateMultiplication3(child)
+        }
+        return listExercise
+    }
+
+    private fun generateDivision(child: ExerciseLevelDetail): MutableList<ExerciseList>{
+        val listExercise: MutableList<ExerciseList> = arrayListOf()
+        (0 until child.totalQue).forEach { j ->
+            val que1 = if (child.digits == 4){
+                if (j < 2){
+                    generateSingleDigit(2,19)
+                }else{
+                    generateSingleDigit(2,99)
+                }
+            }else if (child.digits == 5){
+                if (j < 2){
+                    generateSingleDigit(2,19)
+                }else{
+                    generateSingleDigit(2,299)
+                }
+            }else { // 6 digit
+                if (child.totalQue > 5){
+                    if (j < 5){
+                        generateSingleDigit(2,299)
+                    }else{
+                        generateSingleDigit(300,999)
+                    }
+                }else{
+                    if (j < 2){
+                        generateSingleDigit(2,19)
+                    }else{
+                        generateSingleDigit(2,399)
+                    }
+                }
+
+            }
+
+            val que22 = if (child.digits == 4){
+                val min = 1000 / que1
+                val max : Int = 9999 / que1
+                generateSingleDigit(min,max)
+            }else if (child.digits == 5){
+                val min = 10000 / que1
+                val max : Int = 99999 / que1
+                generateSingleDigit(min,max)
+            }else { // 6 digit
+                val min = 100000 / que1
+                val max : Int = 999999 / que1
+                generateSingleDigit(min,max)
+            }
+            val que2 : Int = que22
+            var answer = 0
+            var question = ""
+            if (que2 > que1){
+                val answerTemp = que2 * que1
+                question = "${answerTemp}/$que1"
+                answer = answerTemp / que1
+            }else{
+                val answerTemp = que1 * que2
+                question = "${answerTemp}/$que2"
+                answer = answerTemp / que2
+            }
+
+            listExercise.add(ExerciseList(question,answer))
+        }
+        listExercise.shuffle()
+        return listExercise
+    }
+
+    private fun generateMultiplication3(child: ExerciseLevelDetail): MutableList<ExerciseList>{
+        val listExercise: MutableList<ExerciseList> = arrayListOf()
+        (0 until child.totalQue).forEach { j ->
+            val que1 = if (child.digits == 3){
+                generateSingleDigit(2,99)
+            }else if (child.digits == 4){
+                generateSingleDigit(2,999)
+            }else if (child.digits == 5){
+                generateSingleDigit(2,9999)
+            }else if (child.digits == 6){
+                generateSingleDigit(2,99999)
+            }else { // 7 digit
+                generateSingleDigit(2,999999)
+            }
+
+            val que22 = if (child.digits == 3){
+                val min = 100 / que1
+                val max : Int = 999 / que1
+                generateSingleDigit(min,max)
+            }else if (child.digits == 4){
+                val min = 1000 / que1
+                val max : Int = 9999 / que1
+                generateSingleDigit(min,max)
+            }else if (child.digits == 5){
+                val min = 10000 / que1
+                val max : Int = 99999 / que1
+                generateSingleDigit(min,max)
+            }else if (child.digits == 6){
+                val min = 100000 / que1
+                val max : Int = 999999 / que1
+                generateSingleDigit(min,max)
+            }else { // 7 digit
+                val min = 1000000 / que1
+                val max : Int = 9999999 / que1
+                generateSingleDigit(min,max)
+            }
+            val que2 : Int = que22
+            val isInvert = generateIndex()
+            var answer = 0
+            var question = ""
+            if (isInvert == 0){
+                answer = que2 * que1
+                question = "${que2}x$que1"
+            }else{
+                answer = que1 * que2
+                question = "${que1}x$que2"
+            }
+            listExercise.add(ExerciseList(question,answer))
+        }
+
+        return listExercise
+    }
+
+    private fun generateMulDigit3Que5(child: ExerciseLevelDetail) : MutableList<ExerciseList>{
+        val listExercise: MutableList<ExerciseList> = arrayListOf()
+        var isLongNotDone2 = true
+        var isLongNotDone3 = true
+        var isLongNotDone4 = true
+        var isLongNotDone5 = true
+        var isLongNotDone6 = true
+        var isLongNotDone7 = true
+        var isLongNotDone8 = true
+        var isLongNotDone9 = true
+        for (j in 0 until child.totalQue){
+            val que1 = generateSingleDigit(2,9)
+            val que2 = if (que1 == 2){
+                val index = generateIndex(3)
+                if (isLongNotDone2 && index == 0){
+                    isLongNotDone2 = false
+                    generateSingleDigit(100,499)
+                }else{
+                    generateSingleDigit(50,99)
+                }
+            }else if (que1 == 3){
+                val index = generateIndex(3)
+                if (isLongNotDone3 && index == 0){
+                    isLongNotDone3 = false
+                    generateSingleDigit(100,333)
+                }else{
+                    generateSingleDigit(34,99)
+                }
+            }else if (que1 == 4){
+                val index = generateIndex(3)
+                if (isLongNotDone4 && index == 0){
+                    isLongNotDone4 = false
+                    generateSingleDigit(100,249)
+                }else{
+                    generateSingleDigit(25,99)
+                }
+            }else if (que1 == 5){
+                val index = generateIndex(3)
+                if (isLongNotDone5 && index == 0){
+                    isLongNotDone5 = false
+                    generateSingleDigit(100,199)
+                }else{
+                    generateSingleDigit(20,99)
+                }
+            }else if (que1 == 6){
+                val index = generateIndex(3)
+                if (isLongNotDone6 && index == 0){
+                    isLongNotDone6 = false
+                    generateSingleDigit(100,166)
+                }else{
+                    generateSingleDigit(17,99)
+                }
+            }else if (que1 == 7){
+                val index = generateIndex(3)
+                if (isLongNotDone7 && index == 0){
+                    isLongNotDone7 = false
+                    generateSingleDigit(100,142)
+                }else{
+                    generateSingleDigit(15,99)
+                }
+            }else if (que1 == 8){
+                val index = generateIndex(3)
+                if (isLongNotDone8 && index == 0){
+                    isLongNotDone8 = false
+                    generateSingleDigit(100,124)
+                }else{
+                    generateSingleDigit(13,99)
+                }
+            }else { // if (que1 == 9)
+                val index = generateIndex(3)
+                if (isLongNotDone9 && index == 0){
+                    isLongNotDone9 = false
+                    generateSingleDigit(100,111)
+                }else{
+                    generateSingleDigit(12,99)
+                }
+            }
+
+            val isInvert = generateIndex()
+            var answer = 0
+            var question = ""
+            if (isInvert == 0){
+                answer = que2 * que1
+                question = "${que2}x$que1"
+            }else{
+                answer = que1 * que2
+                question = "${que1}x$que2"
+            }
+            listExercise.add(ExerciseList(question,answer))
+        }
+        return listExercise
     }
 
     fun generateAdditionSubExercise(child: ExerciseLevelDetail) : MutableList<ExerciseList>{
         val listExercise: MutableList<ExerciseList> = arrayListOf()
-        val max = if (child.digits == 3){
+        val max = if (child.digits == 2){
+            99
+        }else if (child.digits == 3){
             999
         }else if (child.digits == 4){
             9999
@@ -698,9 +946,11 @@ object DataProvider {
         }else if (child.digits == 6){
             999999
         }else{
-            99
+            9
         }
-        val min = if (child.digits == 3){
+        val min = if (child.digits == 2){
+            10
+        }else if (child.digits == 3){
             100
         }else if (child.digits == 4){
             1000
@@ -709,7 +959,7 @@ object DataProvider {
         }else if (child.digits == 6){
             100000
         }else{
-            10
+            1
         }
 
         for (j in 0 until child.totalQue){
@@ -717,7 +967,7 @@ object DataProvider {
             if (child.queLines > 5){
                 maxMinusSignCount = generateTotalMinusSign()
             }else{
-                val index = generateSign()
+                val index = generateIndex()
                 if (index == 0){
                     maxMinusSignCount = 1
                 }
@@ -735,7 +985,7 @@ object DataProvider {
                         question = "$question+$nextValues"
                         answer += nextValues
                     }else{
-                        val index = generateSign()
+                        val index = generateIndex()
                         if (index == 0 || answer < min) { // 0 = add +
                             val nextValues = generateSingleDigit(min, max)
                             question = "$question+$nextValues"
@@ -755,7 +1005,6 @@ object DataProvider {
                 }
             }
             listExercise.add(ExerciseList(question,answer))
-            Log.e("jigarLogs","answer = "+answer+" question = "+question)
         }
         return listExercise
     }

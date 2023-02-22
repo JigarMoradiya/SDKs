@@ -132,7 +132,11 @@ fun Context.openPlayStore() {
         toastS(getString(R.string.play_store_not_found))
     }
 }
-fun Context.shareIntent(msg : String) {
+fun Context.shareIntent() {
+    val msg = "Abacus child learning application!\n" +
+            "Abacus will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\n" +
+            "Download Abacus App from Google Play Store \uD83D\uDC47\uD83D\uDC47\uD83D\uDC47\uD83D\uDE0D\uD83D\uDE07\n" +
+            "https://play.google.com/store/apps/details?id=${packageName}"
     val sharingIntent = Intent(Intent.ACTION_SEND)
     sharingIntent.type = "text/plain"
     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))

@@ -50,4 +50,7 @@ interface InAppSKUDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertList(inAppSkuDetails: List<InAppSkuDetails>)
+
+    @Query("DELETE FROM tableInAppSKU")
+    suspend fun deleteInAppSKU()
 }

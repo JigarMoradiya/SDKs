@@ -359,14 +359,14 @@ class BillingRepository @Inject constructor(
                 .build())
 
         val productListSubscription: ArrayList<QueryProductDetailsParams.Product> = arrayListOf(
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build(),
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build(),
+//            QueryProductDetailsParams.Product.newBuilder()
+//                .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
+//                .setProductType(BillingClient.ProductType.SUBS)
+//                .build(),
+//            QueryProductDetailsParams.Product.newBuilder()
+//                .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
+//                .setProductType(BillingClient.ProductType.SUBS)
+//                .build(),
             QueryProductDetailsParams.Product.newBuilder()
                 .setProductId(PRODUCT_ID_Subscription_Weekly)
                 .setProductType(BillingClient.ProductType.SUBS)

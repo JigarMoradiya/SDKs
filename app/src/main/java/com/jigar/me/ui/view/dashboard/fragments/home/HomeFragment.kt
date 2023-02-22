@@ -1,9 +1,5 @@
 package com.jigar.me.ui.view.dashboard.fragments.home
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -11,18 +7,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager.widget.ViewPager
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.target.CustomTarget
@@ -33,7 +23,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.jigar.me.MyApplication
 import com.jigar.me.R
+import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.local.data.HomeBanner
+import com.jigar.me.data.local.data.HomeMenu
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.databinding.FragmentHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
@@ -48,12 +40,14 @@ import org.json.JSONObject
 import java.util.*
 
 @AndroidEntryPoint
-class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
+class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
+    HomeMenuAdapter.OnItemClickListener {
     private lateinit var binding: FragmentHomeBinding
     private var root : View? = null
     private val appViewModel by viewModels<AppViewModel>()
 
     private lateinit var bannerPagerAdapter: BannerPagerAdapter
+    private lateinit var homeMenuAdapter: HomeMenuAdapter
     //handler for run auto scroll thread
     private var handler : Handler? = null
     private var runnable: Runnable? = null
@@ -73,11 +67,15 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
         return root!!
     }
     private fun initViews() {
+        homeMenuAdapter = HomeMenuAdapter(DataProvider.getHomeMenuList(),this)
+        binding.recyclerviewMenu.adapter = homeMenuAdapter
         getTrackData()
         setViewPager()
         getFBConstant()
     }
-
+    override fun onItemHomeMenuClick(data: HomeMenu) {
+        moveToClick(data.type)
+    }
     private fun setViewPager() {
         handler = Handler(Looper.getMainLooper())
         binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -98,22 +96,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
     }
 
     private fun initListener() {
-        binding.cardAboutUs.onClick { moveToClick(AppConstants.HomeClicks.Menu_AboutUs) }
         binding.cardSettingTop.onClick { moveToClick(AppConstants.HomeClicks.Menu_Setting) }
-        binding.cardYoutube.onClick { moveToClick(AppConstants.HomeClicks.Menu_Click_Youtube) }
-        binding.cardPurchase.onClick { moveToClick(AppConstants.HomeClicks.Menu_Purchase) }
-
-        binding.cardAbacusStarter.onClick { moveToClick(AppConstants.HomeClicks.Menu_Starter) }
-        binding.cardAbacusNumber.onClick { moveToClick(AppConstants.HomeClicks.Menu_Number) }
-        binding.cardAddition.onClick { moveToClick(AppConstants.HomeClicks.Menu_Addition) }
-        binding.cardSubtractions.onClick { moveToClick(AppConstants.HomeClicks.Menu_Addition_Subtraction) }
-        binding.cardMultiplication.onClick { moveToClick(AppConstants.HomeClicks.Menu_Multiplication) }
-
-        binding.cardDivision.onClick { moveToClick(AppConstants.HomeClicks.Menu_Division) }
-        binding.cardPracticeMaterial.onClick { moveToClick(AppConstants.HomeClicks.Menu_PractiseMaterial) }
-        binding.cardExam.onClick { moveToClick(AppConstants.HomeClicks.Menu_DailyExam) }
-        binding.cardSudoku.onClick { moveToClick(AppConstants.HomeClicks.Menu_Sudoku) }
-        binding.cardNumberSequence.onClick { moveToClick(AppConstants.HomeClicks.Menu_Number_Puzzle) }
     }
     private fun checkPurchase() {
         appViewModel.getInAppPurchase().observe(viewLifecycleOwner) { listData ->
@@ -227,6 +210,9 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
                 val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Division))
                 mNavController.navigate(action)
             }
+            AppConstants.HomeClicks.Menu_Exercise -> {
+                mNavController.navigate(R.id.action_homeFragment_to_exerciseHomeFragment)
+            }
             AppConstants.HomeClicks.Menu_DailyExam -> {
                 mNavController.navigate(R.id.action_homeFragment_to_examHomeFragment)
             }
@@ -247,14 +233,9 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
             }
             AppConstants.HomeClicks.Menu_AboutUs -> {
                 mNavController.navigate(R.id.action_homeFragment_to_aboutFragment)
-//                mNavController.navigate(R.id.action_homeFragment_to_exerciseHomeFragment)
             }
             AppConstants.HomeClicks.Menu_Share -> {
-                val msg = "Abacus child learning application!\n" +
-                        "Abacus will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\n" +
-                        "Download Abacus App from Google Playstore \uD83D\uDC47\uD83D\uDC47\uD83D\uDC47\uD83D\uDE0D\uD83D\uDE07\n" +
-                        "https://play.google.com/store/apps/details?id=${requireContext().packageName}"
-                requireContext().shareIntent(msg)
+                requireContext().shareIntent()
             }
             AppConstants.HomeClicks.Menu_Click_Youtube -> {
                 requireContext().openYoutube()
@@ -316,9 +297,12 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
                     val resetImage = mapMessage[AppConstants.AbacusProgress.resetImage] as Long
                     val privacyPolicy = mapMessage[AppConstants.AbacusProgress.Privacy_Policy_data] as String
                     val baseUrl = mapMessage[AppConstants.AbacusProgress.BaseUrl] as String
+                    val iPath = mapMessage[AppConstants.AbacusProgress.iPath] as String
                     val ads = mapMessage[AppConstants.AbacusProgress.Ads] as String
                     with(prefManager){
                         setBaseUrl(baseUrl)
+                        setCustomParam(AppConstants.AbacusProgress.iPath,iPath)
+
                         setCustomParam(AppConstants.AbacusProgress.Privacy_Policy_data,privacyPolicy)
                         setCustomParam(AppConstants.AbacusProgress.Ads,ads)
                         setCustomParamInt(AppConstants.AbacusProgress.Discount,discount.toInt())
@@ -374,4 +358,6 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener {
         }
 
     }
+
+
 }

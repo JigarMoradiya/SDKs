@@ -71,9 +71,9 @@ class ExamResultLevel1Adapter(
 
         }else if (data.type == BeginnerExamQuestionType.Additions || data.type == BeginnerExamQuestionType.Subtractions){
             if (data.type == BeginnerExamQuestionType.Additions){
-                holder.binding.imgSign.setImageResource(R.drawable.ic_sign_plus)
+                holder.binding.imgSign.setImageResource(R.drawable.cal_plus)
             }else if (data.type == BeginnerExamQuestionType.Subtractions){
-                holder.binding.imgSign.setImageResource(R.drawable.ic_sign_minus)
+                holder.binding.imgSign.setImageResource(R.drawable.cal_minus)
             }
             val list1ImageCount = data.value.toInt()
             val list2ImageCount = data.value2.toInt()

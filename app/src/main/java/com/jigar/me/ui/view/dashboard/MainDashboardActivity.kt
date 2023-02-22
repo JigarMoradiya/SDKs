@@ -18,12 +18,16 @@ import com.jigar.me.ui.view.base.inapp.BillingRepository
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.HalfAbacusFragment
 import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.ExamFragment
 import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.Level1ExamFragment
+import com.jigar.me.ui.view.dashboard.fragments.exercise.ExerciseHomeFragment
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.extensions.hide
 import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainDashboardActivity : BaseActivity(){
@@ -188,6 +192,9 @@ class MainDashboardActivity : BaseActivity(){
             }
             is ExamFragment -> {
                 fragment.examLeaveAlert()
+            }
+            is ExerciseHomeFragment -> {
+                fragment.exerciseLeaveAlert()
             }
             else -> {
                 navigationUp()

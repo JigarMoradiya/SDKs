@@ -4,6 +4,8 @@ object AppConstants {
     internal const val DB_NAME = "kotlin_basic.db"
     internal const val PREF_NAME = "kotlin_basic_pref"
     internal const val YOUTUBE_URL = "https://www.youtube.com/channel/UC9MSzIbLkuzffqepgOqBLhw"
+//    internal const val TEMP_BASE_URL = "https://abacuspro.in/backend/index.php/Api/"
+    internal const val TEMP_BASE_URL = "https://www.sdd-production.com/jigar/backend/index.php/Api/"
 
     const val BLINK_ICON_ANIMATION_DURATION: Long = 700
     const val BLINK_ICON_ANIMATION_ALPHA: Float = 0.2F
@@ -84,6 +86,8 @@ object AppConstants {
 
 
             var BaseUrl = "BaseUrl"
+            var iPath = "iPath"
+
             var Discount = "Discount"
             var Ads = "Ads"
             var reset = "reset"
@@ -144,19 +148,20 @@ object AppConstants {
             const val Menu_AboutUs = 6
             const val Menu_Multiplication = 7
             const val Menu_Division = 8
-            const val Menu_Purchase = 9
-            const val Menu_DailyExam = 10
-            const val Menu_PractiseMaterial = 11
-            const val Menu_Setting = 12
+            const val Menu_Exercise = 9
+            const val Menu_Purchase = 10
+            const val Menu_DailyExam = 11
+            const val Menu_PractiseMaterial = 12
+            const val Menu_Setting = 13
 
-            const val Menu_Click_Back = 13
-            const val Menu_Click_ResetProgress = 14
-            const val Menu_Click_Youtube = 15
-            const val Menu_Click_Table = 16
-            const val Menu_Share = 17
+            const val Menu_Click_Back = 14
+            const val Menu_Click_ResetProgress = 15
+            const val Menu_Click_Youtube = 16
+            const val Menu_Click_Table = 17
+            const val Menu_Share = 18
 
-            const val Menu_Sudoku = 18
-            const val Menu_Number_Puzzle = 19
+            const val Menu_Sudoku = 19
+            const val Menu_Number_Puzzle = 20
 
         }
     }

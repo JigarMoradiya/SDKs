@@ -17,8 +17,8 @@ android {
         applicationId 'com.jigar.me'
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 70
-        versionName "7.0.0"
+        versionCode 72
+        versionName "7.0.2"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -41,7 +41,6 @@ android {
         productFlavors {
             dev {
                 applicationId "com.abacus.puzzle"
-                buildConfigField "String", "API_MODULE", base_module
                 buildConfigField "String", "ONE_SIGNAL", one_signal_id
                 resValue "string", "app_name", "Abacus Child Leaning App"
             }
