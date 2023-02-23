@@ -13,7 +13,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.google.gson.Gson
 import com.jigar.me.R
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.local.data.ExerciseLevel
@@ -21,10 +20,7 @@ import com.jigar.me.data.local.data.ExerciseLevelDetail
 import com.jigar.me.data.local.data.ExerciseList
 import com.jigar.me.databinding.FragmentExerciseHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
-import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
-import com.jigar.me.ui.view.base.abacus.AbacusMasterSound
-import com.jigar.me.ui.view.base.abacus.AbacusMasterView
-import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
+import com.jigar.me.ui.view.base.abacus.*
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.confirm_alerts.dialogs.ExerciseCompleteDialog
 import com.jigar.me.ui.view.dashboard.fragments.exercise.adapter.ExerciseAdditionSubtractionAdapter
@@ -33,6 +29,8 @@ import com.jigar.me.utils.*
 import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.ticker
+import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
@@ -44,7 +42,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     private var currentSumVal = 0f
     private var totalTimeLeft = 0L
     private var isPurchased = false
-    private var isKeyboardValueText = false
     private var theam = AppConstants.Settings.theam_Egg
     private var isResetRunning = false
     private lateinit var exerciseLevelPagerAdapter: ExerciseLevelPagerAdapter
@@ -53,7 +50,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     private var listKeyboardAnswer = arrayListOf<String>()
     private var listExerciseAdditionSubtraction : MutableList<ExerciseList> = arrayListOf()
     private var exercisePosition = 0
-    private var timer: CountDownTimer? = null
     private var currentChildData : ExerciseLevelDetail? = null
     private var currentParentData: ExerciseLevel? = null
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -81,6 +77,10 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         setAbacus()
     }
     private fun initListener() {
+        binding.ivReset.onClick {
+            binding.txtAllClear.performClick()
+            resetClick()
+        }
         binding.imgEarse.onClick {
             if (listKeyboardAnswer.isNotNullOrEmpty()){
                 listKeyboardAnswer.removeAt(listKeyboardAnswer.lastIndex)
@@ -105,25 +105,18 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         binding.txt8.onClick { addKeyboardValue("8") }
         binding.txt9.onClick { addKeyboardValue("9") }
 
-
-        binding.ivReset.onClick { resetClick() }
         binding.txtNext.onClick {
-                if (!binding.tvAnswer.text.toString().isNullOrEmpty() && binding.tvAnswer.text.toString() != "0"){
-                    listExerciseAdditionSubtraction[exercisePosition].userAnswer = binding.tvAnswer.text.toString().toInt()
-                }
-                if (listKeyboardAnswer.isNotNullOrEmpty()){
-                    binding.txtAllClear.performClick()
-                }else{
-                    binding.ivReset.performClick()
-                }
-
-                if (exercisePosition < listExerciseAdditionSubtraction.lastIndex){
-                    exercisePosition++
-                    setQuestions()
-                }else{
-                    openCompleteDialog()
-                }
-
+            if (!binding.tvAnswer.text.toString().isNullOrEmpty() && binding.tvAnswer.text.toString() != "0"){
+                listExerciseAdditionSubtraction[exercisePosition].userAnswer = binding.tvAnswer.text.toString().toInt()
+            }
+            binding.ivReset.performClick()
+            if (exercisePosition < listExerciseAdditionSubtraction.lastIndex){
+                exercisePosition++
+                setQuestions()
+            }else{
+                tickerChannel.cancel()
+                openCompleteDialog()
+            }
         }
     }
 
@@ -141,15 +134,75 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
 
     private fun setKeyboardAnswer() {
         AbacusMasterSound.playTap(requireContext())
-        isKeyboardValueText = true
-        if (listKeyboardAnswer.isNotEmpty()){
-            binding.tvAnswer.text = listKeyboardAnswer.joinToString("")
-        }else{
-            binding.tvAnswer.text = "0"
-        }
+        setNumber()
+    }
 
-        if (!binding.tvCurrentVal.text.equals("0")){
-            binding.ivReset.performClick()
+    private fun setNumber() {
+        val questionTemp = if (listKeyboardAnswer.isNotEmpty()){
+            listKeyboardAnswer.joinToString("")
+        }else{
+            "0"
+        }
+        val topPositions = ArrayList<Int>()
+        val bottomPositions = ArrayList<Int>()
+        val totalLength = 7
+        val remainLength = totalLength - questionTemp.length
+        var zero = ""
+        for (i in 1..remainLength){
+            zero += "0"
+        }
+        val question = zero+questionTemp
+        for (i in 0 until if (totalLength == 1) 2 else totalLength) {
+            if (i < question.length) {
+                val charAt = question[i] - '1' //convert char to int. minus 1 from question as in abacuse 0 item have 1 value.
+                if (charAt >= 0) {
+                    if (charAt >= 4) {
+                        topPositions.add(i, 0)
+                        bottomPositions.add(i, charAt - 5)
+                    } else {
+                        topPositions.add(i, -1)
+                        bottomPositions.add(i, charAt)
+                    }
+                } else {
+                    topPositions.add(i, -1)
+                    bottomPositions.add(i, -1)
+                }
+            } else {
+                topPositions.add(i, -1)
+                bottomPositions.add(i, -1)
+            }
+        }
+        val subTop: MutableList<Int> = ArrayList()
+        subTop.addAll(topPositions.subList(0, question.length))
+        val subBottom: MutableList<Int> = ArrayList()
+        subBottom.addAll(bottomPositions.subList(0, question.length))
+        for (i in question.indices) {
+            topPositions.removeAt(0)
+            bottomPositions.removeAt(0)
+        }
+        topPositions.addAll(subTop)
+        bottomPositions.addAll(subBottom)
+
+        setSelectedPositions(topPositions, bottomPositions,null)
+    }
+
+    private fun setSelectedPositions(
+        topSelectedPositions: ArrayList<Int>,
+        bottomSelectedPositions: ArrayList<Int>,
+        setPositionCompleteListener: AbacusMasterCompleteListener?
+    ) {
+        if (isAdded) {
+            //app was crashing if position set before update no of row count. so added this delay.
+            binding.abacusBottom.post {
+                binding.abacusTop.setSelectedPositions(
+                    topSelectedPositions,
+                    setPositionCompleteListener
+                )
+                binding.abacusBottom.setSelectedPositions(
+                    bottomSelectedPositions,
+                    setPositionCompleteListener
+                )
+            }
         }
     }
 
@@ -176,7 +229,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         binding.linearTime.show()
         binding.linearLevel.hide()
         binding.imgBack.hide()
-        resetClick()
         when (parentData.id) {
             "1" -> {
                 binding.recyclerviewExercise.show()
@@ -198,43 +250,47 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 setQuestions()
             }
         }
-        totalTimeLeft = TimeUnit.MINUTES.toMillis(childData.totalTime.toLong())
+        totalTimeLeft = TimeUnit.MINUTES.toSeconds(childData.totalTime.toLong())
 //                totalTimeLeft = TimeUnit.MINUTES.toMillis(1L)
         startTimer()
     }
-
+    private var tickerChannel = ticker(delayMillis = 1000, initialDelayMillis = 0)
     private fun startTimer() {
-        timer = object: CountDownTimer(totalTimeLeft, 1000) {
-            override fun onTick(millisUntilFinished: Long) {
-                totalTimeLeft = millisUntilFinished
-                val time = DateTimeUtils.displayDurationHourMinSec(TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished))
-                binding.txtTimer.text = time
+        tickerChannel = ticker(delayMillis = 1000, initialDelayMillis = 0)
+        launch {
+            for (event in tickerChannel) {
+                CoroutineScope(Dispatchers.Main).launch {
+                    val time = DateTimeUtils.displayDurationHourMinSec(totalTimeLeft)
+                    binding.txtTimer.text = time
+                }
+                totalTimeLeft--
+                if (totalTimeLeft == 0L){
+                    CoroutineScope(Dispatchers.Main).launch {
+                        openCompleteDialog()
+                    }
+                    break
+                }
             }
-
-            override fun onFinish() {
-                openCompleteDialog()
-            }
+            tickerChannel.cancel()
         }
-        timer?.start()
     }
 
     private fun openCompleteDialog() {
         PlaySound.play(requireContext(), PlaySound.number_puzzle_win)
         binding.txtNext.isEnabled = false
         binding.txtTimer.text = "00:00"
-        timer?.cancel()
         newInterstitialAdCompleteExercise()
     }
 
     override fun onPause() {
         super.onPause()
-        timer?.cancel()
+        tickerChannel.cancel()
     }
 
     override fun onResume() {
         super.onResume()
         if (binding.linearExerciseAddSub.isVisible){
-            timer?.start()
+            startTimer()
         }
     }
 
@@ -264,6 +320,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
 
     private fun resetClick() {
         if (!isResetRunning) {
+            AbacusMasterSound.playResetSound(requireContext())
             isResetRunning = true
             binding.ivReset.y = 0f
             binding.ivReset.animate().setDuration(200)
@@ -273,7 +330,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                             isResetRunning = false
                         }.start()
                 }.start()
-            onAbacusValueDotReset()
+//            onAbacusValueDotReset()
         }
     }
 
@@ -329,11 +386,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 val intSumVal = bottomVal + accumulator
                 val strCurVal = intSumVal.toString()
                 currentSumVal = java.lang.Float.valueOf(strCurVal)
-                binding.tvCurrentVal.text = strCurVal
-                if (!isKeyboardValueText){
-                    listKeyboardAnswer.clear()
-                    binding.tvAnswer.text = strCurVal
-                }
                 onAbacusValueChange(abacusView, currentSumVal)
             }
             R.id.abacusBottom -> if (binding.abacusTop.engine != null) {
@@ -348,11 +400,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 val intSumVal = topVal + accumulator
                 val strCurVal = intSumVal.toString()
                 currentSumVal = java.lang.Float.valueOf(strCurVal)
-                binding.tvCurrentVal.text = strCurVal
-                if (!isKeyboardValueText){
-                    binding.tvAnswer.text = strCurVal
-                    listKeyboardAnswer.clear()
-                }
                 onAbacusValueChange(abacusView, currentSumVal)
             }
         }
@@ -360,8 +407,16 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
 
     override fun onAbacusValueChange(abacusView: View, sum: Float) {
         lifecycleScope.launch {
-            delay(1000)
-            isKeyboardValueText = false
+
+            if (binding.linearExerciseAddSub.isVisible){
+                val value = sum.toInt().toString()
+                listKeyboardAnswer.clear()
+                for (i in value.indices){
+                    listKeyboardAnswer.add(value[i].toString())
+                }
+                binding.tvAnswer.text = sum.toInt().toString()
+                binding.tvCurrentVal.text = sum.toInt().toString()
+            }
         }
 //        with(prefManager){
 //
@@ -398,6 +453,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                         binding.linearTime.hide()
                         binding.linearLevel.show()
                         binding.imgBack.show()
+                        tickerChannel.cancel()
                     }
                     override fun onConfirmationNoClick(bundle: Bundle?) = Unit
                 })

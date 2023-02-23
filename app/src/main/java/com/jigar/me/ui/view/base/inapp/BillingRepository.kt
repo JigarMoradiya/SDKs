@@ -5,15 +5,13 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import com.android.billingclient.api.*
-import com.google.firebase.crashlytics.internal.model.ImmutableList
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.jigar.me.MyApplication
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDB
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.data.pref.AppPreferencesHelper
-import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productList
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productListSubscription
 import com.jigar.me.utils.AppConstants
@@ -138,25 +136,45 @@ class BillingRepository @Inject constructor(
      * launch the Google Play Billing flow. The response to this call is returned in
      * [onPurchasesUpdated]
      */
-
     fun launchBillingFlow(activity: Activity, skuDetails: InAppSkuDetails) {
-        val productDetails : ProductDetails = Gson().fromJson(skuDetails.originalJson, ProductDetails::class.java)
-        val productDetailsParamsList = listOf(
-            BillingFlowParams.ProductDetailsParams.newBuilder()
-                // retrieve a value for "productDetails" by calling queryProductDetailsAsync()
-                .setProductDetails(productDetails)
-                // to get an offer token, call ProductDetails.subscriptionOfferDetails()
-                // for a list of offers that are available to the user
-                .setOfferToken(skuDetails.offerToken?:"")
-                .build()
-        )
+        val list : ArrayList<QueryProductDetailsParams.Product> = if (skuDetails.type == BillingClient.ProductType.INAPP){
+            arrayListOf(QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(skuDetails.sku)
+                    .setProductType(BillingClient.ProductType.INAPP)
+                    .build())
+        }else{
+            arrayListOf(QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(skuDetails.sku)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build())
+        }
+        val params = QueryProductDetailsParams.newBuilder().setProductList(list)
+        playStoreBillingClient?.queryProductDetailsAsync(params.build()) { billingResult, productDetailsList ->
+            // Process the result
+            if (productDetailsList.isNotEmpty()) {
+                productDetailsList.filter { it.productId == skuDetails.sku }.also {
+                    if (it.isNotNullOrEmpty()){
+                        val productDetailsParamsList = listOf(
+                            BillingFlowParams.ProductDetailsParams.newBuilder()
+                                // retrieve a value for "productDetails" by calling queryProductDetailsAsync()
+                                .setProductDetails(it.first())
+                                // to get an offer token, call ProductDetails.subscriptionOfferDetails()
+                                // for a list of offers that are available to the user
+                                .setOfferToken(skuDetails.offerToken?:"")
+                                .build()
+                        )
 
-        val billingFlowParams = BillingFlowParams.newBuilder()
-            .setProductDetailsParamsList(productDetailsParamsList)
-            .build()
+                        val billingFlowParams = BillingFlowParams.newBuilder()
+                            .setProductDetailsParamsList(productDetailsParamsList)
+                            .build()
 
-        // Launch the billing flow
-        playStoreBillingClient?.launchBillingFlow(activity, billingFlowParams)
+                        // Launch the billing flow
+                        playStoreBillingClient?.launchBillingFlow(activity, billingFlowParams)
+                    }
+                }
+            }
+        }
+
     }
     private fun queryPurchasesAsync() {
         Log.d(LOG_TAG, "queryPurchasesAsync called")

@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.jigar.me.R
 import com.jigar.me.databinding.FragmentFullAbacusBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
+import com.jigar.me.ui.view.base.abacus.AbacusMasterCompleteListener
 import com.jigar.me.ui.view.base.abacus.AbacusMasterView
 import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
@@ -144,13 +146,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private fun goToPurchase() {
         mNavController.navigate(R.id.action_fullAbacusFragment_to_purchaseFragment)
     }
-    private fun ads() {
-        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
-            prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&
-            !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
-            showAMFullScreenAds(getString(R.string.interstitial_ad_unit_id_abacus_full_screen))
-        }
-    }
+
     private fun setAbacus() {
         with(prefManager){
             isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
@@ -158,7 +154,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             if (isPurchased){
                 setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
             }else{
-                ads()
                 setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
             }
             theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
@@ -300,9 +295,97 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                     speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
                 }
                 binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
+                ads()
             }
         }
+    }
 
+//    private fun setNumber() {
+//        val topPositions = ArrayList<Int>()
+//        val bottomPositions = ArrayList<Int>()
+//        val questionTemp = values.toString()
+//        val remainLength = 9 - questionTemp.length
+//        var zero = ""
+//        for (i in 1..remainLength){
+//            zero += "0"
+//        }
+//        val question = zero+questionTemp
+//        Log.e("jigarLogs","question = "+question)
+//        val totalLength = 9
+//        for (i in 0 until if (totalLength == 1) 2 else totalLength) {
+//            if (i < question.length) {
+//                val charAt = question[i] - '1' //convert char to int. minus 1 from question as in abacuse 0 item have 1 value.
+//                if (charAt >= 0) {
+//                    if (charAt >= 4) {
+//                        topPositions.add(i, 0)
+//                        bottomPositions.add(i, charAt - 5)
+//                    } else {
+//                        topPositions.add(i, -1)
+//                        bottomPositions.add(i, charAt)
+//                    }
+//                } else {
+//                    topPositions.add(i, -1)
+//                    bottomPositions.add(i, -1)
+//                }
+//            } else {
+//                topPositions.add(i, -1)
+//                bottomPositions.add(i, -1)
+//            }
+//        }
+//        Log.e("jigarLogs","topPositions = "+topPositions)
+//        Log.e("jigarLogs","bottomPositions = "+bottomPositions)
+//        val subTop: MutableList<Int> = ArrayList()
+//        subTop.addAll(topPositions.subList(0, question.length))
+//        val subBottom: MutableList<Int> = ArrayList()
+//        subBottom.addAll(bottomPositions.subList(0, question.length))
+//        for (i in question.indices) {
+//            topPositions.removeAt(0)
+//            bottomPositions.removeAt(0)
+//        }
+//        topPositions.addAll(subTop)
+//        bottomPositions.addAll(subBottom)
+//
+//        setSelectedPositions(
+//            topPositions,
+//            bottomPositions,
+//            object : AbacusMasterCompleteListener() {
+//                @Synchronized
+//                override fun onSetPositionComplete() {
+//                    noOfTimeCompleted++
+//                    if (noOfTimeCompleted == 2) {
+//                        /*both abacus reset*/
+//                        resetAbacus()
+//                    }
+//                }
+//            })
+//    }
+//
+//    private fun setSelectedPositions(
+//        topSelectedPositions: ArrayList<Int>,
+//        bottomSelectedPositions: ArrayList<Int>,
+//        setPositionCompleteListener: AbacusMasterCompleteListener?
+//    ) {
+//        if (isAdded) {
+//            //app was crashing if position set before update no of row count. so added this delay.
+//            binding.abacusBottom.post {
+//                binding.abacusTop.setSelectedPositions(
+//                    topSelectedPositions,
+//                    setPositionCompleteListener
+//                )
+//                binding.abacusBottom.setSelectedPositions(
+//                    bottomSelectedPositions,
+//                    setPositionCompleteListener
+//                )
+//            }
+//        }
+//    }
+
+    private fun ads() {
+        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
+            prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&
+            !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
+            showAMFullScreenAds(getString(R.string.interstitial_ad_unit_id_abacus_full_screen))
+        }
     }
 
     override fun onAbacusValueSubmit(sum: Float) {

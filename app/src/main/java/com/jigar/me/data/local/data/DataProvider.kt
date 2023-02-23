@@ -997,8 +997,17 @@ object DataProvider {
                             }else{
                                 nextInt(min, answer + 1)
                             }
-                            question = "$question-$nextValues"
-                            answer -= nextValues
+
+                            val temp = answer - nextValues
+                            if (i == (child.queLines -1) && temp == 0){
+                                val nextValuesTemp = nextValues - 1
+                                question = "$question-$nextValuesTemp"
+                                answer -= nextValuesTemp
+                            }else{
+                                question = "$question-$nextValues"
+                                answer -= nextValues
+                            }
+
                         }
                     }
 

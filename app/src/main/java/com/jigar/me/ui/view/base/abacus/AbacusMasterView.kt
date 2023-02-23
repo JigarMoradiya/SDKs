@@ -533,22 +533,22 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
         }
     }
 
-    fun resetAndSetNextRow() {
-        if (defaultState != null) {
-            if (isSoundEnabled) {
-                playResetSound(context)
-            }
-            thread?.setSleep(false)
-            engine?.setState(defaultState!!, true, object :
-                AbacusMasterEngine.OnStateResetCompletedListener {
-                override fun onStateResetCompleted() {
-                    thread?.setSleep(true)
-                    showReadout()
-                }
-            })
-            beadState = defaultState
-        }
-    }
+//    fun resetAndSetNextRow() {
+//        if (defaultState != null) {
+//            if (isSoundEnabled) {
+//                playResetSound(context)
+//            }
+//            thread?.setSleep(false)
+//            engine?.setState(defaultState!!, true, object :
+//                AbacusMasterEngine.OnStateResetCompletedListener {
+//                override fun onStateResetCompleted() {
+//                    thread?.setSleep(true)
+//                    showReadout()
+//                }
+//            })
+//            beadState = defaultState
+//        }
+//    }
 
     fun quickReset() {
         if (defaultState != null) {

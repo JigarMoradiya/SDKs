@@ -150,8 +150,18 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             binding.txtTitle.setPadding(0,16.dp,0,0)
         }
         startAbacus()
+        lifecycleScope.launch {
+            delay(400)
+            bannerAds()
+        }
     }
-
+    private fun bannerAds() {
+        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y"
+            && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y"
+            && !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
+            showAMBannerAds(binding.adView,getString(R.string.banner_ad_unit_id_abacus))
+        }
+    }
     private fun initListener() {
         binding.cardBack.onClick { goBack() }
         binding.cardResetProgress.onClick { resetProgressClick() }
@@ -190,14 +200,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         goBack()
     }
 
-    private fun ads() {
-        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y"
-            && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y"
-            && !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
-            showAMBannerAds(binding.adView,getString(R.string.banner_ad_unit_id_abacus))
-            showAMFullScreenAds(getString(R.string.interstitial_ad_unit_id_abacus_half_screen))
-        }
-    }
     private fun initObserver() {
         apiViewModel.getAbacusOfPagesResponse.observe(this) {
             when (it) {
@@ -403,8 +405,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 // totalLength == 1 ? 2 : totalLength: if question and ans length 1 then add 1 more size for 2 column display.
                 for (i in 0 until if (totalLength == 1) 2 else totalLength) {
                     if (i < question.length) {
-                        val charAt =
-                            question[i] - '1' //convert char to int. minus 1 from question as in abacuse 0 item have 1 value.
+                        val charAt = question[i] - '1' //convert char to int. minus 1 from question as in abacuse 0 item have 1 value.
                         if (charAt >= 0) {
                             if (charAt >= 4) {
                                 topPositions.add(i, 0)
@@ -1161,6 +1162,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     private fun makeAutoRefresh() {
+        ads()
         if (isStepByStep && isAutoRefresh){
             abacusFragment?.resetButtonEnable(false)
             lifecycleScope.launch {
@@ -1171,6 +1173,14 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }else{
             abacusFragment?.resetButtonEnable(true)
             abacusFragment?.showResetToContinue(true)
+        }
+    }
+
+    private fun ads() {
+        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y"
+            && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y"
+            && !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
+            showAMFullScreenAds(getString(R.string.interstitial_ad_unit_id_abacus_half_screen))
         }
     }
 

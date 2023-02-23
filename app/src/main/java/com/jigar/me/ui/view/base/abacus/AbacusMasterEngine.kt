@@ -194,7 +194,7 @@ class AbacusMasterEngine(
                         val totaldiff = position - currentPosition
                         val currentDiff = totaldiff * valueAnimator.animatedFraction
                         val curAnimatedPos = currentPosition + currentDiff
-                        rows[i]!!.moveBeadToInternal(j, (curAnimatedPos * rowHeight).toInt())
+                        rows[i]?.moveBeadToInternal(j, (curAnimatedPos * rowHeight).toInt())
                     }
                 }
             }

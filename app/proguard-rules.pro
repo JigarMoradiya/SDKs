@@ -40,7 +40,6 @@
 -keepclasseswithmembers class * {
     @retrofit.http.* <methods>;
 }
-
 -keep class com.google.gson.** { *; }
 -keep class com.google.inject.** { *; }
 -keep class org.apache.http.** { *; }
@@ -66,9 +65,10 @@
 
 # ALSO REMEMBER KEEPING YOUR MODEL CLASSES
 -keepclassmembers class  com.jigar.me.data.model.* { *; }
--keepclassmembers class  com.jigar.me.data.model.stripe_models.* { *; }
--keepclassmembers class  com.jigar.me.data.model.chat.* {*;}
-
+-keepclassmembers class  com.jigar.me.data.model.pages.* { *; }
+-keepclassmembers class  com.jigar.me.data.model.dbtable.exam.* {*;}
+-keepclassmembers class  com.jigar.me.data.model.dbtable.inapp.* {*;}
+-keepclassmembers class  com.jigar.me.data.model.dbtable.suduko.* {*;}
 
 #json library
 -keepnames class com.fasterxml.jackson.databind.** { *; }
