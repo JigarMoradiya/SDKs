@@ -17,8 +17,8 @@ android {
         applicationId 'com.jigar.me'
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 73
-        versionName "7.0.3"
+        versionCode 75
+        versionName "7.0.5"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

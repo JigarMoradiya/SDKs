@@ -29,7 +29,7 @@ import kotlin.coroutines.CoroutineContext
 
 abstract class BaseFragment : Fragment(), CoroutineScope {
     lateinit var prefManager : AppPreferencesHelper
-    lateinit var mNavController: NavController
+//    lateinit var mNavController: NavController
 
     private lateinit var job: Job
     override val coroutineContext: CoroutineContext
@@ -47,13 +47,13 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setNavigationGraph()
+//        setNavigationGraph()
         txtToSpeechInit()
     }
 
-    private fun setNavigationGraph() {
-        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-    }
+//    private fun setNavigationGraph() {
+//        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+//    }
 
     fun showToast(id : Int){
         requireContext().toastS(getString(id))

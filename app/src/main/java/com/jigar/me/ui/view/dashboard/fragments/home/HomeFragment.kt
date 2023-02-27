@@ -12,6 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -45,6 +47,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     private lateinit var binding: FragmentHomeBinding
     private var root : View? = null
     private val appViewModel by viewModels<AppViewModel>()
+    private lateinit var mNavController: NavController
 
     private lateinit var bannerPagerAdapter: BannerPagerAdapter
     private lateinit var homeMenuAdapter: HomeMenuAdapter
@@ -61,10 +64,14 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         if (root == null){
             binding = FragmentHomeBinding.inflate(inflater, container, false)
             root = binding.root
+            setNavigationGraph()
             initViews()
             initListener()
         }
         return root!!
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
     private fun initViews() {
         homeMenuAdapter = HomeMenuAdapter(DataProvider.getHomeMenuList(),this)

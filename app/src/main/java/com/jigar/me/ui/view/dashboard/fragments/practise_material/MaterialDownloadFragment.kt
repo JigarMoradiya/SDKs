@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.R
@@ -33,7 +35,7 @@ class MaterialDownloadFragment : BaseFragment(), MaterialDownloadAdapter.OnItemC
     private lateinit var binding: FragmentMaterialDownloadBinding
     private val inAppViewModel by viewModels<InAppViewModel>()
     private val appViewModel by viewModels<AppViewModel>()
-
+    private lateinit var mNavController: NavController
     private var listDownloadMaterial: List<DownloadMaterialData> = ArrayList()
     private lateinit var materialDownloadAdapter: MaterialDownloadAdapter
     private lateinit var overlayView: ImageOverlayView
@@ -50,10 +52,14 @@ class MaterialDownloadFragment : BaseFragment(), MaterialDownloadAdapter.OnItemC
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentMaterialDownloadBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initView()
         initListener()
         ads()
         return binding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
     override fun onResume() {
         super.onResume()

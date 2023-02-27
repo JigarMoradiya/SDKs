@@ -23,7 +23,7 @@ import com.jigar.me.utils.DataTypeConverter
 @Database(
     entities = [InAppSkuDetails::class,InAppPurchaseDetails::class, ExamHistory::class
         , Suduko::class, SudukoPlay::class, SudukoAnswerStatus::class, SudukoLevel::class],
-    version = 6,
+    version = 7,
     exportSchema = false
 )
 @TypeConverters(DataTypeConverter::class)

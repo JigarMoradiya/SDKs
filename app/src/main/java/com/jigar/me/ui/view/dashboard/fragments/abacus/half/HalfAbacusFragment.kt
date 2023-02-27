@@ -11,6 +11,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -68,7 +70,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private var abacus_type = 0 // 0 = sum-sub-single  1 = multiplication 2 = divide
     private var final_column = 0
     private var noOfDecimalPlace = 0
-
+    private lateinit var mNavController: NavController
     private var adapterAdditionSubtraction: AbacusAdditionSubtractionTypeAdapter =
         AbacusAdditionSubtractionTypeAdapter(
             arrayListOf(), this, true
@@ -124,10 +126,14 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentHalfAbacusBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initViews()
         initListener()
         ads()
         return binding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
     private fun initViews() {

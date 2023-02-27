@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.R
@@ -31,6 +33,7 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
     MultiplicationPageListAdapter.OnItemClickListener, DivisionPageListAdapter.OnItemClickListener,
     AdditionSubtractionPageListAdapter.OnItemClickListener {
     private lateinit var binding: FragmentPageBinding
+    private lateinit var mNavController: NavController
     private var root : View? = null
     private val apiViewModel by viewModels<AppViewModel>()
 
@@ -61,12 +64,15 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
         if (root == null){
             binding = FragmentPageBinding.inflate(inflater, container, false)
             root = binding.root
+            setNavigationGraph()
             initViews()
             initListener()
         }
         return root!!
     }
-
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
     private fun initViews() {
         from = PageFragmentArgs.fromBundle(requireArguments()).from
         title = PageFragmentArgs.fromBundle(requireArguments()).title

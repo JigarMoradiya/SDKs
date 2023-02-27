@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.jigar.me.R
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.databinding.FragmentMaterialHomeBinding
@@ -28,17 +30,21 @@ class MaterialHomeFragment : BaseFragment() {
     private var root : View? = null
     private val appViewModel by viewModels<AppViewModel>()
     private val inAppViewModel by viewModels<InAppViewModel>()
+    private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         if (root == null){
             binding = FragmentMaterialHomeBinding.inflate(inflater, container, false)
             root = binding.root
+            setNavigationGraph()
             initView()
             initListener()
             ads()
         }
         return root!!
     }
-
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
     private fun initView() {
         inAppViewModel.inAppInit()
     }

@@ -33,11 +33,16 @@ interface InAppSKUDao {
             }else{
                 if (!it.subscriptionOfferDetails.isNullOrEmpty()){
                     val offerDetail = it.subscriptionOfferDetails?.first()
-                    if (!offerDetail?.pricingPhases?.pricingPhaseList.isNullOrEmpty()){
-                        val data = offerDetail?.pricingPhases?.pricingPhaseList?.first()
+                    val pricingPhaseList = offerDetail?.pricingPhases?.pricingPhaseList
+                    if (!pricingPhaseList.isNullOrEmpty()){
+                        val data = pricingPhaseList.first()
+                        val originalPrice = if (pricingPhaseList.size > 1){
+                            val data2 = pricingPhaseList[1]
+                            data2?.formattedPrice
+                        }else{""}
                         val detail = InAppSkuDetails(it.productId, it.productType, data?.formattedPrice,
                             data?.priceAmountMicros, data?.priceCurrencyCode,
-                            it.title, it.description, originalJson, offerToken = offerDetail?.offerToken, billingPeriod = data?.billingPeriod)
+                            it.title, it.description, originalJson, offerToken = offerDetail.offerToken, billingPeriod = data?.billingPeriod, originalPrice = originalPrice)
                         insert(detail)
                     }
                 }

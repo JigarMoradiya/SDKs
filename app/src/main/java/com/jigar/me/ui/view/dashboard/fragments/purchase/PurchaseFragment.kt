@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.jigar.me.MyApplication
 import com.jigar.me.R
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
@@ -25,12 +27,16 @@ class PurchaseFragment : BaseFragment(), PurchaseAdapter.OnItemClickListener {
     private val inAppViewModel by viewModels<InAppViewModel>()
     private var listSKU: List<InAppSkuDetails> = arrayListOf()
     private lateinit var skuListAdapter: PurchaseAdapter
-
+    private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentPurchaseBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initViews()
         initListener()
         return binding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
     private fun initViews() {

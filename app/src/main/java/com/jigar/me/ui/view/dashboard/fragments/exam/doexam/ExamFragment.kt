@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -34,8 +36,7 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 @AndroidEntryPoint
-class ExamFragment : BaseFragment(),
-    ExamCompleteDialog.TestCompleteDialogInterface{
+class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterface{
 
     private lateinit var mBinding: FragmentExamBinding
     private val apiViewModel by viewModels<AppViewModel>()
@@ -51,6 +52,7 @@ class ExamFragment : BaseFragment(),
     private var total_sec = 0
     private var handler: Handler? = null
     private var runnable: Runnable? = null
+    private lateinit var mNavController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         examLevel = ExamFragmentArgs.fromBundle(requireArguments()).examLevel
@@ -60,10 +62,14 @@ class ExamFragment : BaseFragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentExamBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         init()
         clickListener()
         ads()
         return mBinding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
     private fun init() {
@@ -278,7 +284,7 @@ class ExamFragment : BaseFragment(),
                     totalWrong++
                 }
                 list_abacus[currentQuestionPos].userAnswer = mBinding.txtAnswer1.text.toString()
-                if (currentQuestionPos == (list_abacus.size -1)){
+                if (currentQuestionPos == list_abacus.lastIndex){
                     completePopup()
                 }else if (currentQuestionPos < list_abacus.size){
                     currentQuestionPos++

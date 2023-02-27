@@ -33,5 +33,11 @@ object Migrations {
             database.execSQL("ALTER TABLE tableInAppSKU ADD COLUMN billingPeriod TEXT;")
         }
     }
+    val MIGRATION_6_7 = object : Migration(6, 7) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL("ALTER TABLE tableInAppSKU ADD COLUMN originalPrice TEXT;")
+            database.execSQL("ALTER TABLE tableInAppSKU ADD COLUMN discountPer TEXT;")
+        }
+    }
 
 }

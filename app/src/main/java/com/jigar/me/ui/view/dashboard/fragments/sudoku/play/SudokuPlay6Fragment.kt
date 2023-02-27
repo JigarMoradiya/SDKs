@@ -11,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.gson.Gson
 import com.jigar.me.MyApplication
 import com.jigar.me.R
@@ -63,6 +65,7 @@ class SudokuPlay6Fragment : BaseFragment(), SudokuCompleteDialog.SudokuCompleteD
     private val delay = 1000
     private var runnable: Runnable? = null
     private var timer = 0
+    private lateinit var mNavController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         roomId = SudokuPlay6FragmentArgs.fromBundle(requireArguments()).roomId
@@ -70,12 +73,15 @@ class SudokuPlay6Fragment : BaseFragment(), SudokuCompleteDialog.SudokuCompleteD
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSudokuPlay6by6Binding.inflate(inflater, container, false)
+        setNavigationGraph()
         initView()
         initListener()
         adsBanner()
         return binding.root
     }
-
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
     private fun initView() {
         mp_select = MediaPlayer.create(requireContext(), R.raw.sudoku_select)
         mp_delete = MediaPlayer.create(requireContext(), R.raw.sudoku_number_delete)

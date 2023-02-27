@@ -18,14 +18,17 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingsFragment : BaseFragment() {
     private lateinit var binding: FragmentSettingsBinding
     private var isPurchased = false
-
+    private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initViews()
         initListener()
         return binding.root
     }
-
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
     private fun initViews() {
         with(prefManager){
             isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All, "") == "Y"
@@ -74,7 +77,7 @@ class SettingsFragment : BaseFragment() {
         binding.swHideTable.onClick { onOnOffClick(AppConstants.Settings.Setting_hide_table,binding.isHideTable) }
 
         binding.relLeftHand.onClick { onOnOffClick(AppConstants.Settings.Setting_left_hand,binding.isLeftHand) }
-        binding.swLeftHand.onClick { onOnOffClick(AppConstants.Settings.Setting_hide_table,binding.isHideTable) }
+        binding.swLeftHand.onClick { onOnOffClick(AppConstants.Settings.Setting_hide_table,binding.isLeftHand) }
 
         binding.relAnswerStep.onClick { onAbacusAnswerClick(AppConstants.Settings.Setting_answer_Step) }
         binding.relAnswerFinal.onClick { onAbacusAnswerClick(AppConstants.Settings.Setting_answer_Final) }

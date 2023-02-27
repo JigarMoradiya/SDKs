@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.jigar.me.R
 import com.jigar.me.databinding.FragmentFullAbacusBinding
 import com.jigar.me.ui.view.base.BaseFragment
@@ -46,12 +48,17 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private var isPurchased = false
     private var resetX = 0f
     private var theam = AppConstants.Settings.theam_Egg
-
+    private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentFullAbacusBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initViews()
         initListener()
         return binding.root
+    }
+
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
     private fun initViews() {

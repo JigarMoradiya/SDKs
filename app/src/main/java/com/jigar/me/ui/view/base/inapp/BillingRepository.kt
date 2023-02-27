@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import com.android.billingclient.api.*
 import com.google.gson.Gson
+import com.jigar.me.BuildConfig
 import com.jigar.me.MyApplication
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDB
@@ -376,28 +377,46 @@ class BillingRepository @Inject constructor(
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build())
 
-        val productListSubscription: ArrayList<QueryProductDetailsParams.Product> = arrayListOf(
-//            QueryProductDetailsParams.Product.newBuilder()
-//                .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
-//                .setProductType(BillingClient.ProductType.SUBS)
-//                .build(),
-//            QueryProductDetailsParams.Product.newBuilder()
-//                .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
-//                .setProductType(BillingClient.ProductType.SUBS)
-//                .build(),
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_Subscription_Weekly)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build(),
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_Subscription_Month1)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build(),
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_Subscription_Month3)
-                .setProductType(BillingClient.ProductType.SUBS)
-                .build()
+
+        val productListSubscription: ArrayList<QueryProductDetailsParams.Product> = if (BuildConfig.DEBUG){
+            arrayListOf(
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Weekly)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Month1)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Month3)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build()
             )
+        }else{
+            arrayListOf(
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Weekly)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Month1)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Month3)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build()
+            )
+        }
 
     }
 

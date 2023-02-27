@@ -18,7 +18,9 @@ data class InAppSkuDetails(
     val orderId: String = "", /* Not in SkuDetails; it's the augmentation */
     val purchaseTime: Long = 0L, /* Not in SkuDetails; it's the augmentation */
     val offerToken: String? = null,
-    val billingPeriod: String? = null
+    val billingPeriod: String? = null,
+    val originalPrice: String? = null,
+    val discountPer: String? = null
 ){
     fun isSubscriptionPlan() = type == BillingClient.ProductType.SUBS
     fun getDesc() = if (isSubscriptionPlan()){

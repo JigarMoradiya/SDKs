@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -31,11 +33,15 @@ import dagger.hilt.android.AndroidEntryPoint
 class SudokuHomeFragment : BaseFragment(), SudokuSelectLevelDialog.SudokuSelectLevelDialogInterface {
 
     private lateinit var binding: FragmentSudokuHomeBinding
-
+    private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSudokuHomeBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initListener()
         return binding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
     override fun onPause() {

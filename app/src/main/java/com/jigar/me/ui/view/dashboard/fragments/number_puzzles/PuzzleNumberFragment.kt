@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -25,6 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PuzzleNumberFragment : BaseFragment(), NumberSequenceCompleteBottomSheet.NumberSequenceCompleteDialogInterface {
     private lateinit var mBinding: FragmentPuzzleNumberBinding
+    private lateinit var mNavController: NavController
     private var check = false
     private var gridType = 3
     private var numbSteps = 0
@@ -48,10 +51,14 @@ class PuzzleNumberFragment : BaseFragment(), NumberSequenceCompleteBottomSheet.N
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentPuzzleNumberBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initViews()
         initListener()
         ads()
         return mBinding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
     private fun stepAds() {

@@ -118,7 +118,6 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/font_extra_bold"
                     android:gravity="center"
-                    android:text="@{sku.price}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSizeLarge"
                     tools:text="₹800.00" />

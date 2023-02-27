@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jigar.me.R
@@ -21,16 +23,19 @@ class SudokuHistoryFragment : BaseFragment(){
     private lateinit var tabsAdapter: SudokuHistoryTabLayoutAdapter
 
     private lateinit var binding: FragmentSudokuHistoryBinding
-
+    internal lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSudokuHistoryBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initView()
         initListener()
         ads()
         return binding.root
     }
 
-
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
     private fun ads() {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
             prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&

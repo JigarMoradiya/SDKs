@@ -73,11 +73,16 @@ fun purchaseTime(view: MaterialTextView,productType : String, purchaseTime: Long
 
             val dateDiff = System.currentTimeMillis() - calendar.timeInMillis
             val day: Long = TimeUnit.MILLISECONDS.toDays(dateDiff)
+//            val dateDiff = System.currentTimeMillis() - (System.currentTimeMillis() - 24000)
+//            val day: Long = 0L
             if (billingPeriod.equals("p1w",true)){
                 var weeks = day/7
                 val week = day%7
                 if (week > 0){
                     weeks += 1
+                }
+                if (weeks == 0L){
+                    weeks = 1
                 }
                 calendarEnd.add(Calendar.WEEK_OF_MONTH,weeks.toInt())
             }else{
@@ -87,12 +92,18 @@ fun purchaseTime(view: MaterialTextView,productType : String, purchaseTime: Long
                     if (month > 0){
                         months += 1
                     }
+                    if (months == 0L){
+                        months = 1
+                    }
                     months
                 }else if (billingPeriod.equals("p3m",true)){
                     var months = day/90
                     val month = day%90
                     if (month > 0){
                         months += 3
+                    }
+                    if (months == 0L){
+                        months = 3
                     }
                     months
                 }else{ // if (billingPeriod.equals("p6m",true))
@@ -101,8 +112,12 @@ fun purchaseTime(view: MaterialTextView,productType : String, purchaseTime: Long
                     if (month > 0){
                         months += 6
                     }
+                    if (months == 0L){
+                        months = 6
+                    }
                     months
                 }
+
                 calendarEnd.add(Calendar.MONTH,months.toInt())
             }
             view.text = HtmlCompat.fromHtml("<b>Subscribed ON : </b>${formatter.format(calendar.time)}<br/><b>Expire ON : </b>${formatter.format(calendarEnd.time)}",HtmlCompat.FROM_HTML_MODE_COMPACT)

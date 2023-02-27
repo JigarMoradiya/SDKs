@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.jigar.me.R
 import com.jigar.me.databinding.FragmentExamHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
@@ -18,16 +20,15 @@ import java.util.*
 class ExamHomeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentExamHomeBinding
-
+    private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentExamHomeBinding.inflate(inflater, container, false)
-        init()
+        setNavigationGraph()
         clickListener()
         return binding.root
     }
-
-    private fun init() {
-
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
 
     private fun clickListener() {

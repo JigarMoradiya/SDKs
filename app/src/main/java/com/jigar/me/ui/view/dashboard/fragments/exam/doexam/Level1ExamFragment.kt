@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
@@ -42,11 +44,11 @@ import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
 @AndroidEntryPoint
-class Level1ExamFragment : BaseFragment(),
-    ExamCompleteDialog.TestCompleteDialogInterface{
+class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterface{
 
     private lateinit var mBinding: FragmentExamLevel1Binding
     private val apiViewModel by viewModels<AppViewModel>()
+    private lateinit var mNavController: NavController
 
     private var listExam: List<BeginnerExamPaper> = ArrayList()
     private var currentQuestionPos = 0
@@ -62,12 +64,15 @@ class Level1ExamFragment : BaseFragment(),
     private var objectListAdapter2: ObjectListAdapter = ObjectListAdapter(0, null,DataObjectsSize.Small)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentExamLevel1Binding.inflate(inflater, container, false)
+        setNavigationGraph()
         init()
         clickListener()
         ads()
         return mBinding.root
     }
-
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
     private fun init() {
         mCalculator = Calculator()
         handler = Handler(Looper.getMainLooper())

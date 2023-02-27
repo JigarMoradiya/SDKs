@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.interstitial.InterstitialAd
@@ -38,6 +40,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     ExerciseLevelPagerAdapter.OnItemClickListener,
     ExerciseCompleteDialog.ExerciseCompleteDialogInterface {
     private lateinit var binding: FragmentExerciseHomeBinding
+    private lateinit var mNavController: NavController
     private var valuesAnswer: Int = -1
     private var currentSumVal = 0f
     private var totalTimeLeft = 0L
@@ -54,10 +57,14 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     private var currentParentData: ExerciseLevel? = null
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentExerciseHomeBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         initViews()
         initListener()
         ads()
         return binding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
     private fun ads() {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" // local
@@ -78,8 +85,15 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     }
     private fun initListener() {
         binding.ivReset.onClick {
-            binding.txtAllClear.performClick()
-            resetClick()
+            if (binding.linearExerciseAddSub.isVisible){
+                binding.txtAllClear.performClick()
+                resetClick()
+            }else{
+                if (binding.tvCurrentVal.text.toString() != "0"){
+                    resetClick()
+                }
+            }
+
         }
         binding.imgEarse.onClick {
             if (listKeyboardAnswer.isNotNullOrEmpty()){
@@ -219,40 +233,45 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         binding.imgBack.show()
     }
     override fun onExerciseStartClick() {
-        val parentData = exerciseLevelPagerAdapter.listData[binding.viewPager.currentItem]
-        val childData = parentData.list[parentData.selectedChildPos]
-        currentChildData = childData
-        currentParentData = parentData
+        binding.ivReset.performClick()
+        lifecycleScope.launch {
+            delay(400)
+            val parentData = exerciseLevelPagerAdapter.listData[binding.viewPager.currentItem]
+            val childData = parentData.list[parentData.selectedChildPos]
+            currentChildData = childData
+            currentParentData = parentData
 
-        exercisePosition = 0
-        binding.linearExerciseAddSub.show()
-        binding.linearTime.show()
-        binding.linearLevel.hide()
-        binding.imgBack.hide()
-        when (parentData.id) {
-            "1" -> {
-                binding.recyclerviewExercise.show()
-                binding.txtMultiplication.hide()
-                listExerciseAdditionSubtraction = DataProvider.generateAdditionSubExercise(childData)
-                setQuestions()
-            }
-            "2" -> {
-                binding.recyclerviewExercise.hide()
-                binding.txtMultiplication.show()
-                listExerciseAdditionSubtraction = DataProvider.generateMultiplicationExercise(childData)
-                setQuestions()
-            }
-            "3" -> {
-                binding.recyclerviewExercise.hide()
-                binding.txtMultiplication.show()
-                listExerciseAdditionSubtraction = DataProvider.generateDivisionExercise(childData)
+            exercisePosition = 0
+            binding.linearExerciseAddSub.show()
+            binding.linearTime.show()
+            binding.linearLevel.hide()
+            binding.imgBack.hide()
+            when (parentData.id) {
+                "1" -> {
+                    binding.recyclerviewExercise.show()
+                    binding.txtMultiplication.hide()
+                    listExerciseAdditionSubtraction = DataProvider.generateAdditionSubExercise(childData)
+                    setQuestions()
+                }
+                "2" -> {
+                    binding.recyclerviewExercise.hide()
+                    binding.txtMultiplication.show()
+                    listExerciseAdditionSubtraction = DataProvider.generateMultiplicationExercise(childData)
+                    setQuestions()
+                }
+                "3" -> {
+                    binding.recyclerviewExercise.hide()
+                    binding.txtMultiplication.show()
+                    listExerciseAdditionSubtraction = DataProvider.generateDivisionExercise(childData)
 
-                setQuestions()
+                    setQuestions()
+                }
             }
-        }
-        totalTimeLeft = TimeUnit.MINUTES.toSeconds(childData.totalTime.toLong())
+            Log.e("jigarLogs","listExerciseAdditionSubtraction = "+listExerciseAdditionSubtraction)
+            totalTimeLeft = TimeUnit.MINUTES.toSeconds(childData.totalTime.toLong())
 //                totalTimeLeft = TimeUnit.MINUTES.toMillis(1L)
-        startTimer()
+            startTimer()
+        }
     }
     private var tickerChannel = ticker(delayMillis = 1000, initialDelayMillis = 0)
     private fun startTimer() {
@@ -330,7 +349,9 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                             isResetRunning = false
                         }.start()
                 }.start()
-//            onAbacusValueDotReset()
+            if (!binding.linearExerciseAddSub.isVisible){
+                onAbacusValueDotReset()
+            }
         }
     }
 
@@ -415,6 +436,8 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                     listKeyboardAnswer.add(value[i].toString())
                 }
                 binding.tvAnswer.text = sum.toInt().toString()
+                binding.tvCurrentVal.text = sum.toInt().toString()
+            }else{
                 binding.tvCurrentVal.text = sum.toInt().toString()
             }
         }

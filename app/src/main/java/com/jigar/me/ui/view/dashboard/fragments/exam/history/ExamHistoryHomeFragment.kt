@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jigar.me.R
@@ -20,13 +22,17 @@ class ExamHistoryHomeFragment : BaseFragment() {
 
     private lateinit var binding: FragmentExamHistoryBinding
     private lateinit var tabsAdapter: ExamHistoryTabLayoutAdapter
-
+    lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentExamHistoryBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         init()
         clickListener()
         ads()
         return binding.root
+    }
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
     private fun ads() {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" // local

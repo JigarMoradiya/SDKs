@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -26,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ExamResultFragment : BaseFragment() {
 
     private lateinit var binding: FragmentExamResultBinding
-
+    private lateinit var mNavController: NavController
     private var examResult = ""
     private var listAbacus: List<DailyExamData> = ArrayList<DailyExamData>()
     private var listAbacusLevel1: List<BeginnerExamPaper> = ArrayList<BeginnerExamPaper>()
@@ -43,11 +45,15 @@ class ExamResultFragment : BaseFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentExamResultBinding.inflate(inflater, container, false)
+        setNavigationGraph()
         init()
         clickListener()
         return binding.root
     }
 
+    private fun setNavigationGraph() {
+        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+    }
 
     private fun init() {
         if (examType == Constants.examLevelBeginner){
