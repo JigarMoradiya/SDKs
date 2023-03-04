@@ -30,6 +30,7 @@ object Constants {
     const val notificationTypeRate = "rate"
     const val notificationTypeShare = "share"
 
+    const val bottomSheetWidthBaseOnRatio10 = 10
     const val bottomSheetWidthBaseOnRatio6 = 6
     const val bottomSheetWidthBaseOnRatio5 = 5
     const val bottomSheetWidthBaseOnRatio4 = 4

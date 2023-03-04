@@ -62,6 +62,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
     private var runnable: Runnable? = null
     private var objectListAdapter1: ObjectListAdapter = ObjectListAdapter(0, null, DataObjectsSize.Small)
     private var objectListAdapter2: ObjectListAdapter = ObjectListAdapter(0, null,DataObjectsSize.Small)
+    private var clickType = ""
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         mBinding = FragmentExamLevel1Binding.inflate(inflater, container, false)
         setNavigationGraph()
@@ -80,25 +81,43 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
     }
 
     private fun getAndStartExam(){
-        if (requireContext().isNetworkAvailable) {
-            if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
-                listExam = DataProvider.generateBegginerExamPaper(requireContext(),examLevel )
-                prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,Gson().toJson(listExam))
-            } else {
-                val type = object : TypeToken<List<BeginnerExamPaper>>() {}.type
-                listExam = Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,""), type)
-            }
+        if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
+            listExam = DataProvider.generateBegginerExamPaper(requireContext(),examLevel )
+            prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,Gson().toJson(listExam))
+        } else {
+            val type = object : TypeToken<List<BeginnerExamPaper>>() {}.type
+            listExam = Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,""), type)
+        }
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
             setDailyExamAbacus()
         } else {
-            requireContext().toastS(getString(R.string.no_internet))
-            onBack()
+            notOfflineSupportDialog()
         }
+    }
+    private fun notOfflineSupportDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        setDailyExamAbacus()
+                    } else{
+                        mNavController.navigateUp()
+                    }
+                }
+            })
+    }
+    private fun goToPurchase() {
+        mNavController.navigate(R.id.action_level1ExamFragment_to_purchaseFragment)
     }
 
     private fun clickListener() {
         // blink animation
         mBinding.txtTapCorrectAns.setBlinkAnimation()
-        mBinding.cardBack.onClick { onViewClick("back") }
+        mBinding.cardBack.onClick { examLeaveAlert() }
         mBinding.cardAnswer1.onClick { onViewClick("answer1") }
         mBinding.cardAnswer2.onClick { onViewClick("answer2") }
         mBinding.cardAnswer3.onClick { onViewClick("answer3") }
@@ -293,10 +312,31 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
     }
 
     private fun onViewClick(clickType: String) {
+        this.clickType = clickType
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+            clickOtions()
+        }else{
+            notOfflineSupportDialog2()
+        }
+    }
+    private fun notOfflineSupportDialog2() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        clickOtions()
+                    } else{
+                        mNavController.navigateUp()
+                    }
+                }
+            })
+    }
+    private fun clickOtions() {
         when (clickType) {
-            "back" -> {
-                examLeaveAlert()
-            }
             "answer1" -> {
                 if (correctAns != mBinding.txtAnswer1.text.toString()) {
                     totalWrong++

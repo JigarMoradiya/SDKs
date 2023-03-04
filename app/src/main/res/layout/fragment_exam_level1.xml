@@ -40,7 +40,7 @@
             android:elevation="@dimen/activity_padding6"
             android:indeterminate="false"
             android:max="20"
-            android:progress="3"
+            android:progress="0"
             android:progressDrawable="@drawable/quiz_progress_styled"
             app:layout_constraintBottom_toTopOf="@+id/txtHeaderTitle"
             app:layout_constraintEnd_toEndOf="parent"

@@ -59,6 +59,7 @@ object AppConstants {
             var AdsShowNumberPuzzleStep = 20
 
             var Purchase_All = "Purchase_All"
+            var isOfflineSupport = "isOfflineSupport"
             var Purchase_Ads = "Purchase_Ads"
             var Purchase_Toddler_Single_digit_level1 = "Purchase_Toddler_Single_digit_level1"
             var Purchase_Add_Sub_level2 = "Purchase_Add_Sub_level2"
@@ -162,6 +163,10 @@ object AppConstants {
 
             const val Menu_Sudoku = 19
             const val Menu_Number_Puzzle = 20
+
+            const val OtherApp_Abacus = 101
+            const val OtherApp_Number = 102
+            const val OtherApp_Sudoku = 103
 
         }
     }

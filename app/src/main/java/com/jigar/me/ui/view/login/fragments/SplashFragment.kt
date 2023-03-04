@@ -18,7 +18,6 @@ import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottom
 import com.jigar.me.ui.view.dashboard.MainDashboardActivity
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.extensions.isNetworkAvailable
-import com.jigar.me.utils.extensions.openPlayStore
 import com.jigar.me.utils.extensions.toastL
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay

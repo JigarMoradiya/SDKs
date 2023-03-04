@@ -1,6 +1,5 @@
 package com.jigar.me.data.local.db.inapp.sku
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.android.billingclient.api.BillingClient

@@ -1,8 +1,6 @@
 package com.jigar.me.ui.view.dashboard.fragments.exercise
 
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +30,6 @@ import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ticker
-import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
@@ -120,17 +117,22 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         binding.txt9.onClick { addKeyboardValue("9") }
 
         binding.txtNext.onClick {
-            if (!binding.tvAnswer.text.toString().isNullOrEmpty() && binding.tvAnswer.text.toString() != "0"){
-                listExerciseAdditionSubtraction[exercisePosition].userAnswer = binding.tvAnswer.text.toString().toInt()
-            }
-            binding.ivReset.performClick()
-            if (exercisePosition < listExerciseAdditionSubtraction.lastIndex){
-                exercisePosition++
-                setQuestions()
+            if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+                if (!binding.tvAnswer.text.toString().isNullOrEmpty() && binding.tvAnswer.text.toString() != "0"){
+                    listExerciseAdditionSubtraction[exercisePosition].userAnswer = binding.tvAnswer.text.toString().toInt()
+                }
+                binding.ivReset.performClick()
+                if (exercisePosition < listExerciseAdditionSubtraction.lastIndex){
+                    exercisePosition++
+                    setQuestions()
+                }else{
+                    tickerChannel.cancel()
+                    openCompleteDialog()
+                }
             }else{
-                tickerChannel.cancel()
-                openCompleteDialog()
+                notOfflineSupportDialog()
             }
+
         }
     }
 
@@ -233,45 +235,49 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         binding.imgBack.show()
     }
     override fun onExerciseStartClick() {
-        binding.ivReset.performClick()
-        lifecycleScope.launch {
-            delay(400)
-            val parentData = exerciseLevelPagerAdapter.listData[binding.viewPager.currentItem]
-            val childData = parentData.list[parentData.selectedChildPos]
-            currentChildData = childData
-            currentParentData = parentData
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+            binding.ivReset.performClick()
+            lifecycleScope.launch {
+                delay(400)
+                val parentData = exerciseLevelPagerAdapter.listData[binding.viewPager.currentItem]
+                val childData = parentData.list[parentData.selectedChildPos]
+                currentChildData = childData
+                currentParentData = parentData
 
-            exercisePosition = 0
-            binding.linearExerciseAddSub.show()
-            binding.linearTime.show()
-            binding.linearLevel.hide()
-            binding.imgBack.hide()
-            when (parentData.id) {
-                "1" -> {
-                    binding.recyclerviewExercise.show()
-                    binding.txtMultiplication.hide()
-                    listExerciseAdditionSubtraction = DataProvider.generateAdditionSubExercise(childData)
-                    setQuestions()
-                }
-                "2" -> {
-                    binding.recyclerviewExercise.hide()
-                    binding.txtMultiplication.show()
-                    listExerciseAdditionSubtraction = DataProvider.generateMultiplicationExercise(childData)
-                    setQuestions()
-                }
-                "3" -> {
-                    binding.recyclerviewExercise.hide()
-                    binding.txtMultiplication.show()
-                    listExerciseAdditionSubtraction = DataProvider.generateDivisionExercise(childData)
+                exercisePosition = 0
+                binding.linearExerciseAddSub.show()
+                binding.linearTime.show()
+                binding.linearLevel.hide()
+                binding.imgBack.hide()
+                when (parentData.id) {
+                    "1" -> {
+                        binding.recyclerviewExercise.show()
+                        binding.txtMultiplication.hide()
+                        listExerciseAdditionSubtraction = DataProvider.generateAdditionSubExercise(childData)
+                        setQuestions()
+                    }
+                    "2" -> {
+                        binding.recyclerviewExercise.hide()
+                        binding.txtMultiplication.show()
+                        listExerciseAdditionSubtraction = DataProvider.generateMultiplicationExercise(childData)
+                        setQuestions()
+                    }
+                    "3" -> {
+                        binding.recyclerviewExercise.hide()
+                        binding.txtMultiplication.show()
+                        listExerciseAdditionSubtraction = DataProvider.generateDivisionExercise(childData)
 
-                    setQuestions()
+                        setQuestions()
+                    }
                 }
-            }
-            Log.e("jigarLogs","listExerciseAdditionSubtraction = "+listExerciseAdditionSubtraction)
-            totalTimeLeft = TimeUnit.MINUTES.toSeconds(childData.totalTime.toLong())
+                totalTimeLeft = TimeUnit.MINUTES.toSeconds(childData.totalTime.toLong())
 //                totalTimeLeft = TimeUnit.MINUTES.toMillis(1L)
-            startTimer()
+                startTimer()
+            }
+        }else{
+            notOfflineSupportDialog()
         }
+
     }
     private var tickerChannel = ticker(delayMillis = 1000, initialDelayMillis = 0)
     private fun startTimer() {
@@ -308,6 +314,10 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
 
     override fun onResume() {
         super.onResume()
+        continueExercise()
+    }
+
+    private fun continueExercise() {
         if (binding.linearExerciseAddSub.isVisible){
             startTimer()
         }
@@ -472,11 +482,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 ,getString(R.string.yes_i_m_sure),getString(R.string.no_please_continue), icon = R.drawable.ic_alert,
                 clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
                     override fun onConfirmationYesClick(bundle: Bundle?) {
-                        binding.linearExerciseAddSub.hide()
-                        binding.linearTime.hide()
-                        binding.linearLevel.show()
-                        binding.imgBack.show()
-                        tickerChannel.cancel()
+                        goToMainView()
                     }
                     override fun onConfirmationNoClick(bundle: Bundle?) = Unit
                 })
@@ -484,6 +490,14 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
             mNavController.navigateUp()
         }
 
+    }
+
+    private fun goToMainView() {
+        binding.linearExerciseAddSub.hide()
+        binding.linearTime.hide()
+        binding.linearLevel.show()
+        binding.imgBack.show()
+        tickerChannel.cancel()
     }
 
     private fun newInterstitialAdCompleteExercise() {
@@ -522,5 +536,27 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         if (ExerciseCompleteDialog.alertdialog?.isShowing != true){
             ExerciseCompleteDialog.showPopup(requireContext(),listExerciseAdditionSubtraction,prefManager,currentParentData,currentChildData,this@ExerciseHomeFragment)
         }
+    }
+
+    private fun notOfflineSupportDialog() {
+        tickerChannel.cancel()
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                   if (requireContext().isNetworkAvailable){
+                       continueExercise()
+                   } else{
+                       mNavController.navigateUp()
+                   }
+                }
+            })
+    }
+
+    private fun goToPurchase() {
+        mNavController.navigate(R.id.action_exerciseHomeFragment_to_purchaseFragment)
     }
 }

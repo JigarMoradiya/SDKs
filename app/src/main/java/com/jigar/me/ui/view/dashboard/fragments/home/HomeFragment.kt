@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +24,15 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jigar.me.MyApplication
 import com.jigar.me.R
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.local.data.HomeBanner
 import com.jigar.me.data.local.data.HomeMenu
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
+import com.jigar.me.data.model.pages.AdditionSubtractionCategory
 import com.jigar.me.databinding.FragmentHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.inapp.BillingRepository
@@ -104,6 +108,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
 
     private fun initListener() {
         binding.cardSettingTop.onClick { moveToClick(AppConstants.HomeClicks.Menu_Setting) }
+        binding.cardAboutUs.onClick { moveToClick(AppConstants.HomeClicks.Menu_AboutUs) }
     }
     private fun checkPurchase() {
         appViewModel.getInAppPurchase().observe(viewLifecycleOwner) { listData ->
@@ -181,7 +186,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         MyApplication.logEvent(data.type, null)
         when (data.type) {
             AppConstants.HomeBannerTypes.banner_rate_us -> {
-                requireContext().openPlayStore()
+                requireContext().openURL("https://play.google.com/store/apps/details?id=${requireContext().packageName}")
             }
             AppConstants.HomeBannerTypes.banner_share -> {
                 moveToClick(AppConstants.HomeClicks.Menu_Share)
@@ -353,7 +358,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
                     ,getString(R.string.yes_i_want_to_update),getString(R.string.no_thanks), icon = R.drawable.ic_alert,
                     clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
                         override fun onConfirmationYesClick(bundle: Bundle?) {
-                            requireContext().openPlayStore()
+                            requireContext().openURL("https://play.google.com/store/apps/details?id=${requireContext().packageName}")
                         }
                         override fun onConfirmationNoClick(bundle: Bundle?){
                             requireActivity().finish()

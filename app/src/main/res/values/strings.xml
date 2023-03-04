@@ -46,6 +46,8 @@
 
     <!--Error messages-->
     <string name="no_internet">Please check your network connection.</string>
+    <string name="no_internet_working">Your internet is not working</string>
+    <string name="for_offline_support_msg">For offline support you need to purchase paid plan.</string>
     <string name="request_timeout">Request timed out. Please try again later.</string>
     <string name="some_thing_wrong">Some thing went wrong, Please try again after sometime.</string>
     <string name="connection_error">You are offline. Kindly check your network connection.</string>
@@ -367,4 +369,8 @@
     <string name="you_are_on_the_right_track">You are on the right track</string>
     <string name="good_job">Good job</string>
     <string name="not_bad">Not bad</string>
+
+    <string name="other_app_s_by_brainapptech_team">Other App\'s by BrainAppTech Team</string>
+    <string name="offline_not_supported">Offline not supported</string>
+    <string name="now_offline_support_"><font color='#FF0000'>Now offline support</font> for Abacus starter, Number, Addition, Subtraction, Multiplication, Division, Abacus Exercise and Exam.</string>
 </resources>

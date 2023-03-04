@@ -22,7 +22,7 @@
         android:layout_height="@dimen/_44sdp"
         android:overScrollMode="never"
         android:scrollbars="none"
-        app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
+        app:layout_constraintEnd_toStartOf="@+id/cardAboutUs"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
@@ -36,6 +36,27 @@
         app:spi_dotSelectedColor="@color/colorPrimary"
         app:spi_looped="true" />
 
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cardAboutUs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_1sdp"
+        app:cardBackgroundColor="@color/light_setting"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardMaxElevation="@dimen/card_elevation"
+        app:cardUseCompatPadding="true"
+        app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="@dimen/_32sdp"
+            android:layout_height="@dimen/_32sdp"
+            android:padding="@dimen/activity_padding8"
+            app:srcCompat="@drawable/ic_about_us_new" />
+
+    </com.google.android.material.card.MaterialCardView>
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardSettingTop"
         android:layout_width="wrap_content"
@@ -75,8 +96,8 @@
             android:overScrollMode="never"
             android:scrollbars="none"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="7"
-            tools:itemCount="14"
+            app:spanCount="6"
+            tools:itemCount="12"
             tools:listitem="@layout/raw_home_menu" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

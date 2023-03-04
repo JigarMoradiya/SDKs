@@ -46,6 +46,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private var currentSumVal = 0f
     private var isResetRunning = false
     private var isPurchased = false
+    private var is1stTime = false
     private var resetX = 0f
     private var theam = AppConstants.Settings.theam_Egg
     private lateinit var mNavController: NavController
@@ -206,10 +207,13 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
 
             lifecycleScope.launch {
-                delay(500)
+                delay(300)
                 binding.relAbacus.show()
-                if (isSpeak) {
-                    speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
+                is1stTime = true
+                if (requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+                    goToNextValue()
+                }else{
+                    notOfflineSupportDialog()
                 }
             }
         }
@@ -269,7 +273,22 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             }
         }
     }
-
+    private fun notOfflineSupportDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        goToNextValue()
+                    } else{
+                        mNavController.navigateUp()
+                    }
+                }
+            })
+    }
     override fun onAbacusValueChange(abacusView: View, sum: Float) {
         with(prefManager){
             if (sum.toInt() == values) {
@@ -295,15 +314,29 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                 }
                 setCustomParamInt(AppConstants.Settings.Toddler_No_Count,total_count)
                 lifecycleScope.launch {
-                    delay(500)
+                    delay(300)
                     if (getCustomParam(AppConstants.Settings.SW_Reset,"") == "Y") {
                         resetAbacus()
                     }
-                    speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
+                    is1stTime = false
+                    if (requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+                        goToNextValue()
+                    }else{
+                        notOfflineSupportDialog()
+                    }
+//                    speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
                 }
                 binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
-                ads()
+//                ads()
             }
+        }
+
+    }
+
+    private fun goToNextValue() {
+        speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
+        if (!is1stTime){
+            ads()
         }
     }
 

@@ -15,6 +15,7 @@ import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.pages.*
 import com.jigar.me.databinding.FragmentPageBinding
 import com.jigar.me.ui.view.base.BaseFragment
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.dashboard.fragments.page.adapter.AdditionSubtractionPageListAdapter
 import com.jigar.me.ui.view.dashboard.fragments.page.adapter.DivisionPageListAdapter
 import com.jigar.me.ui.view.dashboard.fragments.page.adapter.MultiplicationPageListAdapter
@@ -22,10 +23,7 @@ import com.jigar.me.ui.view.dashboard.fragments.page.adapter.SingleDigitPageList
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Resource
-import com.jigar.me.utils.extensions.isNetworkAvailable
-import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.openYoutube
-import com.jigar.me.utils.extensions.toastL
+import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -78,47 +76,53 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
         title = PageFragmentArgs.fromBundle(requireArguments()).title
 
         binding.title = resources.getString(R.string.lessons_of) + " " + title
-        if (requireContext().isNetworkAvailable) {
-            if (from == AppConstants.HomeClicks.Menu_Number) {
-                fillSingleDigitPages()
-            } else if (from == AppConstants.HomeClicks.Menu_Multiplication) {
-                fillMultiplicationPages()
-            } else if (from == AppConstants.HomeClicks.Menu_Division) {
-                fillDivisionPages()
-            } else if (from == AppConstants.HomeClicks.Menu_Addition) {
-                if (listAdditionSubtractionsPages.isEmpty()) {
-                    if (prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, "").isEmpty()) {
-                        apiViewModel.getPages(from)
-                    } else {
-                        val type = object : TypeToken<List<AdditionSubtractionCategory>>() {}.type
-                        val listTemp: List<AdditionSubtractionCategory> =
-                            Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, ""),type)
-                        setAdditionSubtractionPages(listTemp)
-                    }
-                } else {
-                    setAdditionSubtractionPages(listAdditionSubtractionsPages)
-                }
-
-            } else if (from == AppConstants.HomeClicks.Menu_Addition_Subtraction) {
-                if (listAdditionSubtractionsPages.isEmpty()) {
-                    if (prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, "").isEmpty()) {
-                        apiViewModel.getPages(from)
-                    } else {
-                        val type = object : TypeToken<List<AdditionSubtractionCategory>>() {}.type
-                        val listTemp: List<AdditionSubtractionCategory> =
-                            Gson().fromJson(prefManager.getCustomParam(AppConstants.Extras_Comman.Level + from, ""),type)
-                        setAdditionSubtractionPages(listTemp)
-                    }
-                } else {
-                    setAdditionSubtractionPages(listAdditionSubtractionsPages)
-                }
-            }
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+            getPages()
         } else {
-            requireContext().toastL(getString(R.string.no_internet))
-            onBack()
+            notOfflineSupportDialog()
         }
     }
 
+    private fun getPages() {
+        if (from == AppConstants.HomeClicks.Menu_Number) {
+            fillSingleDigitPages()
+        } else if (from == AppConstants.HomeClicks.Menu_Multiplication) {
+            fillMultiplicationPages()
+        } else if (from == AppConstants.HomeClicks.Menu_Division) {
+            fillDivisionPages()
+        } else if (from == AppConstants.HomeClicks.Menu_Addition || from == AppConstants.HomeClicks.Menu_Addition_Subtraction) {
+            val pages = requireContext().readJsonAsset("pages.json")
+            if (pages.isEmpty()){
+                onBack()
+            }else{
+                val type = object : TypeToken<List<AdditionSubtractionCategory>>() {}.type
+                val listTemp: List<AdditionSubtractionCategory> = Gson().fromJson(pages,type)
+                listTemp.filter { it.level_id == from.toString()}.also {
+                    if (it.isNotNullOrEmpty()){
+                        setAdditionSubtractionPages(it)
+                    }
+                }
+            }
+
+        }
+    }
+
+    private fun notOfflineSupportDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    binding.cardPurchase.performClick()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        getPages()
+                    } else{
+                        mNavController.navigateUp()
+                    }
+                }
+            })
+    }
 
 
     private fun initListener() {
@@ -132,27 +136,6 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
     }
 
     private fun initObserver() {
-        apiViewModel.getPagesResponse.observe(this) {
-            when (it) {
-                is Resource.Loading -> {
-                    showLoading()
-                }
-                is Resource.Success -> {
-                    hideLoading()
-                    it.value.content?.also {
-                        val list: ArrayList<AdditionSubtractionCategory> = Gson().fromJson(
-                            it.asJsonArray, object : TypeToken<ArrayList<AdditionSubtractionCategory>>() {}.type)
-                        prefManager.setCustomParam(AppConstants.Extras_Comman.Level + from, Gson().toJson(list))
-                        setAdditionSubtractionPages(list)
-                    }
-                }
-                is Resource.Failure -> {
-                    hideLoading()
-                    it.errorBody?.let { it1 -> requireContext().toastL(it1) }
-                }
-                else -> {}
-            }
-        }
     }
 
     private fun fillSingleDigitPages() {

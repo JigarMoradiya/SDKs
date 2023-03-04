@@ -1,0 +1,332 @@
+[
+  {
+    "level_id": "2",
+    "category_id": "1",
+    "category_name": "Basic Addition",
+    "pages": [
+      {
+        "page_id": "51",
+        "PageName": "Page 1",
+        "SortDesc": "Starting of Addition"
+      },
+      {
+        "page_id": "52",
+        "PageName": "Page 2",
+        "SortDesc": "Addtion of 2 Digits - Max 29"
+      },
+      {
+        "page_id": "53",
+        "PageName": "Page 3",
+        "SortDesc": "Addition of 2 Digits - Max 49"
+      },
+      {
+        "page_id": "54",
+        "PageName": "Page 4",
+        "SortDesc": "Addition of 2 Digits - 50 to 99 Answer"
+      },
+      {
+        "page_id": "55",
+        "PageName": "Page 5",
+        "SortDesc": "Random addition from 1 to 99"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "3",
+    "category_name": "Basic Subtraction",
+    "pages": [
+      {
+        "page_id": "56",
+        "PageName": "Basic",
+        "SortDesc": "Starting of Subtraction"
+      },
+      {
+        "page_id": "57",
+        "PageName": "+-5",
+        "SortDesc": "Subtraction of Single Digit for +-5"
+      },
+      {
+        "page_id": "58",
+        "PageName": "+-6",
+        "SortDesc": "Subtraction of Single Digit for +-6"
+      },
+      {
+        "page_id": "59",
+        "PageName": "+-7",
+        "SortDesc": "Subtraction of Single Digit for +-7"
+      },
+      {
+        "page_id": "60",
+        "PageName": "+-8",
+        "SortDesc": "Subtraction of Single Digit for +-8"
+      },
+      {
+        "page_id": "61",
+        "PageName": "+-9",
+        "SortDesc": "Subtraction of Single Digit +-9"
+      },
+      {
+        "page_id": "62",
+        "PageName": "Random",
+        "SortDesc": "Random +-123456789"
+      }
+    ]
+  },
+  {
+    "level_id": "2",
+    "category_id": "2",
+    "category_name": "Addition of 3 Digits",
+    "pages": [
+      {
+        "page_id": "65",
+        "PageName": "Page 6",
+        "SortDesc": "Addition of 3 Digits"
+      },
+      {
+        "page_id": "66",
+        "PageName": "Page 7",
+        "SortDesc": "Addition of 3 Digits"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "4",
+    "category_name": "Basic Subtraction of 2 digits",
+    "pages": [
+      {
+        "page_id": "63",
+        "PageName": "Basic",
+        "SortDesc": "Subtraction of Two Digits"
+      },
+      {
+        "page_id": "64",
+        "PageName": "Funny",
+        "SortDesc": "Fun with Number"
+      },
+      {
+        "page_id": "72",
+        "PageName": "Random",
+        "SortDesc": "Addition/Subtraction"
+      },
+      {
+        "page_id": "73",
+        "PageName": "Random",
+        "SortDesc": "Addition/Subtraction"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "5",
+    "category_name": "Little Friend Subtraction (+5)",
+    "pages": [
+      {
+        "page_id": "95",
+        "PageName": "+4=-1+5",
+        "SortDesc": "Twist of +5 with -1"
+      },
+      {
+        "page_id": "96",
+        "PageName": "+3=-2+5",
+        "SortDesc": "Twist of +5 with -2"
+      },
+      {
+        "page_id": "97",
+        "PageName": "+2=-3+5",
+        "SortDesc": "Twist of +5 with -3"
+      },
+      {
+        "page_id": "98",
+        "PageName": "+1=-4+5",
+        "SortDesc": "Twist of +5 with -4"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "6",
+    "category_name": "Little Friend Subtraction (-5)",
+    "pages": [
+      {
+        "page_id": "99",
+        "PageName": "-4=-5+1",
+        "SortDesc": "Twist of -5 with +1"
+      },
+      {
+        "page_id": "100",
+        "PageName": "-3=-5+2",
+        "SortDesc": "Twist of -5 with +2"
+      },
+      {
+        "page_id": "101",
+        "PageName": "-2=-5+3",
+        "SortDesc": "Twist of -5 with +3"
+      },
+      {
+        "page_id": "102",
+        "PageName": "-1=-5+4",
+        "SortDesc": "Twist of -5 with +4"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "7",
+    "category_name": "Big Friend Subtraction (+10)",
+    "pages": [
+      {
+        "page_id": "77",
+        "PageName": "+9=-1+10",
+        "SortDesc": "Twist of +10 with -1"
+      },
+      {
+        "page_id": "78",
+        "PageName": "+8=-2+10",
+        "SortDesc": "Twist of +10 with -2"
+      },
+      {
+        "page_id": "79",
+        "PageName": "+7=-3+10",
+        "SortDesc": "Twist of +10 with -3"
+      },
+      {
+        "page_id": "83",
+        "PageName": "+6=-4+10",
+        "SortDesc": "Twist of +10 with -4"
+      },
+      {
+        "page_id": "84",
+        "PageName": "+5=-5+10",
+        "SortDesc": "Twist of +10 with -5"
+      },
+      {
+        "page_id": "85",
+        "PageName": "+4=-6+10",
+        "SortDesc": "Twist of +10 with -6"
+      },
+      {
+        "page_id": "89",
+        "PageName": "+3=-7+10",
+        "SortDesc": "Twist of +10 with -7"
+      },
+      {
+        "page_id": "90",
+        "PageName": "+2=-8+10",
+        "SortDesc": "Twist of +10 with -8"
+      },
+      {
+        "page_id": "91",
+        "PageName": "+1=-9+10",
+        "SortDesc": "Twist of +10 with -9"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "8",
+    "category_name": "Family Subtraction (+10-5)",
+    "pages": [
+      {
+        "page_id": "103",
+        "PageName": "+9=+4-5+10",
+        "SortDesc": "Twist of -5 and +10 with +4"
+      },
+      {
+        "page_id": "104",
+        "PageName": "+8=+3-5+10",
+        "SortDesc": "Twist of -5 and +10 with +3"
+      },
+      {
+        "page_id": "105",
+        "PageName": "+7=+2-5+10",
+        "SortDesc": "Twist of -5 and +10 with +2"
+      },
+      {
+        "page_id": "106",
+        "PageName": "+6=+1-5+10",
+        "SortDesc": "Twist of -5 and +10 with +1"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "9",
+    "category_name": "Big Friend Subtraction (-10)",
+    "pages": [
+      {
+        "page_id": "80",
+        "PageName": "-9=-10+1",
+        "SortDesc": "Twist of -10 with +1"
+      },
+      {
+        "page_id": "81",
+        "PageName": "-8=-10+2",
+        "SortDesc": "Twist of -10 with +2"
+      },
+      {
+        "page_id": "82",
+        "PageName": "-7=-10+3",
+        "SortDesc": "Twist of -10 with +3"
+      },
+      {
+        "page_id": "86",
+        "PageName": "-6=-10+4",
+        "SortDesc": "Twist of -10 with +4"
+      },
+      {
+        "page_id": "87",
+        "PageName": "-5=-10+5",
+        "SortDesc": "Twist of -10 with +5"
+      },
+      {
+        "page_id": "88",
+        "PageName": "-4=-10+6",
+        "SortDesc": "Twist of -10 with +6"
+      },
+      {
+        "page_id": "92",
+        "PageName": "-3=-10+7",
+        "SortDesc": "Twist of -10 with +7"
+      },
+      {
+        "page_id": "93",
+        "PageName": "-2=-10+8",
+        "SortDesc": "Twist of -10 with +8"
+      },
+      {
+        "page_id": "94",
+        "PageName": "-1=-10+9",
+        "SortDesc": "Twist of -10 with +9"
+      }
+    ]
+  },
+  {
+    "level_id": "3",
+    "category_id": "10",
+    "category_name": "Family Subtraction (-10+5)",
+    "pages": [
+      {
+        "page_id": "107",
+        "PageName": "-9=-10+5-4",
+        "SortDesc": "Twist of -10 and +5 with -4"
+      },
+      {
+        "page_id": "108",
+        "PageName": "-8=-10+5-3",
+        "SortDesc": "Twist of -10 and +5 with -3"
+      },
+      {
+        "page_id": "109",
+        "PageName": "-7=-10+5-2",
+        "SortDesc": "Twist of -10 and +5 with -2"
+      },
+      {
+        "page_id": "110",
+        "PageName": "-6=-10+5-1",
+        "SortDesc": "Twist of -10 and +5 with -1"
+      }
+    ]
+  }
+]

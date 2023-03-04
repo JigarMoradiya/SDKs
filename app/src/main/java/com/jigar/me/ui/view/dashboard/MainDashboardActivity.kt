@@ -91,6 +91,7 @@ class MainDashboardActivity : BaseActivity(){
     }
     private fun setPurchase(listData: List<InAppPurchaseDetails>) {
         with(prefManager){
+            setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
             setCustomParam(AppConstants.Purchase.Purchase_All, "N")
             setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
             setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
@@ -110,6 +111,7 @@ class MainDashboardActivity : BaseActivity(){
                         }
                         BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime, BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime_old -> {
                             setCustomParam(AppConstants.Purchase.Purchase_All, "Y")
+                            setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, true)
                         }
                         BillingRepository.AbacusSku.PRODUCT_ID_level1_lifetime -> {
                             setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"Y")

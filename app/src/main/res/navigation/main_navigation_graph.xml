@@ -40,7 +40,11 @@
 
     <fragment
         android:id="@+id/exerciseHomeFragment"
-        android:name="com.jigar.me.ui.view.dashboard.fragments.exercise.ExerciseHomeFragment"></fragment>
+        android:name="com.jigar.me.ui.view.dashboard.fragments.exercise.ExerciseHomeFragment">
+        <action
+            android:id="@+id/action_exerciseHomeFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/sudokuHomeFragment"
@@ -217,6 +221,9 @@
             app:launchSingleTop="true"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/examFragment"/>
+        <action
+            android:id="@+id/action_examFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
     </fragment>
     <fragment
         android:id="@+id/level1ExamFragment"
@@ -233,6 +240,9 @@
             app:launchSingleTop="true"
             app:popUpToInclusive="true"
             app:popUpTo="@+id/level1ExamFragment"/>
+        <action
+            android:id="@+id/action_level1ExamFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
     </fragment>
     <fragment
         android:id="@+id/examResultFragment"

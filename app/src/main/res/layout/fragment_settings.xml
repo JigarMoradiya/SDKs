@@ -134,7 +134,32 @@
                 android:orientation="vertical"
                 android:padding="@dimen/activity_padding4">
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtOtherApps"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_padding8"
+                    android:fontFamily="@font/font_extra_bold"
+                    android:text="@string/other_app_s_by_brainapptech_team"
+                    android:textColor="@color/teal_900"
+                    android:textSize="@dimen/textSizeLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearShareRate" />
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerviewOtherApps"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:overScrollMode="never"
+                    android:scrollbars="none"
+                    android:layout_marginTop="@dimen/activity_padding6"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="8"
+                    tools:itemCount="2"
+                    tools:listitem="@layout/raw_home_menu" />
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

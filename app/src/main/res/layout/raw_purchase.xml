@@ -90,7 +90,7 @@
                 android:alpha="0.9"
                 android:fontFamily="@font/font_medium"
                 android:gravity="center"
-                android:lines="3"
+                android:lines="4"
                 android:lineSpacingMultiplier="1.1"
                 android:text="@{HtmlCompat.fromHtml(sku.getDesc(),HtmlCompat.FROM_HTML_MODE_COMPACT)}"
                 android:textColor="@color/white"

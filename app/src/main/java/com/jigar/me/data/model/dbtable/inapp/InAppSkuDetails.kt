@@ -3,6 +3,8 @@ package com.jigar.me.data.model.dbtable.inapp
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.android.billingclient.api.BillingClient
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime_old
 
 @Entity(tableName = "tableInAppSKU")
 data class InAppSkuDetails(
@@ -24,8 +26,10 @@ data class InAppSkuDetails(
 ){
     fun isSubscriptionPlan() = type == BillingClient.ProductType.SUBS
     fun getDesc() = if (isSubscriptionPlan()){
-        "$description<br/><b>Practice Material not include.</b>"
-    }else{
-        description
+        "$description<br/><b>Practice Material not include.</b><br/><b>Offline Support not include.</b>"
+    }else if(sku == PRODUCT_ID_All_lifetime || sku == PRODUCT_ID_All_lifetime_old) {
+        "$description<br/><b>Offline Supported.</b>"
+    } else{
+        "$description<br/><b>Offline Support not include.</b>"
     }
 }

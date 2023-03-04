@@ -353,18 +353,6 @@ class BillingRepository @Inject constructor(
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build(),
             QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_level1_lifetime)
-                .setProductType(BillingClient.ProductType.INAPP)
-                .build(),
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_level2_lifetime)
-                .setProductType(BillingClient.ProductType.INAPP)
-                .build(),
-            QueryProductDetailsParams.Product.newBuilder()
-                .setProductId(PRODUCT_ID_level3_lifetime)
-                .setProductType(BillingClient.ProductType.INAPP)
-                .build(),
-            QueryProductDetailsParams.Product.newBuilder()
                 .setProductId(PRODUCT_ID_ads)
                 .setProductType(BillingClient.ProductType.INAPP)
                 .build(),
@@ -380,14 +368,14 @@ class BillingRepository @Inject constructor(
 
         val productListSubscription: ArrayList<QueryProductDetailsParams.Product> = if (BuildConfig.DEBUG){
             arrayListOf(
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build(),
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build(),
+//                QueryProductDetailsParams.Product.newBuilder()
+//                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
+//                    .setProductType(BillingClient.ProductType.SUBS)
+//                    .build(),
+//                QueryProductDetailsParams.Product.newBuilder()
+//                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
+//                    .setProductType(BillingClient.ProductType.SUBS)
+//                    .build(),
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(PRODUCT_ID_Subscription_Weekly)
                     .setProductType(BillingClient.ProductType.SUBS)

@@ -59,8 +59,6 @@ data class ExamHistory(
 }
 
 data class DailyExamData(
-    @SerializedName("abacus_id")
-    var abacus_id: String = "",
     @SerializedName("questions")
     var questions: String = "",
     @SerializedName("userAnswer")

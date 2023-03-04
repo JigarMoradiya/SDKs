@@ -15,6 +15,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -25,6 +26,7 @@ import com.jigar.me.R
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
 import java.io.File
+import java.io.IOException
 
 
  @Suppress("UNCHECKED_CAST")
@@ -124,12 +126,12 @@ fun Context.openMail() {
 //    }
 
 }
-fun Context.openPlayStore() {
+fun Context.openURL(url : String) {
     try {
-        startActivity(Intent(Intent.ACTION_VIEW,Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+     startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(url)))
     } catch (e: Exception) {
-        e.printStackTrace()
-        toastS(getString(R.string.play_store_not_found))
+     e.printStackTrace()
+     toastS(getString(R.string.play_store_not_found))
     }
 }
 fun Context.shareIntent() {
@@ -159,4 +161,18 @@ fun Context.downloadFilePath() : String?{
     }
 //    return getExternalFilesDir("download")?.path
     return folder.path
+}
+
+ fun Context.readJsonAsset(fileName: String): String {
+    return try {
+        val inputStream = assets.open("abacus/$fileName")
+        val size = inputStream.available()
+        val buffer = ByteArray(size)
+        inputStream.read(buffer)
+        inputStream.close()
+        String(buffer, Charsets.UTF_8)
+    } catch (e: IOException) {
+        println(e.printStackTrace())
+        ""
+    }
 }

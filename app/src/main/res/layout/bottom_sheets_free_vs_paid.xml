@@ -58,7 +58,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="36dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:fontFamily="@font/font_bold"
                     android:gravity="center"
                     android:includeFontPadding="false"
@@ -97,7 +97,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:minHeight="30dp"
                     android:text="@string/txt_free1"
@@ -135,7 +135,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:minHeight="30dp"
                     android:text="@string/txt_free3"
@@ -174,49 +174,12 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:minHeight="30dp"
                     android:text="@string/txt_free2"
                     android:textColor="@color/colorListingHeading"
                     android:textSize="@dimen/textSizeExtraSmall" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/headerlinecolor" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:minHeight="30dp"
-                    android:text="@string/txt_purchase8"
-                    android:textColor="@color/colorListingHeading"
-                    android:textSize="@dimen/textSizeSmall"
-                    app:fontFamily="@font/font_bold" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/headerlinecolor" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:minHeight="30dp"
-                    android:textColor="@color/colorListingHeading"
-                    android:textSize="@dimen/_8sdp" />
 
                 <View
                     android:layout_width="1dp"
@@ -241,6 +204,84 @@
                 android:layout_height="1dp"
                 android:background="@color/headerlinecolor" />
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:minHeight="30dp"
+                    android:text="@string/offline_not_supported"
+                    android:textColor="@color/colorListingHeading"
+                    android:textSize="@dimen/_8sdp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/headerlinecolor" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:minHeight="30dp"
+                    android:paddingHorizontal="@dimen/_2sdp"
+                    android:text="@string/now_offline_support_"
+                    android:textColor="@color/colorListingHeading"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_bold" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/headerlinecolor" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:minHeight="30dp"
+                    android:textColor="@color/colorListingHeading"
+                    android:textSize="@dimen/_8sdp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/headerlinecolor" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/font_bold"
+                    android:gravity="center"
+                    android:minHeight="30dp"
+                    android:text="@string/txt_purchase5"
+                    android:textColor="@color/colorListingHeading"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_bold" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/headerlinecolor"
+                android:visibility="visible" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -250,7 +291,45 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_weight="1.5"
+                    android:gravity="center"
+                    android:minHeight="30dp"
+                    android:textColor="@color/colorListingHeading"
+                    android:textSize="@dimen/_8sdp" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/headerlinecolor" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
+                    android:gravity="center"
+                    android:minHeight="30dp"
+                    android:text="@string/txt_purchase8"
+                    android:textColor="@color/colorListingHeading"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_bold" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/headerlinecolor" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:minHeight="30dp"
                     android:textColor="@color/colorListingHeading"
@@ -287,7 +366,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
+                    android:layout_weight="1.5"
                     android:gravity="center"
                     android:minHeight="30dp"
                     android:textColor="@color/colorListingHeading"
@@ -309,53 +388,6 @@
                     android:textSize="@dimen/textSizeSmall"
                     app:fontFamily="@font/font_bold" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/headerlinecolor"
-                android:visibility="visible" />
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="visible">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:minHeight="30dp"
-                    android:textColor="@color/colorListingHeading"
-                    android:textSize="@dimen/_8sdp" />
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:background="@color/headerlinecolor" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:fontFamily="@font/font_bold"
-                    android:gravity="center"
-                    android:minHeight="30dp"
-                    android:text="@string/txt_purchase5"
-                    android:textColor="@color/colorListingHeading"
-                    android:textSize="@dimen/textSizeSmall"
-                    app:fontFamily="@font/font_bold" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/headerlinecolor"
-                android:visibility="visible" />
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

@@ -23,7 +23,7 @@ object PurchaseInfoBottomSheetDialog {
         sheetBinding.tvClose.onClick {
             bottomSheetDialog.dismiss()
         }
-        activity.setBottomSheetDialogAttr(bottomSheetDialog, Constants.bottomSheetWidthBaseOnRatio6)
+        activity.setBottomSheetDialogAttr(bottomSheetDialog, Constants.bottomSheetWidthBaseOnRatio10)
         bottomSheetDialog.show()
     }
 

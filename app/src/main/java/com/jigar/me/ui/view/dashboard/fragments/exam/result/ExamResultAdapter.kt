@@ -60,8 +60,8 @@ class ExamResultAdapter(
             data.questions
                 .replace("+", "\n+")
                 .replace("-", "\n-")
-                .replace("x", "\nx")
-                .replace("/", "\n/")
+                .replace("x", "\nx ")
+                .replace("/", "\n÷ ")
         )
 
     }

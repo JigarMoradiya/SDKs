@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.android.gms.ads.AdError
@@ -20,6 +21,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.MyApplication
 import com.jigar.me.R
+import com.jigar.me.data.local.data.DataProvider
+import com.jigar.me.data.model.PojoAbacus
 import com.jigar.me.data.model.dbtable.exam.DailyExamData
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.databinding.FragmentExamBinding
@@ -40,7 +43,7 @@ class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterf
 
     private lateinit var mBinding: FragmentExamBinding
     private val apiViewModel by viewModels<AppViewModel>()
-
+    private var clickType = ""
     private var examLevel = ""
     private var examLevelLable = ""
     private var list_abacus: List<DailyExamData> = ArrayList()
@@ -80,46 +83,125 @@ class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterf
     }
 
     private fun getAndStartExam() {
-        if (requireContext().isNetworkAvailable) {
-            if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
-                apiViewModel.getExamAbacus(examLevel)
-            } else {
-                setDailyExamAbacus()
-            }
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+            startExamNow()
         } else {
-            requireContext().toastS(getString(R.string.no_internet))
-            onBack()
+            notOfflineSupportDialog()
         }
     }
 
-    private fun initObserver() {
-        apiViewModel.getExamAbacusResponse.observe(this) {
-            when (it) {
-                is Resource.Loading -> {
-                    showLoading()
-                }
-                is Resource.Success -> {
-                    hideLoading()
-                    it.value.content?.also {
-                        val list: ArrayList<DailyExamData> = Gson().fromJson(
-                            it.asJsonArray, object : TypeToken<ArrayList<DailyExamData>>() {}.type)
+    private fun startExamNow() {
+        if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
+            val abacus = requireContext().readJsonAsset("abacus.json")
+            val type = object : TypeToken<ArrayList<PojoAbacus>>() {}.type
+            val temp: ArrayList<PojoAbacus> = Gson().fromJson(abacus,type)
+            if (examLevel == "2"){
+                temp.filter { (it.id == "51" || it.id == "52" || it.id == "53" || it.id == "54" || it.id == "56"
+                        || it.id == "57" || it.id == "58" || it.id == "59" || it.id == "60" || it.id == "61"
+                        || it.id == "62" || it.id == "63" || it.id == "64" || it.id == "72" || it.id == "73"
+                        || it.id == "95" || it.id == "96" || it.id == "97" || it.id == "98" || it.id == "99"
+                        || it.id == "101" || it.id == "102") && it.s3.isNullOrEmpty()  && it.s4.isNullOrEmpty() && it.s5.isNullOrEmpty()}.also {
+                    val list: ArrayList<DailyExamData> = arrayListOf()
+                    if (it.isNotNullOrEmpty()){
+                        val tempNew: ArrayList<PojoAbacus> = it as ArrayList<PojoAbacus>
+                        tempNew.shuffle()
+                        val tempNew1: List<PojoAbacus> = tempNew.take(17)
+                        tempNew1.map {
+                            var question = it.q0+it.s1+it.q1
+                            if (!it.s2.isNullOrEmpty()){question = question+it.s2+it.q2}
+                            list.add(DailyExamData(question))
+                        }
+                        for (i in 1..3) {
+                            val que1 = DataProvider.generateSingleDigit(2, 9)
+                            val que2 = DataProvider.generateSingleDigit(2, 9)
+                            list.add(DailyExamData(que1.toString()+"x"+que2.toString()))
+                        }
+                        list.shuffle()
                         prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel, Gson().toJson(list))
                         setDailyExamAbacus()
                     }
                 }
-                is Resource.Failure -> {
-                    hideLoading()
-                    it.errorBody?.let { it1 -> requireContext().toastL(it1) }
+            }else if (examLevel =="3"){
+                temp.filter {
+                    (it.id == "54" || it.id == "65" || it.id == "66"
+                            || it.id == "77" || it.id == "78" || it.id == "79" || it.id == "80" || it.id == "81"
+                            || it.id == "82" || it.id == "83" || it.id == "84" || it.id == "85" || it.id == "86"
+                            || it.id == "87" || it.id == "88" || it.id == "89" || it.id == "90" || it.id == "91"
+                            || it.id == "92" || it.id == "93" || it.id == "94"
+                            || it.id == "95" || it.id == "96" || it.id == "97" || it.id == "98" || it.id == "99"
+                            || it.id == "101" || it.id == "102" || it.id == "103" || it.id == "104" || it.id == "105"
+                            || it.id == "106" || it.id == "107" || it.id == "108" || it.id == "109" || it.id == "110")
+                    !it.s3.isNullOrEmpty()}.also {
+                    val list: ArrayList<DailyExamData> = arrayListOf()
+                    if (it.isNotNullOrEmpty()){
+                        val tempNew: ArrayList<PojoAbacus> = it as ArrayList<PojoAbacus>
+                        tempNew.shuffle()
+                        val tempNew1: List<PojoAbacus> = tempNew.take(20)
+                        tempNew1.map {
+                            var question = it.q0+it.s1+it.q1
+                            if (!it.s2.isNullOrEmpty()){question = question+it.s2+it.q2}
+                            if (!it.s3.isNullOrEmpty()){question = question+it.s3+it.q3}
+                            if (!it.s4.isNullOrEmpty()){question = question+it.s4+it.q4}
+                            if (!it.s5.isNullOrEmpty()){question = question+it.s5+it.q5}
+                            list.add(DailyExamData(question))
+                        }
+                        for (i in 1..3) {
+                            val que1 = DataProvider.generateSingleDigit(11, 99)
+                            val que2 = DataProvider.generateSingleDigit(2, 9)
+                            list.add(DailyExamData(que1.toString()+"x"+que2.toString()))
+                        }
+                        for (i in 1..2) {
+                            val que1 = DataProvider.generateSingleDigit(11, 99)
+                            val que2 = DataProvider.generateSingleDigit(2, 50)
+                            if (que2 > que1){
+                                val answerTemp = que2 * que1
+                                val question = "${answerTemp}/$que1"
+                                list.add(DailyExamData(question))
+                            }else{
+                                val answerTemp = que1 * que2
+                                val question = "${answerTemp}/$que2"
+                                list.add(DailyExamData(question))
+                            }
+                        }
+                        list.shuffle()
+                        prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel, Gson().toJson(list))
+                        setDailyExamAbacus()
+                    }
                 }
-                else -> {}
             }
+
+        } else {
+            setDailyExamAbacus()
         }
+    }
+
+    private fun notOfflineSupportDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        startExamNow()
+                    } else{
+                        mNavController.navigateUp()
+                    }
+                }
+            })
+    }
+    private fun goToPurchase() {
+        mNavController.navigate(R.id.action_examFragment_to_purchaseFragment)
+    }
+    private fun initObserver() {
+
     }
 
     private fun clickListener() {
         // blink animation
         mBinding.txtTapCorrectAns.setBlinkAnimation()
-        mBinding.cardBack.onClick { onViewClick("back") }
+        mBinding.cardBack.onClick { examLeaveAlert() }
         mBinding.cardSkip.onClick { onViewClick("skip") }
         mBinding.cardAnswer1.onClick { onViewClick("answer1") }
         mBinding.cardAnswer2.onClick { onViewClick("answer2") }
@@ -182,7 +264,7 @@ class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterf
                 .replace("+", " + ")
                 .replace("-", " - ")
                 .replace("x", " x ")
-                .replace("/", " / ")+" = "
+                .replace("/", " ÷ ")+" = "
             val resultObject = mCalculator.getResult(
                 list_abacus[currentQuestionPos].questions,
                 list_abacus[currentQuestionPos].questions
@@ -229,42 +311,54 @@ class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterf
         }
     }
     private fun completePopup() {
-        mBinding.cardAnswer1.isEnabled = false
-        mBinding.cardAnswer2.isEnabled = false
-        mBinding.cardAnswer3.isEnabled = false
-        mBinding.cardAnswer4.isEnabled = false
-        if (runnable != null){
-            handler?.removeCallbacks(runnable!!)
-        }
-        val minutes = total_sec / 60
-        val seconds = total_sec % 60
-        val totalTime = String.format("%d:%02d", minutes, seconds)
-        val right = list_abacus.size - totalWrong - totalSkip
-//        val totalRight = right.toString() + " (" + 100 * right / list_abacus.size + "%)"
-        CoroutineScope(Dispatchers.Default).launch{
-            apiViewModel.saveExamResultDB(ExamHistory(0,total_sec,examLevelLable,list_abacus))
-        }
-        // set empty question list
-        prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"")
+        lifecycleScope.launch {
+            mBinding.cardAnswer1.isEnabled = false
+            mBinding.cardAnswer2.isEnabled = false
+            mBinding.cardAnswer3.isEnabled = false
+            mBinding.cardAnswer4.isEnabled = false
 
-        val previousCount = prefManager.getCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,0)
-        prefManager.setCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,(previousCount+1))
-
-        ExamCompleteDialog.showPopup(
-            requireActivity(),
-            totalTime,
-            totalSkip.toString(),
-            totalWrong.toString(),
-            right.toString(),list_abacus.size.toString(),
-            this
-        )
-    }
-
-    private fun onViewClick(clickType: String) {
-        when (clickType) {
-            "back" -> {
-                examLeaveAlert()
+            if (runnable != null){
+                handler?.removeCallbacks(runnable!!)
             }
+            val minutes = total_sec / 60
+            val seconds = total_sec % 60
+            val totalTime = String.format("%d:%02d", minutes, seconds)
+            val right = list_abacus.size - totalWrong - totalSkip
+            apiViewModel.saveExamResultDB(ExamHistory(0,total_sec,examLevelLable,list_abacus))
+            // set empty question list
+            prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"")
+
+            val previousCount = prefManager.getCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,0)
+            prefManager.setCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,(previousCount+1))
+
+            ExamCompleteDialog.showPopup(
+                requireActivity(),
+                totalTime,
+                totalSkip.toString(),
+                totalWrong.toString(),
+                right.toString(),list_abacus.size.toString(),
+                this@ExamFragment
+            )
+        }
+    }
+    private fun notOfflineSupportDialog2() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        clickOtions()
+                    } else{
+                        mNavController.navigateUp()
+                    }
+                }
+            })
+    }
+    private fun clickOtions(){
+        when (clickType) {
             "skip" -> {
                 totalSkip++
                 list_abacus[currentQuestionPos].userAnswer = ""
@@ -327,6 +421,14 @@ class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterf
                     setExamPaper()
                 }
             }
+        }
+    }
+    private fun onViewClick(clickType: String) {
+        this.clickType = clickType
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+            clickOtions()
+        }else{
+            notOfflineSupportDialog2()
         }
     }
 

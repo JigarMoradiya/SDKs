@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.core.view.isVisible
@@ -42,8 +41,6 @@ import java.util.*
 @AndroidEntryPoint
 class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAdditionSubtractionTypeAdapter.HintListener{
     private lateinit var binding: FragmentHalfAbacusBinding
-    private val apiViewModel by viewModels<AppViewModel>()
-
     private var abacusType = ""
     private var pageId = ""
     private var Que2_str = "" // required only for Multiplication and Division
@@ -71,21 +68,12 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private var final_column = 0
     private var noOfDecimalPlace = 0
     private lateinit var mNavController: NavController
-    private var adapterAdditionSubtraction: AbacusAdditionSubtractionTypeAdapter =
-        AbacusAdditionSubtractionTypeAdapter(
-            arrayListOf(), this, true
-        )
-    private var adapterMultiplication: AbacusMultiplicationTypeAdapter =
-        AbacusMultiplicationTypeAdapter(
-            arrayListOf(), true
-        )
-    private var adapterDivision: AbacusDivisionTypeAdapter = AbacusDivisionTypeAdapter(
-        arrayListOf(), true
-    )
+    private var adapterAdditionSubtraction: AbacusAdditionSubtractionTypeAdapter = AbacusAdditionSubtractionTypeAdapter(arrayListOf(), this, true)
+    private var adapterMultiplication: AbacusMultiplicationTypeAdapter = AbacusMultiplicationTypeAdapter(arrayListOf(), true)
+    private var adapterDivision: AbacusDivisionTypeAdapter = AbacusDivisionTypeAdapter(arrayListOf(), true)
 
     private var list_abacus: List<PojoAbacus> = arrayListOf()
     private var list_abacus_main = ArrayList<HashMap<String, String>>()
-    private var alertdialog: AlertDialog? = null
 
     // abacus move
     private var isMoveNext: Boolean = false
@@ -93,7 +81,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
     // for division
     private var postfixZero = ""
-
     private var abacusFragment: HalfAbacusSubFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,7 +97,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 )
             }
             AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction -> {
-                total = requireArguments().getInt(AppConstants.apiParams.total, 0)
+//                total = requireArguments().getInt(AppConstants.apiParams.total, 0)
             }
             else -> { // for multiplication and division
                 Que2_str = requireArguments().getString(AppConstants.Extras_Comman.Que2_str, "")
@@ -121,7 +108,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 }
             }
         }
-        initObserver()
     }
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -206,85 +192,66 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         goBack()
     }
 
-    private fun initObserver() {
-        apiViewModel.getAbacusOfPagesResponse.observe(this) {
-            when (it) {
-                is Resource.Loading -> {
-                    showLoading()
+    private fun startAbacus() {
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+            startAbacusNow()
+        }else{
+            notOfflineSupportDialog2()
+        }
+
+    }
+    private fun notOfflineSupportDialog2() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    binding.cardPurchase.performClick()
                 }
-                is Resource.Success -> {
-                    hideLoading()
-                    it.value.content?.also {
-                        val list: ArrayList<PojoAbacus> = Gson().fromJson(
-                            it.asJsonArray, object : TypeToken<ArrayList<PojoAbacus>>() {}.type)
-                        prefManager.setCustomParam(AppConstants.apiParams.pageId + pageId, Gson().toJson(list))
-                        setAbacusOfPagesAdditionSubtraction(list)
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        startAbacusNow()
+                    } else{
+                        mNavController.navigateUp()
                     }
                 }
-                is Resource.Failure -> {
-                    hideLoading()
-                    it.errorBody?.let { it1 -> requireContext().toastL(it1) }
-                }
-                else -> {}
-            }
-        }
+            })
     }
-    private fun startAbacus() {
+
+    private fun startAbacusNow() {
         val currentPosTemp = prefManager.getCurrentSumFromPref(pageId)
         if (currentPosTemp!= null){
             current_pos = currentPosTemp
         }
-        if (requireContext().isNetworkAvailable) {
-            if (abacusType == AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
-                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2,"") == "Y")
-                setTempTheme()
-                if (prefManager.getCustomParam(AppConstants.apiParams.pageId + pageId, "").isEmpty()) {
-                    getListAdditionSubtractionApi()
-                } else {
-                    val type = object : TypeToken<List<PojoAbacus>>() {}.type
-                    val listTemp: List<PojoAbacus> =
-                        Gson().fromJson(prefManager.getCustomParam(AppConstants.apiParams.pageId + pageId, ""), type)
-                    if (isPurchased) {
-                        if (listTemp.size == total) {
-                            setAbacusOfPagesAdditionSubtraction(listTemp)
-                        } else {
-                            getListAdditionSubtractionApi()
-                        }
-                    } else {
-                        if (listTemp.size == AppConstants.Purchase.Purchase_limit_free) {
-                            setAbacusOfPagesAdditionSubtraction(listTemp)
-                        } else {
-                            getListAdditionSubtractionApi()
-                        }
-                    }
+        if (abacusType == AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
+            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2,"") == "Y")
+            setTempTheme()
+            val abacus = requireContext().readJsonAsset("abacus.json")
+            val type = object : TypeToken<List<PojoAbacus>>() {}.type
+            val temp: List<PojoAbacus> = Gson().fromJson(abacus,type)
+            temp.filter { it.id == pageId}.also {
+                if (it.isNotNullOrEmpty()){
+                    total = it.size
+                    val listTemp = if (isPurchased){it}else{it.take(20)}
+                    setAbacusOfPagesAdditionSubtraction(listTemp)
                 }
-            } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeMultiplication) {
-                isPurchased = (prefManager.getCustomParam(
-                    AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(
-                    AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
-                setTempTheme()
-                setDataOfMultiplication(true)
-            } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeDivision) {
-                isPurchased = (prefManager.getCustomParam(
-                    AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(
-                    AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
-                setTempTheme()
-                setDataOfDivision(true)
-            } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber) {
-                isPurchased = (prefManager.getCustomParam(
-                    AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(
-                    AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"") == "Y")
-                setTempTheme()
-                setDataOfNumber(true)
-            } else {
-                goBack()
             }
+        } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeMultiplication) {
+            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
+            setTempTheme()
+            setDataOfMultiplication(true)
+        } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeDivision) {
+            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
+            setTempTheme()
+            setDataOfDivision(true)
+        } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber) {
+            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"") == "Y")
+            setTempTheme()
+            setDataOfNumber(true)
         } else {
-            requireContext().toastS(getString(R.string.no_internet))
             goBack()
         }
     }
@@ -514,14 +481,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
     }
 
-    private fun getListAdditionSubtractionApi() {
-        if (isPurchased) {
-            apiViewModel.getAbacusOfPages(pageId, AppConstants.Purchase.Purchase_limit)
-        } else {
-            apiViewModel.getAbacusOfPages(pageId, AppConstants.Purchase.Purchase_limit_free)
-        }
-    }
-
     // api response
     private fun setAbacusOfPagesAdditionSubtraction(dataList: List<PojoAbacus>) {
         list_abacus = dataList
@@ -545,7 +504,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
             var data: HashMap<String, String>
             data = HashMap()
-            data[Constants.Que] = datatemp.que0
+            data[Constants.Que] = datatemp.q0
             data[Constants.Sign] = ""
             data[Constants.Hint] = ""
             list_abacus_main_temp.add(data)
@@ -554,76 +513,77 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 val finalDatatemp: PojoAbacus = datatemp
                 lifecycleScope.launch {
                     delay(700)
-                    speakOut(resources.getString(R.string.speech_set) + " " + finalDatatemp.que0)
+                    speakOut(resources.getString(R.string.speech_set) + " " + finalDatatemp.q0)
                 }
             }
-            if (new_column < datatemp.que0.length) {
-                new_column = datatemp.que0.length
+            if (new_column < datatemp.q0.length) {
+                new_column = datatemp.q0.length
             }
 
-            if (list_abacus[current_pos].sign1.isNotEmpty()) {
+            if (list_abacus[current_pos].s1.isNotEmpty()) {
                 data = HashMap()
-                data[Constants.Que] = datatemp.que1
-                data[Constants.Hint] = datatemp.hint1
-                data[Constants.Sign] = datatemp.sign1
+                data[Constants.Que] = datatemp.q1
+                data[Constants.Hint] = datatemp.h1?:""
+                data[Constants.Sign] = datatemp.s1
                 list_abacus_main_temp.add(data)
-                if (new_column < datatemp.que1.length) {
-                    new_column = datatemp.que1.length
+                if (new_column < datatemp.q1.length) {
+                    new_column = datatemp.q1.length
                 }
-                if (datatemp.sign1 == "-"
-                    || datatemp.sign1 == "+"
+                if (datatemp.s1 == "-"
+                    || datatemp.s1 == "+"
                 ) {
                     abacus_type = 0
-                    if (list_abacus[current_pos].sign2.isNotEmpty()) {
+                    if (!list_abacus[current_pos].s2.isNullOrEmpty()) {
                         data = HashMap()
-                        data[Constants.Que] = datatemp.que2
-                        data[Constants.Hint] = datatemp.hint2
-                        data[Constants.Sign] = datatemp.sign2
+                        data[Constants.Que] = datatemp.q2?:""
+                        data[Constants.Hint] = datatemp.h2?:""
+                        data[Constants.Sign] = datatemp.s2?:""
                         list_abacus_main_temp.add(data)
-                        if (new_column < datatemp.que2.length) {
-                            new_column = datatemp.que2.length
+                        if (new_column < (datatemp.q2?:"").length) {
+                            new_column = (datatemp.q2?:"").length
                         }
-                        if (list_abacus[current_pos].sign3.isNotEmpty()) {
+                        if (!list_abacus[current_pos].s3.isNullOrEmpty()) {
                             data = HashMap()
-                            data[Constants.Que] = datatemp.que3
-                            data[Constants.Hint] = datatemp.hint3
-                            data[Constants.Sign] = datatemp.sign3
+                            data[Constants.Que] = datatemp.q3?:""
+                            data[Constants.Hint] = datatemp.h3?:""
+                            data[Constants.Sign] = datatemp.s3?:""
                             list_abacus_main_temp.add(data)
-                            if (new_column < datatemp.que3.length) {
-                                new_column = datatemp.que3.length
+                            if (new_column < (datatemp.q3?:"").length) {
+                                new_column = (datatemp.q3?:"").length
                             }
-                            if (list_abacus[current_pos].sign4.isNotEmpty()) {
+                            if (!list_abacus[current_pos].s4.isNullOrEmpty()) {
                                 data = HashMap()
-                                data[Constants.Que] = datatemp.que4
-                                data[Constants.Hint] = datatemp.hint4
-                                data[Constants.Sign] = datatemp.sign4
+                                data[Constants.Que] = datatemp.q4?:""
+                                data[Constants.Hint] = datatemp.h4?:""
+                                data[Constants.Sign] = datatemp.s4?:""
                                 list_abacus_main_temp.add(data)
-                                if (new_column < datatemp.que4.length) {
-                                    new_column = datatemp.que4.length
+                                if (new_column < (datatemp.q4?:"").length) {
+                                    new_column = (datatemp.q4?:"").length
                                 }
-                                if (list_abacus[current_pos].sign5.isNotEmpty()) {
+                                if (!list_abacus[current_pos].s5.isNullOrEmpty()) {
                                     data = HashMap()
-                                    data[Constants.Que] = datatemp.que5
-                                    data[Constants.Hint] = datatemp.hint5
-                                    data[Constants.Sign] = datatemp.sign5
+                                    data[Constants.Que] = datatemp.q5?:""
+                                    data[Constants.Hint] = datatemp.h5?:""
+                                    data[Constants.Sign] = datatemp.s5?:""
                                     list_abacus_main_temp.add(data)
-                                    if (new_column < datatemp.que5.length) {
-                                        new_column = datatemp.que5.length
+                                    if (new_column < (datatemp.q5?:"").length) {
+                                        new_column = (datatemp.q5?:"").length
                                     }
                                 }
                             }
                         }
                     }
-                } else if (datatemp.sign1 == "*") {
+                } else if (datatemp.s1 == "*") {
                     abacus_type = 1
-                } else if (datatemp.sign1 == "/") {
+                } else if (datatemp.s1 == "/") {
                     abacus_type = 2
                 }
             } else {
                 abacus_type = 0
             }
 
-            val answer = java.lang.Double.valueOf(datatemp.ans)
+//            val answer = java.lang.Double.valueOf(datatemp.ans)
+            val answer = datatemp.getAnswer().toDouble()
             var noOfDecimalPlace = 0
             var column = 3
             if (abacus_type == 0) {
@@ -644,7 +604,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     column = if (ans.length == 1) 3 else ans.length
                     noOfDecimalPlace = 0
                 } else {
-                    val ans = datatemp.ans
+                    val ans = datatemp.getAnswer().toString()
                     noOfDecimalPlace = ans.length - ans.indexOf(".") - 1
                     column = ans.length - 1
                 }
@@ -990,8 +950,13 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
     override fun onAbacusValueChange(abacusView: View, sum: Float) {
         if (isMoveNext) {
-            moveToNext()
-            isMoveNext = false
+            if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+                moveToNext()
+                isMoveNext = false
+            }else{
+                notOfflineSupportDialog()
+            }
+
             return
         }
         if (abacus_type == 0) {
@@ -1118,15 +1083,31 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
     }
 
+    private fun notOfflineSupportDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
+            ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    binding.cardPurchase.performClick()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?){
+                    if (requireContext().isNetworkAvailable){
+                        moveToNext()
+                        isMoveNext = false
+                    } else{
+                        mNavController.navigateUp()
+                    }
+                }
+            })
+    }
+
     // update progress to Firebase
     private fun updateToFirebase(currentPos: Int) {
-        if (requireContext().isNetworkAvailable) {
-            // set from value when reset page progress for abacus type number
-            if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber && currentPos == 0){
-                prefManager.setCustomParamInt(pageId + "value", From)
-            }
-            FirebaseDatabase.getInstance().reference.child(AppConstants.AbacusProgress.Track + "/" + prefManager.getDeviceId() + "/" + pageId).child(AppConstants.AbacusProgress.Position).setValue(currentPos)
+        // set from value when reset page progress for abacus type number
+        if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber && currentPos == 0){
+            prefManager.setCustomParamInt(pageId + "value", From)
         }
+        FirebaseDatabase.getInstance().reference.child(AppConstants.AbacusProgress.Track + "/" + prefManager.getDeviceId() + "/" + pageId).child(AppConstants.AbacusProgress.Position).setValue(currentPos)
     }
 
     override fun onAbacusValueSubmit(sum: Float) {

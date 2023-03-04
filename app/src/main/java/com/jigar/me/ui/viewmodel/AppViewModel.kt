@@ -14,28 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AppViewModel @Inject constructor(private val apiRepository: ApiRepository,private val dbRepository: DBRepository) : ViewModel() {
-
-    private val _getPagesResponse: MutableLiveData<Resource<MainAPIResponseArray>> = MutableLiveData()
-    val getPagesResponse: LiveData<Resource<MainAPIResponseArray>> get() = _getPagesResponse
-    fun getPages(level_id : Int) = viewModelScope.launch {
-        _getPagesResponse.value = Resource.Loading
-        _getPagesResponse.value = apiRepository.getPages(level_id.toString())
-    }
-
-    private val _getAbacusOfPagesResponse: MutableLiveData<Resource<MainAPIResponseArray>> = MutableLiveData()
-    val getAbacusOfPagesResponse: LiveData<Resource<MainAPIResponseArray>> get() = _getAbacusOfPagesResponse
-    fun getAbacusOfPages(pageId : String,limit : Int) = viewModelScope.launch {
-        _getAbacusOfPagesResponse.value = Resource.Loading
-        _getAbacusOfPagesResponse.value = apiRepository.getAbacusOfPages(pageId,limit.toString())
-    }
-
-    private val _getExamAbacusResponse: MutableLiveData<Resource<MainAPIResponseArray>> = MutableLiveData()
-    val getExamAbacusResponse: LiveData<Resource<MainAPIResponseArray>> get() = _getExamAbacusResponse
-    fun getExamAbacus(level : String) = viewModelScope.launch {
-        _getExamAbacusResponse.value = Resource.Loading
-        _getExamAbacusResponse.value = apiRepository.getExamAbacus(level)
-    }
-
     private val _getPracticeMaterialResponse: MutableLiveData<Resource<MainAPIResponseArray>> = MutableLiveData()
     val getPracticeMaterialResponse: LiveData<Resource<MainAPIResponseArray>> get() = _getPracticeMaterialResponse
     fun getPracticeMaterial(type : String) = viewModelScope.launch {
@@ -44,8 +22,6 @@ class AppViewModel @Inject constructor(private val apiRepository: ApiRepository,
     }
 
     fun getInAppPurchase() = dbRepository.getInAppPurchase()
-
-
     fun getInAppSKUDetailLive(sku : String) = dbRepository.getInAppSKUDetailLive(sku)
     fun getInAppSKU() = dbRepository.getInAppSKU()
 

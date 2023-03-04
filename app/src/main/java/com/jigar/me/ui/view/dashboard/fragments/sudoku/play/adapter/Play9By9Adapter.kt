@@ -43,6 +43,16 @@ class Play9By9Adapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        SetValue(holder.binding.txt0,position,holder.binding.txt000,holder.binding.txtbg0,holder.binding.recyclerView0)
+        SetValue(holder.binding.txt1,position,holder.binding.txt111,holder.binding.txtbg1,holder.binding.recyclerView1)
+        SetValue(holder.binding.txt2,position,holder.binding.txt222,holder.binding.txtbg2,holder.binding.recyclerView2)
+        SetValue(holder.binding.txt3,position,holder.binding.txt333,holder.binding.txtbg3,holder.binding.recyclerView3)
+        SetValue(holder.binding.txt4,position,holder.binding.txt444,holder.binding.txtbg4,holder.binding.recyclerView4)
+        SetValue(holder.binding.txt5,position,holder.binding.txt555,holder.binding.txtbg5,holder.binding.recyclerView5)
+        SetValue(holder.binding.txt6,position,holder.binding.txt666,holder.binding.txtbg6,holder.binding.recyclerView6)
+        SetValue(holder.binding.txt7,position,holder.binding.txt777,holder.binding.txtbg7,holder.binding.recyclerView7)
+        SetValue(holder.binding.txt8,position,holder.binding.txt888,holder.binding.txtbg8,holder.binding.recyclerView8)
+
         if (prefManager.getCustomParam(SudukoConst.Notes, "0").equals("1", ignoreCase = true)) {
             setValueNotes(holder.binding.txt0,position,holder.binding.txt000,holder.binding.txtbg0,holder.binding.recyclerView0)
             setValueNotes(holder.binding.txt1,position,holder.binding.txt111,holder.binding.txtbg1,holder.binding.recyclerView1)
@@ -53,16 +63,6 @@ class Play9By9Adapter(
             setValueNotes(holder.binding.txt6,position,holder.binding.txt666,holder.binding.txtbg6,holder.binding.recyclerView6)
             setValueNotes(holder.binding.txt7,position,holder.binding.txt777,holder.binding.txtbg7,holder.binding.recyclerView7)
             setValueNotes(holder.binding.txt8,position,holder.binding.txt888,holder.binding.txtbg8,holder.binding.recyclerView8)
-        } else {
-            SetValue(holder.binding.txt0,position,holder.binding.txt000,holder.binding.txtbg0,holder.binding.recyclerView0)
-            SetValue(holder.binding.txt1,position,holder.binding.txt111,holder.binding.txtbg1,holder.binding.recyclerView1)
-            SetValue(holder.binding.txt2,position,holder.binding.txt222,holder.binding.txtbg2,holder.binding.recyclerView2)
-            SetValue(holder.binding.txt3,position,holder.binding.txt333,holder.binding.txtbg3,holder.binding.recyclerView3)
-            SetValue(holder.binding.txt4,position,holder.binding.txt444,holder.binding.txtbg4,holder.binding.recyclerView4)
-            SetValue(holder.binding.txt5,position,holder.binding.txt555,holder.binding.txtbg5,holder.binding.recyclerView5)
-            SetValue(holder.binding.txt6,position,holder.binding.txt666,holder.binding.txtbg6,holder.binding.recyclerView6)
-            SetValue(holder.binding.txt7,position,holder.binding.txt777,holder.binding.txtbg7,holder.binding.recyclerView7)
-            SetValue(holder.binding.txt8,position,holder.binding.txt888,holder.binding.txtbg8,holder.binding.recyclerView8)
         }
     }
 
@@ -141,7 +141,7 @@ class Play9By9Adapter(
                             txt.show()
                             txt_pos.hide()
                             txt_bg.hide()
-                            txt.text = ""
+//                            txt.text = ""
                             if (prefManager.getCustomParam(SudukoConst.SelectedBox, "")
                                     .equals(position.toString() + str, ignoreCase = true)
                             ) {

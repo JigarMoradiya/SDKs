@@ -21,13 +21,10 @@ import com.jigar.me.internal.service.download.FileDownloadNotificationManager
 import com.jigar.me.ui.view.dashboard.MainDashboardActivity
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
-import com.jigar.me.utils.extensions.openPlayStore
+import com.jigar.me.utils.extensions.openURL
 import com.jigar.me.utils.extensions.openYoutube
 import com.jigar.me.utils.extensions.shareIntent
-import com.onesignal.OSNotificationAction
 import com.onesignal.OneSignal
-//import com.onesignal.OSNotificationAction
-//import com.onesignal.OneSignal
 import com.tonyodev.fetch2.Fetch
 import com.tonyodev.fetch2.FetchConfiguration
 import com.tonyodev.fetch2core.Downloader
@@ -203,7 +200,7 @@ class MyApplication : Application(),Configuration.Provider {
                             this.openYoutube(notification.youtube_url)
                         }
                         Constants.notificationTypeRate -> {
-                            this.openPlayStore()
+                            this.openURL("https://play.google.com/store/apps/details?id=${this.packageName}")
                         }
                         Constants.notificationTypeShare -> {
                             this.shareIntent()

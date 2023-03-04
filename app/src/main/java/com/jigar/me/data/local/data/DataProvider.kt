@@ -30,11 +30,19 @@ object DataProvider {
             add(HomeMenu(AppConstants.HomeClicks.Menu_Exercise,R.drawable.home_menu_exercise))
             add(HomeMenu(AppConstants.HomeClicks.Menu_DailyExam,R.drawable.home_menu_exam))
             add(HomeMenu(AppConstants.HomeClicks.Menu_PractiseMaterial,R.drawable.home_menu_material))
-            add(HomeMenu(AppConstants.HomeClicks.Menu_Sudoku,R.drawable.home_menu_sudoku))
+//            add(HomeMenu(AppConstants.HomeClicks.Menu_Sudoku,R.drawable.home_menu_sudoku))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Number_Puzzle,R.drawable.home_menu_number_sequence))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Click_Youtube,R.drawable.home_menu_tutorial))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Purchase,R.drawable.home_menu_purchase))
-            add(HomeMenu(AppConstants.HomeClicks.Menu_AboutUs,R.drawable.home_menu_about_us))
+//            add(HomeMenu(AppConstants.HomeClicks.Menu_AboutUs,R.drawable.home_menu_about_us))
+        }
+        return list
+    }
+    fun getOtherAppList(): ArrayList<OtherApps> {
+        val list = ArrayList<OtherApps>()
+        with(list) {
+            add(OtherApps(AppConstants.HomeClicks.OtherApp_Number, R.drawable.logo_number,"Number learning with abacus","https://play.google.com/store/apps/details?id=com.abacus.soroban&hl=en&utm_source=ref-abacus&utm_medium=related-app&utm_campaign=app"))
+            add(OtherApps(AppConstants.HomeClicks.OtherApp_Sudoku, R.drawable.logo_sudoku,"Sudoku Puzzle","https://play.google.com/store/apps/details?id=com.sudoku.puzzle.maths.number&hl=en&utm_source=ref-abacus&utm_medium=related-app&utm_campaign=app"))
         }
         return list
     }
