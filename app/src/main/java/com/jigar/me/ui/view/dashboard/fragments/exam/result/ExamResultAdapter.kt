@@ -16,13 +16,7 @@ class ExamResultAdapter(
     private var listData: List<DailyExamData>
 ) : RecyclerView.Adapter<ExamResultAdapter.FormViewHolder>() {
 
-    private lateinit var mCalculator: Calculator
-    fun setData(listData: List<DailyExamData>) {
-        this.listData = listData
-        mCalculator = Calculator()
-        notifyDataSetChanged()
-    }
-
+    private var mCalculator: Calculator = Calculator()
 
     override fun onCreateViewHolder(
         parent: ViewGroup, viewType: Int

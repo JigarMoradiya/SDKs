@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="MissingDefaultResource">
+
+    <RelativeLayout
+        android:id="@+id/relAbacus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivReset"
+            android:layout_width="@dimen/_6sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:layout_alignEnd="@+id/rlAbacusMain"
+            android:layout_marginEnd="@dimen/activity_padding12"
+            app:srcCompat="@drawable/box_primory_accent"
+            app:tint="@color/black" />
+
+        <RelativeLayout
+            android:id="@+id/rlAbacusMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@drawable/bg_abacus_frame"
+            android:gravity="end">
+
+            <RelativeLayout
+                android:id="@+id/rlAbacus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical">
+
+                <FrameLayout
+                    android:id="@+id/flAbacusTop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="@dimen/activity_padding4">
+
+                    <com.jigar.me.ui.view.base.abacus.AbacusMasterView
+                        android:id="@+id/abacusTop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:beadDrawables="@array/bead_top"
+                        app:columnSpacing="@dimen/_24sdp"
+                        app:isBeadStackFromBottom="false"
+                        app:noOfBead="1"
+                        app:roadDrawable="@drawable/road_blue"
+                        app:singleBeadValue="5" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/flAbacusBottom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/rlDivider"
+                    android:paddingHorizontal="@dimen/activity_padding4">
+
+                    <com.jigar.me.ui.view.base.abacus.AbacusMasterView
+                        android:id="@+id/abacusBottom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:beadDrawables="@array/big_bottom"
+                        app:columnSpacing="@dimen/_24sdp"
+                        app:isBeadStackFromBottom="true"
+                        app:noOfBead="4"
+                        app:roadDrawable="@drawable/road_blue"
+                        app:singleBeadValue="1" />
+
+                </FrameLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlDivider"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/flAbacusTop"
+                    android:layout_alignStart="@+id/flAbacusTop"
+                    android:layout_alignEnd="@+id/flAbacusTop">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/two"
+                        android:background="@color/black2" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

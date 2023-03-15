@@ -29,27 +29,21 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_4sdp"
             android:layout_marginTop="@dimen/_13sdp"
-            android:background="@drawable/rect_left_red"
-            android:gravity="right"
-            android:paddingStart="@dimen/seventeen"
-            android:paddingTop="@dimen/_14sdp"
-            android:paddingEnd="@dimen/seventeen"
-            android:paddingBottom="@dimen/_14sdp">
+            android:background="@drawable/bg_abacus_frame_large_half">
 
-            <RelativeLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/rlAbacus"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="@dimen/zero">
+                android:layout_height="wrap_content">
 
                 <FrameLayout
                     android:id="@+id/flAbacusTop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/six"
-                    android:paddingEnd="@dimen/six">
+                    android:paddingHorizontal="@dimen/six"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <com.jigar.me.ui.view.base.abacus.AbacusMasterView
                         android:id="@+id/abacusTop"
@@ -61,14 +55,31 @@
                         app:roadDrawable="@drawable/road_blue"
                         app:singleBeadValue="5" />
                 </FrameLayout>
+                <RelativeLayout
+                    android:id="@+id/rlDivider"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="@+id/flAbacusTop"
+                    app:layout_constraintStart_toStartOf="@+id/flAbacusTop"
+                    app:layout_constraintTop_toBottomOf="@+id/flAbacusTop">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivDivider"
+                        android:layout_marginStart="@dimen/activity_padding4"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/six"
+                        android:background="@color/black2" />
+
+                </RelativeLayout>
 
                 <FrameLayout
                     android:id="@+id/flAbacusBottom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/rlDivider"
-                    android:paddingStart="@dimen/six"
-                    android:paddingEnd="@dimen/six">
+                    android:paddingHorizontal="@dimen/six"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rlDivider">
 
                     <com.jigar.me.ui.view.base.abacus.AbacusMasterView
                         android:id="@+id/abacusBottom"
@@ -85,52 +96,26 @@
                     android:id="@+id/ivRight"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/sixteen"
-                    android:layout_below="@+id/flAbacusTop"
-                    android:layout_marginStart="@dimen/minus_two"
-                    android:layout_marginTop="@dimen/minus_twofive"
-                    android:layout_toEndOf="@+id/rlDivider"
+                    android:layout_marginEnd="-2dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/rlDivider"
+                    app:layout_constraintEnd_toEndOf="@+id/rlDivider"
+                    app:layout_constraintTop_toTopOf="@+id/rlDivider"
                     app:srcCompat="@drawable/road_dot" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ivLeft"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/sixteen"
-                    android:layout_below="@+id/flAbacusTop"
-                    android:layout_marginStart="@dimen/zero"
-                    android:layout_marginTop="@dimen/minus_twofive"
-                    app:srcCompat="@drawable/road_dot"
-                    android:visibility="gone" />
-
-
-                <RelativeLayout
-                    android:id="@+id/rlDivider"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/flAbacusTop"
-                    android:layout_alignStart="@+id/flAbacusTop"
-                    android:layout_alignEnd="@+id/flAbacusTop">
-
-                    <!--android:layout_marginStart="@dimen/twopointfive"-->
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivDivider"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/eight" />
-
-                </RelativeLayout>
-
-            </RelativeLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </RelativeLayout>
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tvCurrentVal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_16sdp"
             android:layout_alignStart="@+id/rlAbacusMain"
             android:layout_alignTop="@+id/rlAbacusMain"
             android:layout_alignEnd="@+id/rlAbacusMain"
-            android:fontFamily="@font/font_bold"
-            android:includeFontPadding="false"
+            android:fontFamily="@font/font_extra_bold"
             android:gravity="center"
+            android:includeFontPadding="false"
             android:text="0"
             android:textColor="@color/white"
             android:textSize="@dimen/textSizeMedium" />
@@ -138,11 +123,11 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/ResettoContinue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_16sdp"
             android:layout_alignStart="@+id/rlAbacusMain"
             android:layout_alignEnd="@+id/rlAbacusMain"
             android:layout_alignBottom="@+id/rlAbacusMain"
-            android:fontFamily="@font/font_bold"
+            android:fontFamily="@font/font_extra_bold"
             android:gravity="center"
             android:maxLines="1"
             android:paddingBottom="@dimen/_1sdp"

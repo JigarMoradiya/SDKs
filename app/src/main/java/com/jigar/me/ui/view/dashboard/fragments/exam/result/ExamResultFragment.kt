@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
@@ -14,15 +17,21 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.BeginnerExamPaper
+import com.jigar.me.data.local.data.BeginnerExamQuestionType
 import com.jigar.me.data.model.dbtable.exam.DailyExamData
 import com.jigar.me.databinding.FragmentExamResultBinding
+import com.jigar.me.databinding.RawExamResultLevel1Binding
 import com.jigar.me.ui.view.base.BaseFragment
+import com.jigar.me.ui.view.base.abacus.AbacusUtils
 import com.jigar.me.utils.AppConstants
+import com.jigar.me.utils.Calculator
+import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
-import com.jigar.me.utils.extensions.isNetworkAvailable
-import com.jigar.me.utils.extensions.onClick
+import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ExamResultFragment : BaseFragment() {
@@ -30,11 +39,11 @@ class ExamResultFragment : BaseFragment() {
     private lateinit var binding: FragmentExamResultBinding
     private lateinit var mNavController: NavController
     private var examResult = ""
+    private var examAbacusTheme = AppConstants.Settings.theam_Default
     private var listAbacus: List<DailyExamData> = ArrayList<DailyExamData>()
     private var listAbacusLevel1: List<BeginnerExamPaper> = ArrayList<BeginnerExamPaper>()
+    private var mCalculator: Calculator = Calculator()
 
-    private val dailyExamResultAdapter: ExamResultAdapter = ExamResultAdapter(arrayListOf())
-    private val dailyExamResultLevel1Adapter: ExamResultLevel1Adapter = ExamResultLevel1Adapter(arrayListOf())
     private var examType = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,20 +66,29 @@ class ExamResultFragment : BaseFragment() {
 
     private fun init() {
         if (examType == Constants.examLevelBeginner){
-            binding.recyclerviewResult.layoutManager = LinearLayoutManager(requireContext())
-            binding.recyclerviewResult.adapter = dailyExamResultLevel1Adapter
+            examAbacusTheme = requireArguments().getString(AppConstants.Extras_Comman.examAbacusType, AppConstants.Settings.theam_Default)
+            prefManager.setCustomParam(AppConstants.Settings.TheamTempView, examAbacusTheme)
             val type = object : TypeToken<List<BeginnerExamPaper>>() {}.type
             listAbacusLevel1 = Gson().fromJson(examResult, type)
-            dailyExamResultLevel1Adapter.setData(listAbacusLevel1)
+
+            binding.recyclerviewResult.layoutManager = LinearLayoutManager(requireContext())
+            binding.recyclerviewResult.setHasFixedSize(true)
+            binding.recyclerviewResult.itemAnimator = null
+            binding.recyclerviewResult.setItemViewCacheSize(listAbacusLevel1.size)
+
+            val dailyExamResultLevel1Adapter = ExamResultLevel1Adapter(listAbacusLevel1,examAbacusTheme,lifecycleScope)
+            binding.recyclerviewResult.adapter = dailyExamResultLevel1Adapter
+
         }else{
-            binding.recyclerviewResult.adapter = dailyExamResultAdapter
             val type = object : TypeToken<List<DailyExamData>>() {}.type
             listAbacus = Gson().fromJson(examResult, type)
-            dailyExamResultAdapter.setData(listAbacus)
+            val dailyExamResultAdapter = ExamResultAdapter(listAbacus)
+            binding.recyclerviewResult.adapter = dailyExamResultAdapter
         }
 
         ads()
     }
+
     private fun clickListener() {
         binding.cardBack.onClick { mNavController.navigateUp() }
     }

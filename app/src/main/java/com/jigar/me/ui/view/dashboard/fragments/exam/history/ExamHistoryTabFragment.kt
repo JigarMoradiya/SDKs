@@ -73,6 +73,7 @@ class ExamHistoryTabFragment : BaseFragment(), ExamHistoryListAdapter.OnItemClic
         val bundle = Bundle()
         if (data.examType == Constants.examLevelBeginner){
             bundle.putString(AppConstants.Extras_Comman.examResult, Gson().toJson(data.examBeginners))
+            bundle.putString(AppConstants.Extras_Comman.examAbacusType, data.theme?:AppConstants.Settings.theam_Default)
         }else{
             bundle.putString(AppConstants.Extras_Comman.examResult, Gson().toJson(data.examDetails))
         }

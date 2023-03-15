@@ -1,13 +1,24 @@
 <resources>
     <dimen name="bead_dimens">@dimen/_22sdp</dimen>
     <dimen name="bead_dimens_width">@dimen/_40sdp</dimen>
+    <dimen name="bead_dimens_extra_space">@dimen/_3sdp</dimen>
+
+    <dimen name="bead_dimens_exam">@dimen/_10sdp</dimen>
+    <dimen name="bead_dimens_width_exam">@dimen/_18sdp</dimen>
+    <dimen name="bead_dimens_extra_space_exam">@dimen/_2sdp</dimen>
+
+    <dimen name="bead_dimens_exam_result">@dimen/_8sdp</dimen>
+    <dimen name="bead_dimens_width_exam_result">@dimen/_14sdp</dimen>
+    <dimen name="bead_dimens_extra_space_exam_result">@dimen/_1sdp</dimen>
 
     <dimen name="minus_two">-2.00dp</dimen>
     <dimen name="minus_twofive">-4dp</dimen>
     <dimen name="eight_dp">@dimen/four</dimen>
     <dimen name="zero">0.00dp</dimen>
     <dimen name="two">2.00dp</dimen>
+    <dimen name="three">3.00dp</dimen>
     <dimen name="four">4.00dp</dimen>
+    <dimen name="five">5.00dp</dimen>
     <dimen name="six">6.00dp</dimen>
     <dimen name="eight">8.00dp</dimen>
     <dimen name="ten">10.00dp</dimen>

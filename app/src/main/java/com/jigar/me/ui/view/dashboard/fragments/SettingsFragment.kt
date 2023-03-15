@@ -19,12 +19,11 @@ import com.jigar.me.utils.extensions.toastS
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SettingsFragment : BaseFragment(), OtherAppAdapter.OnItemClickListener {
+class SettingsFragment : BaseFragment() {
     private lateinit var binding: FragmentSettingsBinding
     private var isPurchased = false
     private lateinit var mNavController: NavController
 
-    private lateinit var otherAppAdapter: OtherAppAdapter
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         setNavigationGraph()
@@ -48,12 +47,6 @@ class SettingsFragment : BaseFragment(), OtherAppAdapter.OnItemClickListener {
         setTheme()
         setAbacusAnswer()
 
-        otherAppAdapter = OtherAppAdapter(DataProvider.getOtherAppList(),this)
-        binding.recyclerviewOtherApps.adapter = otherAppAdapter
-    }
-
-    override fun onItemOtherAppClick(data: OtherApps) {
-        requireContext().openURL(data.url)
     }
 
     private fun initListener() {
@@ -74,9 +67,6 @@ class SettingsFragment : BaseFragment(), OtherAppAdapter.OnItemClickListener {
         binding.relAutoReset.onClick { onOnOffClick(AppConstants.Settings.Setting_auto_reset_abacus,binding.isAutoReset) }
         binding.swAutoReset.onClick { onOnOffClick(AppConstants.Settings.Setting_auto_reset_abacus,binding.isAutoReset) }
 
-        binding.relSudokuSound.onClick { onOnOffClick(AppConstants.Settings.Setting_SudokuVolume,binding.isSudokuSound) }
-        binding.swSudokuSound.onClick { onOnOffClick(AppConstants.Settings.Setting_SudokuVolume,binding.isSudokuSound) }
-
         binding.relNumberPuzzleSound.onClick { onOnOffClick(AppConstants.Settings.Setting_NumberPuzzleVolume,binding.isNumberPuzzleSound) }
         binding.swNumberPuzzleSound.onClick { onOnOffClick(AppConstants.Settings.Setting_NumberPuzzleVolume,binding.isNumberPuzzleSound) }
 
@@ -90,7 +80,7 @@ class SettingsFragment : BaseFragment(), OtherAppAdapter.OnItemClickListener {
         binding.swHideTable.onClick { onOnOffClick(AppConstants.Settings.Setting_hide_table,binding.isHideTable) }
 
         binding.relLeftHand.onClick { onOnOffClick(AppConstants.Settings.Setting_left_hand,binding.isLeftHand) }
-        binding.swLeftHand.onClick { onOnOffClick(AppConstants.Settings.Setting_hide_table,binding.isLeftHand) }
+        binding.swLeftHand.onClick { onOnOffClick(AppConstants.Settings.Setting_left_hand,binding.isLeftHand) }
 
         binding.relAnswerStep.onClick { onAbacusAnswerClick(AppConstants.Settings.Setting_answer_Step) }
         binding.relAnswerFinal.onClick { onAbacusAnswerClick(AppConstants.Settings.Setting_answer_Final) }
@@ -112,8 +102,6 @@ class SettingsFragment : BaseFragment(), OtherAppAdapter.OnItemClickListener {
 
             binding.isAutoReset = getCustomParamBoolean(AppConstants.Settings.Setting_auto_reset_abacus, false)
 
-            binding.isSudokuSound = getCustomParam(AppConstants.Settings.Setting_SudokuVolume, "y") == "y"
-
             binding.isNumberPuzzleSound = getCustomParamBoolean(AppConstants.Settings.Setting_NumberPuzzleVolume, true)
         }
 
@@ -132,13 +120,7 @@ class SettingsFragment : BaseFragment(), OtherAppAdapter.OnItemClickListener {
     }
 
     private fun onOnOffClick(type: String, isChecked: Boolean?) {
-        if (type == AppConstants.Settings.Setting_SudokuVolume){
-            if (isChecked == true){
-                prefManager.setCustomParam(AppConstants.Settings.Setting_SudokuVolume,"n")
-            }else{
-                prefManager.setCustomParam(AppConstants.Settings.Setting_SudokuVolume,"y")
-            }
-        }else if (type == AppConstants.Settings.Setting__hint_sound){
+       if (type == AppConstants.Settings.Setting__hint_sound){
             if (isChecked == true){
                 prefManager.setCustomParamBoolean(type, false)
             }else{

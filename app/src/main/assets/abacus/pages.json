@@ -141,6 +141,13 @@
         "page_id": "98",
         "PageName": "+1=-4+5",
         "SortDesc": "Twist of +5 with -4"
+      },
+      {
+        "page_id": "111",
+        "PageName": "Random",
+        "SortDesc": "Random of +5",
+        "hint": "+4 = -1+5<br/>+3 = -2+5<br/>+2 = -3+5<br/>+1 = -4+5",
+        "file": "abacus_new.json"
       }
     ]
   },
@@ -168,6 +175,13 @@
         "page_id": "102",
         "PageName": "-1=-5+4",
         "SortDesc": "Twist of -5 with +4"
+      },
+      {
+        "page_id": "112",
+        "PageName": "Random",
+        "SortDesc": "Random of -5",
+        "hint": "-4 = -5+1<br/>-3 = -5+2<br/>-2 = -5+3<br/>-1 = -5+4",
+        "file": "abacus_new.json"
       }
     ]
   },
@@ -220,6 +234,13 @@
         "page_id": "91",
         "PageName": "+1=-9+10",
         "SortDesc": "Twist of +10 with -9"
+      },
+      {
+        "page_id": "113",
+        "PageName": "Random",
+        "SortDesc": "Random of +10",
+        "hint": "+9 = -1+10<br/>+8 = -2+10<br/>+7 = -3+10<br/>+6 = -4+10<br/>+5 = -5+10<br/>+4 = -6+10<br/>+3 = -7+10<br/>+2 = -8+10<br/>+1 = -9+10",
+        "file": "abacus_new.json"
       }
     ]
   },
@@ -247,6 +268,13 @@
         "page_id": "106",
         "PageName": "+6=+1-5+10",
         "SortDesc": "Twist of -5 and +10 with +1"
+      },
+      {
+        "page_id": "114",
+        "PageName": "Random",
+        "SortDesc": "Random of -5+10",
+        "hint": "+9 = +4-5+10<br/>+8 = +3-5+10<br/>+7 = +2-5+10<br/>+6 = +1-5+10",
+        "file": "abacus_new.json"
       }
     ]
   },
@@ -299,6 +327,13 @@
         "page_id": "94",
         "PageName": "-1=-10+9",
         "SortDesc": "Twist of -10 with +9"
+      },
+      {
+        "page_id": "115",
+        "PageName": "Random",
+        "SortDesc": "Random of -10",
+        "hint": "-9 = -10+1<br/>-8 = -10+2<br/>-7 = -10+3<br/>-6 = -10+4<br/>-5 = -10+5<br/>-4 = -10+6<br/>-3 = -10+7<br/>-2 = -10+8<br/>-1 = -10+9",
+        "file": "abacus_new.json"
       }
     ]
   },
@@ -326,6 +361,13 @@
         "page_id": "110",
         "PageName": "-6=-10+5-1",
         "SortDesc": "Twist of -10 and +5 with -1"
+      },
+      {
+        "page_id": "116",
+        "PageName": "Random",
+        "SortDesc": "Random of -10",
+        "hint": "-9=-10+5-4<br/>-8=-10+5-3<br/>-7=-10+5-2<br/>-6=-10+5-1",
+        "file": "abacus_new.json"
       }
     ]
   }

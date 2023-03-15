@@ -207,7 +207,8 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
         val bundle = Bundle()
         bundle.putString(AppConstants.Extras_Comman.AbacusType,AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction)
         bundle.putString(AppConstants.apiParams.pageId,data.page_id)
-        bundle.putInt(AppConstants.apiParams.total,data.total_abacus?.toInt()?:0)
+        bundle.putString(AppConstants.apiParams.hint,data.hint)
+        bundle.putString(AppConstants.apiParams.file,data.file)
         mNavController.navigate(R.id.action_pageFragment_to_halfAbacusFragment, bundle)
     }
 }

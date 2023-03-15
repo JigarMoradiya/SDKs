@@ -2,10 +2,7 @@ package com.jigar.me.ui.view.base.abacus
 
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.PixelFormat
-import android.graphics.PorterDuff
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +13,7 @@ import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.ui.view.base.abacus.AbacusMasterSound.playClickSound
 import com.jigar.me.ui.view.base.abacus.AbacusMasterSound.playResetSound
@@ -28,7 +26,7 @@ import com.jigar.me.utils.AppConstants
 class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     SurfaceView(context, attrs), SurfaceHolder.Callback {
     private val fireAccumulator = 0L
-
+    var canvasTemp: Canvas? = null
     internal inner class DrawThread(surfaceHolder: SurfaceHolder?) : Thread() {
         private var isSingleDraw = false
         private var isPaused = false
@@ -103,15 +101,19 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                     } catch (e: IllegalArgumentException) {
                         e.printStackTrace()
                     } finally {
-                        if (c != null) mSurfaceHolder?.unlockCanvasAndPost(c)
-                        if (isSingleDraw) {
-                            isSingleDraw = false
-                            if (onSingleDrawingCompletedListener != null) {
-                                onSingleDrawingCompletedListener?.onSingleDrawingCompleted()
-                                onSingleDrawingCompletedListener = null
-                            } else {
-                                isSleep = true
+                        try {
+                            if (c != null) mSurfaceHolder?.unlockCanvasAndPost(c)
+                            if (isSingleDraw) {
+                                isSingleDraw = false
+                                if (onSingleDrawingCompletedListener != null) {
+                                    onSingleDrawingCompletedListener?.onSingleDrawingCompleted()
+                                    onSingleDrawingCompletedListener = null
+                                } else {
+                                    isSleep = true
+                                }
                             }
+                        } catch (e: IllegalStateException) {
+                        } catch (e: Exception) {
                         }
                     }
                 }
@@ -138,6 +140,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     private var beadState: AbacusMasterEngine.BeadState? = null
     private var defaultState: AbacusMasterEngine.BeadState? = null
     internal var noOfColumn = 1
+    private var beadType = AbacusBeadType.Exam
     private var noOfRows_used = 9
     private val isBeadStackFromBottom: Boolean
     private val beadDrawables: Array<Drawable?>
@@ -151,38 +154,48 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     private var selectedPositions: ArrayList<Int>? = null
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        canvasTemp = canvas
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setNoOfRowAndBeads(noOfRows_used, noOfColumn, noOfBeads, colSpacing)
+        setNoOfRowAndBeads(noOfRows_used, noOfColumn, noOfBeads, colSpacing,beadType)
     }
 
     fun getNoOfColumn(): Int {
         return noOfColumn
     }
 
-    fun setNoOfBeads(noOfBeads: Int) {
-        setBeads(noOfBeads)
-        invalidate()
-    }
+//    fun setNoOfBeads(noOfBeads: Int) {
+//        setBeads(noOfBeads)
+//        invalidate()
+//    }
 
     private fun setBeads(noOfBeads: Int) {
         this.noOfBeads = noOfBeads
         if (beadDrawables.isNotEmpty()) {
-            ExtraHeight = context.resources.getDimension(R.dimen.eight_dp).toInt()
+
             // size set manually
 //            layoutParams.height = beadDrawables[0]!!.minimumHeight * (noOfBeads + 1) + ExtraHeight
-            val sizes = resources.getDimension(R.dimen.bead_dimens).toInt()
-            layoutParams.height = sizes * (noOfBeads + 1) + ExtraHeight
+            val sizes = if (beadType == AbacusBeadType.Exam){
+                extraHeight = context.resources.getDimension(R.dimen.bead_dimens_extra_space_exam).toInt()
+                resources.getDimension(R.dimen.bead_dimens_exam).toInt()
+            }else if (beadType == AbacusBeadType.ExamResult){
+                extraHeight = context.resources.getDimension(R.dimen.bead_dimens_extra_space_exam_result).toInt()
+                resources.getDimension(R.dimen.bead_dimens_exam_result).toInt()
+            }else{
+                extraHeight = context.resources.getDimension(R.dimen.bead_dimens_extra_space).toInt()
+                resources.getDimension(R.dimen.bead_dimens).toInt()
+            }
+            layoutParams.height = sizes * (noOfBeads + 1) + extraHeight
             layoutParams = layoutParams
         }
     }
 
-    fun setNoOfColumn(noOfColumn: Int) {
-        setRow(noOfColumn)
-        invalidate()
-    }
+//    fun setNoOfColumn(noOfColumn: Int) {
+//        setRow(noOfColumn)
+//        invalidate()
+//    }
 
     private fun setRow(noOfRows: Int) {
         noOfColumn = noOfRows
@@ -191,25 +204,43 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
 //            layoutParams.width = (beadDrawables[0]!!.minimumWidth + colSpacing) * noOfRows
             val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
                 AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
-                val sizes = context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
-                layoutParams.width = (sizes + colSpacing) * noOfRows
+            if (beadType == AbacusBeadType.Exam){
+                if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                    val sizes = context.resources.getDimension(R.dimen.bead_dimens_width_exam).toInt()
+                    layoutParams.width = (sizes + colSpacing) * noOfRows
+                }else{
+                    val sizes = resources.getDimension(R.dimen.bead_dimens_exam).toInt()
+                    layoutParams.width = (sizes + colSpacing) * noOfRows
+                }
+            }else if (beadType == AbacusBeadType.ExamResult){
+                if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                    val sizes = context.resources.getDimension(R.dimen.bead_dimens_width_exam_result).toInt()
+                    layoutParams.width = (sizes + colSpacing) * noOfRows
+                }else{
+                    val sizes = resources.getDimension(R.dimen.bead_dimens_exam_result).toInt()
+                    layoutParams.width = (sizes + colSpacing) * noOfRows
+                }
             }else{
-                val sizes = resources.getDimension(R.dimen.bead_dimens).toInt()
-                layoutParams.width = (sizes + colSpacing) * noOfRows
+                if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                    val sizes = context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
+                    layoutParams.width = (sizes + colSpacing) * noOfRows
+                }else{
+                    val sizes = resources.getDimension(R.dimen.bead_dimens).toInt()
+                    layoutParams.width = (sizes + colSpacing) * noOfRows
+                }
             }
+
             layoutParams = layoutParams
         }
     }
 
-    fun setNoOfRowAndBeads(noOfRows_used: Int, noOfRows: Int, noOfBeads: Int, columnSpacing: Int) {
+    fun setNoOfRowAndBeads(noOfRows_used: Int, noOfRows: Int, noOfBeads: Int, columnSpacing: Int, beadType : AbacusBeadType = AbacusBeadType.None) {
 //        defaultState = null;
+        this.beadType = beadType
         this.noOfRows_used = noOfRows_used
         colSpacing = columnSpacing
         setRow(noOfRows)
         setBeads(noOfBeads)
-
-
 //        postInvalidate();
     }
 
@@ -219,6 +250,10 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             if (engine != null) engine?.draw(canvas)
         } catch (e: Exception) {
         }
+    }
+
+    fun clearView(){
+        invalidate()
     }
 
     @Synchronized
@@ -254,7 +289,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                     engine = AbacusMasterEngine(
                         it, noOfColumn, noOfBeads, singleBeadValue,
                         context, roadDrawable, selectedBeadDrawable, beadDrawables, isBeadStackFromBottom,
-                        colSpacing, noOfRows_used
+                        colSpacing, noOfRows_used,extraHeight,beadType
                     )
                 }
                 if (beadState != null) {
@@ -300,6 +335,8 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
 
     override fun surfaceCreated(holder: SurfaceHolder) {
         setWillNotDraw(false)
+        // z axis
+        setZOrderOnTop(false)
         isInitialized = true
     }
 
@@ -333,6 +370,9 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     private var prevY = -1
     private var diffTouchAndDrawY = 0
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (beadType == AbacusBeadType.Exam){
+            return false
+        }
         return try {
             when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -571,7 +611,8 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     }
 
     companion object {
-        var ExtraHeight = 0
+        var extraHeight = 0
+        var beadDimesions = 0
     }
 
     init {

@@ -14,6 +14,7 @@ import com.jigar.me.data.local.db.Migrations.MIGRATION_3_4
 import com.jigar.me.data.local.db.Migrations.MIGRATION_4_5
 import com.jigar.me.data.local.db.Migrations.MIGRATION_5_6
 import com.jigar.me.data.local.db.Migrations.MIGRATION_6_7
+import com.jigar.me.data.local.db.Migrations.MIGRATION_7_8
 import com.jigar.me.data.local.db.exam.ExamHistoryDB
 import com.jigar.me.data.local.db.exam.ExamHistoryDao
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
@@ -61,7 +62,7 @@ object AppModule {
     fun providesDatabase(@ApplicationContext context: Context): AppDatabase =
         Room.databaseBuilder(context, AppDatabase::class.java, AppConstants.DB_NAME)
 //            .fallbackToDestructiveMigration()
-            .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7)
+            .addMigrations(MIGRATION_1_2,MIGRATION_2_3,MIGRATION_3_4,MIGRATION_4_5,MIGRATION_5_6,MIGRATION_6_7,MIGRATION_7_8)
             .build()
 
     @Provides

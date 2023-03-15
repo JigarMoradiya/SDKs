@@ -6,8 +6,9 @@ import android.content.Context
 import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Handler
-import android.util.Log
+import android.os.Looper
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
 import java.io.Serializable
@@ -18,22 +19,20 @@ class AbacusMasterEngine(
     private val numColumns: Int,
     private val noOfBeads: Int,
     private val singleBeadValue: Int,
-    context: Context,
+    private val context: Context,
     roadDrawable: Drawable?,
     selectedBeadDrawable: Drawable?,
     beads: Array<Drawable?>,
     isBeadStackFromBottom: Boolean,
     private val colSpacing: Int,
-    noOfRows_used: Int
+    noOfRows_used: Int,
+    extraHeight : Int = 0,
+    private val beadType : AbacusBeadType
 ) {
     class BeadState : Serializable {
         var numRows = 0
         var numBeads = 0
         lateinit var positions: Array<DoubleArray>
-
-        companion object {
-            const val serialVersionUID = 3121933153069222515L
-        }
     }
 
     interface OnStateResetCompletedListener {
@@ -42,8 +41,6 @@ class AbacusMasterEngine(
 
     private var position: Point? = null
     private var rows: Array<AbacusMasterRowEngine?> = arrayOfNulls(numColumns)
-    private var paint: Paint? = null
-    private var paintBorder: Paint? = null
     private var beadHeight = 0
     private var beadWidth = 0
     private var borderWidth = 0
@@ -51,23 +48,50 @@ class AbacusMasterEngine(
     private var canvas : Canvas?= null
 
     init {
-        val beadDrawable = beads[0]
+//        val beadDrawable = beads[0]
 //        beadWidth = beadDrawable!!.minimumWidth + colSpacing
 //        beadHeight = beadDrawable.minimumHeight
 
         // size set manually
-        val sizes = context.resources.getDimension(R.dimen.bead_dimens).toInt()
+        if (beadType == AbacusBeadType.Exam){
+            val sizes = context.resources.getDimension(R.dimen.bead_dimens_exam).toInt()
 
-        val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
-            AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-        val sizes_width = if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
-            context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
+            val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
+                AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
+            val sizes_width = if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                context.resources.getDimension(R.dimen.bead_dimens_width_exam).toInt()
+            }else{
+                sizes
+            }
+
+            beadWidth = sizes_width + colSpacing
+            beadHeight = sizes
+        }else  if (beadType == AbacusBeadType.ExamResult){
+            val sizes = context.resources.getDimension(R.dimen.bead_dimens_exam_result).toInt()
+            val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
+                AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
+            val sizes_width = if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                context.resources.getDimension(R.dimen.bead_dimens_width_exam_result).toInt()
+            }else{
+                sizes
+            }
+            beadWidth = sizes_width + colSpacing
+            beadHeight = sizes
         }else{
-            sizes
+            val sizes = context.resources.getDimension(R.dimen.bead_dimens).toInt()
+
+            val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
+                AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
+            val sizes_width = if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
+            }else{
+                sizes
+            }
+
+            beadWidth = sizes_width + colSpacing
+            beadHeight = sizes
         }
 
-        beadWidth = sizes_width + colSpacing
-        beadHeight = sizes
 
         borderWidth = 1
         rowHeight = 11 * beadHeight
@@ -89,16 +113,11 @@ class AbacusMasterEngine(
                 roadDrawable,
                 selectedBeadDrawable,
                 noOfRows_used,
-                numColumns
+                numColumns,
+                extraHeight,
+                beadType
             )
         }
-        paint = Paint()
-        paint!!.color = Color.argb(255, 188, 157, 118) // brownish
-        paint!!.style = Paint.Style.FILL
-        paintBorder = Paint()
-        paintBorder!!.color = Color.argb(255, 100, 255, 0) // brownish
-        paintBorder!!.style = Paint.Style.STROKE
-        paintBorder!!.strokeWidth = 8f
     }
 
     fun setSelectedPositions(selectedPosition: ArrayList<Int>) {
@@ -108,7 +127,7 @@ class AbacusMasterEngine(
             rowPosition.x = position!!.x + i * beadWidth
             rowPosition.y = position!!.y
             if (rows[i] != null) {
-                rows[i]!!.setSelectedPosition(selectedPositions[i])
+                rows[i]?.setSelectedPosition(selectedPositions[i])
             }
         }
     }
@@ -154,8 +173,13 @@ class AbacusMasterEngine(
     fun draw(canvass: Canvas?) {
         this.canvas = canvass
         var i = 1
+        val beadPaint = Paint()
+        beadPaint.color = Color.WHITE
+        beadPaint.style = Paint.Style.FILL
+        canvas?.drawPaint(beadPaint)
+
         for (r in rows) {
-            r!!.draw(canvas, i == rows.size, colSpacing, i)
+            r?.draw(canvas, i == rows.size, colSpacing, i)
             i++
         }
     }
@@ -210,17 +234,14 @@ class AbacusMasterEngine(
             valueAnimator.start()
         } else {
             setState(beadState)
-            Handler().postDelayed({ onStateResetCompletedListener!!.onStateResetCompleted() }, 3)
+            Handler(Looper.getMainLooper()).postDelayed({ onStateResetCompletedListener!!.onStateResetCompleted() }, 3)
         }
     }
 
     fun setState(beadState: BeadState) {
         for (i in 0 until beadState.numRows) {
             for (j in 0 until beadState.numBeads) {
-                rows[i]!!.moveBeadToInternal(
-                    j,
-                    (beadState.positions[i][j] * rowHeight).toInt()
-                )
+                rows[i]?.moveBeadToInternal(j, (beadState.positions[i][j] * rowHeight).toInt())
             }
         }
     }

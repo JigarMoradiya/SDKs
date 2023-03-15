@@ -20,6 +20,8 @@ data class AdditionSubtractionPage(
     var PageName: String? = null,
     @SerializedName("SortDesc")
     var SortDesc: String? = null,
-    @SerializedName("total_abacus")
-    var total_abacus: String? = null
+    @SerializedName("hint")
+    var hint: String? = null,
+    @SerializedName("file")
+    var file: String? = null
 )

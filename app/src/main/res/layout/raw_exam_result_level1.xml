@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_padding6"
-        app:cardBackgroundColor="@color/card_bg"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/card_corner_radius"
         app:cardElevation="@dimen/card_elevation4">
 
@@ -16,6 +16,34 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/activity_padding12">
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:id="@+id/relAbacus"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <include layout="@layout/layout_abacus_exam"
+                    android:id="@+id/layoutAbacus1"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgSign1"
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_16sdp"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="@dimen/activity_padding16"
+                    android:tint="@color/red"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/cal_plus"
+                    tools:visibility="visible" />
+
+                <include layout="@layout/layout_abacus_exam"
+                    android:id="@+id/layoutAbacus2"/>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearQuestion"
                 android:layout_width="0dp"

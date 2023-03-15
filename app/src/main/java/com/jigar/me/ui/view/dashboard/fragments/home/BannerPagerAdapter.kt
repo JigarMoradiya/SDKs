@@ -20,21 +20,11 @@ class BannerPagerAdapter(var listData: ArrayList<HomeBanner>,
         fun onBannerItemClick(data: HomeBanner)
     }
 
-    fun addOfferBanner(data : HomeBanner){
-        listData.filter { it.type == AppConstants.HomeBannerTypes.banner_offer }.also {
-            if (it.isNullOrEmpty()){
-                listData.add(0,data)
-//                listData.shuffle()
-                notifyDataSetChanged()
-            }
-        }
-    }
 
     fun addPurchaseBanner(data : HomeBanner){
         listData.filter { it.type == AppConstants.HomeBannerTypes.banner_purchase }.also {
             if (it.isNullOrEmpty()){
                 listData.add(data)
-//                listData.shuffle()
                 notifyDataSetChanged()
             }
         }

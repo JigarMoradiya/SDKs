@@ -163,16 +163,18 @@ fun Context.downloadFilePath() : String?{
     return folder.path
 }
 
- fun Context.readJsonAsset(fileName: String): String {
-    return try {
-        val inputStream = assets.open("abacus/$fileName")
-        val size = inputStream.available()
-        val buffer = ByteArray(size)
-        inputStream.read(buffer)
-        inputStream.close()
-        String(buffer, Charsets.UTF_8)
-    } catch (e: IOException) {
-        println(e.printStackTrace())
-        ""
-    }
+ fun Context.readJsonAsset(fileName: String?): String {
+    return if (!fileName.isNullOrEmpty()){
+        try {
+            val inputStream = assets.open("abacus/$fileName")
+            val size = inputStream.available()
+            val buffer = ByteArray(size)
+            inputStream.read(buffer)
+            inputStream.close()
+            String(buffer, Charsets.UTF_8)
+        } catch (e: IOException) {
+            println(e.printStackTrace())
+            ""
+        }
+    }else{""}
 }

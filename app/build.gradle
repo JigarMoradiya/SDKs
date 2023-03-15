@@ -17,8 +17,8 @@ android {
         applicationId 'com.jigar.me'
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 76
-        versionName "7.0.6"
+        versionCode 77
+        versionName "7.0.7"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -100,11 +100,11 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.20'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.3'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     // screen size according size
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
@@ -125,9 +125,6 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03"
     kapt "androidx.hilt:hilt-compiler:1.0.0"
     kapt "com.google.dagger:hilt-android-compiler:2.38"
-    // work manager
-    implementation 'androidx.hilt:hilt-work:1.0.0'
-    implementation 'androidx.work:work-runtime-ktx:2.7.1'
 
     //coroutine
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
@@ -174,7 +171,7 @@ dependencies {
     // Download Manger Library
     implementation "androidx.tonyodev.fetch2:xfetch2:3.1.6"
     implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.6"
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.9.0'
 
     // Android Lighter library
     implementation 'me.samlss:lighter:1.0.3'

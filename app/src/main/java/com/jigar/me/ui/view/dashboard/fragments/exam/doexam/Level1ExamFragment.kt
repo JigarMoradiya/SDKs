@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,20 +23,15 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.MyApplication
 import com.jigar.me.R
-import com.jigar.me.data.local.data.BeginnerExamPaper
-import com.jigar.me.data.local.data.BeginnerExamQuestionType
-import com.jigar.me.data.local.data.DataObjectsSize
-import com.jigar.me.data.local.data.DataProvider
+import com.jigar.me.data.local.data.*
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.databinding.FragmentExamLevel1Binding
 import com.jigar.me.ui.view.base.BaseFragment
+import com.jigar.me.ui.view.base.abacus.AbacusUtils
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.ExamCompleteDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
-import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.Calculator
-import com.jigar.me.utils.CommonUtils
-import com.jigar.me.utils.Constants
+import com.jigar.me.utils.*
 import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -54,6 +50,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
     private var currentQuestionPos = 0
     private var totalWrong = 0
     private var correctAns = ""
+    private var theme = ""
     private var examLevel = "1"
     private var examLevelLable = Constants.examLevelBeginner
     private lateinit var mCalculator: Calculator
@@ -77,10 +74,14 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
     private fun init() {
         mCalculator = Calculator()
         handler = Handler(Looper.getMainLooper())
+
         getAndStartExam()
     }
 
     private fun getAndStartExam(){
+        lifecycleScope.launch {
+            theme = AbacusUtils.setAbacusColumn(prefManager,AbacusBeadType.Exam,mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom,mBinding.layoutAbacus2.abacusTop,mBinding.layoutAbacus2.abacusBottom)
+        }
         if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
             listExam = DataProvider.generateBegginerExamPaper(requireContext(),examLevel )
             prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,Gson().toJson(listExam))
@@ -173,64 +174,126 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
             mBinding.imgSign.hide()
 
             if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Count){
-                val str = getString(R.string.count_the)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
+                val str = getString(R.string.count_the)+" <b><font color='#E14A4D'>Abacus Beads</font></b>"
                 mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
-                var list1ImageCount = 0
-                var list2ImageCount = 0
-                val totalCount = listExam[currentQuestionPos].value.toInt()
-                if (totalCount > 10){
-                    list1ImageCount = totalCount/2
-                    list2ImageCount = totalCount - list1ImageCount
-                }else if (totalCount < 6){
-                    list1ImageCount = totalCount
-                }else{
-                    list1ImageCount = 5
-                    list2ImageCount = totalCount - 5
-                }
-                val size = if (list1ImageCount < 5 && list2ImageCount == 0){
-                    DataObjectsSize.Large
-                }else if (list1ImageCount == 5 && list2ImageCount == 0){
-                    DataObjectsSize.Medium
-                }else{
-                    DataObjectsSize.Small
-                }
-                if (list1ImageCount > 0){
-                    objectListAdapter1= ObjectListAdapter(list1ImageCount, listExam[currentQuestionPos].imageData,size)
-                    mBinding.recyclerviewObjects1.layoutManager = GridLayoutManager(requireContext(),list1ImageCount)
-                    mBinding.recyclerviewObjects1.adapter = objectListAdapter1
-                }
-                if (list2ImageCount > 0){
-                    objectListAdapter2= ObjectListAdapter(list2ImageCount, listExam[currentQuestionPos].imageData,size)
-                    mBinding.recyclerviewObjects2.layoutManager = GridLayoutManager(requireContext(),list2ImageCount)
-                    mBinding.recyclerviewObjects2.adapter = objectListAdapter2
-                    mBinding.recyclerviewObjects2.show()
-                    mBinding.spaceBetween.show()
-                }
 
+                if (listExam[currentQuestionPos].isAbacusQuestion == true){
+                    mBinding.linearQuestion.hide()
+                    mBinding.relAbacus.show()
+                    mBinding.layoutAbacus1.relAbacus.show()
+                    mBinding.layoutAbacus2.relAbacus.hide()
+                    mBinding.layoutAbacus2.abacusTop.hide()
+                    mBinding.layoutAbacus2.abacusBottom.hide()
+                    mBinding.layoutAbacus1.abacusTop.show()
+                    mBinding.layoutAbacus1.abacusBottom.show()
+                    mBinding.imgSign1.hide()
+                    lifecycleScope.launch {
+                        AbacusUtils.setNumber(listExam[currentQuestionPos].value,mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom)
+                    }
+                }else{
+                    mBinding.layoutAbacus1.relAbacus.hide()
+                    mBinding.layoutAbacus2.relAbacus.hide()
+                    mBinding.layoutAbacus1.abacusTop.hide()
+                    mBinding.layoutAbacus1.abacusBottom.hide()
+                    mBinding.layoutAbacus2.abacusTop.hide()
+                    mBinding.layoutAbacus2.abacusBottom.hide()
+                    mBinding.relAbacus.hide()
+                    mBinding.linearQuestion.show()
+                    val str = getString(R.string.count_the)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
+                    mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
 
+                    var list1ImageCount = 0
+                    var list2ImageCount = 0
+                    val totalCount = listExam[currentQuestionPos].value.toInt()
+                    if (totalCount > 10){
+                        list1ImageCount = totalCount/2
+                        list2ImageCount = totalCount - list1ImageCount
+                    }else if (totalCount < 6){
+                        list1ImageCount = totalCount
+                    }else{
+                        list1ImageCount = 5
+                        list2ImageCount = totalCount - 5
+                    }
+                    val size = if (list1ImageCount < 5 && list2ImageCount == 0){
+                        DataObjectsSize.Large
+                    }else if (list1ImageCount == 5 && list2ImageCount == 0){
+                        DataObjectsSize.Medium
+                    }else{
+                        DataObjectsSize.Small
+                    }
+
+                    if (list1ImageCount > 0){
+                        objectListAdapter1= ObjectListAdapter(list1ImageCount, listExam[currentQuestionPos].imageData,size)
+                        mBinding.recyclerviewObjects1.layoutManager = GridLayoutManager(requireContext(),list1ImageCount)
+                        mBinding.recyclerviewObjects1.adapter = objectListAdapter1
+                    }
+                    if (list2ImageCount > 0){
+                        objectListAdapter2= ObjectListAdapter(list2ImageCount, listExam[currentQuestionPos].imageData,size)
+                        mBinding.recyclerviewObjects2.layoutManager = GridLayoutManager(requireContext(),list2ImageCount)
+                        mBinding.recyclerviewObjects2.adapter = objectListAdapter2
+                        mBinding.recyclerviewObjects2.show()
+                        mBinding.spaceBetween.show()
+                    }
+                }
             }else if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Additions || listExam[currentQuestionPos].type == BeginnerExamQuestionType.Subtractions){
-                if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Additions){
-                    val str = getString(R.string.additions_of)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
-                    mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
-                    mBinding.imgSign.setImageResource(R.drawable.cal_plus)
-                }else if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Subtractions){
-                    val str = getString(R.string.subtraction_of)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
-                    mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
-                    mBinding.imgSign.setImageResource(R.drawable.cal_minus)
-                }
+
                 val list1ImageCount = listExam[currentQuestionPos].value.toInt()
                 val list2ImageCount = listExam[currentQuestionPos].value2.toInt()
 
-                objectListAdapter1= ObjectListAdapter(list1ImageCount, listExam[currentQuestionPos].imageData,DataObjectsSize.ExtraSmall)
-                mBinding.recyclerviewObjects1.layoutManager = GridLayoutManager(requireContext(),list1ImageCount)
-                mBinding.recyclerviewObjects1.adapter = objectListAdapter1
+                if (listExam[currentQuestionPos].isAbacusQuestion == true){
+                    mBinding.relAbacus.show()
+                    mBinding.linearQuestion.hide()
+                    mBinding.imgSign1.show()
+                    mBinding.layoutAbacus2.relAbacus.show()
+                    mBinding.layoutAbacus1.relAbacus.show()
+                    mBinding.layoutAbacus2.abacusTop.show()
+                    mBinding.layoutAbacus2.abacusBottom.show()
+                    mBinding.layoutAbacus1.abacusTop.show()
+                    mBinding.layoutAbacus1.abacusBottom.show()
 
-                objectListAdapter2= ObjectListAdapter(list2ImageCount, listExam[currentQuestionPos].imageData,DataObjectsSize.ExtraSmall)
-                mBinding.recyclerviewObjects2.layoutManager = GridLayoutManager(requireContext(),list2ImageCount)
-                mBinding.recyclerviewObjects2.adapter = objectListAdapter2
+                    if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Additions){
+                        val str = getString(R.string.additions_of)+" <b><font color='#E14A4D'>Abacus Beads</font></b>"
+                        mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
+                        mBinding.imgSign1.setImageResource(R.drawable.cal_plus)
+                    }else if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Subtractions){
+                        val str = getString(R.string.subtraction_of)+" <b><font color='#E14A4D'>Abacus Beads</font></b>"
+                        mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
+                        mBinding.imgSign1.setImageResource(R.drawable.cal_minus)
+                    }
 
-                mBinding.recyclerviewObjects2.show()
-                mBinding.imgSign.show()
+                    lifecycleScope.launch {
+                        AbacusUtils.setNumber(list1ImageCount.toString(),mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom,list2ImageCount.toString(),mBinding.layoutAbacus2.abacusTop,mBinding.layoutAbacus2.abacusBottom)
+                    }
+                }else{
+                    mBinding.layoutAbacus1.relAbacus.hide()
+                    mBinding.layoutAbacus2.relAbacus.hide()
+                    mBinding.layoutAbacus1.abacusTop.hide()
+                    mBinding.layoutAbacus1.abacusBottom.hide()
+                    mBinding.layoutAbacus2.abacusTop.hide()
+                    mBinding.layoutAbacus2.abacusBottom.hide()
+                    mBinding.relAbacus.hide()
+                    mBinding.linearQuestion.show()
+                    if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Additions){
+                        val str = getString(R.string.additions_of)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
+                        mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
+                        mBinding.imgSign.setImageResource(R.drawable.cal_plus)
+                    }else if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Subtractions){
+                        val str = getString(R.string.subtraction_of)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
+                        mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
+                        mBinding.imgSign.setImageResource(R.drawable.cal_minus)
+                    }
+
+                    objectListAdapter1= ObjectListAdapter(list1ImageCount, listExam[currentQuestionPos].imageData,DataObjectsSize.ExtraSmall)
+                    mBinding.recyclerviewObjects1.layoutManager = GridLayoutManager(requireContext(),list1ImageCount)
+                    mBinding.recyclerviewObjects1.adapter = objectListAdapter1
+
+                    objectListAdapter2= ObjectListAdapter(list2ImageCount, listExam[currentQuestionPos].imageData,DataObjectsSize.ExtraSmall)
+                    mBinding.recyclerviewObjects2.layoutManager = GridLayoutManager(requireContext(),list2ImageCount)
+                    mBinding.recyclerviewObjects2.adapter = objectListAdapter2
+
+                    mBinding.recyclerviewObjects2.show()
+                    mBinding.imgSign.show()
+                }
 
             }
             mBinding.progressHorizontal.progress = (currentQuestionPos + 1)
@@ -301,7 +364,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
         val totalTime = String.format("%d:%02d", minutes, seconds)
         val right = listExam.size - totalWrong
         CoroutineScope(Dispatchers.Main).launch{
-            apiViewModel.saveExamResultDB(ExamHistory(0,total_sec,examLevelLable, arrayListOf(), listExam))
+            apiViewModel.saveExamResultDB(ExamHistory(0,total_sec,examLevelLable, arrayListOf(), listExam,theme = theme))
         }
         // set empty question list
         prefManager.setCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"")
@@ -435,6 +498,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
         val bundle = Bundle()
         bundle.putString(AppConstants.Extras_Comman.examResult, Gson().toJson(listExam))
         bundle.putString(AppConstants.Extras_Comman.type, Constants.examLevelBeginner)
+        bundle.putString(AppConstants.Extras_Comman.examAbacusType, theme)
         mNavController.navigate(R.id.action_level1ExamFragment_to_examResultFragment, bundle)
     }
     private fun onBack() {

@@ -29,6 +29,7 @@ object Constants {
     const val notificationTypeYoutube = "youtube"
     const val notificationTypeRate = "rate"
     const val notificationTypeShare = "share"
+    const val notificationTypeURL = "url"
 
     const val bottomSheetWidthBaseOnRatio10 = 10
     const val bottomSheetWidthBaseOnRatio6 = 6
@@ -55,6 +56,14 @@ object Constants {
 
     var Col_Space_exercise_polygon = 5F
     var Col_Space_exercise_default = 20F
+
+    var Col_Space_exam_polygon = 8F
+    var Col_Space_exam_egg = 6F
+    var Col_Space_exam_default = 12F
+
+    var Col_Space_exam_result_polygon = 4F
+    var Col_Space_exam_result_egg = 3F
+    var Col_Space_exam_result_default = 6F
 
     var Que = "Que"
     var Sign = "Sign"

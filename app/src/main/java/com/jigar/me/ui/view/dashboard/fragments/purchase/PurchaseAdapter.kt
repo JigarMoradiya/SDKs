@@ -71,39 +71,6 @@ class PurchaseAdapter(
                 }
             }else{
                 binding.txtPrice.text = data.price
-                when (data.sku) {
-                    PRODUCT_ID_All_lifetime -> {
-                        val pricee = (data.price?:"").replace(".","")
-                        var newString = ""
-                        for(i in pricee.indices){
-                            if (!pricee[i].isDigit()){
-                                newString += pricee[i]
-                            }
-                        }
-                        val discount = prefManager.getCustomParamInt(AppConstants.AbacusProgress.Discount,0)
-                        if (discount > 0){
-                            binding.txtOriginalPrice.paintFlags = binding.txtOriginalPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                            val tempPer = 100 - discount
-                            try {
-                                binding.txtDiscount.show()
-                                binding.txtOriginalPrice.show()
-                                binding.txtDiscount.text = "$discount% OFF"
-                                val discountedPrice : Long = if (data.price_amount_micros != null){
-                                    data.price_amount_micros/1000000
-                                }else{
-                                    data.price_amount_micros?:0L
-                                }
-                                val originalPrice = 100 * discountedPrice / tempPer
-                                binding.txtOriginalPrice.text = "$newString$originalPrice.00"
-
-                            } catch (e: NumberFormatException) {
-                            }
-                        }else{
-                            binding.txtDiscount.hide()
-                            binding.txtOriginalPrice.hide()
-                        }
-                    }
-                }
             }
             when (data.sku) {
                 PRODUCT_ID_Subscription_Month3 -> {

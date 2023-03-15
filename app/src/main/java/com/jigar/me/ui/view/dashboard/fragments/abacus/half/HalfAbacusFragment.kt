@@ -1,14 +1,13 @@
 package com.jigar.me.ui.view.dashboard.fragments.abacus.half
 
-import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.RelativeLayout
+import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -41,6 +40,8 @@ import java.util.*
 @AndroidEntryPoint
 class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAdditionSubtractionTypeAdapter.HintListener{
     private lateinit var binding: FragmentHalfAbacusBinding
+    private var hintPage : String? = null
+    private var fileAbacus : String? = null
     private var abacusType = ""
     private var pageId = ""
     private var Que2_str = "" // required only for Multiplication and Division
@@ -91,20 +92,17 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             AppConstants.Extras_Comman.AbacusTypeNumber -> {
                 From = requireArguments().getInt(AppConstants.Extras_Comman.From, 0)
                 To = requireArguments().getInt(AppConstants.Extras_Comman.To, 0)
-                isRandom = requireArguments().getBoolean(
-                    AppConstants.Extras_Comman.isType_random,
-                    false
-                )
+                isRandom = requireArguments().getBoolean(AppConstants.Extras_Comman.isType_random,false)
             }
             AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction -> {
-//                total = requireArguments().getInt(AppConstants.apiParams.total, 0)
+                hintPage = requireArguments().getString(AppConstants.apiParams.hint)
+                fileAbacus = requireArguments().getString(AppConstants.apiParams.file)
             }
             else -> { // for multiplication and division
                 Que2_str = requireArguments().getString(AppConstants.Extras_Comman.Que2_str, "")
                 Que2_type = requireArguments().getString(AppConstants.Extras_Comman.Que2_type, "")
                 if (abacusType == AppConstants.Extras_Comman.AbacusTypeMultiplication) {
-                    Que1_digit_type =
-                        requireArguments().getInt(AppConstants.Extras_Comman.Que1_digit_type, 0)
+                    Que1_digit_type = requireArguments().getInt(AppConstants.Extras_Comman.Que1_digit_type, 0)
                 }
             }
         }
@@ -226,7 +224,12 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
                     || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2,"") == "Y")
             setTempTheme()
-            val abacus = requireContext().readJsonAsset("abacus.json")
+            val abacus = if (!fileAbacus.isNullOrEmpty()){
+                requireContext().readJsonAsset(fileAbacus)
+            }else{
+                requireContext().readJsonAsset("abacus.json")
+            }
+
             val type = object : TypeToken<List<PojoAbacus>>() {}.type
             val temp: List<PojoAbacus> = Gson().fromJson(abacus,type)
             temp.filter { it.id == pageId}.also {
@@ -498,6 +501,18 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             binding.tvAns.text = ""
 
             val datatemp: PojoAbacus = list_abacus[current_pos]
+
+            if (!hintPage.isNullOrEmpty()) {
+                if (isDisplayHelpMessage) {
+                    binding.cardHint.show()
+                } else {
+                    binding.cardHint.hide()
+                }
+                binding.cardTable.hide()
+                binding.relativeTable.hide()
+                binding.txtHint.text = HtmlCompat.fromHtml(hintPage!!,HtmlCompat.FROM_HTML_MODE_LEGACY)
+            }
+
 
             val list_abacus_main_temp = ArrayList<HashMap<String, String>>()
             var new_column = 0
@@ -889,14 +904,13 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             val temp_hint = "$Sign$que = $hint"
             speek_hint = temp_hint.replace("-", " minus ").replace("+", " plus ")
                 .replace("=", " equal to ")
-            binding.txtHint.text = temp_hint
             lifecycleScope.launch {
                 delay(1500)
                 if (isPurchased && isHintSound) {
                     speakOut(resources.getString(R.string.speech_formula_for) + " " + speek_hint)
                 }
             }
-        } else {
+        } else if (hintPage.isNullOrEmpty()){
             binding.cardHint.hide()
             binding.cardTable.hide()
             binding.relativeTable.hide()

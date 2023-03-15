@@ -12,3 +12,7 @@ enum class DataObjectsSize {
 enum class BeginnerExamQuestionType {
     Count, Additions, Subtractions
 }
+
+enum class AbacusBeadType {
+    None, Exam, ExamResult
+}

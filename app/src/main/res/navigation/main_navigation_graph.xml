@@ -31,9 +31,6 @@
             android:id="@+id/action_homeFragment_to_puzzleNumberHomeFragment"
             app:destination="@id/puzzleNumberHomeFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_sudokuHomeFragment"
-            app:destination="@id/sudokuHomeFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_exerciseHomeFragment"
             app:destination="@id/exerciseHomeFragment" />
     </fragment>
@@ -44,66 +41,6 @@
         <action
             android:id="@+id/action_exerciseHomeFragment_to_purchaseFragment"
             app:destination="@id/purchaseFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/sudokuHomeFragment"
-        android:name="com.jigar.me.ui.view.dashboard.fragments.sudoku.SudokuHomeFragment">
-        <action
-            android:id="@+id/action_sudokuHomeFragment_to_sudokuHistoryFragment"
-            app:destination="@id/sudokuHistoryFragment" />
-        <action
-            android:id="@+id/action_sudokuHomeFragment_to_sudokuPlay4Fragment"
-            app:destination="@id/sudokuPlay4Fragment" />
-        <action
-            android:id="@+id/action_sudokuHomeFragment_to_sudokuPlay6Fragment"
-            app:destination="@id/sudokuPlay6Fragment" />
-        <action
-            android:id="@+id/action_sudokuHomeFragment_to_sudokuPlay9Fragment"
-            app:destination="@id/sudokuPlay9Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/sudokuHistoryFragment"
-        android:name="com.jigar.me.ui.view.dashboard.fragments.sudoku.history.SudokuHistoryFragment">
-        <action
-            android:id="@+id/action_sudokuHistoryFragment_to_sudokuPlay4Fragment"
-            app:destination="@id/sudokuPlay4Fragment" />
-        <action
-            android:id="@+id/action_sudokuHistoryFragment_to_sudokuPlay6Fragment"
-            app:destination="@id/sudokuPlay6Fragment" />
-        <action
-            android:id="@+id/action_sudokuHistoryFragment_to_sudokuPlay9Fragment"
-            app:destination="@id/sudokuPlay9Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/sudokuPlay4Fragment"
-        android:name="com.jigar.me.ui.view.dashboard.fragments.sudoku.play.SudokuPlay4Fragment">
-        <argument
-            android:name="roomId"
-            app:argType="string" />
-        <argument
-            android:name="level"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/sudokuPlay6Fragment"
-        android:name="com.jigar.me.ui.view.dashboard.fragments.sudoku.play.SudokuPlay6Fragment">
-        <argument
-            android:name="roomId"
-            app:argType="string" />
-        <argument
-            android:name="level"
-            app:argType="string" />
-    </fragment>
-    <fragment
-        android:id="@+id/sudokuPlay9Fragment"
-        android:name="com.jigar.me.ui.view.dashboard.fragments.sudoku.play.SudokuPlay9Fragment">
-        <argument
-            android:name="roomId"
-            app:argType="string" />
-        <argument
-            android:name="level"
-            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/fullAbacusFragment"

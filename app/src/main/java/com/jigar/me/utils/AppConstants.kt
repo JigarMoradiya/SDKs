@@ -91,7 +91,6 @@ object AppConstants {
 
             var Discount = "Discount"
             var Ads = "Ads"
-            var reset = "reset"
             var versionCode = "VersionCode"
             var resetImage = "resetImage"
             var Privacy_Policy_data = "Privacy_Policy_data"
@@ -103,7 +102,6 @@ object AppConstants {
     annotation class Settings {
         companion object {
             const val Setting_sound = "Setting_sound"
-            const val Setting_SudokuVolume = "Setting_SudokuVolume"
             const val Setting_NumberPuzzleVolume = "Setting_NumberPuzzleVolume"
             const val Setting__hint_sound = "Setting_hint_sound"
             const val Setting_display_abacus_number = "Setting_display_abacus_number"
@@ -161,7 +159,6 @@ object AppConstants {
             const val Menu_Click_Table = 17
             const val Menu_Share = 18
 
-            const val Menu_Sudoku = 19
             const val Menu_Number_Puzzle = 20
 
             const val OtherApp_Abacus = 101
@@ -193,6 +190,7 @@ object AppConstants {
 
             var examLevelLable = "examLevelLable"
             var examResult = "ExamResult"
+            var examAbacusType = "ExamAbacusType"
 
             var DownloadType_Maths = "maths"
             var DownloadType_Nursery = "nursery"
@@ -246,6 +244,8 @@ object AppConstants {
             const val pageId = "page_id"
             const val limit = "limit"
             const val total = "total"
+            const val hint = "hint"
+            const val file = "file"
             const val level = "level"
             const val type = "type"
         }

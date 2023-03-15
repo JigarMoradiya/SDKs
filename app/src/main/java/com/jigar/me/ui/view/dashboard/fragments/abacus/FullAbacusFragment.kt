@@ -167,7 +167,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
 
         }
-        if (theam == AppConstants.Settings.theam_shape) {
+        if (theam == AppConstants.Settings.theam_shape || theam == AppConstants.Settings.theam_Default) {
             binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
         } else {
             binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))

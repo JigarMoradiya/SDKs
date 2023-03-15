@@ -2,16 +2,13 @@ package com.jigar.me
 
 import android.app.Activity
 import android.app.Application
-import android.app.Notification
 import android.app.PendingIntent
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.hilt.work.HiltWorkerFactory
 import androidx.navigation.NavDeepLinkBuilder
-import androidx.work.Configuration
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
@@ -37,11 +34,7 @@ import javax.inject.Inject
 
 
 @HiltAndroidApp
-class MyApplication : Application(),Configuration.Provider {
-    @Inject lateinit var workerFactory: HiltWorkerFactory
-    override fun getWorkManagerConfiguration() = Configuration.Builder()
-        .setWorkerFactory(workerFactory)
-        .build()
+class MyApplication : Application() {
     init {
         instance = this
         alreadyCalledversionCheck = false
@@ -184,9 +177,6 @@ class MyApplication : Application(),Configuration.Provider {
                         Constants.notificationTypeExam -> {
                             moveToDestination(R.id.examHomeFragment)
                         }
-                        Constants.notificationTypeSudoku -> {
-                            moveToDestination(R.id.sudokuHomeFragment)
-                        }
                         Constants.notificationTypeNumberSequence -> {
                             moveToDestination(R.id.puzzleNumberHomeFragment)
                         }
@@ -209,8 +199,12 @@ class MyApplication : Application(),Configuration.Provider {
                             moveToDestination(R.id.homeFragment)
                         }
                     }
+                }else{
+                    moveToDestination(R.id.homeFragment)
                 }
 
+            }else{
+                moveToDestination(R.id.homeFragment)
             }
         }
 

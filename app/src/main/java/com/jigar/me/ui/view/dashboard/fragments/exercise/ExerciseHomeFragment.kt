@@ -137,15 +137,16 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     }
 
     private fun addKeyboardValue(value : String){
-        if (value == "0"){
-            if (listKeyboardAnswer.isNotEmpty()){
+        if (listKeyboardAnswer.size < 7){
+            if (value == "0"){
+                if (listKeyboardAnswer.isNotEmpty()){
+                    listKeyboardAnswer.add(value)
+                }
+            }else{
                 listKeyboardAnswer.add(value)
             }
-        }else{
-            listKeyboardAnswer.add(value)
+            setKeyboardAnswer()
         }
-        setKeyboardAnswer()
-
     }
 
     private fun setKeyboardAnswer() {
@@ -377,7 +378,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
             theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
 
         }
-        if (theam == AppConstants.Settings.theam_shape) {
+        if (theam == AppConstants.Settings.theam_shape || theam == AppConstants.Settings.theam_Default) {
             binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
         } else {
             binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))

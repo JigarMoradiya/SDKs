@@ -2,14 +2,13 @@ package com.jigar.me.ui.view.base.abacus
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.text.TextUtils
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
 import java.util.*
@@ -26,7 +25,9 @@ class AbacusMasterRowEngine(
     private val roadDrawable: Drawable?,
     private val selectedBeadDrawable: Drawable?,
     private val noOfRows_used: Int,
-    private var numColumns: Int
+    private var numColumns: Int,
+    private var extraHeight : Int,
+    private val beadType : AbacusBeadType
 ) {
 
     var tempBeads: IntArray? = null
@@ -57,24 +58,21 @@ class AbacusMasterRowEngine(
 //      var tempBeads: IntArray? = null
     private lateinit var tempBeads_new: IntArray
 
-    private var beadPaint: Paint
-    private var rowPaint: Paint
+//    private var beadPaint: Paint
+//    private var rowPaint: Paint
 
     private var beadDrawables_eyes: ArrayList<Drawable?> = arrayListOf()
     private var beadDrawables_eyes_smaile: ArrayList<Drawable?> = arrayListOf()
     private var isColorFull: Boolean = false
     private var selectedPositions: ArrayList<Int>? = null
-    private var ExtraHeight = 0
     private var theam = AppConstants.Settings.theam_Default
     init{
         beadHeight = beadHeight1
-        ExtraHeight =
-            context.resources.getDimension(R.dimen.eight_dp).toInt()
         selectedPositions = ArrayList()
         height = (numBeads + 1) * beadHeight
-        beadPaint = Paint()
-        beadPaint.color = Color.argb(255, 73, 137, 30)
-        beadPaint.style = Paint.Style.FILL
+//        beadPaint = Paint()
+//        beadPaint.color = Color.argb(255, 73, 137, 30)
+//        beadPaint.style = Paint.Style.FILL
         beadDrawables_eyes = ArrayList()
         beadDrawables_eyes_smaile = ArrayList()
         theam = AppPreferencesHelper(context,AppConstants.PREF_NAME)
@@ -91,10 +89,18 @@ class AbacusMasterRowEngine(
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_blue))
             }
             theam.equals(AppConstants.Settings.theam_eyes, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_pink_close))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_orange_close))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_blue_close))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_green_close))
+                if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
+                }else{
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_pink_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_orange_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_blue_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_green_close))
+                }
+
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.face_pink_open))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.face_orange_open))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.face_blue_open))
@@ -111,27 +117,43 @@ class AbacusMasterRowEngine(
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.shape_hexagon))
             }
             theam.equals(AppConstants.Settings.theam_Star, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_yellow_close))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_blue_close))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_orange_close))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_green_close))
+                if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
+                }else{
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_yellow_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_blue_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_orange_close))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_green_close))
+                }
+
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_yellow_open))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_blue_open))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_orange_open))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_green_open))
             }
             theam.equals(AppConstants.Settings.theam_Egg, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg1))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg4))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg2))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg3))
+                if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
+                }else{
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg1))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg4))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg2))
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg3))
+                }
+
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg1))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg4))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg2))
                 beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg3))
             }
         }
-        rowPaint = Paint()
+//        rowPaint = Paint()
         beads = IntArray(numBeads)
         setSelectedPosition(selectedPosition)
         isColorFull = AppPreferencesHelper(
@@ -162,11 +184,11 @@ class AbacusMasterRowEngine(
             list_abacus.add("value" + beads[i])
         }
         if (AppPreferencesHelper(context, AppConstants.PREF_NAME)
-                .getCustomParam("column$isBeadStackFromBottom$numColumns","").isEmpty()
+                .getCustomParam(beadHeight.toString()+"_column$isBeadStackFromBottom$numColumns","").isEmpty()
         ) {
             val allIds = TextUtils.join(",", list_abacus)
             AppPreferencesHelper(context, AppConstants.PREF_NAME)
-                .setCustomParam("column$isBeadStackFromBottom$numColumns", allIds)
+                .setCustomParam(beadHeight.toString()+"_column$isBeadStackFromBottom$numColumns", allIds)
         }
         numColumns--
     }
@@ -241,14 +263,22 @@ class AbacusMasterRowEngine(
     fun draw(canvas: Canvas?, isLastRow: Boolean, rowSpacing: Int, col: Int) {
         val road = roadDrawable!!
         val rowThickness = road.minimumWidth
-        val startX = position.x + beadWidth / 2 - rowThickness / 2
-        val endX = position.x + beadWidth / 2 + rowThickness / 2
-        road.setBounds(startX,position.y,endX,position.y + height + ExtraHeight)
+
+        if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+            val startX = position.x + beadWidth / 2 - rowThickness / 3
+            val endX = position.x + beadWidth / 2 + rowThickness / 3
+            road.setBounds(startX,position.y, endX,position.y + height + extraHeight)
+        }else{
+            val startX = position.x + beadWidth / 2 - rowThickness / 2
+            val endX = position.x + beadWidth / 2 + rowThickness / 2
+            road.setBounds(startX,position.y,endX,position.y + height + extraHeight)
+        }
+
         road.draw(canvas!!)
         var drawablePos = 0
         val listAbacus = ArrayList<String>()
         var tempvalue = -1
-        val str: String = AppPreferencesHelper(context,AppConstants.PREF_NAME).getCustomParam("column$isBeadStackFromBottom","")
+        val str: String = AppPreferencesHelper(context,AppConstants.PREF_NAME).getCustomParam(beadHeight.toString()+"_column$isBeadStackFromBottom","")
         if (str.isNotEmpty()) {
             val strAll = str.split(",".toRegex()).toTypedArray()
             val listTemp = ArrayList<String?>()
@@ -328,19 +358,33 @@ class AbacusMasterRowEngine(
                             beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_gray)!!
                         }
                         theam.equals(AppConstants.Settings.theam_eyes, ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.face_red_close)!!
+                            beadDrawable = if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+                                ContextCompat.getDrawable(context,R.drawable.face_gray_close)!!
+                            }else{
+                                ContextCompat.getDrawable(context,R.drawable.face_red_close)!!
+                            }
+
                         }
                         theam.equals(AppConstants.Settings.theam_shape,ignoreCase = true) -> {
                             beadDrawable = ContextCompat.getDrawable(context,R.drawable.shape_square_gray)!!
                         }
                         theam.equals(AppConstants.Settings.theam_Star,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.star_red_close)!!
+                            beadDrawable = if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+                                ContextCompat.getDrawable(context,R.drawable.star_gray_close)!!
+                            }else{
+                                ContextCompat.getDrawable(context,R.drawable.star_red_close)!!
+                            }
+
                         }
                         theam.equals(
                             AppConstants.Settings.theam_Egg,
                             ignoreCase = true
                         ) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.egg0)!!
+                            beadDrawable = if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+                                ContextCompat.getDrawable(context,R.drawable.egg)!!
+                            }else{
+                                ContextCompat.getDrawable(context,R.drawable.egg0)!!
+                            }
                         }
                     }
                 }
@@ -451,18 +495,18 @@ class AbacusMasterRowEngine(
             if (isColorFull || isBeadSelected) {
                 beadDrawable?.setBounds(
                     position.x + rowSpacing / 2,
-                    position.y + beads[i] + if (!isBeadStackFromBottom) ExtraHeight else 0,
+                    position.y + beads[i] + if (!isBeadStackFromBottom) extraHeight else 0,
                     position.x + beadWidth - rowSpacing / 2,
-                    position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) ExtraHeight else 0
+                    position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) extraHeight else 0
                 )
                 beadDrawable?.draw(canvas)
             }
             if (!isColorFull) {
                 beadDrawable?.setBounds(
                     position.x + rowSpacing / 2,
-                    position.y + beads[i] + if (!isBeadStackFromBottom) ExtraHeight else 0,
+                    position.y + beads[i] + if (!isBeadStackFromBottom) extraHeight else 0,
                     position.x + beadWidth - rowSpacing / 2,
-                    position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) ExtraHeight else 0
+                    position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) extraHeight else 0
                 )
                 beadDrawable?.draw(canvas)
             }
@@ -470,14 +514,14 @@ class AbacusMasterRowEngine(
             // TODO Draw direction
             drawablePos++
 
-            if (isBeadStackFromBottom && AppPreferencesHelper(context,AppConstants.PREF_NAME).getCustomParam("column$isBeadStackFromBottom","").isEmpty()) {
+            if (isBeadStackFromBottom && AppPreferencesHelper(context,AppConstants.PREF_NAME).getCustomParam(beadHeight.toString()+"_column$isBeadStackFromBottom","").isEmpty()) {
                 listAbacus.add("value" + beads[i])
             }
         }
-        if (isBeadStackFromBottom && AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam("column$isBeadStackFromBottom","").isEmpty()) {
+        if (isBeadStackFromBottom && AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(beadHeight.toString()+"_column$isBeadStackFromBottom","").isEmpty()) {
             listAbacus.add("value0")
             val allIds = TextUtils.join(",", listAbacus)
-            AppPreferencesHelper(context, AppConstants.PREF_NAME).setCustomParam("column$isBeadStackFromBottom",allIds)
+            AppPreferencesHelper(context, AppConstants.PREF_NAME).setCustomParam(beadHeight.toString()+"_column$isBeadStackFromBottom",allIds)
         }
     }
 

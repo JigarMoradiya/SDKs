@@ -93,11 +93,6 @@
             android:name=".internal.service.download.PDFDownloadService"
             android:enabled="true"
             android:exported="false" />
-
-        <provider
-            android:name="androidx.startup.InitializationProvider"
-            android:authorities="${applicationId}.androidx-startup"
-            tools:node="remove" />
     </application>
 
 </manifest>

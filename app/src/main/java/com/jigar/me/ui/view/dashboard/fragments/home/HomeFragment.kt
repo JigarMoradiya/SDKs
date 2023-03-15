@@ -1,13 +1,10 @@
 package com.jigar.me.ui.view.dashboard.fragments.home
 
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,30 +13,26 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.target.CustomTarget
 import com.eftimoff.viewpagertransformers.DepthPageTransformer
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.jigar.me.MyApplication
 import com.jigar.me.R
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.local.data.HomeBanner
 import com.jigar.me.data.local.data.HomeMenu
-import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
-import com.jigar.me.data.model.pages.AdditionSubtractionCategory
 import com.jigar.me.databinding.FragmentHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
-import com.jigar.me.ui.view.base.inapp.BillingRepository
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.OtherApplicationBottomSheet
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.extensions.*
+import com.jigar.me.utils.extensions.onClick
+import com.jigar.me.utils.extensions.openURL
+import com.jigar.me.utils.extensions.openYoutube
+import com.jigar.me.utils.extensions.shareIntent
 import dagger.hilt.android.AndroidEntryPoint
 import org.json.JSONException
 import org.json.JSONObject
@@ -109,6 +102,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     private fun initListener() {
         binding.cardSettingTop.onClick { moveToClick(AppConstants.HomeClicks.Menu_Setting) }
         binding.cardAboutUs.onClick { moveToClick(AppConstants.HomeClicks.Menu_AboutUs) }
+        binding.txtOtherApps.onClick { OtherApplicationBottomSheet.showPopup(requireActivity()) }
     }
     private fun checkPurchase() {
         appViewModel.getInAppPurchase().observe(viewLifecycleOwner) { listData ->
@@ -117,46 +111,9 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
                     bannerPagerAdapter.addPurchaseBanner(HomeBanner(AppConstants.HomeBannerTypes.banner_purchase,R.drawable.banner_purchase))
                 }
             }
-            if (prefManager.getCustomParamInt(AppConstants.AbacusProgress.Discount,0)> 0){
-                appViewModel.getInAppSKUDetailLive(BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime)
-                    .observe(viewLifecycleOwner){ data ->
-                        if (data.isNullOrEmpty()){
-                            fetchSKUDetail(null)
-                        }else{
-                            fetchSKUDetail(data[0])
-                        }
-                    }
-            }
         }
     }
-    private fun fetchSKUDetail(data: InAppSkuDetails?) {
-        if (data == null || !data.isPurchase){
-            val baseUrl = prefManager.getBaseUrl()
-            if (baseUrl.isNotEmpty()){
-                val url = baseUrl.replace("https://","").split("/")
-                if (url.isNotNullOrEmpty()){
-                    val imageUrl = "https://"+url[0]+"/"+AppConstants.AbacusProgress.OfferBannerValue
-                    Glide.with(requireContext()).asBitmap().load(imageUrl)
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .skipMemoryCache(true)
-                        .into(object : CustomTarget<Bitmap?>() {
-                            override fun onLoadCleared(placeholder: Drawable?) {}
-                            override fun onLoadFailed(errorDrawable: Drawable?) {
-                                super.onLoadFailed(errorDrawable)
-                            }
-                            override fun onResourceReady(
-                                resource: Bitmap,
-                                transition: com.bumptech.glide.request.transition.Transition<in Bitmap?>?
-                            ) {
-                                if (::bannerPagerAdapter.isInitialized){
-                                    bannerPagerAdapter.addOfferBanner(HomeBanner(AppConstants.HomeBannerTypes.banner_offer,R.drawable.banner_purchase,resource))
-                                }
-                            }
-                        })
-                }
-            }
-        }
-    }
+
     private fun autoScrollBanner() {
         /*After setting the adapter use the timer */
         runnable?.let { handler?.removeCallbacks(it) }
@@ -231,9 +188,6 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
             AppConstants.HomeClicks.Menu_PractiseMaterial -> {
                 mNavController.navigate(R.id.action_homeFragment_to_materialHomeFragment)
             }
-            AppConstants.HomeClicks.Menu_Sudoku -> {
-                mNavController.navigate(R.id.action_homeFragment_to_sudokuHomeFragment)
-            }
             AppConstants.HomeClicks.Menu_Number_Puzzle -> {
                 mNavController.navigate(R.id.action_homeFragment_to_puzzleNumberHomeFragment)
             }
@@ -303,9 +257,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val mapMessage = dataSnapshot.value as HashMap<*, *>?
-                    val reset = mapMessage!![AppConstants.AbacusProgress.reset] as Long
-                    val versionCode = mapMessage[AppConstants.AbacusProgress.versionCode] as Long
-                    val discount = mapMessage[AppConstants.AbacusProgress.Discount] as Long
+                    val versionCode = mapMessage!![AppConstants.AbacusProgress.versionCode] as Long
                     val resetImage = mapMessage[AppConstants.AbacusProgress.resetImage] as Long
                     val privacyPolicy = mapMessage[AppConstants.AbacusProgress.Privacy_Policy_data] as String
                     val baseUrl = mapMessage[AppConstants.AbacusProgress.BaseUrl] as String
@@ -317,13 +269,6 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
 
                         setCustomParam(AppConstants.AbacusProgress.Privacy_Policy_data,privacyPolicy)
                         setCustomParam(AppConstants.AbacusProgress.Ads,ads)
-                        setCustomParamInt(AppConstants.AbacusProgress.Discount,discount.toInt())
-
-                        if (reset.toInt() > getCustomParamInt(AppConstants.AbacusProgress.reset, 0)) {
-                            setCustomParamInt(AppConstants.AbacusProgress.reset, reset.toInt())
-                            setCustomParam(AppConstants.Extras_Comman.Level + "2","")
-                            setCustomParam(AppConstants.Extras_Comman.Level + "3","")
-                        }
 
                         if (resetImage.toInt() > getCustomParamInt(AppConstants.AbacusProgress.resetImage, 0)) {
                             setCustomParamInt(AppConstants.AbacusProgress.resetImage, resetImage.toInt())

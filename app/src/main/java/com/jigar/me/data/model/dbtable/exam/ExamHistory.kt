@@ -20,7 +20,8 @@ data class ExamHistory(
     val examType: String,
     val examDetails: List<DailyExamData> = arrayListOf(),
     val examBeginners: List<BeginnerExamPaper> = arrayListOf(),
-    val addedOn: Date = Date()
+    val addedOn: Date = Date(),
+    val theme: String? = null
 ){
     fun getTotalRightAns() : Int{
         var totalCorrectAns = 0

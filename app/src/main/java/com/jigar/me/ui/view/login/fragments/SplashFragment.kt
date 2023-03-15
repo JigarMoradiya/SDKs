@@ -56,9 +56,7 @@ class SplashFragment : BaseFragment() {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.exists()) {
                     val mapMessage = dataSnapshot.value as HashMap<*, *>?
-                    val reset = mapMessage!![AppConstants.AbacusProgress.reset] as Long
-                    val discount = mapMessage[AppConstants.AbacusProgress.Discount] as Long
-                    val resetImage = mapMessage[AppConstants.AbacusProgress.resetImage] as Long
+                    val resetImage = mapMessage!![AppConstants.AbacusProgress.resetImage] as Long
                     val privacyPolicy = mapMessage[AppConstants.AbacusProgress.Privacy_Policy_data] as String
                     val baseUrl = mapMessage[AppConstants.AbacusProgress.BaseUrl] as String
                     val iPath = mapMessage[AppConstants.AbacusProgress.iPath] as String
@@ -66,23 +64,14 @@ class SplashFragment : BaseFragment() {
                     with(prefManager){
                         setBaseUrl(baseUrl)
                         setCustomParam(AppConstants.AbacusProgress.iPath,iPath)
-
                         setCustomParam(AppConstants.AbacusProgress.Privacy_Policy_data,privacyPolicy)
                         setCustomParam(AppConstants.AbacusProgress.Ads,ads)
-                        setCustomParamInt(AppConstants.AbacusProgress.Discount,discount.toInt())
-
-                        if (reset.toInt() > getCustomParamInt(AppConstants.AbacusProgress.reset, 0)) {
-                            setCustomParamInt(AppConstants.AbacusProgress.reset, reset.toInt())
-                            setCustomParam(AppConstants.Extras_Comman.Level + "2","")
-                            setCustomParam(AppConstants.Extras_Comman.Level + "3","")
-                        }
 
                         if (resetImage.toInt() > getCustomParamInt(AppConstants.AbacusProgress.resetImage, 0)) {
                             setCustomParamInt(AppConstants.AbacusProgress.resetImage, resetImage.toInt())
                             setCustomParam(AppConstants.Extras_Comman.DownloadType+"_"+AppConstants.Extras_Comman.DownloadType_Maths, "")
                             setCustomParam(AppConstants.Extras_Comman.DownloadType+"_"+AppConstants.Extras_Comman.DownloadType_Nursery, "")
                         }
-
                     }
                     nextPage()
                 }

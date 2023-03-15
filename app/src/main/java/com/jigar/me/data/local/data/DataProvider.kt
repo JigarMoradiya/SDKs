@@ -17,6 +17,18 @@ import kotlin.random.Random.Default.nextInt
 
 
 object DataProvider {
+    fun getAbacusThemeList() : ArrayList<String>{
+        val list = ArrayList<String>()
+        with(list){
+            add(AppConstants.Settings.theam_Default)
+            add(AppConstants.Settings.theam_Egg)
+            add(AppConstants.Settings.theam_eyes)
+            add(AppConstants.Settings.theam_shape)
+            add(AppConstants.Settings.theam_Star)
+        }
+        list.shuffle()
+        return list
+    }
     /* home menu */
     fun getHomeMenuList() : ArrayList<HomeMenu>{
         val list = ArrayList<HomeMenu>()
@@ -30,11 +42,9 @@ object DataProvider {
             add(HomeMenu(AppConstants.HomeClicks.Menu_Exercise,R.drawable.home_menu_exercise))
             add(HomeMenu(AppConstants.HomeClicks.Menu_DailyExam,R.drawable.home_menu_exam))
             add(HomeMenu(AppConstants.HomeClicks.Menu_PractiseMaterial,R.drawable.home_menu_material))
-//            add(HomeMenu(AppConstants.HomeClicks.Menu_Sudoku,R.drawable.home_menu_sudoku))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Number_Puzzle,R.drawable.home_menu_number_sequence))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Click_Youtube,R.drawable.home_menu_tutorial))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Purchase,R.drawable.home_menu_purchase))
-//            add(HomeMenu(AppConstants.HomeClicks.Menu_AboutUs,R.drawable.home_menu_about_us))
         }
         return list
     }
@@ -509,6 +519,12 @@ object DataProvider {
 
         if (previousTotalExamCount > 6){
             (examList as ArrayList<BeginnerExamPaper>).shuffle()
+        }
+        examList.map {
+            val index = generateIndex(3)
+            if (index == 1){
+                it.isAbacusQuestion = true
+            }
         }
         return examList
     }

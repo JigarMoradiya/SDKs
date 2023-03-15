@@ -179,7 +179,7 @@
 
     <!--  Daily Exam  -->
 
-    <string name="testResult">Result of this test</string>
+    <string name="testResult">Exam\'s Result</string>
     <string name="child_level">Select Exam Level as per Kid\'s Ability</string>
     <string name="select_sudoku_child_level">Select type as per Kid\'s Ability for Play Sudoku</string>
 
@@ -296,23 +296,9 @@
     <string name="Hint_come">Come tomorrow for next hint</string>
     <string name="notes">Notes</string>
     <string name="hint">Hint</string>
-    <string name="sudoku_history">Sudoku History</string>
-    <string name="play_sudoku">Play Sudoku</string>
-    <string name="sudoku">Sudoku</string>
-    <string name="sudoku_description">The goal of Sudoku is to fill a 9×9 grid with numbers so that each row, column and 3×3 grid contain all of the digits between 1 and 9.</string>
-    <string name="sudoku_description4">The goal of Sudoku is to fill a 4×4 grid with numbers so that each row, column and 2×2 grid contain all of the digits between 1 and 4.</string>
-    <string name="sudoku_description6">The goal of Sudoku is to fill a 6×6 grid with numbers so that each row, column and 3×2 grid contain all of the digits between 1 and 6.</string>
-    <string name="about_sudoku_description"><font color='#0000EE'><b>• Sudoku builds problem-solving skills.</b></font>\nSudoku is all about solving problems. When your child plays sudoku, they are constantly being challenged to find the right numbers to place in each box. Finding the right number requires some critical thinking and looking for a solution from different directions. This helps improve their problem-solving skills, which will help them solve other problems in school.\n\n<font color='#0000EE'><b>• Sudoku helps with number recognition and counting.</b></font>\nSudoku requires your child to recognize the numbers and place each one in a specific box. This helps them learn to recognize the numbers and count. Later, this skill will help them with basic arithmetic, so they can easily add and subtract numbers without much effort.\n\n<font color='#0000EE'><b>• Sudoku improves spatial relationships skills.</b></font>\nYour child has to look at each row and column of boxes on a sudoku puzzle before they start filling in any boxes. They have to be able to see how the number fits into the larger picture of the entire board before they can solve it. This improves their ability and notice how different objects are positioned relative to other objects, which is called spatial awareness or spatial relations. This is important because math problems often involve spatial relations.\n\n<font color='#0000EE'><b>• Sudoku helps your child develop concentration skills.</b></font>\nPlacing each number in the right box requires focus and concentration, at least until they learn to play sudoku well enough that it becomes second nature. This skill will help them sit still longer during lessons or at home while they read. It can also make it easier for them to complete tasks without getting distracted by everything else they see around them.\n\n<font color='#0000EE'><b>• Sudoku improves visual memory skills.</b></font>\nWhen your child plays sudoku they are not only looking for the correct numbers, but where those numbers go in relation to all of the other numbers on the board. Once they’ve filled in one or two boxes, they see how everything connects and will remember where the other numbers go. This helps improve their visual memory, which makes it easier for them to complete school tasks like reading or recalling information they’ve learned.</string>
-    <string name="start_new_sudoku">Start New Sudoku</string>
     <string name="completed">Completed</string>
     <string name="continue_">Continue</string>
-    <string name="about_sudoku">About Sudoku</string>
     <string name="close">Close</string>
-    <string name="advantages_of_sudoku">Let’s see the some advantages of Sudoku and how help to build math skills</string>
-    <string name="sudoku_for_kid_s">Sudoku for Kid\'s</string>
-    <string name="select_sudoku_type">Select sudoku type</string>
-    <string name="sudoku_volume">Sudoku volume</string>
-
 
     <string name="_24_number_puzzle">24 Number Puzzle</string>
     <string name="_15_number_puzzle">15 Number Puzzle</string>
@@ -373,4 +359,5 @@
     <string name="other_app_s_by_brainapptech_team">Other App\'s by BrainAppTech Team</string>
     <string name="offline_not_supported">Offline not supported</string>
     <string name="now_offline_support_"><font color='#FF0000'>Now offline support</font> for Abacus starter, Number, Addition, Subtraction, Multiplication, Division, Abacus Exercise and Exam.</string>
+    <string name="check_other_application_by_us">Check other application by us.</string>
 </resources>

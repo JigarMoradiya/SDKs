@@ -69,10 +69,8 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
         lighter = Lighter.with(requireActivity())
         isDisplayAbacusNumber = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_abacus_number, true)
 
-        prefManager.setCustomParam("column" + "true", "")
-        prefManager.setCustomParam("column" + "false", "")
-
-        if (prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_shape) {
+        if (prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_shape
+            || prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_Default) {
             binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
         } else {
             binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))
