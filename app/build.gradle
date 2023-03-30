@@ -11,14 +11,14 @@ plugins {
     id 'com.google.firebase.crashlytics'
 }
 android {
-    compileSdkVersion 32
+    compileSdkVersion 33
 
     defaultConfig {
         applicationId 'com.jigar.me'
         minSdkVersion 23
-        targetSdkVersion 32
-        versionCode 77
-        versionName "7.0.7"
+        targetSdkVersion 33
+        versionCode 80
+        versionName "8.0.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -142,7 +142,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.9'
 
     // admob ads
-    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+//    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+    implementation 'com.google.android.gms:play-services-ads:21.4.0'
     // Calculator
     implementation 'com.fathzer:javaluator:3.0.2'
 
@@ -160,9 +161,6 @@ dependencies {
 
     // rating bar
     implementation 'com.github.ome450901:SimpleRatingBar:1.5.0'
-
-    // Android Lighter library
-    implementation 'me.samlss:lighter:1.0.3'
 
     // image viewer pager
     implementation 'com.facebook.fresco:fresco:2.4.0'

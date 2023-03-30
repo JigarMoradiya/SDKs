@@ -2,19 +2,24 @@ package com.jigar.me.ui.view.dashboard
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.jigar.me.BuildConfig
 import com.jigar.me.R
 import com.jigar.me.data.model.dbtable.inapp.InAppPurchaseDetails
 import com.jigar.me.databinding.ActivityMainDashboardBinding
 import com.jigar.me.ui.view.base.BaseActivity
 import com.jigar.me.ui.view.base.inapp.BillingRepository
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.HalfAbacusFragment
 import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.ExamFragment
 import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.Level1ExamFragment
@@ -22,12 +27,13 @@ import com.jigar.me.ui.view.dashboard.fragments.exercise.ExerciseHomeFragment
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
 import com.jigar.me.utils.AppConstants
+import com.jigar.me.utils.Constants
+import com.jigar.me.utils.checkPermissions
 import com.jigar.me.utils.extensions.hide
+import com.jigar.me.utils.extensions.toastS
 import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+
 
 @AndroidEntryPoint
 class MainDashboardActivity : BaseActivity(){
@@ -81,9 +87,47 @@ class MainDashboardActivity : BaseActivity(){
     private fun initViews() {
         setNavigationGraph()
         onMainActivityBack()
+        this.checkPermissions(Constants.NOTIFICATION_PERMISSION,requestMultiplePermissions)
 
+        Log.e("jigarLogs","emailAddress1 = "+OneSignal.getDeviceState()?.emailAddress)
+        OneSignal.setEmail("jigar2596moradiya@gmail.com")
+        Log.e("jigarLogs","emailAddress = "+OneSignal.getDeviceState()?.emailAddress)
+        Log.e("jigarLogs","pushToken = "+OneSignal.getDeviceState()?.pushToken)
+        Log.e("jigarLogs","userId = "+OneSignal.getDeviceState()?.userId)
     }
 
+    // permission result
+    private var requestMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        permissions.entries.filter { !it.value }.also{
+            if (it.isEmpty()){
+            }else{
+                notificationPermissionPopup()
+            }
+        }
+    }
+
+    /**
+     * Activity Result For Resume Result
+     */
+    private var resumeActivityResultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            if (activityResult.resultCode == RESULT_OK) {
+            }
+        }
+
+    private fun notificationPermissionPopup() {
+        CommonConfirmationBottomSheet.showPopup(this,getString(R.string.permission_alert),getString(R.string.notification_permission_msg)
+            ,getString(R.string.okay),getString(R.string.give_later), icon = R.drawable.ic_alert,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri: Uri = Uri.fromParts("package", packageName, null)
+                    intent.data = uri
+                    resumeActivityResultLauncher.launch(intent)
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
+    }
 
 
     private fun initListener() {

@@ -145,6 +145,8 @@
 
     <string name="yes_i_want_to_start">Yes, I want to start</string>
     <string name="yes_i_m_sure">Yes, I\'m sure</string>
+    <string name="okay">Okay</string>
+    <string name="give_later">Give next time</string>
     <string name="yes_i_want_to_purchase">Yes, I want to Purchase</string>
     <string name="yes_i_want_to_update">Yes, I want to Update</string>
     <string name="no_purchase_later">No, I will Purchase later</string>
@@ -360,4 +362,7 @@
     <string name="offline_not_supported">Offline not supported</string>
     <string name="now_offline_support_"><font color='#FF0000'>Now offline support</font> for Abacus starter, Number, Addition, Subtraction, Multiplication, Division, Abacus Exercise and Exam.</string>
     <string name="check_other_application_by_us">Check other application by us.</string>
+
+    <string name="notification_permission_msg">Notification permission is required to get alert related to Abacus!</string>
+    <string name="permission_alert">Permission Alert!</string>
 </resources>

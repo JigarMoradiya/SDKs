@@ -224,7 +224,7 @@ class MyApplication : Application() {
             .setDestination(R.id.pageFragment)
             .setArguments(args)
             .setComponentName(MainDashboardActivity::class.java)
-            .createTaskStackBuilder().getPendingIntent(1,if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT })!!
+            .createTaskStackBuilder().getPendingIntent(1,PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)!!
             .send()
     }
     private fun moveToPractiseMaterialType(downloadType : String) {
@@ -236,7 +236,7 @@ class MyApplication : Application() {
             .setDestination(R.id.materialDownloadFragment)
             .setArguments(args)
             .setComponentName(MainDashboardActivity::class.java)
-            .createTaskStackBuilder().getPendingIntent(1,if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT })!!
+            .createTaskStackBuilder().getPendingIntent(1,PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)!!
             .send()
     }
     private fun moveToDestination(id : Int) {
@@ -244,7 +244,7 @@ class MyApplication : Application() {
             .setGraph(R.navigation.main_navigation_graph)
             .setDestination(id)
             .setComponentName(MainDashboardActivity::class.java)
-            .createTaskStackBuilder().getPendingIntent(1,if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT })!!
+            .createTaskStackBuilder().getPendingIntent(1,PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)!!
             .send()
     }
 

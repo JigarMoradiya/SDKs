@@ -61,7 +61,9 @@ class SplashFragment : BaseFragment() {
                     val baseUrl = mapMessage[AppConstants.AbacusProgress.BaseUrl] as String
                     val iPath = mapMessage[AppConstants.AbacusProgress.iPath] as String
                     val ads = mapMessage[AppConstants.AbacusProgress.Ads] as String
+                    val isAdmob = mapMessage[AppConstants.AbacusProgress.isAdmob] as Boolean
                     with(prefManager){
+                        setCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,isAdmob)
                         setBaseUrl(baseUrl)
                         setCustomParam(AppConstants.AbacusProgress.iPath,iPath)
                         setCustomParam(AppConstants.AbacusProgress.Privacy_Policy_data,privacyPolicy)

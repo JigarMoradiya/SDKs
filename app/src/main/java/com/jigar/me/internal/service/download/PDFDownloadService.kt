@@ -154,7 +154,7 @@ class PDFDownloadService : Service(), FetchObserver<Download> {
         }
 
         val intent = Intent(this, MainDashboardActivity::class.java)
-        val pendingIntentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT }
+        val pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, pendingIntentFlag)
 
         builder = NotificationCompat.Builder(this, getString(R.string.app_download_monitor_channel_id))

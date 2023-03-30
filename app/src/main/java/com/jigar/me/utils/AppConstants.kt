@@ -91,6 +91,7 @@ object AppConstants {
 
             var Discount = "Discount"
             var Ads = "Ads"
+            var isAdmob = "isAdmob"
             var versionCode = "VersionCode"
             var resetImage = "resetImage"
             var Privacy_Policy_data = "Privacy_Policy_data"

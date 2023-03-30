@@ -113,7 +113,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         setNavigationGraph()
         initViews()
         initListener()
-        ads()
         return binding.root
     }
     private fun setNavigationGraph() {
@@ -182,9 +181,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     fun onBackClick(){
-        if (abacusFragment?.isLighterShow() == true){
-            abacusFragment?.dismissLighter()
-        }
         binding.flAbacus.removeAllViews()
         binding.relAbacus.hide()
         goBack()

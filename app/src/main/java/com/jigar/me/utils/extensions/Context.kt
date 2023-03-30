@@ -128,7 +128,10 @@ fun Context.openMail() {
 }
 fun Context.openURL(url : String) {
     try {
-     startActivity(Intent(Intent.ACTION_VIEW,Uri.parse(url)))
+        val i = Intent(Intent.ACTION_VIEW)
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        i.data = Uri.parse(url)
+        startActivity(i)
     } catch (e: Exception) {
      e.printStackTrace()
      toastS(getString(R.string.play_store_not_found))
@@ -140,6 +143,7 @@ fun Context.shareIntent() {
             "Download Abacus App from Google Play Store \uD83D\uDC47\uD83D\uDC47\uD83D\uDC47\uD83D\uDE0D\uD83D\uDE07\n" +
             "https://play.google.com/store/apps/details?id=${packageName}"
     val sharingIntent = Intent(Intent.ACTION_SEND)
+    sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     sharingIntent.type = "text/plain"
     sharingIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
     sharingIntent.putExtra(Intent.EXTRA_TEXT, msg)
@@ -148,6 +152,7 @@ fun Context.shareIntent() {
 
  fun Context.openYoutube(url : String = AppConstants.YOUTUBE_URL) {
      val i = Intent(Intent.ACTION_VIEW)
+     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
      i.data = Uri.parse(url)
      startActivity(i)
  }

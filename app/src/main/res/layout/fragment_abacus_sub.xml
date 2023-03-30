@@ -121,7 +121,7 @@
             android:textSize="@dimen/textSizeMedium" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/ResettoContinue"
+            android:id="@+id/resettoContinue"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/_16sdp"
             android:layout_alignStart="@+id/rlAbacusMain"
@@ -135,7 +135,8 @@
             android:text="@string/ResettoContinue"
             android:textColor="@color/colorHeadingBlack_00"
             android:textSize="@dimen/_9sdp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
     </RelativeLayout>
 

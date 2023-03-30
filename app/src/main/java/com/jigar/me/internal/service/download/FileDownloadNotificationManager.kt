@@ -170,7 +170,7 @@ abstract class FileDownloadNotificationManager(context: Context) : FetchNotifica
                 else -> ACTION_TYPE_INVALID
             }
             intent.putExtra(EXTRA_ACTION_TYPE, action)
-            val pendingIntentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT }
+            val pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             return PendingIntent.getBroadcast(context, downloadNotification.notificationId + action, intent, pendingIntentFlag)
         }
     }
@@ -192,7 +192,7 @@ abstract class FileDownloadNotificationManager(context: Context) : FetchNotifica
                 else -> ACTION_TYPE_INVALID
             }
             intent.putExtra(EXTRA_ACTION_TYPE, action)
-            val pendingIntentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT }
+            val pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             return PendingIntent.getBroadcast(context, groupId + action, intent, pendingIntentFlag)
         }
     }
@@ -320,7 +320,7 @@ abstract class FileDownloadNotificationManager(context: Context) : FetchNotifica
                 }
             }
 
-            val pendingIntentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) { PendingIntent.FLAG_MUTABLE } else { PendingIntent.FLAG_UPDATE_CURRENT }
+            val pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
             val pendingIntent = PendingIntent.getActivity(context, 0, pdfIntent, pendingIntentFlag)
 
             val notificationBuilder = downloadNotificationsBuilderMap[notificationId]

@@ -16,6 +16,7 @@ import com.jigar.me.ui.view.confirm_alerts.bottomsheets.PurchaseInfoBottomSheetD
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
 import com.jigar.me.utils.extensions.isNetworkAvailable
+import com.jigar.me.utils.extensions.isNotNullOrEmpty
 import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.toastS
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,7 +26,7 @@ class PurchaseFragment : BaseFragment(), PurchaseAdapter.OnItemClickListener {
     private lateinit var binding: FragmentPurchaseBinding
     private val apiViewModel by viewModels<AppViewModel>()
     private val inAppViewModel by viewModels<InAppViewModel>()
-    private var listSKU: List<InAppSkuDetails> = arrayListOf()
+    private var listSKU: MutableList<InAppSkuDetails> = arrayListOf()
     private lateinit var skuListAdapter: PurchaseAdapter
     private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -40,12 +41,14 @@ class PurchaseFragment : BaseFragment(), PurchaseAdapter.OnItemClickListener {
     }
 
     private fun initViews() {
-        inAppViewModel.inAppInit()
-        skuListAdapter = PurchaseAdapter(arrayListOf(),prefManager, this)
+        skuListAdapter = PurchaseAdapter(listSKU,prefManager, this)
         binding.recyclerview.adapter = skuListAdapter
         apiViewModel.getInAppSKU().observe(viewLifecycleOwner){
-            setSKU(it)
+            if (listSKU.isNullOrEmpty()){
+                setSKU(it)
+            }
         }
+        inAppViewModel.inAppInit()
     }
 
     private fun initListener() {
@@ -54,8 +57,9 @@ class PurchaseFragment : BaseFragment(), PurchaseAdapter.OnItemClickListener {
     }
 
     private fun setSKU(listData: List<InAppSkuDetails>) {
-        listSKU = listData
-        skuListAdapter.setData(listData)
+        listSKU.clear()
+        listSKU.addAll(listData)
+        skuListAdapter.notifyItemRangeChanged(0,listSKU.size)
     }
 
     override fun onPurchaseItemClick(position: Int) {

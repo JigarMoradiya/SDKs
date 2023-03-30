@@ -7,6 +7,8 @@ object Constants {
     const val FETCH_NAMESPACE = "AbacusDownloads"
     const val BROWSER_MOBILE_AGENET = "Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.93 Mobile Safari/537.36"
 
+    const val NOTIFICATION_PERMISSION = "notification_permission"
+
     const val examLevelBeginner = "Beginner"
     const val examLevelIntermediate = "Intermediate"
     const val examLevelExpert = "Expert"

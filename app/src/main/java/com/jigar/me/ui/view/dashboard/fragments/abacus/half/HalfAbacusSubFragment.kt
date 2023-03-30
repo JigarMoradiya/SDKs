@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
 import com.jigar.me.databinding.FragmentAbacusSubBinding
@@ -18,6 +20,7 @@ import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
 import com.jigar.me.utils.*
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.onClick
+import com.jigar.me.utils.extensions.setAbacusResetShakeAnimation
 import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import me.samlss.lighter.Lighter
@@ -50,7 +53,7 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     private var bottomSelectedPositions: ArrayList<Int> = arrayListOf()
 
     private var onAbacusValueChangeListener: OnAbacusValueChangeListener? = null
-    private var lighter : Lighter? = null
+
     fun newInstance(column: Int, noOfDecimalPlace: Int, abacus_type: Int): HalfAbacusSubFragment {
         val fragment = HalfAbacusSubFragment()
         fragment.final_column = column
@@ -66,7 +69,6 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     }
 
     private fun initViews() {
-        lighter = Lighter.with(requireActivity())
         isDisplayAbacusNumber = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_abacus_number, true)
 
         if (prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_shape
@@ -75,15 +77,12 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
         } else {
             binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))
         }
-
     }
 
     private fun initListener() {
         binding.ivReset.onClick { onResetClick() }
+        binding.resettoContinue.onClick { onResetClick() }
     }
-    fun isLighterShow() = lighter?.isShowing == true
-    fun dismissLighter() {lighter?.dismiss()}
-
     fun setOnAbacusValueChangeListener(onAbacusValueChangeListener: OnAbacusValueChangeListener?) {
         this.onAbacusValueChangeListener = onAbacusValueChangeListener
     }
@@ -287,58 +286,31 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     }
     fun showResetToContinue(type: Boolean) {
         if (type) {
-            binding.ResettoContinue.show()
-            if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
-                startTimerForToolTips()
-            }else{
-                CommonUtils.blinkView(binding.ivReset,3)
-            }
+            binding.resettoContinue.show()
+            startTimerForToolTips()
+//            if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
+//                startTimerForToolTips()
+//            }else{
+//                CommonUtils.blinkView(binding.ivReset,3)
+//            }
         } else {
-            binding.ResettoContinue.hide()
+            binding.resettoContinue.hide()
         }
     }
 
     private fun startTimerForToolTips() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (isAdded && isResumed){
-                // for right side abacus
-                var layoutID = R.layout.layout_tip_reset_abacus_right
-                var direction = Direction.LEFT
-                var marginOffset = MarginOffset(30, 0, 0, 0)
-                if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
-                    layoutID = R.layout.layout_tip_reset_abacus_left
-                    direction = Direction.RIGHT
-                    marginOffset = MarginOffset(0, 30, 0, 0)
-                }
-                val circleShape = CircleShape(50F)
-                circleShape.setPaint(LighterHelper.getDashPaint())
-                try {
-                    lighter?.setOnLighterListener(object : OnLighterListener {
-                        override fun onDismiss() = Unit
-                        override fun onShow(index: Int) = Unit
-                    })
-                        ?.setBackgroundColor(0x00000000)
-                        ?.addHighlight(
-                            LighterParameter.Builder()
-                                .setHighlightedViewId(R.id.ivReset)
-                                .setTipLayoutId(layoutID)
-                                .setLighterShape(circleShape)
-                                .setTipViewRelativeDirection(direction)
-                                .setTipViewDisplayAnimation(LighterHelper.getScaleAnimation())
-                                .setTipViewRelativeOffset(marginOffset)
-                                .build())?.show()
-                }catch (e: Exception){
-                    e.printStackTrace()
-                }
+                binding.ivReset.setAbacusResetShakeAnimation()
             }
-
-        },3000)
+        },2500)
     }
 
     private fun onResetClick() {
         if (!isResetRunning) {
             isResetRunning = true
             binding.ivReset.y = 0f
+
             binding.ivReset.animate().setDuration(200)
                 .translationYBy((binding.ivReset.height / 2).toFloat()).withEndAction {
                     binding.ivReset.animate().setDuration(200)
