@@ -17,6 +17,9 @@ import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.admanager.AdManagerAdRequest
+import com.google.android.gms.ads.admanager.AdManagerInterstitialAd
+import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.gson.Gson
@@ -476,7 +479,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
             && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" && // if yes in firebase
             (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") != "Y" // if not purchased
                     && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y")) {
-            newInterstitialAdRequestLeaveExam()
+            newInterstitialAdRequest(getString(R.string.interstitial_ad_unit_id_exam_leave))
         }else{
             onBack()
         }
@@ -487,7 +490,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
             && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" && // if yes in firebase
             (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") != "Y" // if not purchased
                     && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y")) {
-            newInterstitialAdRequestExamCompleteClose()
+            newInterstitialAdRequest(getString(R.string.interstitial_ad_unit_id_exam_complete_close))
         }else{
             onBack()
         }
@@ -505,34 +508,58 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
         mNavController.navigateUp()
     }
 
-    // exam complate and close
-    private fun newInterstitialAdRequestExamCompleteClose() {
-        val adRequest = AdRequest.Builder().build()
+    // exam complate and close, leave exam
+    private fun newInterstitialAdRequest(adUnit : String) {
         showLoading()
-        InterstitialAd.load(requireContext(),getString(R.string.interstitial_ad_unit_id_exam_complete_close), adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                hideLoadingAndFinish()
-            }
+        val isAdmob = prefManager.getCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,true)
+        if (isAdmob){
+            val adRequest = AdRequest.Builder().build()
+            InterstitialAd.load(requireContext(),adUnit, adRequest, object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    hideLoadingAndFinish()
+                }
 
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                showInterstitialRequest(interstitialAd)
-            }
-        })
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    showInterstitialRequest(interstitialAd)
+                }
+            })
+        }else{
+            val adRequest = AdManagerAdRequest.Builder().build()
+            AdManagerInterstitialAd.load(requireContext(),adUnit, adRequest, object : AdManagerInterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    hideLoadingAndFinish()
+                }
+
+                override fun onAdLoaded(interstitialAd: AdManagerInterstitialAd) {
+                    showInterstitialRequest(interstitialAd)
+                }
+            })
+        }
     }
 
-    // show leave ads
-    private fun newInterstitialAdRequestLeaveExam() {
-        val adRequest = AdRequest.Builder().build()
-        showLoading()
-        InterstitialAd.load(requireContext(),getString(R.string.interstitial_ad_unit_id_exam_leave), adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
+    fun showInterstitialRequest(mInterstitialAd: AdManagerInterstitialAd) {
+        // Show the ad if it's ready. Otherwise toast and reload the ad.
+        mInterstitialAd.fullScreenContentCallback = object : FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                Log.d("AdmobInterStitialAds", "exam Ad was dismissed.")
+                // Don't forget to set the ad reference to null so you
+                // don't show the ad a second time.
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError) {
+                Log.d("AdmobInterStitialAds", "exam Ad failed to show.")
+                // Don't forget to set the ad reference to null so you
+                // don't show the ad a second time.
                 hideLoadingAndFinish()
             }
 
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                showInterstitialRequest(interstitialAd)
+            override fun onAdShowedFullScreenContent() {
+                Log.d("AdmobInterStitialAds", "exam Ad showed fullscreen content.")
+                // Called when ad is dismissed.
+                hideLoadingAndFinish()
             }
-        })
+        }
+        mInterstitialAd.show(requireActivity())
     }
 
     fun showInterstitialRequest(mInterstitialAd: InterstitialAd) {

@@ -10,6 +10,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.jigar.me.BuildConfig
 import com.jigar.me.R
 import com.jigar.me.databinding.BottomSheetCommanConfimationBinding
 import com.jigar.me.databinding.FragmentSplashBinding
@@ -61,7 +62,11 @@ class SplashFragment : BaseFragment() {
                     val baseUrl = mapMessage[AppConstants.AbacusProgress.BaseUrl] as String
                     val iPath = mapMessage[AppConstants.AbacusProgress.iPath] as String
                     val ads = mapMessage[AppConstants.AbacusProgress.Ads] as String
-                    val isAdmob = mapMessage[AppConstants.AbacusProgress.isAdmob] as Boolean
+                    val isAdmob = if (BuildConfig.DEBUG){
+                        false
+                    }else{
+                        mapMessage[AppConstants.AbacusProgress.isAdmob] as Boolean
+                    }
                     with(prefManager){
                         setCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,isAdmob)
                         setBaseUrl(baseUrl)

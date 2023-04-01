@@ -88,12 +88,6 @@ class MainDashboardActivity : BaseActivity(){
         setNavigationGraph()
         onMainActivityBack()
         this.checkPermissions(Constants.NOTIFICATION_PERMISSION,requestMultiplePermissions)
-
-        Log.e("jigarLogs","emailAddress1 = "+OneSignal.getDeviceState()?.emailAddress)
-        OneSignal.setEmail("jigar2596moradiya@gmail.com")
-        Log.e("jigarLogs","emailAddress = "+OneSignal.getDeviceState()?.emailAddress)
-        Log.e("jigarLogs","pushToken = "+OneSignal.getDeviceState()?.pushToken)
-        Log.e("jigarLogs","userId = "+OneSignal.getDeviceState()?.userId)
     }
 
     // permission result
@@ -181,6 +175,17 @@ class MainDashboardActivity : BaseActivity(){
                         }
                     }
                 }
+            }
+
+            if (BuildConfig.DEBUG){
+                setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
+                setCustomParam(AppConstants.Purchase.Purchase_All, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Ads, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "N")
             }
         }
     }

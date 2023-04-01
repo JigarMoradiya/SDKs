@@ -15,6 +15,24 @@
     <!--    <string name="banner_ad_unit_id">ca-app-pub-5759468493922763/8591840381</string>-->
     <!--    <string name="interstitial_ad_unit_id">ca-app-pub-5759468493922763/5018160875</string>-->
 
+<!--    <string name="banner_ad_unit_id_abacus">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="banner_ad_unit_id_practise_material">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="banner_ad_unit_id_exam">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="banner_ad_unit_id_exam_result">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="banner_ad_unit_id_sudoku">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="banner_ad_unit_id_number_puzzle">ca-app-pub-3940256099942544/6300978111</string>-->
+<!--    <string name="banner_ad_unit_id_exercise">ca-app-pub-3940256099942544/6300978111</string>-->
+
+<!--    <string name="interstitial_ad_unit_id_exam_complete_show_result">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_exam_complete_close">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_exam_leave">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_abacus_full_screen">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_abacus_half_screen">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_sudoku">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_number_puzzle_step">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_number_puzzle_complete">ca-app-pub-3940256099942544/1033173712</string>-->
+<!--    <string name="interstitial_ad_unit_id_exercise">ca-app-pub-3940256099942544/1033173712</string>-->
+
     <string name="banner_ad_unit_id_abacus">ca-app-pub-5759468493922763/9552869463</string>
     <string name="banner_ad_unit_id_practise_material">ca-app-pub-5759468493922763/7125661457</string>
     <string name="banner_ad_unit_id_exam">ca-app-pub-5759468493922763/8179760812</string>

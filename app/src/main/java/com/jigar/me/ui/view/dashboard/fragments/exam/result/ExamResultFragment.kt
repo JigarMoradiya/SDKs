@@ -1,6 +1,7 @@
 package com.jigar.me.ui.view.dashboard.fragments.exam.result
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.admanager.AdManagerAdRequest
+import com.google.android.gms.ads.admanager.AdManagerInterstitialAd
+import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.gson.Gson
@@ -104,18 +108,35 @@ class ExamResultFragment : BaseFragment() {
 
     // show leave ads
     private fun newInterstitialAdRequest() {
-        val adRequest = AdRequest.Builder().build()
         showLoading()
-        InterstitialAd.load(requireContext(),getString(R.string.interstitial_ad_unit_id_exam_complete_show_result), adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                hideLoading()
-            }
+        val isAdmob = prefManager.getCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,true)
+        val adUnit = getString(R.string.interstitial_ad_unit_id_exam_complete_show_result)
+        if (isAdmob){
+            val adRequest = AdRequest.Builder().build()
+            InterstitialAd.load(requireContext(),adUnit, adRequest, object : InterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    hideLoading()
+                }
 
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                hideLoading()
-                interstitialAd.show(requireActivity())
-            }
-        })
+                override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                    hideLoading()
+                    interstitialAd.show(requireActivity())
+                }
+            })
+        }else{
+            val adRequest = AdManagerAdRequest.Builder().build()
+            AdManagerInterstitialAd.load(requireContext(),adUnit, adRequest, object : AdManagerInterstitialAdLoadCallback() {
+                override fun onAdFailedToLoad(adError: LoadAdError) {
+                    hideLoading()
+                }
+
+                override fun onAdLoaded(interstitialAd: AdManagerInterstitialAd) {
+                    hideLoading()
+                    interstitialAd.show(requireActivity())
+                }
+            })
+        }
+
     }
 
 

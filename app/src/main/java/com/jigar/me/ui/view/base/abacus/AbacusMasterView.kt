@@ -370,7 +370,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     private var prevY = -1
     private var diffTouchAndDrawY = 0
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (beadType == AbacusBeadType.Exam){
+        if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
             return false
         }
         return try {

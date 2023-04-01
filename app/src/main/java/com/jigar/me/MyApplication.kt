@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.navigation.NavDeepLinkBuilder
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.RequestConfiguration
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.gson.Gson
 import com.jigar.me.data.model.NotificationData
@@ -30,6 +31,7 @@ import io.reactivex.exceptions.UndeliverableException
 import io.reactivex.plugins.RxJavaPlugins
 import java.io.IOException
 import java.net.SocketException
+import java.util.*
 import javax.inject.Inject
 
 
@@ -79,6 +81,12 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         MobileAds.initialize(this)
+        if (BuildConfig.DEBUG){
+            val testDeviceIds = listOf("465FAD15876FE450FAC4DFB84C422B2E")
+            val configuration = RequestConfiguration.Builder().setTestDeviceIds(testDeviceIds).build()
+            MobileAds.setRequestConfiguration(configuration)
+        }
+
         analytics = FirebaseAnalytics.getInstance(this@MyApplication)
 
         oneSignal()
