@@ -45,7 +45,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     private lateinit var binding: FragmentHomeBinding
     private var root : View? = null
     private val appViewModel by viewModels<AppViewModel>()
-    private lateinit var mNavController: NavController
+    private var mNavController: NavController? = null
 
     private lateinit var bannerPagerAdapter: BannerPagerAdapter
     private lateinit var homeMenuAdapter: HomeMenuAdapter
@@ -158,48 +158,48 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     private fun moveToClick(clickType: Int) {
         when (clickType) {
             AppConstants.HomeClicks.Menu_Starter -> {
-                mNavController.navigate(R.id.action_homeFragment_to_fullAbacusFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_fullAbacusFragment)
             }
             AppConstants.HomeClicks.Menu_Number -> {
                 val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Number))
-                mNavController.navigate(action)
+                mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Addition -> {
                 val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Addition))
-                mNavController.navigate(action)
+                mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Addition_Subtraction -> {
                 val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.AdditionSubtraction))
-                mNavController.navigate(action)
+                mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Multiplication -> {
                 val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Multiplication))
-                mNavController.navigate(action)
+                mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Division -> {
                 val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Division))
-                mNavController.navigate(action)
+                mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Exercise -> {
-                mNavController.navigate(R.id.action_homeFragment_to_exerciseHomeFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_exerciseHomeFragment)
             }
             AppConstants.HomeClicks.Menu_DailyExam -> {
-                mNavController.navigate(R.id.action_homeFragment_to_examHomeFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_examHomeFragment)
             }
             AppConstants.HomeClicks.Menu_PractiseMaterial -> {
-                mNavController.navigate(R.id.action_homeFragment_to_materialHomeFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_materialHomeFragment)
             }
             AppConstants.HomeClicks.Menu_Number_Puzzle -> {
-                mNavController.navigate(R.id.action_homeFragment_to_puzzleNumberHomeFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_puzzleNumberHomeFragment)
             }
             AppConstants.HomeClicks.Menu_Setting -> {
-                mNavController.navigate(R.id.action_homeFragment_to_settingsFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_settingsFragment)
             }
             AppConstants.HomeClicks.Menu_Purchase -> {
-                mNavController.navigate(R.id.action_homeFragment_to_purchaseFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_purchaseFragment)
             }
             AppConstants.HomeClicks.Menu_AboutUs -> {
-                mNavController.navigate(R.id.action_homeFragment_to_aboutFragment)
+                mNavController?.navigate(R.id.action_homeFragment_to_aboutFragment)
             }
             AppConstants.HomeClicks.Menu_Share -> {
                 requireContext().shareIntent()

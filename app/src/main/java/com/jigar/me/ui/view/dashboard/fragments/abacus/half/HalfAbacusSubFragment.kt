@@ -23,12 +23,6 @@ import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.setAbacusResetShakeAnimation
 import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
-import me.samlss.lighter.Lighter
-import me.samlss.lighter.interfaces.OnLighterListener
-import me.samlss.lighter.parameter.Direction
-import me.samlss.lighter.parameter.LighterParameter
-import me.samlss.lighter.parameter.MarginOffset
-import me.samlss.lighter.shape.CircleShape
 import java.util.ArrayList
 
 @AndroidEntryPoint

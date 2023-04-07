@@ -17,8 +17,8 @@ android {
         applicationId 'com.jigar.me'
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 81
-        versionName "8.0.1"
+        versionCode 82
+        versionName "8.0.2"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -141,8 +141,7 @@ dependencies {
 
     implementation 'com.google.code.gson:gson:2.8.9'
 
-    // admob ads
-//    implementation 'com.google.android.gms:play-services-ads:21.5.0'
+    // admob ads not use 21.5.0 right now
     implementation 'com.google.android.gms:play-services-ads:21.4.0'
     // Calculator
     implementation 'com.fathzer:javaluator:3.0.2'
@@ -171,10 +170,10 @@ dependencies {
     implementation "androidx.tonyodev.fetch2okhttp:xfetch2okhttp:3.1.6"
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:4.9.0'
 
-    // Android Lighter library
-    implementation 'me.samlss:lighter:1.0.3'
-
     // push notification
     implementation 'com.onesignal:OneSignal:[4.0.0, 4.99.99]'
+
+    // install referrer
+    implementation "com.android.installreferrer:installreferrer:2.2"
 
 }

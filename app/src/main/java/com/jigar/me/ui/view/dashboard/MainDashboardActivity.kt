@@ -13,7 +13,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.android.installreferrer.api.InstallReferrerClient
+import com.android.installreferrer.api.InstallReferrerStateListener
+import com.android.installreferrer.api.ReferrerDetails
 import com.jigar.me.BuildConfig
+import com.jigar.me.MyApplication
 import com.jigar.me.R
 import com.jigar.me.data.model.dbtable.inapp.InAppPurchaseDetails
 import com.jigar.me.databinding.ActivityMainDashboardBinding
@@ -30,6 +34,7 @@ import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
 import com.jigar.me.utils.checkPermissions
 import com.jigar.me.utils.extensions.hide
+import com.jigar.me.utils.extensions.log
 import com.jigar.me.utils.extensions.toastS
 import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,6 +67,9 @@ class MainDashboardActivity : BaseActivity(){
         initViews()
         initListener()
         initObserver()
+        if (!prefManager.getCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,false)){
+            recordReferral()
+        }
     }
 
     private fun initObserver() {
@@ -254,5 +262,60 @@ class MainDashboardActivity : BaseActivity(){
     }
     private fun navigationUp() {
         navController.navigateUp()
+    }
+
+    private fun recordReferral() {
+        log("welcome referral")
+        val referrerClient = InstallReferrerClient.newBuilder(this).build()
+        referrerClient.startConnection(object : InstallReferrerStateListener {
+
+            override fun onInstallReferrerSetupFinished(responseCode: Int) {
+                when (responseCode) {
+                    InstallReferrerClient.InstallReferrerResponse.OK -> {
+                        // Connection established.
+                        val response: ReferrerDetails = referrerClient.installReferrer
+                        val referrerUrl = response.installReferrer
+//                        val referrerClickTime: Long = response.referrerClickTimestampSeconds*1000
+//                        val appInstallTime: Long = response.installBeginTimestampSeconds*1000
+
+                        log("referrerUrl : "+referrerUrl)
+//                        if (referrerUrl.contains("utm_source=referral")){
+                            referrerUrl.split("&").forEach { term ->
+                                if (term.contains("=") && term.split("=").size>1){
+                                    val param = term.split("=")[0]
+                                    val value = term.split("=")[1]
+                                    when(param){
+                                        "utm_source" -> {
+                                            log("Found utm_source in Installation and value is $value")
+                                            MyApplication.logEvent(value, null)
+                                            prefManager.setCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,true)
+                                        }
+                                    }
+                                }
+                            }
+//                        }else{
+//                            prefManager.setCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,true)
+//                        }
+
+
+                        referrerClient.endConnection()
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+                        // API not available on the current Play Store app.
+                        log("Feature Not Supported")
+                    }
+                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+                        // Connection couldn't be established.
+                        log("Service is Unavailable.")
+                    }
+                }
+            }
+
+            override fun onInstallReferrerServiceDisconnected() {
+                // Try to restart the connection on the next request to
+                // Google Play by calling the startConnection() method.
+                log("Service is disconnected.")
+            }
+        })
     }
 }
