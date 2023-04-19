@@ -185,16 +185,16 @@ class MainDashboardActivity : BaseActivity(){
                 }
             }
 
-            if (BuildConfig.DEBUG){
-                setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
-                setCustomParam(AppConstants.Purchase.Purchase_All, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Ads, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "N")
-            }
+//            if (BuildConfig.DEBUG){
+//                setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
+//                setCustomParam(AppConstants.Purchase.Purchase_All, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Ads, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "N")
+//            }
         }
     }
     private fun showToolbarTitle(id: Int) {

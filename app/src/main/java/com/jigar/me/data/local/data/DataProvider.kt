@@ -2,12 +2,12 @@ package com.jigar.me.data.local.data
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import com.jigar.me.R
 import com.jigar.me.data.model.pages.*
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
+import com.jigar.me.utils.extensions.isNotNullOrEmpty
 import com.jigar.me.utils.sudoku.SudokuConst4
 import com.jigar.me.utils.sudoku.SudokuConst6
 import com.jigar.me.utils.sudoku.SudukoConst
@@ -17,7 +17,7 @@ import kotlin.random.Random.Default.nextInt
 
 
 object DataProvider {
-    fun getAbacusThemeList() : ArrayList<String>{
+    fun getAbacusThemeTypesList() : ArrayList<String>{
         val list = ArrayList<String>()
         with(list){
             add(AppConstants.Settings.theam_Default)
@@ -29,7 +29,43 @@ object DataProvider {
         list.shuffle()
         return list
     }
-    /* home menu */
+
+    fun getAbacusThemeTypeList() : ArrayList<AbacusType>{
+        val list = ArrayList<AbacusType>()
+        with(list){
+            add(AbacusType(AppConstants.Settings.theam_Poligon_default,R.drawable.poligon_black,R.drawable.bg_abacus_frame_large_black,R.color.abacus_rod_black,R.color.abacus_rod_black_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Blue,R.drawable.poligon_blue,R.drawable.bg_abacus_frame_large_blue,R.color.abacus_rod_blue,R.color.abacus_rod_blue_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Blue_Sky,R.drawable.poligon_blue_sky,R.drawable.bg_abacus_frame_large_blue_sky,R.color.abacus_rod_blue_sky,R.color.abacus_rod_blue_sky_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Purple,R.drawable.poligon_purple,R.drawable.bg_abacus_frame_large_purple,R.color.abacus_rod_purple,R.color.abacus_rod_purple_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Orange,R.drawable.poligon_orange,R.drawable.bg_abacus_frame_large_orange,R.color.abacus_rod_orange,R.color.abacus_rod_orange_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Tint,R.drawable.poligon_tint,R.drawable.bg_abacus_frame_large_tint,R.color.abacus_rod_tint,R.color.abacus_rod_tint_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Red,R.drawable.poligon_red,R.drawable.bg_abacus_frame_large_red,R.color.abacus_rod_red,R.color.abacus_rod_red_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Green,R.drawable.poligon_green,R.drawable.bg_abacus_frame_large_green,R.color.abacus_rod_green,R.color.abacus_rod_green_dark))
+            add(AbacusType(AppConstants.Settings.theam_Poligon_Pink,R.drawable.poligon_pink,R.drawable.bg_abacus_frame_large_pink,R.color.abacus_rod_pink,R.color.abacus_rod_pink_dark))
+        }
+        return list
+    }
+    val abacusThemeList = ArrayList<AbacusType>()
+    fun getAllAbacusThemeTypeList() : ArrayList<AbacusType>{
+        val list = ArrayList<AbacusType>()
+        list.addAll(getAbacusThemeTypeList())
+        with(list){
+            add(AbacusType(AppConstants.Settings.theam_shape,R.drawable.shape_square_gray,R.drawable.bg_abacus_frame_large_black,R.color.abacus_rod_black,R.color.abacus_rod_black_dark))
+            add(AbacusType(AppConstants.Settings.theam_eyes,R.drawable.face_gray_open,R.drawable.bg_abacus_frame_large_pink,R.color.abacus_rod_pink,R.color.abacus_rod_pink_dark))
+            add(AbacusType(AppConstants.Settings.theam_Star,R.drawable.star_gray_open,R.drawable.bg_abacus_frame_large_red,R.color.abacus_rod_red,R.color.abacus_rod_red_dark))
+            add(AbacusType(AppConstants.Settings.theam_Egg,R.drawable.egg,R.drawable.bg_abacus_frame_large_black,R.color.abacus_rod_black,R.color.abacus_rod_black_dark))
+        }
+        if (abacusThemeList.isEmpty()){
+            abacusThemeList.addAll(list)
+        }
+        return list
+    }
+    fun findAbacusThemeType(type : String) : AbacusType?{
+        if (abacusThemeList.isEmpty()){
+            getAllAbacusThemeTypeList()
+        }
+        return abacusThemeList.find { it.type == type }
+    }
     fun getHomeMenuList() : ArrayList<HomeMenu>{
         val list = ArrayList<HomeMenu>()
         with(list){
@@ -1137,8 +1173,8 @@ object DataProvider {
     ): ArrayList<HashMap<String, String>> {
         var que2_str = que2_str1
         val list_abacus = ArrayList<HashMap<String, String>>()
-        val que2: Int
-        val que1 = when {
+        var que2: Int
+        var que1 = when {
             position < 10 -> {
                 val max = 111
                 val min = 1
@@ -1225,7 +1261,7 @@ object DataProvider {
             }
         }
 //        que1 = 999
-//        que2 = 39
+//        que2 = 9
         var data: HashMap<String, String> = HashMap()
         val final_que1 = que1 * que2
         data[Constants.Que] = final_que1.toString()

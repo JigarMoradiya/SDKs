@@ -4,38 +4,36 @@ import android.content.Context
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusType
 import com.jigar.me.databinding.RowQuestionLayoutBinding
+import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
 import com.jigar.me.utils.ViewUtils
 import com.jigar.me.utils.extensions.invisible
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.show
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AbacusMultiplicationTypeAdapter(
-    private var abecuseItems: List<HashMap<String, String>>,private var isStepByStep: Boolean
+    private var abacusItems: ArrayList<HashMap<String, String>>, private var isStepByStep: Boolean, private val abacusType : AbacusType?
 ) :
     RecyclerView.Adapter<AbacusMultiplicationTypeAdapter.FormViewHolder>() {
 
     private val highlightDetail = HashMap<Int, Int>()
     private var isClear = false
-    private var currentStep = 0
 
     fun setData(listData: List<HashMap<String, String>>, isStepByStep: Boolean) {
-        this.abecuseItems = listData
-        this.isStepByStep = isStepByStep
-
         highlightDetail[0] = 0
         highlightDetail[1] = 0
-        notifyDataSetChanged()
+        this.abacusItems.clear()
+        this.abacusItems.addAll(listData)
+        this.isStepByStep = isStepByStep
+        notifyItemRangeChanged(0,abacusItems.size)
     }
 
 
@@ -47,7 +45,7 @@ class AbacusMultiplicationTypeAdapter(
     }
 
     override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
-        val data = abecuseItems[position]
+        val data = abacusItems[position]
         val context = holder.binding.tvQuestion.context
         holder.binding.tvSymbol.text =
             Objects.requireNonNull<String>(data[Constants.Sign]).replace("*", "x")
@@ -83,21 +81,20 @@ class AbacusMultiplicationTypeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return abecuseItems.size
+        return abacusItems.size
     }
 
-    fun getTable(context: Context): SpannableString? {
+    fun getTable(context: Context,themeContent : AbacusType? = null): SpannableString? {
         if (highlightDetail.size > 1) {
             val position = highlightDetail[1]!!
             val position0 = highlightDetail[0]!!
-            val abecuseItem = abecuseItems[1]
-            val abecuseItem0 = abecuseItems[0]
+            val abecuseItem = abacusItems[1]
+            val abecuseItem0 = abacusItems[0]
             return ViewUtils.getTable(
                 context,
-                Integer.valueOf(
-                    abecuseItem[Constants.Que]!!.substring(position, position + 1)
-                ),
-                Integer.valueOf(abecuseItem0[Constants.Que]!!.substring(position0, position0 + 1))
+                Integer.valueOf(abecuseItem[Constants.Que]!!.substring(position, position + 1)),
+                Integer.valueOf(abecuseItem0[Constants.Que]!!.substring(position0, position0 + 1)),
+                themeContent
             )
         }
         return null
@@ -111,11 +108,12 @@ class AbacusMultiplicationTypeAdapter(
             text!!.length,
             Spannable.SPAN_INCLUSIVE_EXCLUSIVE
         )
-        wordtoSpan.setSpan(
-            ForegroundColorSpan(
-                ContextCompat.getColor(context, R.color.red)
-            ), position, position + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE
-        )
+        val color = if (abacusType != null){
+            CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+        }else{
+            ContextCompat.getColor(context, R.color.red)
+        }
+        wordtoSpan.setSpan(ForegroundColorSpan(color), position, position + 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
         return wordtoSpan
     }
 
@@ -124,7 +122,7 @@ class AbacusMultiplicationTypeAdapter(
     }
 
     fun getItem(item: Int): HashMap<String, String> {
-        return abecuseItems[item]
+        return abacusItems[item]
     }
 
     fun reset() {
@@ -136,8 +134,8 @@ class AbacusMultiplicationTypeAdapter(
 
     fun goToNextStep() {
         try {
-            val firstItem = abecuseItems[0]
-            val secondItem = abecuseItems[1]
+            val firstItem = abacusItems[0]
+            val secondItem = abacusItems[1]
             val currentSum = getCurrentSumVal()
             if (highlightDetail[0]!! < firstItem[Constants.Que]!!.length - 1) {
                 highlightDetail[0] = highlightDetail[0]!! + 1
@@ -158,9 +156,9 @@ class AbacusMultiplicationTypeAdapter(
     }
 
     fun getCurrentSumVal(): Double? {
-        if (abecuseItems.size >= 2) {
-            val firstItem = abecuseItems[0]
-            val secondItem = abecuseItems[1]
+        if (abacusItems.size >= 2) {
+            val firstItem = abacusItems[0]
+            val secondItem = abacusItems[1]
             var currentsumval = 0.0
             for (i in 0..highlightDetail[1]!!) {
                 for (j in 0..(if (i == highlightDetail[1]) highlightDetail[0] else firstItem[Constants.Que]!!.length - 1)!!) {
@@ -182,10 +180,10 @@ class AbacusMultiplicationTypeAdapter(
     }
 
     fun getFinalSumVal(): Double? {
-        if (abecuseItems.size > 0) {
+        if (abacusItems.size > 0) {
             var expression = ""
-            for (i in abecuseItems.indices) {
-                val abecuseItem = abecuseItems[i]
+            for (i in abacusItems.indices) {
+                val abecuseItem = abacusItems[i]
                 expression += abecuseItem[Constants.Sign]!!.trim { it <= ' ' } + abecuseItem[Constants.Que]!!
                     .trim { it <= ' ' }
             }

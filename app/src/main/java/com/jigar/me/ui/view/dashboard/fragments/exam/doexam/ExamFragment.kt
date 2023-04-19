@@ -481,6 +481,7 @@ class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterf
         val bundle = Bundle()
         bundle.putString(AppConstants.Extras_Comman.examResult, Gson().toJson(list_abacus))
         bundle.putString(AppConstants.Extras_Comman.type, examLevelLable)
+        bundle.putString(AppConstants.Extras_Comman.From, "exam")
         mNavController.navigate(R.id.action_examFragment_to_examResultFragment, bundle)
     }
     private  fun onBack() {

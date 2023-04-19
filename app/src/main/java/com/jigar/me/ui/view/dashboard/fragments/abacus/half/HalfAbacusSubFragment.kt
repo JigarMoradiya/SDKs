@@ -3,14 +3,12 @@ package com.jigar.me.ui.view.dashboard.fragments.abacus.half
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
+import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
@@ -65,11 +63,21 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     private fun initViews() {
         isDisplayAbacusNumber = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_abacus_number, true)
 
-        if (prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_shape
-            || prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_Default) {
-            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
-        } else {
-            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))
+        val theme = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+//        if (prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_shape
+//            || prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_Default) {
+//            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
+//        } else {
+//            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))
+//        }
+
+        val themeContent = DataProvider.findAbacusThemeType(theme)
+        themeContent?.abacusFrame135?.let { binding.rlAbacusMain.setBackgroundResource(it) }
+        themeContent?.dividerColor1?.let { binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),it)) }
+        themeContent?.resetBtnColor8?.let {
+            binding.ivReset.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+            binding.ivRight.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+            binding.ivLeft.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
         }
     }
 

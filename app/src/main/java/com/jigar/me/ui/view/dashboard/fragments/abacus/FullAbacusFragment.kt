@@ -2,9 +2,6 @@ package com.jigar.me.ui.view.dashboard.fragments.abacus
 
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.jigar.me.R
+import com.jigar.me.data.local.data.DataProvider
+import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.databinding.FragmentFullAbacusBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
-import com.jigar.me.ui.view.base.abacus.AbacusMasterCompleteListener
 import com.jigar.me.ui.view.base.abacus.AbacusMasterView
 import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
@@ -27,7 +25,6 @@ import com.jigar.me.utils.ViewUtils
 import com.jigar.me.utils.extensions.dp
 import com.jigar.me.utils.extensions.isNetworkAvailable
 import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -38,6 +35,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     AbacusMasterBeadShiftListener,
     OnAbacusValueChangeListener {
     private lateinit var binding: FragmentFullAbacusBinding
+    private var abacusBinding: FragmentAbacusSubBinding? = null
     private var values: Int = 1
     private var random_min: Int = 0
     private var random_max: Int = 0
@@ -48,7 +46,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private var isPurchased = false
     private var is1stTime = false
     private var resetX = 0f
-    private var theam = AppConstants.Settings.theam_Egg
+    private var theme = AppConstants.Settings.theam_Egg
     private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentFullAbacusBinding.inflate(inflater, container, false)
@@ -78,7 +76,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
     private fun initListener() {
         binding.cardBack.onClick { mNavController.navigateUp() }
-        binding.ivReset.onClick { resetClick()}
         binding.swRandom.onClick { switchRandomClick() }
         binding.swReset.onClick { switchResetClick() }
         binding.swResetStarting.onClick { switchResetStartingClick() }
@@ -88,14 +85,14 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private fun resetClick() {
         if (!isResetRunning) {
             isResetRunning = true
-            binding.ivReset.y = 0f
-            binding.ivReset.animate().setDuration(200)
-                .translationYBy((binding.ivReset.height / 2).toFloat()).withEndAction {
-                    binding.ivReset.animate().setDuration(200)
-                        .translationYBy((-binding.ivReset.height / 2).toFloat()).withEndAction {
+            abacusBinding?.ivReset?.y = 0f
+            abacusBinding?.ivReset?.animate()?.setDuration(200)
+                ?.translationYBy((abacusBinding?.ivReset?.height!! / 2).toFloat())?.withEndAction {
+                    abacusBinding?.ivReset?.animate()?.setDuration(200)
+                        ?.translationYBy((-abacusBinding?.ivReset?.height!! / 2).toFloat())!!.withEndAction {
                             isResetRunning = false
                         }.start()
-                }.start()
+                }?.start()
             onAbacusValueDotReset()
         }
     }
@@ -164,30 +161,40 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             }else{
                 setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
             }
-            theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+            theme = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
 
         }
-        if (theam == AppConstants.Settings.theam_shape || theam == AppConstants.Settings.theam_Default) {
-            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
-        } else {
-            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))
+
+        binding.linearAbacus.removeAllViews()
+        abacusBinding = FragmentAbacusSubBinding.inflate(layoutInflater, null, false)
+        binding.linearAbacus.addView(abacusBinding?.root)
+
+        abacusBinding?.ivReset?.onClick { resetClick()}
+
+        val themeContent = DataProvider.findAbacusThemeType(theme)
+        themeContent?.abacusFrame135?.let { abacusBinding?.rlAbacusMain?.setBackgroundResource(it) }
+        themeContent?.dividerColor1?.let { abacusBinding?.ivDivider?.setBackgroundColor(ContextCompat.getColor(requireContext(),it)) }
+        themeContent?.resetBtnColor8?.let {
+            abacusBinding?.ivReset?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+            abacusBinding?.ivRight?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+            abacusBinding?.ivLeft?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
         }
 
-        if (theam.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
+        if (theme.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
             val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_full_eyes,requireActivity())
-            binding.abacusTop.setNoOfRowAndBeads(0, 9, 1, colSpacing)
-            binding.abacusBottom.setNoOfRowAndBeads(0, 9, 4, colSpacing)
-        }else if (theam.equals(AppConstants.Settings.theam_Default, ignoreCase = true)) {
+            abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1, colSpacing)
+            abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4, colSpacing)
+        }else if (theme.contains(AppConstants.Settings.theam_Default, ignoreCase = true)) {
             val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_full_polygon,requireActivity())
-            binding.abacusTop.setNoOfRowAndBeads(0, 9, 1, colSpacing)
-            binding.abacusBottom.setNoOfRowAndBeads(0, 9, 4, colSpacing)
+            abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1, colSpacing)
+            abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4, colSpacing)
         } else {
             val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_full_default,requireActivity())
-            binding.abacusTop.setNoOfRowAndBeads(0, 9, 1, colSpacing)
-            binding.abacusBottom.setNoOfRowAndBeads(0, 9, 4, colSpacing)
+            abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1, colSpacing)
+            abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4, colSpacing)
         }
-        binding.abacusTop.onBeadShiftListener = this
-        binding.abacusBottom.onBeadShiftListener = this
+        abacusBinding?.abacusTop?.onBeadShiftListener = this@FullAbacusFragment
+        abacusBinding?.abacusBottom?.onBeadShiftListener = this@FullAbacusFragment
     }
     private fun setSwitchs(isSpeak: Boolean) {
         with(prefManager){
@@ -208,7 +215,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
             lifecycleScope.launch {
                 delay(300)
-                binding.relAbacus.show()
                 is1stTime = true
                 if (requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
                     goToNextValue()
@@ -241,8 +247,8 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         var accumulator = 0
 
         when (abacusView.id) {
-            R.id.abacusTop -> if (binding.abacusBottom.engine != null) {
-                val bottomVal = binding.abacusBottom.engine!!.getValue()
+            R.id.abacusTop -> if (abacusBinding?.abacusBottom?.engine != null) {
+                val bottomVal = abacusBinding?.abacusBottom?.engine!!.getValue()
                 var i = 0
                 while (i < rowValue.size) {
                     accumulator *= 10
@@ -253,11 +259,11 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                 val intSumVal = bottomVal + accumulator
                 val strCurVal = intSumVal.toString()
                 currentSumVal = java.lang.Float.valueOf(strCurVal)
-                binding.tvCurrentVal.text = strCurVal
+                abacusBinding?.tvCurrentVal?.text = strCurVal
                 onAbacusValueChange(abacusView, currentSumVal)
             }
-            R.id.abacusBottom -> if (binding.abacusTop.engine != null) {
-                val topVal = binding.abacusTop.engine!!.getValue()
+            R.id.abacusBottom -> if (abacusBinding?.abacusTop?.engine != null) {
+                val topVal = abacusBinding?.abacusTop?.engine!!.getValue()
                 var i = 0
                 while (i < rowValue.size) {
                     accumulator *= 10
@@ -267,8 +273,8 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                 }
                 val intSumVal = topVal + accumulator
                 val strCurVal = intSumVal.toString()
-                currentSumVal = java.lang.Float.valueOf(strCurVal)
-                binding.tvCurrentVal.text = strCurVal
+                currentSumVal = strCurVal.toFloat()
+                abacusBinding?.tvCurrentVal?.text = strCurVal
                 onAbacusValueChange(abacusView, currentSumVal)
             }
         }
@@ -340,86 +346,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         }
     }
 
-//    private fun setNumber() {
-//        val topPositions = ArrayList<Int>()
-//        val bottomPositions = ArrayList<Int>()
-//        val questionTemp = values.toString()
-//        val remainLength = 9 - questionTemp.length
-//        var zero = ""
-//        for (i in 1..remainLength){
-//            zero += "0"
-//        }
-//        val question = zero+questionTemp
-//        Log.e("jigarLogs","question = "+question)
-//        val totalLength = 9
-//        for (i in 0 until if (totalLength == 1) 2 else totalLength) {
-//            if (i < question.length) {
-//                val charAt = question[i] - '1' //convert char to int. minus 1 from question as in abacuse 0 item have 1 value.
-//                if (charAt >= 0) {
-//                    if (charAt >= 4) {
-//                        topPositions.add(i, 0)
-//                        bottomPositions.add(i, charAt - 5)
-//                    } else {
-//                        topPositions.add(i, -1)
-//                        bottomPositions.add(i, charAt)
-//                    }
-//                } else {
-//                    topPositions.add(i, -1)
-//                    bottomPositions.add(i, -1)
-//                }
-//            } else {
-//                topPositions.add(i, -1)
-//                bottomPositions.add(i, -1)
-//            }
-//        }
-//        Log.e("jigarLogs","topPositions = "+topPositions)
-//        Log.e("jigarLogs","bottomPositions = "+bottomPositions)
-//        val subTop: MutableList<Int> = ArrayList()
-//        subTop.addAll(topPositions.subList(0, question.length))
-//        val subBottom: MutableList<Int> = ArrayList()
-//        subBottom.addAll(bottomPositions.subList(0, question.length))
-//        for (i in question.indices) {
-//            topPositions.removeAt(0)
-//            bottomPositions.removeAt(0)
-//        }
-//        topPositions.addAll(subTop)
-//        bottomPositions.addAll(subBottom)
-//
-//        setSelectedPositions(
-//            topPositions,
-//            bottomPositions,
-//            object : AbacusMasterCompleteListener() {
-//                @Synchronized
-//                override fun onSetPositionComplete() {
-//                    noOfTimeCompleted++
-//                    if (noOfTimeCompleted == 2) {
-//                        /*both abacus reset*/
-//                        resetAbacus()
-//                    }
-//                }
-//            })
-//    }
-//
-//    private fun setSelectedPositions(
-//        topSelectedPositions: ArrayList<Int>,
-//        bottomSelectedPositions: ArrayList<Int>,
-//        setPositionCompleteListener: AbacusMasterCompleteListener?
-//    ) {
-//        if (isAdded) {
-//            //app was crashing if position set before update no of row count. so added this delay.
-//            binding.abacusBottom.post {
-//                binding.abacusTop.setSelectedPositions(
-//                    topSelectedPositions,
-//                    setPositionCompleteListener
-//                )
-//                binding.abacusBottom.setSelectedPositions(
-//                    bottomSelectedPositions,
-//                    setPositionCompleteListener
-//                )
-//            }
-//        }
-//    }
-
     private fun ads() {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
             prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&
@@ -437,8 +363,8 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     }
 
     private fun resetAbacus() {
-        binding.abacusTop.reset()
-        binding.abacusBottom.reset()
+        abacusBinding?.abacusTop?.reset()
+        abacusBinding?.abacusBottom?.reset()
     }
 
 }

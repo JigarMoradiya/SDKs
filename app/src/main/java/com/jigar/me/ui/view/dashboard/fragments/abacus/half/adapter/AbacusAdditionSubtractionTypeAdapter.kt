@@ -1,25 +1,23 @@
 package com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter
 
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
-import com.jigar.me.databinding.RawPurchaseBinding
+import com.jigar.me.data.local.data.AbacusType
 import com.jigar.me.databinding.RowQuestionLayoutBinding
+import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
 import com.jigar.me.utils.ViewUtils
 import com.jigar.me.utils.extensions.invisible
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.show
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AbacusAdditionSubtractionTypeAdapter(
-    private var abecuseItems: List<HashMap<String, String>>,
-    private val mListener: HintListener,private var isStepByStep: Boolean
+    private var abacusItems: ArrayList<HashMap<String, String>>,
+    private val mListener: HintListener, private var isStepByStep: Boolean, private val abacusType : AbacusType? = null
 ) :
     RecyclerView.Adapter<AbacusAdditionSubtractionTypeAdapter.FormViewHolder>() {
     interface HintListener {
@@ -29,9 +27,10 @@ class AbacusAdditionSubtractionTypeAdapter(
     private var currentStep = 0
 
     fun setData(listData: List<HashMap<String, String>>,isStepByStep : Boolean) {
-        this.abecuseItems = listData
+        this.abacusItems.clear()
+        this.abacusItems.addAll(listData)
         this.isStepByStep = isStepByStep
-        notifyDataSetChanged()
+        notifyItemRangeChanged(0,abacusItems.size)
     }
 
 
@@ -43,7 +42,7 @@ class AbacusAdditionSubtractionTypeAdapter(
     }
 
     override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
-        val data = abecuseItems[position]
+        val data = abacusItems[position]
         val context = holder.binding.tvQuestion.context
 
         holder.binding.tvSymbol.text = data[Constants.Sign]
@@ -55,12 +54,14 @@ class AbacusAdditionSubtractionTypeAdapter(
         }
         if (isStepByStep) {
             if (currentStep == position) {
-                holder.binding.tvSymbol.setTextColor(
+                val color = if (abacusType != null){
+                    CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+                }else{
                     ContextCompat.getColor(context, R.color.red)
-                )
-                holder.binding.tvQuestion.setTextColor(
-                    ContextCompat.getColor(context, R.color.red)
-                )
+                }
+                holder.binding.tvSymbol.setTextColor(color)
+                holder.binding.tvQuestion.setTextColor(color)
+
             } else {
                 holder.binding.tvSymbol.setTextColor(
                     ContextCompat.getColor(context, R.color.black_text)
@@ -80,7 +81,7 @@ class AbacusAdditionSubtractionTypeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return abecuseItems.size
+        return abacusItems.size
     }
 
     fun getCurrentStep(): Int {
@@ -94,8 +95,8 @@ class AbacusAdditionSubtractionTypeAdapter(
 
     fun goToNextStep() {
         this.currentStep++
-        if (currentStep < abecuseItems.size) {
-            val data = abecuseItems[currentStep]
+        if (currentStep < abacusItems.size) {
+            val data = abacusItems[currentStep]
             if (data[Constants.Que]!!.trim { it <= ' ' } == "0") {
                 goToNextStep()
             } else {
@@ -109,10 +110,10 @@ class AbacusAdditionSubtractionTypeAdapter(
     }
 
     fun getCurrentSumVal(): Double? {
-        if (abecuseItems.size > currentStep) {
+        if (abacusItems.size > currentStep) {
             var expression = ""
             for (i in 0..currentStep) {
-                val data = abecuseItems[i]
+                val data = abacusItems[i]
                 expression += data[Constants.Sign]!!.trim { it <= ' ' } + data[Constants.Que]!!.trim { it <= ' ' }
             }
             return ViewUtils.calculateStringExpression(expression)
@@ -121,10 +122,10 @@ class AbacusAdditionSubtractionTypeAdapter(
     }
 
     fun getFinalSumVal(): Double? {
-        if (abecuseItems.isNotEmpty()) {
+        if (abacusItems.isNotEmpty()) {
             var expression = ""
-            for (i in abecuseItems.indices) {
-                val data = abecuseItems[i]
+            for (i in abacusItems.indices) {
+                val data = abacusItems[i]
                 expression += data[Constants.Sign]!!.trim { it <= ' ' } + data[Constants.Que]!!.trim { it <= ' ' }
             }
             return ViewUtils.calculateStringExpression(expression)

@@ -5,18 +5,14 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
-import android.util.Log
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusType
 import com.jigar.me.databinding.RowQuestionLayoutBinding
+import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
 import com.jigar.me.utils.ViewUtils
 import com.jigar.me.utils.extensions.hide
@@ -24,11 +20,11 @@ import com.jigar.me.utils.extensions.invisible
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.show
 import java.util.*
+import kotlin.collections.ArrayList
 
 class AbacusDivisionTypeAdapter(
-    private var abecuseItems: List<HashMap<String, String>>,private var isStepByStep: Boolean
-) :
-    RecyclerView.Adapter<AbacusDivisionTypeAdapter.FormViewHolder>() {
+    private var abacusItems: ArrayList<HashMap<String, String>>, private var isStepByStep: Boolean, private val abacusType : AbacusType?
+) : RecyclerView.Adapter<AbacusDivisionTypeAdapter.FormViewHolder>() {
 
     private val highlightDetail = HashMap<Int, Pair<Int, Int>>()
     private var isClear = false
@@ -42,10 +38,11 @@ class AbacusDivisionTypeAdapter(
     var currentTablePosition = 0
 
     fun setData(listData: List<HashMap<String, String>>, isStepByStep: Boolean) {
-        this.abecuseItems = listData
-        this.isStepByStep = isStepByStep
         isLastTemp = false
-        notifyDataSetChanged()
+        this.abacusItems.clear()
+        this.abacusItems.addAll(listData)
+        this.isStepByStep = isStepByStep
+        notifyItemRangeChanged(0,abacusItems.size)
     }
 
 
@@ -57,7 +54,7 @@ class AbacusDivisionTypeAdapter(
     }
 
     override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
-        val data = abecuseItems[position]
+        val data = abacusItems[position]
         val context = holder.binding.tvQuestion.context
         holder.binding.tvSymbol.text = data[Constants.Sign] // intentionally added space before symbol
 
@@ -83,10 +80,18 @@ class AbacusDivisionTypeAdapter(
                     holder.binding.tvQuestion.setTextColor(ContextCompat.getColor(context, R.color.black_text))
                 }
             }
-            if (position == 1 && abecuseItems.size > 2) {
+            if (position == 1 && abacusItems.size > 2) {
+                val color = if (abacusType != null){
+                    CommonUtils.mixTwoColors(ContextCompat.getColor(context,R.color.white), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.75f)
+                }else{
+                    ContextCompat.getColor(context, R.color.red_600)
+                }
+                holder.binding.ivDivider.setBackgroundColor(color)
                 holder.binding.ivDivider.show()
+                holder.binding.spaceBottom.hide()
             } else {
                 holder.binding.ivDivider.hide()
+                holder.binding.spaceBottom.hide()
             }
         }
     }
@@ -99,18 +104,18 @@ class AbacusDivisionTypeAdapter(
     }
 
     override fun getItemCount(): Int {
-        return abecuseItems.size
+        return abacusItems.size
     }
 
     fun setDefaultHighlight() {
-        if (abecuseItems.size >= 2) {
-            val first = abecuseItems[0][Constants.Que]
-            val second = java.lang.Float.valueOf(abecuseItems[1][Constants.Que])
+        if (abacusItems.size >= 2) {
+            val first = abacusItems[0][Constants.Que]
+            val second = java.lang.Float.valueOf(abacusItems[1][Constants.Que])
             calculateHiglightCount(first, second.toInt(), 1, 1, 0)
 
             val pair = Pair<Int, Int>(0, nextHighlightedPosition)
             highlightDetail[0] = pair
-            val pair1 = Pair(0, abecuseItems[1][Constants.Que]!!.length)
+            val pair1 = Pair(0, abacusItems[1][Constants.Que]!!.length)
             highlightDetail[1] = pair1
             highlightDetail[2] = Pair(0, 0)
             highlightDetail[3] = Pair(0, 0)
@@ -121,7 +126,7 @@ class AbacusDivisionTypeAdapter(
     fun isLastStep(): Boolean {
         return if (!isLastTemp) {
             if (highlightDetail.size > 0) {
-                highlightDetail[0]!!.second == abecuseItems[0][Constants.Que]!!.length
+                highlightDetail[0]!!.second == abacusItems[0][Constants.Que]!!.length
             } else false
         } else {
             true
@@ -145,20 +150,21 @@ class AbacusDivisionTypeAdapter(
                 text.length,
                 Spannable.SPAN_INCLUSIVE_EXCLUSIVE
             )
-            wordtoSpan.setSpan(
-                ForegroundColorSpan(
-                    ContextCompat.getColor(context, R.color.red)
-                ), startPosition, endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE
-            )
+            val color = if (abacusType != null){
+                CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+            }else{
+                ContextCompat.getColor(context, R.color.red)
+            }
+            wordtoSpan.setSpan(ForegroundColorSpan(color), startPosition, endPosition, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
             return wordtoSpan
         }
         return SpannableString("")
     }
     fun reset() {
-        for (i in 2 until abecuseItems.size) {
-            abecuseItems[i][Constants.Que] = ""
-            abecuseItems[i][Constants.Sign] = ""
-            abecuseItems[i][Constants.Hint] = ""
+        for (i in 2 until abacusItems.size) {
+            abacusItems[i][Constants.Que] = ""
+            abacusItems[i][Constants.Sign] = ""
+            abacusItems[i][Constants.Hint] = ""
         }
         nextDivider = 0L
         initialDividerPosition = 2
@@ -168,13 +174,13 @@ class AbacusDivisionTypeAdapter(
 
     fun goToNextStep() {
         try {
-            val data = abecuseItems[0]
+            val data = abacusItems[0]
             /*Long currentSum = getCurrentSumVal();*/
             /*shift 0 position*/
             val firstEndPostion = highlightDetail[0]!!.second!!
             if (firstEndPostion < data[Constants.Que]!!.length) {
                 calculateHiglightCount(
-                    abecuseItems[0][Constants.Que], abecuseItems[1][Constants.Que]!!
+                    abacusItems[0][Constants.Que], abacusItems[1][Constants.Que]!!
                         .toInt(),
                     1, 1, firstEndPostion
                 )
@@ -192,13 +198,13 @@ class AbacusDivisionTypeAdapter(
 
                 val pair = Pair<Int, Int>(firstEndPostion, nextHighlightedPosition)
                 highlightDetail[0] = pair
-                if (abecuseItems.size > initialDividerPosition) {
+                if (abacusItems.size > initialDividerPosition) {
                     if (initialDividerPosition > 2) {
                         /*unhighlight previous divider*/
                         val pairInternal = Pair(0, 0)
                         highlightDetail[initialDividerPosition - 1] = pairInternal
                     }
-                    val abecuseItem = abecuseItems[initialDividerPosition]
+                    val abecuseItem = abacusItems[initialDividerPosition]
                     abecuseItem[Constants.Que] = nextDivider.toString()
                     val pairInternal = Pair(0, abecuseItem[Constants.Que]!!.length)
                     highlightDetail[initialDividerPosition] = pairInternal
@@ -224,9 +230,9 @@ class AbacusDivisionTypeAdapter(
         }
     }
     fun getCurrentSumVal(): Long? {
-        if (abecuseItems.size >= 2 && highlightDetail.size > 0) {
-            val firstItem = abecuseItems[0]
-            val secondItem = abecuseItems[1]
+        if (abacusItems.size >= 2 && highlightDetail.size > 0) {
+            val firstItem = abacusItems[0]
+            val secondItem = abacusItems[1]
             val firstPair = highlightDetail[0]
             /*first step*/
             val divideBy = Integer.valueOf(secondItem[Constants.Que])
@@ -413,10 +419,10 @@ class AbacusDivisionTypeAdapter(
     fun getFinalSumVal(): Double? {
 
         /*divide have 2 items. other 2 items used for calculation purpose*/
-        if (abecuseItems.isNotEmpty()) {
+        if (abacusItems.isNotEmpty()) {
             var expression = ""
             for (i in 0..1) {
-                val abecuseItem = abecuseItems[i]
+                val abecuseItem = abacusItems[i]
                 expression += abecuseItem[Constants.Sign]!!.trim { it <= ' ' } + abecuseItem[Constants.Que]!!
                     .trim { it <= ' ' }
             }

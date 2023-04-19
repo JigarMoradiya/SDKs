@@ -21,6 +21,7 @@ import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.local.data.ExerciseLevel
 import com.jigar.me.data.local.data.ExerciseLevelDetail
 import com.jigar.me.data.local.data.ExerciseList
+import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.databinding.FragmentExerciseHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.*
@@ -40,6 +41,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     ExerciseLevelPagerAdapter.OnItemClickListener,
     ExerciseCompleteDialog.ExerciseCompleteDialogInterface {
     private lateinit var binding: FragmentExerciseHomeBinding
+    private var abacusBinding: FragmentAbacusSubBinding? = null
     private lateinit var mNavController: NavController
     private var valuesAnswer: Int = -1
     private var currentSumVal = 0f
@@ -84,17 +86,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         setAbacus()
     }
     private fun initListener() {
-        binding.ivReset.onClick {
-            if (binding.linearExerciseAddSub.isVisible){
-                binding.txtAllClear.performClick()
-                resetClick()
-            }else{
-                if (binding.tvCurrentVal.text.toString() != "0"){
-                    resetClick()
-                }
-            }
-
-        }
         binding.imgEarse.onClick {
             if (listKeyboardAnswer.isNotNullOrEmpty()){
                 listKeyboardAnswer.removeAt(listKeyboardAnswer.lastIndex)
@@ -124,7 +115,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 if (!binding.tvAnswer.text.toString().isNullOrEmpty() && binding.tvAnswer.text.toString() != "0"){
                     listExerciseAdditionSubtraction[exercisePosition].userAnswer = binding.tvAnswer.text.toString().toInt()
                 }
-                binding.ivReset.performClick()
+                abacusBinding?.ivReset?.performClick()
                 if (exercisePosition < listExerciseAdditionSubtraction.lastIndex){
                     exercisePosition++
                     setQuestions()
@@ -213,15 +204,9 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     ) {
         if (isAdded) {
             //app was crashing if position set before update no of row count. so added this delay.
-            binding.abacusBottom.post {
-                binding.abacusTop.setSelectedPositions(
-                    topSelectedPositions,
-                    setPositionCompleteListener
-                )
-                binding.abacusBottom.setSelectedPositions(
-                    bottomSelectedPositions,
-                    setPositionCompleteListener
-                )
+            abacusBinding?.abacusBottom?.post {
+                abacusBinding?.abacusTop?.setSelectedPositions(topSelectedPositions,setPositionCompleteListener)
+                abacusBinding?.abacusBottom?.setSelectedPositions(bottomSelectedPositions,setPositionCompleteListener)
             }
         }
     }
@@ -240,7 +225,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     }
     override fun onExerciseStartClick() {
         if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
-            binding.ivReset.performClick()
+            abacusBinding?.ivReset?.performClick()
             lifecycleScope.launch {
                 delay(400)
                 val parentData = exerciseLevelPagerAdapter.listData[binding.viewPager.currentItem]
@@ -355,14 +340,14 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         if (!isResetRunning) {
             AbacusMasterSound.playResetSound(requireContext())
             isResetRunning = true
-            binding.ivReset.y = 0f
-            binding.ivReset.animate().setDuration(200)
-                .translationYBy((binding.ivReset.height / 2).toFloat()).withEndAction {
-                    binding.ivReset.animate().setDuration(200)
-                        .translationYBy((-binding.ivReset.height / 2).toFloat()).withEndAction {
+            abacusBinding?.ivReset?.y = 0f
+            abacusBinding?.ivReset?.animate()?.setDuration(200)
+                ?.translationYBy((abacusBinding?.ivReset?.height!! / 2).toFloat())?.withEndAction {
+                    abacusBinding?.ivReset?.animate()?.setDuration(200)
+                        ?.translationYBy((-abacusBinding?.ivReset?.height!! / 2).toFloat())?.withEndAction {
                             isResetRunning = false
-                        }.start()
-                }.start()
+                        }?.start()
+                }?.start()
             if (!binding.linearExerciseAddSub.isVisible){
                 onAbacusValueDotReset()
             }
@@ -381,26 +366,47 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
             theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
 
         }
-        if (theam == AppConstants.Settings.theam_shape || theam == AppConstants.Settings.theam_Default) {
-            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
-        } else {
-            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))
+
+        binding.linearAbacus.removeAllViews()
+        abacusBinding = FragmentAbacusSubBinding.inflate(layoutInflater, null, false)
+        binding.linearAbacus.addView(abacusBinding?.root)
+
+        abacusBinding?.ivReset?.onClick {
+            if (binding.linearExerciseAddSub.isVisible){
+                binding.txtAllClear.performClick()
+                resetClick()
+            }else{
+                if (abacusBinding?.tvCurrentVal?.text?.toString() != "0"){
+                    resetClick()
+                }
+            }
+
         }
-        val colSpacing: Int = if (theam.equals(AppConstants.Settings.theam_Default, ignoreCase = true)) {
+
+        val theme = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+        val themeContent = DataProvider.findAbacusThemeType(theme)
+        themeContent?.abacusFrame135?.let { abacusBinding?.rlAbacusMain?.setBackgroundResource(it) }
+        themeContent?.dividerColor1?.let { abacusBinding?.ivDivider?.setBackgroundColor(ContextCompat.getColor(requireContext(),it)) }
+        themeContent?.resetBtnColor8?.let {
+            abacusBinding?.ivReset?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+            abacusBinding?.ivRight?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+            abacusBinding?.ivLeft?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+        }
+        val colSpacing: Int = if (theam.contains(AppConstants.Settings.theam_Default, ignoreCase = true)) {
             ViewUtils.convertDpToPixel(Constants.Col_Space_exercise_polygon,requireActivity())
         } else {
             ViewUtils.convertDpToPixel(Constants.Col_Space_exercise_default,requireActivity())
         }
 
-        binding.abacusTop.setNoOfRowAndBeads(0, 7, 1, colSpacing)
-        binding.abacusBottom.setNoOfRowAndBeads(0, 7, 4, colSpacing)
+        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 7, 1, colSpacing)
+        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 7, 4, colSpacing)
 
-        binding.abacusTop.onBeadShiftListener = this
-        binding.abacusBottom.onBeadShiftListener = this
+        abacusBinding?.abacusTop?.onBeadShiftListener = this
+        abacusBinding?.abacusBottom?.onBeadShiftListener = this
 
         lifecycleScope.launch {
-            delay(500)
-            binding.relAbacus.show()
+            delay(300)
+            abacusBinding?.relAbacus?.show()
         }
     }
 
@@ -409,8 +415,8 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         val singleBeadWeight = abacusView.singleBeadValue
         var accumulator = 0
         when (abacusView.id) {
-            R.id.abacusTop -> if (binding.abacusBottom.engine != null) {
-                val bottomVal = binding.abacusBottom.engine!!.getValue()
+            R.id.abacusTop -> if (abacusBinding?.abacusBottom?.engine != null) {
+                val bottomVal = abacusBinding?.abacusBottom?.engine!!.getValue()
                 var i = 0
                 while (i < rowValue.size) {
                     accumulator *= 10
@@ -423,8 +429,8 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                 currentSumVal = java.lang.Float.valueOf(strCurVal)
                 onAbacusValueChange(abacusView, currentSumVal)
             }
-            R.id.abacusBottom -> if (binding.abacusTop.engine != null) {
-                val topVal = binding.abacusTop.engine!!.getValue()
+            R.id.abacusBottom -> if (abacusBinding?.abacusTop?.engine != null) {
+                val topVal = abacusBinding?.abacusTop?.engine!!.getValue()
                 var i = 0
                 while (i < rowValue.size) {
                     accumulator *= 10
@@ -450,9 +456,9 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
                     listKeyboardAnswer.add(value[i].toString())
                 }
                 binding.tvAnswer.text = sum.toInt().toString()
-                binding.tvCurrentVal.text = sum.toInt().toString()
+                abacusBinding?.tvCurrentVal?.text = sum.toInt().toString()
             }else{
-                binding.tvCurrentVal.text = sum.toInt().toString()
+                abacusBinding?.tvCurrentVal?.text = sum.toInt().toString()
             }
         }
 //        with(prefManager){
@@ -475,8 +481,8 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     }
 
     private fun resetAbacus() {
-        binding.abacusTop.reset()
-        binding.abacusBottom.reset()
+        abacusBinding?.abacusTop?.reset()
+        abacusBinding?.abacusBottom?.reset()
     }
 
     // exercise leave listener

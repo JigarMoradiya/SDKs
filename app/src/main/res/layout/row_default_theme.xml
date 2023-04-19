@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgAbacus"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_24sdp"
+            android:layout_margin="@dimen/activity_padding4"
+            android:adjustViewBounds="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/poligon_orange" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgTick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            app:layout_constraintTop_toTopOf="@+id/imgAbacus"
+            app:layout_constraintEnd_toEndOf="@+id/imgAbacus"
+            app:layout_constraintStart_toStartOf="@+id/imgAbacus"
+            app:srcCompat="@drawable/ic_selected_theme" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

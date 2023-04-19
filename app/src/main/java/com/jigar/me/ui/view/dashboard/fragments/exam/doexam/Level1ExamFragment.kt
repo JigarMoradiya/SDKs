@@ -502,6 +502,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
         bundle.putString(AppConstants.Extras_Comman.examResult, Gson().toJson(listExam))
         bundle.putString(AppConstants.Extras_Comman.type, Constants.examLevelBeginner)
         bundle.putString(AppConstants.Extras_Comman.examAbacusType, theme)
+        bundle.putString(AppConstants.Extras_Comman.From, "exam")
         mNavController.navigate(R.id.action_level1ExamFragment_to_examResultFragment, bundle)
     }
     private fun onBack() {

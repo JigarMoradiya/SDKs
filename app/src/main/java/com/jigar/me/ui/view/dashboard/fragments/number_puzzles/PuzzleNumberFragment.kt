@@ -73,7 +73,13 @@ class PuzzleNumberFragment : BaseFragment(), NumberSequenceCompleteBottomSheet.N
             (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") != "Y" && // purchase not
                     prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y")
         ) {
-            newInterstitialAd(getString(R.string.interstitial_ad_unit_id_number_puzzle_step))
+            val isAdmob = prefManager.getCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,true)
+            if (isAdmob){
+                newInterstitialAd(getString(R.string.interstitial_ad_unit_id_number_puzzle_step))
+            }else{
+                newAdxInterstitialAd(getString(R.string.interstitial_ad_unit_id_number_puzzle_step))
+            }
+
         }
     }
     private fun ads() {

@@ -103,8 +103,51 @@
     <color name="purple_A700">#AA00FF</color>
     <color name="black80">#80000000</color>
     <color name="black2">#7A7A7A</color>
+<!--  1,8 light dark and 3,5 image  -->
+    <color name="abacus_rod_purple">#E1BEE7</color>
+    <color name="abacus_rod_purple_bg">#F3E5F5</color>
+    <color name="abacus_rod_purple_dark">#6A1B9A</color>
+
+    <color name="abacus_rod_pink">#F8BBD0</color>
+    <color name="abacus_rod_pink_bg">#FCE4EC</color>
+    <color name="abacus_rod_pink_dark">#C2185B</color>
+
+    <color name="abacus_rod_red">#FFCDD2</color>
+    <color name="abacus_rod_red_bg">#FFEBEE</color>
+    <color name="abacus_rod_red_dark">#C62828</color>
+
+    <color name="abacus_rod_orange">#FFCCBC</color>
+    <color name="abacus_rod_orange_bg">#FBE9E7</color>
+    <color name="abacus_rod_orange_dark">#D84315</color>
+
+    <color name="abacus_rod_blue">#C5CAE9</color>
+    <color name="abacus_rod_blue_bg">#E8EAF6</color>
+    <color name="abacus_rod_blue_dark">#283593</color>
+
+    <color name="abacus_rod_tint">#B2EBF2</color>
+    <color name="abacus_rod_tint_bg">#E0F7FA</color>
+    <color name="abacus_rod_tint_dark">#00838F</color>
+
+    <color name="abacus_rod_green">#C8E6C9</color>
+    <color name="abacus_rod_green_bg">#E8F5E9</color>
+    <color name="abacus_rod_green_dark">#2E7D32</color>
+
+    <color name="abacus_rod_blue_sky">#B3E5FC</color>
+    <color name="abacus_rod_blue_sky_bg">#E3F2FD</color>
+    <color name="abacus_rod_blue_sky_dark">#0277BD</color>
+
+    <color name="abacus_rod_coffee">#FFE0B2</color>
+    <color name="abacus_rod_coffee_bg">#FFF8E1</color>
+    <color name="abacus_rod_coffee_dark">#EF6C00</color>
+
+    <color name="abacus_rod_black">#939393</color>
+    <color name="abacus_rod_black_bg">#F3F3F3</color>
+    <color name="abacus_rod_black_dark">#2E2E2E</color>
+
     <color name="colorAccent_light">#3c4a70</color>
     <color name="colorAccent_Dark">#1A2C5A</color>
+    <color name="colorAccent_temp">#C0CA33</color>
+
 
     <color name="blue_original">#0000ff</color>
     <color name="light_bg_red">#EC5D6E</color>

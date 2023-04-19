@@ -18,6 +18,7 @@ import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.jigar.me.R
+import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
@@ -137,7 +138,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     // load Interstitial ads
     fun showAMFullScreenAds(adUnit: String) {
         val count = prefManager.getCustomParamInt(AppConstants.Purchase.AdsShowCount, 0)
-        if (count == 5) {
+        if (count == 7) {
             val isAdmob = prefManager.getCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,true)
             if (isAdmob){
                 newInterstitialAd(adUnit,true)
@@ -145,7 +146,11 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
                 newAdxInterstitialAd(adUnit,true)
             }
         } else {
-            val newCount = count + 1
+            val newCount = if (count > 8){
+                1
+            }else{
+                count + 1
+            }
             prefManager.setCustomParamInt(AppConstants.Purchase.AdsShowCount, newCount)
         }
     }
@@ -157,6 +162,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.e("jigarLogs","newInterstitialAd")
                 // Show the ad if it's ready. Otherwise toast and reload the ad.
                 interstitialAd.show(requireActivity())
                 if (isAdsCountReset){
@@ -173,6 +179,7 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
             }
 
             override fun onAdLoaded(interstitialAd: AdManagerInterstitialAd) {
+                Log.e("jigarLogs","newAdxInterstitialAd")
                 // Show the ad if it's ready. Otherwise toast and reload the ad.
                 interstitialAd.show(requireActivity())
                 if (isAdsCountReset){
@@ -201,8 +208,10 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
             }
             val isAdmob = prefManager.getCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,true)
             val adView = if (isAdmob){
+                Log.e("jigarLogs","newBannner")
                 AdView(requireContext())
             }else{
+                Log.e("jigarLogs","newADXBannner")
                 AdManagerAdView(requireContext())
             }
             adView.setAdSize(AdSize.BANNER)

@@ -78,6 +78,7 @@ class ExamHistoryTabFragment : BaseFragment(), ExamHistoryListAdapter.OnItemClic
             bundle.putString(AppConstants.Extras_Comman.examResult, Gson().toJson(data.examDetails))
         }
         bundle.putString(AppConstants.Extras_Comman.type, data.examType)
+        bundle.putString(AppConstants.Extras_Comman.From, "history")
         ((parentFragment as ExamHistoryHomeFragment)).mNavController.navigate(R.id.action_examHistoryHomeFragment_to_examResultFragment, bundle)
     }
 

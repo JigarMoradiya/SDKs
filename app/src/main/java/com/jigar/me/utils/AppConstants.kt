@@ -118,8 +118,16 @@ object AppConstants {
 
             var Theam = "Theam"
             var TheamTempView = "TheamTempView"
-            const val theam_Poligon = "Poligon"
-            const val theam_Default = theam_Poligon
+            const val theam_Poligon_default = "Poligon" // black
+            const val theam_Poligon_Blue = "poligon_blue"
+            const val theam_Poligon_Blue_Sky = "poligon_blue_sky"
+            const val theam_Poligon_Orange = "poligon_orange"
+            const val theam_Poligon_Purple = "poligon_purple"
+            const val theam_Poligon_Pink = "poligon_pink"
+            const val theam_Poligon_Red = "poligon_red"
+            const val theam_Poligon_Green = "poligon_green"
+            const val theam_Poligon_Tint = "poligon_tint"
+            const val theam_Default = theam_Poligon_default
             const val theam_eyes = "Eyes"
             const val theam_Egg = "Egg"
             const val theam_shape = "Shape"

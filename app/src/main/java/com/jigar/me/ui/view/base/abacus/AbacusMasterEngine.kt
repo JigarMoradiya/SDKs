@@ -58,7 +58,7 @@ class AbacusMasterEngine(
 
             val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
                 AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            val sizes_width = if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+            val sizes_width = if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                 context.resources.getDimension(R.dimen.bead_dimens_width_exam).toInt()
             }else{
                 sizes
@@ -70,7 +70,7 @@ class AbacusMasterEngine(
             val sizes = context.resources.getDimension(R.dimen.bead_dimens_exam_result).toInt()
             val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
                 AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            val sizes_width = if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+            val sizes_width = if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                 context.resources.getDimension(R.dimen.bead_dimens_width_exam_result).toInt()
             }else{
                 sizes
@@ -82,7 +82,7 @@ class AbacusMasterEngine(
 
             val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
                 AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            val sizes_width = if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+            val sizes_width = if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                 context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
             }else{
                 sizes
@@ -175,6 +175,7 @@ class AbacusMasterEngine(
         var i = 1
         val beadPaint = Paint()
         beadPaint.color = Color.WHITE
+//        beadPaint.color = Color.parseColor("#fff4e7")
         beadPaint.style = Paint.Style.FILL
         canvas?.drawPaint(beadPaint)
 

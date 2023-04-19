@@ -1,10 +1,12 @@
 package com.jigar.me.ui.view.dashboard.fragments.abacus.half
 
+import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import android.widget.RelativeLayout
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusType
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.PojoAbacus
 import com.jigar.me.databinding.FragmentHalfAbacusBinding
@@ -42,6 +45,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private lateinit var binding: FragmentHalfAbacusBinding
     private var hintPage : String? = null
     private var fileAbacus : String? = null
+    private var themeContent : AbacusType? = null
     private var abacusType = ""
     private var pageId = ""
     private var Que2_str = "" // required only for Multiplication and Division
@@ -69,9 +73,9 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private var final_column = 0
     private var noOfDecimalPlace = 0
     private lateinit var mNavController: NavController
-    private var adapterAdditionSubtraction: AbacusAdditionSubtractionTypeAdapter = AbacusAdditionSubtractionTypeAdapter(arrayListOf(), this, true)
-    private var adapterMultiplication: AbacusMultiplicationTypeAdapter = AbacusMultiplicationTypeAdapter(arrayListOf(), true)
-    private var adapterDivision: AbacusDivisionTypeAdapter = AbacusDivisionTypeAdapter(arrayListOf(), true)
+    private lateinit var adapterAdditionSubtraction: AbacusAdditionSubtractionTypeAdapter
+    private lateinit var adapterMultiplication: AbacusMultiplicationTypeAdapter
+    private lateinit var adapterDivision: AbacusDivisionTypeAdapter
 
     private var list_abacus: List<PojoAbacus> = arrayListOf()
     private var list_abacus_main = ArrayList<HashMap<String, String>>()
@@ -120,6 +124,32 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     private fun initViews() {
+        val theme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
+        themeContent = DataProvider.findAbacusThemeType(theme)
+        themeContent?.resetBtnColor8?.let{
+            val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.75f)
+            binding.ivDivider1.setBackgroundColor(finalColor)
+            binding.cardQuestions.setStrokeColor(ColorStateList.valueOf(finalColor))
+            binding.txtTitle.setTextColor(ContextCompat.getColor(requireContext(),it))
+            binding.tvAns.setTextColor(ContextCompat.getColor(requireContext(),it))
+
+            themeContent?.dividerColor1?.let {it2 ->
+                val finalColor40 = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),it2), ContextCompat.getColor(requireContext(),it), 0.40f)
+                binding.tvAnsNumber.setTextColor(finalColor40)
+            }
+
+            themeContent?.dividerColor1?.let {it2 ->
+                val finalColor60 = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),it2), ContextCompat.getColor(requireContext(),it), 0.60f)
+                binding.cardHint.setStrokeColor(ColorStateList.valueOf(finalColor60))
+                binding.cardHint2.setStrokeColor(ColorStateList.valueOf(finalColor60))
+            }
+
+        }
+
+        adapterAdditionSubtraction = AbacusAdditionSubtractionTypeAdapter(arrayListOf(), this, true,themeContent)
+        adapterMultiplication = AbacusMultiplicationTypeAdapter(arrayListOf(), true,themeContent)
+        adapterDivision = AbacusDivisionTypeAdapter(arrayListOf(), true,themeContent)
+
         if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
             setLeftAbacusRules()
         }else{
@@ -276,8 +306,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.txtTitle.text =
-                (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
+//            binding.txtTitle.text = (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
+            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
             binding.tvAnsNumber.text = ""
             abacus_type = 0
             number = if (isRandom) {
@@ -321,9 +351,10 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.txtTitle.text =
-                (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
-            binding.tvAns.text = ""
+//            binding.txtTitle.text = (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
+            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
+            binding.tvAns.text = "0"
+            binding.tvAns.invisible()
             abacus_type = 2
             list_abacus_main = DataProvider.genrateDevide(
                 Que2_str,
@@ -339,10 +370,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     }
                 }
                 binding.cardAbacusQue.show()
-                adapterDivision = AbacusDivisionTypeAdapter(
-                    list_abacus_main,
-                    isStepByStep
-                )
+                adapterDivision = AbacusDivisionTypeAdapter(list_abacus_main,isStepByStep,themeContent)
                 binding.recyclerview.adapter = adapterDivision
 //                adapter_type2.setData(list_abacus_main, isStepByStep)
                 adapterDivision.clearIterationCount()
@@ -440,9 +468,10 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.txtTitle.text =
-                (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
-            binding.tvAns.text = ""
+//            binding.txtTitle.text = (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
+            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
+            binding.tvAns.text = "0"
+            binding.tvAns.invisible()
             list_abacus_main = DataProvider.genrateMultiplication(
                 Que2_str,
                 Que2_type,
@@ -493,8 +522,10 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_already))
             }
         } else {
-            binding.txtTitle.text = "${(current_pos + 1)}/$total"
-            binding.tvAns.text = ""
+//            binding.txtTitle.text = "${(current_pos + 1)}/$total"
+            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
+            binding.tvAns.text = "0"
+            binding.tvAns.invisible()
 
             val datatemp: PojoAbacus = list_abacus[current_pos]
 
@@ -816,7 +847,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private fun setTableDataAndVisiblilty() {
         if (list_abacus_main.size >= 2) {
             if (abacus_type == 1) {
-                val spannableString = adapterMultiplication.getTable(requireContext())
+                val spannableString = adapterMultiplication.getTable(requireContext(),themeContent)
                 if (!TextUtils.isEmpty(spannableString)) {
                     if (final_column > 5) {
                         binding.cardHint.hide()
@@ -856,14 +887,14 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     binding.cardTable.hide()
                     binding.relativeTable.hide()
                 }
+
                 binding.txtHint.text = ViewUtils.getTable(
                     requireContext(), list_abacus_main[1][Constants.Que]!!.toInt(),
-                    adapterDivision.currentTablePosition
+                    adapterDivision.currentTablePosition, themeContent
                 )
                 binding.txtHintTable.text = ViewUtils.getTable(
-                    requireContext(), list_abacus_main[1][Constants.Que]!!
-                        .toInt(),
-                    adapterDivision.currentTablePosition
+                    requireContext(), list_abacus_main[1][Constants.Que]!! .toInt(),
+                    adapterDivision.currentTablePosition, themeContent
                 )
             } else {
                 binding.cardHint.invisible()
@@ -1070,7 +1101,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.tvAns.text = ""
+            binding.tvAns.text = "0"
+            binding.tvAns.invisible()
             binding.cardHint.hide()
             current_pos++
             prefManager.saveCurrentSum(pageId,current_pos)
@@ -1134,6 +1166,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     } else {
                         binding.tvAns.text = sum.toString()
                     }
+                    binding.tvAns.show()
                     makeAutoRefresh()
                 }
 
@@ -1145,6 +1178,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 } else {
                     binding.tvAns.text = sum.toString()
                 }
+                binding.tvAns.show()
                 makeAutoRefresh()
             }
             2 -> {
@@ -1153,6 +1187,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     sumStr = sumStr.substring(0, sumStr.length - postfixZero.length)
                 }
                 binding.tvAns.text = sumStr
+                binding.tvAns.show()
                 makeAutoRefresh()
             }
         }
@@ -1202,7 +1237,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private fun reset() {
         abacusFragment?.resetAbacus()
         if (abacusType != AppConstants.Extras_Comman.AbacusTypeNumber) {
-            binding.tvAns.text = ""
+            binding.tvAns.text = "0"
+            binding.tvAns.invisible()
             when (abacus_type) {
                 0 -> {
                     adapterAdditionSubtraction.reset()

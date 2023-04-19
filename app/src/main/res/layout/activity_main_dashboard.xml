@@ -6,11 +6,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:scaleType="centerCrop"-->
+<!--            app:srcCompat="@drawable/bg_abacus_number" />-->
+
+
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/bg_abacus_number" />
+            android:background="@color/white"
+            android:scaleType="centerCrop" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:layout_width="match_parent"

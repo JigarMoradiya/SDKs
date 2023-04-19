@@ -383,4 +383,5 @@
 
     <string name="notification_permission_msg">Notification permission is required to get alert related to Abacus!</string>
     <string name="permission_alert">Permission Alert!</string>
+    <string name="abacus_default_amp_free_theme"><![CDATA[Default & Free Abacus Themes]]></string>
 </resources>

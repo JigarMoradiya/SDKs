@@ -13,7 +13,7 @@ object AbacusUtils {
         with(prefManager){
             val isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y")
             if (isPurchased){
-                setCustomParam(AppConstants.Settings.TheamTempView,DataProvider.getAbacusThemeList().first())
+                setCustomParam(AppConstants.Settings.TheamTempView,DataProvider.getAbacusThemeTypesList().first())
             }else{
                 setCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
             }

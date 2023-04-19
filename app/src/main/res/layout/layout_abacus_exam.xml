@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp"
-            android:background="@drawable/bg_abacus_frame"
+            android:background="@drawable/bg_abacus_frame_large_black"
             android:gravity="end">
 
             <RelativeLayout

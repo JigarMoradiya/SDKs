@@ -62,12 +62,12 @@
             android:id="@+id/cardBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_1sdp"
             app:cardBackgroundColor="@color/light_back"
             app:cardCornerRadius="@dimen/_16sdp"
-            app:cardUseCompatPadding="true"
-            app:cardMaxElevation="@dimen/card_elevation"
             app:cardElevation="@dimen/card_elevation"
-            android:layout_margin="@dimen/_1sdp"
+            app:cardMaxElevation="@dimen/card_elevation"
+            app:cardUseCompatPadding="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -83,11 +83,11 @@
             android:id="@+id/cardPurchase"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_1sdp"
             app:cardBackgroundColor="@color/light_purchase"
             app:cardCornerRadius="@dimen/_16sdp"
-            app:cardMaxElevation="@dimen/card_elevation"
             app:cardElevation="@dimen/card_elevation"
-            android:layout_margin="@dimen/_1sdp"
+            app:cardMaxElevation="@dimen/card_elevation"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -129,6 +129,50 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="@dimen/activity_padding4">
+
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_padding4"
+                    app:cardBackgroundColor="@color/white"
+                    app:cardCornerRadius="@dimen/activity_padding8"
+                    app:cardElevation="@dimen/card_elevation"
+                    app:cardMaxElevation="@dimen/card_elevation"
+                    app:strokeWidth="@dimen/_1sdp"
+                    app:strokeColor="@color/colorPurple"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/gradient_card_bg_purple"
+                            app:fontFamily="@font/font_bold"
+                            android:padding="@dimen/activity_padding8"
+                            android:text="@string/abacus_default_amp_free_theme"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/textSizeRegular" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            tools:itemCount="5"
+                            android:id="@+id/recyclerviewAbacusDefault"
+                            tools:listitem="@layout/row_default_theme"
+                            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                            android:padding="@dimen/activity_padding8">
+
+                        </androidx.recyclerview.widget.RecyclerView>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+                </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
@@ -219,7 +263,7 @@
                                 android:layout_height="@dimen/_16sdp"
                                 android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
-                                android:visibility="@{abacusTheme.equals(AppConstants.Settings.theam_Poligon)?View.VISIBLE:View.INVISIBLE}"
+                                android:visibility="@{abacusTheme.equals(AppConstants.Settings.theam_Poligon_default)?View.VISIBLE:View.INVISIBLE}"
                                 app:srcCompat="@drawable/ic_setting_done" />
 
 

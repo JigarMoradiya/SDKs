@@ -38,137 +38,14 @@
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-        <RelativeLayout
-            android:id="@+id/relAbacus"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearAbacus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/activity_padding16"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/adView"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivReset"
-                android:layout_width="@dimen/_14sdp"
-                android:layout_height="@dimen/_20sdp"
-                android:layout_alignEnd="@+id/rlAbacusMain"
-                android:layout_marginEnd="@dimen/_30sdp"
-                app:srcCompat="@drawable/box_primory_accent" />
-
-            <RelativeLayout
-                android:id="@+id/rlAbacusMain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_15sdp"
-                android:background="@drawable/bg_abacus_frame_large">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/rlAbacus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <FrameLayout
-                        android:id="@+id/flAbacusTop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/six"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <com.jigar.me.ui.view.base.abacus.AbacusMasterView
-                            android:id="@+id/abacusTop"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:beadDrawables="@array/bead_top"
-                            app:columnSpacing="@dimen/_24sdp"
-                            app:isBeadStackFromBottom="false"
-                            app:noOfBead="1"
-                            app:roadDrawable="@drawable/road_blue"
-                            app:singleBeadValue="5" />
-
-                    </FrameLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rlDivider"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintEnd_toEndOf="@+id/flAbacusTop"
-                        app:layout_constraintStart_toStartOf="@+id/flAbacusTop"
-                        app:layout_constraintTop_toBottomOf="@+id/flAbacusTop">
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:id="@+id/ivDivider"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/six"
-                            android:background="@color/black2" />
-
-                    </RelativeLayout>
-
-                    <FrameLayout
-                        android:id="@+id/flAbacusBottom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingHorizontal="@dimen/six"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/rlDivider">
-
-                        <com.jigar.me.ui.view.base.abacus.AbacusMasterView
-                            android:id="@+id/abacusBottom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:beadDrawables="@array/big_bottom"
-                            app:columnSpacing="@dimen/_24sdp"
-                            app:isBeadStackFromBottom="true"
-                            app:noOfBead="4"
-                            app:roadDrawable="@drawable/road_blue"
-                            app:singleBeadValue="1" />
-
-                    </FrameLayout>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivRight"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/sixteen"
-                        android:layout_marginEnd="-2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/rlDivider"
-                        app:layout_constraintEnd_toEndOf="@+id/rlDivider"
-                        app:layout_constraintTop_toTopOf="@+id/rlDivider"
-                        app:srcCompat="@drawable/road_dot" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ivLeft"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/sixteen"
-                        android:layout_marginStart="-2dp"
-                        app:layout_constraintBottom_toBottomOf="@+id/rlDivider"
-                        app:layout_constraintStart_toStartOf="@+id/rlDivider"
-                        app:layout_constraintTop_toTopOf="@+id/rlDivider"
-                        app:srcCompat="@drawable/road_dot" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </RelativeLayout>
-
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvCurrentVal"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/_16sdp"
-                android:layout_alignStart="@+id/rlAbacusMain"
-                android:layout_alignTop="@+id/rlAbacusMain"
-                android:layout_alignEnd="@+id/rlAbacusMain"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="0"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textSizeMedium"
-                app:fontFamily="@font/font_extra_bold" />
-
-        </RelativeLayout>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/adView"

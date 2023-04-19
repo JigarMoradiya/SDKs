@@ -101,8 +101,10 @@ class ExamResultFragment : BaseFragment() {
             && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" && // if yes in firebase
             (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") != "Y" // if not purchased
                     && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y")) {
-            newInterstitialAdRequest()
             showAMBannerAds(binding.adView,getString(R.string.banner_ad_unit_id_exam_result))
+            if (requireArguments().getString(AppConstants.Extras_Comman.From, "").equals("exam")){
+                newInterstitialAdRequest()
+            }
         }
     }
 

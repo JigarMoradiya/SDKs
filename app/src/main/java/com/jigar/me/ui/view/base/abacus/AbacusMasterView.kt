@@ -8,12 +8,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
+import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.ui.view.base.abacus.AbacusMasterSound.playClickSound
 import com.jigar.me.ui.view.base.abacus.AbacusMasterSound.playResetSound
@@ -205,7 +207,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
                 AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
             if (beadType == AbacusBeadType.Exam){
-                if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                     val sizes = context.resources.getDimension(R.dimen.bead_dimens_width_exam).toInt()
                     layoutParams.width = (sizes + colSpacing) * noOfRows
                 }else{
@@ -213,7 +215,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                     layoutParams.width = (sizes + colSpacing) * noOfRows
                 }
             }else if (beadType == AbacusBeadType.ExamResult){
-                if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                     val sizes = context.resources.getDimension(R.dimen.bead_dimens_width_exam_result).toInt()
                     layoutParams.width = (sizes + colSpacing) * noOfRows
                 }else{
@@ -221,7 +223,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                     layoutParams.width = (sizes + colSpacing) * noOfRows
                 }
             }else{
-                if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+                if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                     val sizes = context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
                     layoutParams.width = (sizes + colSpacing) * noOfRows
                 }else{
@@ -241,7 +243,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
         colSpacing = columnSpacing
         setRow(noOfRows)
         setBeads(noOfBeads)
-//        postInvalidate();
+        postInvalidate() // TODO
     }
 
     private fun doDraw(canvas: Canvas?) {
@@ -629,15 +631,15 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.face_gray_open)
         } else if (theme.equals(AppConstants.Settings.theam_shape, ignoreCase = true)) {
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.shape_triangle_gray)
-            roadDrawable = ContextCompat.getDrawable(context, R.drawable.road_black)
-            roadDrawable?.setTint(ContextCompat.getColor(context, R.color.black2))
-        } else if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+        } else if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.poligon_gray)
-            roadDrawable = ContextCompat.getDrawable(context, R.drawable.road_black)
-            roadDrawable?.setTint(ContextCompat.getColor(context, R.color.black2))
         } else if (theme.equals(AppConstants.Settings.theam_Egg, ignoreCase = true)) {
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.egg)
         }
+
+        val themeContent = DataProvider.findAbacusThemeType(theme)
+        themeContent?.dividerColor1?.let{ roadDrawable?.setTint(ContextCompat.getColor(context, it))}
+
         noOfColumn = array.getInt(R.styleable.AbacusView_noOfRows, 1)
         noOfBeads = array.getInt(R.styleable.AbacusView_noOfBead, 4)
         singleBeadValue = array.getInt(R.styleable.AbacusView_singleBeadValue, 1)
@@ -654,7 +656,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             beadDrawables = arrayOfNulls(1)
             if (theme.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.star_red_close)
-            } else if (theme.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true)) {
+            } else if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.poligon_gray)
             } else if (theme.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.face_red_close)
