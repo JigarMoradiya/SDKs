@@ -1,29 +1,38 @@
 package com.jigar.me.ui.view.dashboard.fragments.settings
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AbacusType
+import com.jigar.me.data.local.data.AbacusBeadType
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.databinding.FragmentSettingsBinding
+import com.jigar.me.databinding.LayoutAbacusExamBinding
 import com.jigar.me.ui.view.base.BaseFragment
+import com.jigar.me.ui.view.base.abacus.AbacusUtils
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.toastS
+import com.jigar.me.utils.CommonUtils
+import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SettingsFragment : BaseFragment(), AbacusThemePoligonAdapter.OnItemClickListener {
+class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClickListener {
     private lateinit var binding: FragmentSettingsBinding
     private var isPurchased = false
     private lateinit var mNavController: NavController
-    private lateinit var abacusThemePoligonAdapter: AbacusThemePoligonAdapter
-
+    private lateinit var abacusThemeFreeAdapter: AbacusThemeSelectionsAdapter
+    private lateinit var abacusThemePaidAdapter: AbacusThemeSelectionsAdapter
+    private var selectedFreePosition : Int = -1
+    private var selectedPaidPosition : Int = -1
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         setNavigationGraph()
@@ -43,21 +52,26 @@ class SettingsFragment : BaseFragment(), AbacusThemePoligonAdapter.OnItemClickLi
             binding.isPurchased = isPurchased
         }
 
-        Log.e("jigarLogs","pref_theme---- = "+prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
-        setSettings()
-        setTheme()
-        setAbacusAnswer()
+        binding.recyclerviewAbacusDefault.post {
+            val columnFree = CommonUtils.calculateNoOfColumns((resources.getDimension(R.dimen.bead_column).toInt().dp.toFloat()),binding.recyclerviewAbacusDefault.width.dp.toFloat())
+            binding.recyclerviewAbacusDefault.layoutManager = GridLayoutManager(requireContext(),columnFree)
+            abacusThemeFreeAdapter = AbacusThemeSelectionsAdapter(DataProvider.getAbacusThemeFreeTypeList(requireContext(),AbacusBeadType.Exam),this@SettingsFragment, selectedFreePosition)
+            binding.recyclerviewAbacusDefault.adapter = abacusThemeFreeAdapter
 
+            val columnPaid = CommonUtils.calculateNoOfColumns((resources.getDimension(R.dimen.bead_column_paid).toInt().dp.toFloat()),binding.recyclerviewAbacusDefault.width.dp.toFloat())
+            binding.recyclerviewAbacusPaid.layoutManager = GridLayoutManager(requireContext(),columnPaid)
+            abacusThemePaidAdapter = AbacusThemeSelectionsAdapter(DataProvider.getAbacusThemePaidTypeList(requireContext(),AbacusBeadType.Exam),this@SettingsFragment, selectedPaidPosition, true)
+            binding.recyclerviewAbacusPaid.adapter = abacusThemePaidAdapter
+
+            setTheme()
+        }
+        setSettings()
+        setAbacusAnswer()
     }
 
     private fun initListener() {
         binding.cardBack.onClick { mNavController.navigateUp() }
         binding.cardPurchase.onClick { mNavController.navigate(R.id.action_settingsFragment_to_purchaseFragment) }
-        binding.relThemePoligon.onClick { onThemeClick(AppConstants.Settings.theam_Poligon_default) }
-        binding.relThemeEgg.onClick { onThemeClick(AppConstants.Settings.theam_Egg) }
-        binding.relThemeStar.onClick { onThemeClick(AppConstants.Settings.theam_Star) }
-        binding.relThemeEyes.onClick { onThemeClick(AppConstants.Settings.theam_eyes) }
-        binding.relThemeShape.onClick { onThemeClick(AppConstants.Settings.theam_shape) }
 
         binding.relHintSound.onClick { onOnOffClick(AppConstants.Settings.Setting__hint_sound,binding.isHintSound) }
         binding.swHintSound.onClick { onOnOffClick(AppConstants.Settings.Setting__hint_sound,binding.isHintSound) }
@@ -108,19 +122,57 @@ class SettingsFragment : BaseFragment(), AbacusThemePoligonAdapter.OnItemClickLi
 
     }
     private fun setTheme() {
-        var selectedPosition : Int = -1
-        val list = DataProvider.getAbacusThemeTypeList()
+        val freeList = DataProvider.getAbacusThemeFreeTypeList(requireContext(),AbacusBeadType.Exam)
         if (prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default).contains(AppConstants.Settings.theam_Default,true)){
-            val position : Int? = list.indexOfFirst { it.type.equals(prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)) }
+            val position : Int? = freeList.indexOfFirst { it.type.equals(prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default),true) }
             if (position != null && position != -1){
-                selectedPosition = position
+                selectedFreePosition = position
+                setPreviewTheme(freeList[position].type)
+            }
+        }else{
+            val paidList = DataProvider.getAbacusThemePaidTypeList(requireContext(),AbacusBeadType.Exam)
+            val position : Int? = paidList.indexOfFirst { it.type.equals(prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default),true) }
+            if (position != null && position != -1){
+                selectedPaidPosition = position
+                setPreviewTheme(paidList[position].type)
             }
         }
-        abacusThemePoligonAdapter = AbacusThemePoligonAdapter(DataProvider.getAbacusThemeTypeList(),this, selectedPosition)
-        binding.recyclerviewAbacusDefault.adapter = abacusThemePoligonAdapter
+        abacusThemeFreeAdapter.selectedPos(selectedFreePosition)
+        abacusThemePaidAdapter.selectedPos(selectedPaidPosition)
         binding.abacusTheme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
     }
-    override fun onThemePoligonItemClick(data: AbacusType) {
+
+    private fun setPreviewTheme(theme : String) {
+        prefManager.setCustomParam(AppConstants.Settings.TheamTempView,theme)
+        binding.linearAbacus.removeAllViews()
+        binding.linearAbacusPreview.invisible()
+
+
+        lifecycleScope.launch {
+            val abacusBinding : LayoutAbacusExamBinding = LayoutAbacusExamBinding.inflate(layoutInflater, null, false)
+//        val abacusBinding : FragmentAbacusSubBinding = FragmentAbacusSubBinding.inflate(layoutInflater, null, false)
+            binding.linearAbacus.addView(abacusBinding.root)
+            val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.Exam)
+            themeContent.abacusFrameExam135.let {
+                abacusBinding.rlAbacusMain.setBackgroundResource(it)
+            }
+            themeContent.dividerColor1.let {
+                abacusBinding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),it))
+            }
+            themeContent.resetBtnColor8.let {
+                abacusBinding.ivReset.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+                binding.txtPreview.setTextColor(ContextCompat.getColor(requireContext(),it))
+            }
+            AbacusUtils.setAbacusColumnTheme(AbacusBeadType.SettingPreview,abacusBinding.abacusTop,abacusBinding.abacusBottom)
+            binding.linearAbacusPreview.show()
+            val number = DataProvider.generateSingleDigit(1, 998).toString()
+            abacusBinding.tvCurrentVal.text = number
+            AbacusUtils.setNumber(number,abacusBinding.abacusTop,abacusBinding.abacusBottom)
+
+        }
+    }
+
+    override fun onThemePoligonItemClick(data: AbacusContent) {
         onThemeClick(data.type)
     }
 
@@ -159,7 +211,7 @@ class SettingsFragment : BaseFragment(), AbacusThemePoligonAdapter.OnItemClickLi
     private fun onThemeClick(themeType: String) {
         if (themeType != prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)){
             when {
-                themeType == AppConstants.Settings.theam_Egg || themeType.contains(AppConstants.Settings.theam_Default,true) -> {
+                themeType.contains(AppConstants.Settings.theam_Default,true) -> {
                     prefManager.setCustomParam(AppConstants.Settings.Theam,themeType)
                     setTheme()
                 }

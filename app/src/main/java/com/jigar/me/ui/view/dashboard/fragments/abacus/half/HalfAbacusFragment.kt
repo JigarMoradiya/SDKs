@@ -17,7 +17,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AbacusType
+import com.jigar.me.data.local.data.AbacusBeadType
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.PojoAbacus
 import com.jigar.me.databinding.FragmentHalfAbacusBinding
@@ -28,7 +29,6 @@ import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottom
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter.AbacusAdditionSubtractionTypeAdapter
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter.AbacusDivisionTypeAdapter
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter.AbacusMultiplicationTypeAdapter
-import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.*
 import com.jigar.me.utils.CommonUtils.getCurrentSumFromPref
 import com.jigar.me.utils.CommonUtils.saveCurrentSum
@@ -45,7 +45,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private lateinit var binding: FragmentHalfAbacusBinding
     private var hintPage : String? = null
     private var fileAbacus : String? = null
-    private var themeContent : AbacusType? = null
+    private var themeContent : AbacusContent? = null
     private var abacusType = ""
     private var pageId = ""
     private var Que2_str = "" // required only for Multiplication and Division
@@ -125,7 +125,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
     private fun initViews() {
         val theme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
-        themeContent = DataProvider.findAbacusThemeType(theme)
+        themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
         themeContent?.resetBtnColor8?.let{
             val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.75f)
             binding.ivDivider1.setBackgroundColor(finalColor)

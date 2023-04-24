@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,7 @@ import com.jigar.me.R
 import com.jigar.me.data.local.data.*
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.databinding.FragmentExamLevel1Binding
+import com.jigar.me.databinding.LayoutAbacusExamBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusUtils
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
@@ -83,7 +85,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
 
     private fun getAndStartExam(){
         lifecycleScope.launch {
-            theme = AbacusUtils.setAbacusColumn(prefManager,AbacusBeadType.Exam,mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom,mBinding.layoutAbacus2.abacusTop,mBinding.layoutAbacus2.abacusBottom)
+            theme = AbacusUtils.setAbacusTempThemeExam(requireContext(),prefManager,AbacusBeadType.Exam)
         }
         if (prefManager.getCustomParam(AppConstants.Extras_Comman.examLevel + examLevel,"").isEmpty()) {
             listExam = DataProvider.generateBegginerExamPaper(requireContext(),examLevel )
@@ -183,23 +185,30 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
                 if (listExam[currentQuestionPos].isAbacusQuestion == true){
                     mBinding.linearQuestion.hide()
                     mBinding.relAbacus.show()
-                    mBinding.layoutAbacus1.relAbacus.show()
-                    mBinding.layoutAbacus2.relAbacus.hide()
-                    mBinding.layoutAbacus2.abacusTop.hide()
-                    mBinding.layoutAbacus2.abacusBottom.hide()
-                    mBinding.layoutAbacus1.abacusTop.show()
-                    mBinding.layoutAbacus1.abacusBottom.show()
+
+                    mBinding.layoutAbacus1.removeAllViews()
+                    mBinding.layoutAbacus2.removeAllViews()
+                    val abacusBinding1 = LayoutAbacusExamBinding.inflate(layoutInflater, null, false)
+                    mBinding.layoutAbacus1.addView(abacusBinding1.root)
+
+                    mBinding.layoutAbacus1.show()
+                    mBinding.layoutAbacus2.hide()
                     mBinding.imgSign1.hide()
                     lifecycleScope.launch {
-                        AbacusUtils.setNumber(listExam[currentQuestionPos].value,mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom)
+                        val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.Exam)
+                        themeContent.abacusFrameExam135.let {
+                            abacusBinding1.rlAbacusMain.setBackgroundResource(it)
+                        }
+                        themeContent.dividerColor1.let {
+                            abacusBinding1.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),it))
+                        }
+                        themeContent.resetBtnColor8.let {
+                            abacusBinding1.ivReset.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+                        }
+                        AbacusUtils.setAbacusColumnTheme(AbacusBeadType.ExamResult,abacusBinding1.abacusTop,abacusBinding1.abacusBottom)
+                        AbacusUtils.setNumber(listExam[currentQuestionPos].value,abacusBinding1.abacusTop,abacusBinding1.abacusBottom)
                     }
                 }else{
-                    mBinding.layoutAbacus1.relAbacus.hide()
-                    mBinding.layoutAbacus2.relAbacus.hide()
-                    mBinding.layoutAbacus1.abacusTop.hide()
-                    mBinding.layoutAbacus1.abacusBottom.hide()
-                    mBinding.layoutAbacus2.abacusTop.hide()
-                    mBinding.layoutAbacus2.abacusBottom.hide()
                     mBinding.relAbacus.hide()
                     mBinding.linearQuestion.show()
                     val str = getString(R.string.count_the)+" <b><font color='#E14A4D'>"+listExam[currentQuestionPos].imageData.name+"</font></b>"
@@ -246,13 +255,36 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
                 if (listExam[currentQuestionPos].isAbacusQuestion == true){
                     mBinding.relAbacus.show()
                     mBinding.linearQuestion.hide()
+
+                    mBinding.layoutAbacus1.removeAllViews()
+                    mBinding.layoutAbacus2.removeAllViews()
+                    val abacusBinding1 = LayoutAbacusExamBinding.inflate(layoutInflater, null, false)
+                    mBinding.layoutAbacus1.addView(abacusBinding1.root)
+
+                    val abacusBinding2 = LayoutAbacusExamBinding.inflate(layoutInflater, null, false)
+                    mBinding.layoutAbacus2.addView(abacusBinding2.root)
+
                     mBinding.imgSign1.show()
-                    mBinding.layoutAbacus2.relAbacus.show()
-                    mBinding.layoutAbacus1.relAbacus.show()
-                    mBinding.layoutAbacus2.abacusTop.show()
-                    mBinding.layoutAbacus2.abacusBottom.show()
-                    mBinding.layoutAbacus1.abacusTop.show()
-                    mBinding.layoutAbacus1.abacusBottom.show()
+                    mBinding.layoutAbacus1.show()
+                    mBinding.layoutAbacus2.show()
+
+                    lifecycleScope.launch {
+                        val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.Exam)
+                        themeContent.abacusFrameExam135.let {
+                            abacusBinding1.rlAbacusMain.setBackgroundResource(it)
+                            abacusBinding2.rlAbacusMain.setBackgroundResource(it)
+                        }
+                        themeContent.dividerColor1.let {
+                            abacusBinding1.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),it))
+                            abacusBinding2.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),it))
+                        }
+                        themeContent.resetBtnColor8.let {
+                            abacusBinding1.ivReset.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+                            abacusBinding2.ivReset.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
+                        }
+                        AbacusUtils.setAbacusColumnTheme(AbacusBeadType.ExamResult,abacusBinding1.abacusTop,abacusBinding1.abacusBottom,abacusBinding2.abacusTop,abacusBinding2.abacusBottom)
+                        AbacusUtils.setNumber(list1ImageCount.toString(),abacusBinding1.abacusTop,abacusBinding1.abacusBottom,list2ImageCount.toString(),abacusBinding2.abacusTop,abacusBinding2.abacusBottom)
+                    }
 
                     if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Additions){
                         val str = getString(R.string.additions_of)+" <b><font color='#E14A4D'>Abacus Beads</font></b>"
@@ -263,17 +295,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
                         mBinding.txtHeaderTitle.text = HtmlCompat.fromHtml(str,HtmlCompat.FROM_HTML_MODE_COMPACT)
                         mBinding.imgSign1.setImageResource(R.drawable.cal_minus)
                     }
-
-                    lifecycleScope.launch {
-                        AbacusUtils.setNumber(list1ImageCount.toString(),mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom,list2ImageCount.toString(),mBinding.layoutAbacus2.abacusTop,mBinding.layoutAbacus2.abacusBottom)
-                    }
                 }else{
-                    mBinding.layoutAbacus1.relAbacus.hide()
-                    mBinding.layoutAbacus2.relAbacus.hide()
-                    mBinding.layoutAbacus1.abacusTop.hide()
-                    mBinding.layoutAbacus1.abacusBottom.hide()
-                    mBinding.layoutAbacus2.abacusTop.hide()
-                    mBinding.layoutAbacus2.abacusBottom.hide()
                     mBinding.relAbacus.hide()
                     mBinding.linearQuestion.show()
                     if (listExam[currentQuestionPos].type == BeginnerExamQuestionType.Additions){

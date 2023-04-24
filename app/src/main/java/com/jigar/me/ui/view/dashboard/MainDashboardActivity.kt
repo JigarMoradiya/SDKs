@@ -1,5 +1,6 @@
 package com.jigar.me.ui.view.dashboard
 
+import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -96,6 +97,7 @@ class MainDashboardActivity : BaseActivity(){
         setNavigationGraph()
         onMainActivityBack()
         this.checkPermissions(Constants.NOTIFICATION_PERMISSION,requestMultiplePermissions)
+
     }
 
     // permission result

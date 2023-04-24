@@ -14,6 +14,14 @@ import java.text.DecimalFormat
 
 
 object CommonUtils {
+
+    fun calculateNoOfColumns(columnWidthDp: Float, parentWidth : Float): Int {
+        // For example columnWidthdp=180
+//        val displayMetrics = context.resources.displayMetrics
+//        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+        return (parentWidth / columnWidthDp + 0.5).toInt() // +0.5 for correct rounding to int.
+    }
+
     fun mixTwoColors(color1: Int, color2: Int, amount: Float): Int {
         val ALPHA_CHANNEL: Byte = 24
         val RED_CHANNEL: Byte = 16

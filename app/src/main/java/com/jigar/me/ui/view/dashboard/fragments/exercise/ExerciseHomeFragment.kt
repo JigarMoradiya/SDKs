@@ -1,5 +1,6 @@
 package com.jigar.me.ui.view.dashboard.fragments.exercise
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,10 +18,7 @@ import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.jigar.me.R
-import com.jigar.me.data.local.data.DataProvider
-import com.jigar.me.data.local.data.ExerciseLevel
-import com.jigar.me.data.local.data.ExerciseLevelDetail
-import com.jigar.me.data.local.data.ExerciseList
+import com.jigar.me.data.local.data.*
 import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.databinding.FragmentExerciseHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
@@ -47,7 +45,8 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     private var currentSumVal = 0f
     private var totalTimeLeft = 0L
     private var isPurchased = false
-    private var theam = AppConstants.Settings.theam_Egg
+    private var themeContent : AbacusContent? = null
+    private var theam = AppConstants.Settings.theam_Default
     private var isResetRunning = false
     private lateinit var exerciseLevelPagerAdapter: ExerciseLevelPagerAdapter
     private lateinit var exerciseAdditionSubtractionAdapter: ExerciseAdditionSubtractionAdapter
@@ -77,10 +76,22 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         }
     }
     private fun initViews() {
-        exerciseAdditionSubtractionAdapter = ExerciseAdditionSubtractionAdapter(listExerciseAdditionSubtractionQuestion)
+        val theme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
+        themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.None)
+        themeContent?.dividerColor1?.let{
+            val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.85f)
+            binding.cardMain.backgroundTintList = ColorStateList.valueOf(finalColor)
+        }
+        themeContent?.resetBtnColor8?.let{
+            binding.indicatorPager.selectedDotColor = ContextCompat.getColor(requireContext(),it)
+            binding.txtTimer.setTextColor(ContextCompat.getColor(requireContext(),it))
+            binding.txtQueLabel.setTextColor(ContextCompat.getColor(requireContext(),it))
+        }
+
+        exerciseAdditionSubtractionAdapter = ExerciseAdditionSubtractionAdapter(listExerciseAdditionSubtractionQuestion,themeContent)
         binding.recyclerviewExercise.adapter = exerciseAdditionSubtractionAdapter
 
-        exerciseLevelPagerAdapter = ExerciseLevelPagerAdapter(DataProvider.getExerciseList(requireContext()),prefManager,this@ExerciseHomeFragment)
+        exerciseLevelPagerAdapter = ExerciseLevelPagerAdapter(DataProvider.getExerciseList(requireContext()),prefManager,this@ExerciseHomeFragment,themeContent)
         binding.viewPager.adapter = exerciseLevelPagerAdapter
         binding.indicatorPager.attachToPager(binding.viewPager)
         setAbacus()
@@ -383,8 +394,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
 
         }
 
-        val theme = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
-        val themeContent = DataProvider.findAbacusThemeType(theme)
         themeContent?.abacusFrame135?.let { abacusBinding?.rlAbacusMain?.setBackgroundResource(it) }
         themeContent?.dividerColor1?.let { abacusBinding?.ivDivider?.setBackgroundColor(ContextCompat.getColor(requireContext(),it)) }
         themeContent?.resetBtnColor8?.let {
@@ -392,14 +401,9 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
             abacusBinding?.ivRight?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             abacusBinding?.ivLeft?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
         }
-        val colSpacing: Int = if (theam.contains(AppConstants.Settings.theam_Default, ignoreCase = true)) {
-            ViewUtils.convertDpToPixel(Constants.Col_Space_exercise_polygon,requireActivity())
-        } else {
-            ViewUtils.convertDpToPixel(Constants.Col_Space_exercise_default,requireActivity())
-        }
 
-        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 7, 1, colSpacing)
-        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 7, 4, colSpacing)
+        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 7, 1)
+        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 7, 4)
 
         abacusBinding?.abacusTop?.onBeadShiftListener = this
         abacusBinding?.abacusBottom?.onBeadShiftListener = this

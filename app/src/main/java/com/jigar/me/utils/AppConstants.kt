@@ -127,8 +127,12 @@ object AppConstants {
             const val theam_Poligon_Red = "poligon_red"
             const val theam_Poligon_Green = "poligon_green"
             const val theam_Poligon_Tint = "poligon_tint"
+            const val theam_Poligon_Silver = "poligon_silver"
+            const val theam_Poligon_Brown = "poligon_brown"
             const val theam_Default = theam_Poligon_default
-            const val theam_eyes = "Eyes"
+            const val theam_face = "Eyes"
+            const val theam_diamond = "diamond"
+            const val theam_garnet = "garnet"
             const val theam_Egg = "Egg"
             const val theam_shape = "Shape"
             const val theam_Star = "Star"

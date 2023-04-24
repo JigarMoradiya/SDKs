@@ -60,7 +60,7 @@
                             app:columnSpacing="@dimen/_24sdp"
                             app:isBeadStackFromBottom="false"
                             app:noOfBead="1"
-                            app:roadDrawable="@drawable/road_blue"
+                            app:roadDrawable="@drawable/road"
                             app:singleBeadValue="5" />
 
                     </FrameLayout>
@@ -98,7 +98,7 @@
                             app:columnSpacing="@dimen/_24sdp"
                             app:isBeadStackFromBottom="true"
                             app:noOfBead="4"
-                            app:roadDrawable="@drawable/road_blue"
+                            app:roadDrawable="@drawable/road"
                             app:singleBeadValue="1" />
 
                     </FrameLayout>

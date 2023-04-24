@@ -1,5 +1,6 @@
 package com.jigar.me.ui.view.base.abacus
 
+import android.content.Context
 import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.pref.AppPreferencesHelper
@@ -8,45 +9,36 @@ import com.jigar.me.utils.Constants
 import com.jigar.me.utils.ViewUtils
 
 object AbacusUtils {
-    fun setAbacusColumn(prefManager : AppPreferencesHelper,abacusType : AbacusBeadType, abacusTop1: AbacusMasterView, abacusBottom1: AbacusMasterView, abacusTop2: AbacusMasterView? = null, abacusBottom2: AbacusMasterView? = null) : String{
+    fun setAbacusTempThemeExam(context: Context,prefManager : AppPreferencesHelper,abacusType : AbacusBeadType) : String{
         var theam : String
         with(prefManager){
             val isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y")
-            if (isPurchased){
-                setCustomParam(AppConstants.Settings.TheamTempView,DataProvider.getAbacusThemeTypesList().first())
-            }else{
-                setCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            }
+            setCustomParam(AppConstants.Settings.TheamTempView,DataProvider.getAllAbacusThemeTypeList(context,isPurchased,abacusType).first().type)
             theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
         }
-        setAbacusColumnTheme(theam,abacusType,abacusTop1,abacusBottom1, abacusTop2, abacusBottom2)
         return theam
     }
 
-    fun setAbacusColumnTheme(theme : String,abacusType : AbacusBeadType, abacusTop1: AbacusMasterView, abacusBottom1: AbacusMasterView, abacusTop2: AbacusMasterView? = null, abacusBottom2: AbacusMasterView? = null){
-        val colSpacing: Int = if (abacusType == AbacusBeadType.Exam){
-            if (theme.equals(AppConstants.Settings.theam_Default, ignoreCase = true)) {
-                ViewUtils.convertDpToPixel(Constants.Col_Space_exam_polygon,abacusTop1.context)
-            } else if (theme.equals(AppConstants.Settings.theam_Egg, ignoreCase = true)) {
-                ViewUtils.convertDpToPixel(Constants.Col_Space_exam_egg,abacusTop1.context)
-            } else {
-                ViewUtils.convertDpToPixel(Constants.Col_Space_exam_default,abacusTop1.context)
-            }
-        }else{
-            if (theme.equals(AppConstants.Settings.theam_Default, ignoreCase = true)) {
-                ViewUtils.convertDpToPixel(Constants.Col_Space_exam_result_polygon,abacusTop1.context)
-            } else if (theme.equals(AppConstants.Settings.theam_Egg, ignoreCase = true)) {
-                ViewUtils.convertDpToPixel(Constants.Col_Space_exam_result_egg,abacusTop1.context)
-            } else {
-                ViewUtils.convertDpToPixel(Constants.Col_Space_exam_result_default,abacusTop1.context)
-            }
-        }
-        abacusTop1.setNoOfRowAndBeads(0, 3, 1, colSpacing,abacusType)
-        abacusBottom1.setNoOfRowAndBeads(0, 3, 4, colSpacing,abacusType)
+//    fun Context.setAbacusColumn(prefManager : AppPreferencesHelper,abacusType : AbacusBeadType, abacusTop1: AbacusMasterView, abacusBottom1: AbacusMasterView, abacusTop2: AbacusMasterView? = null, abacusBottom2: AbacusMasterView? = null) : String{
+//        var theam : String
+//        with(prefManager){
+//            val isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y")
+//            setCustomParam(AppConstants.Settings.TheamTempView,DataProvider.getAllAbacusThemeTypeList(this@setAbacusColumn,isPurchased).first().type)
+//            theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+//        }
+//        setAbacusColumnTheme(theam,abacusType,abacusTop1,abacusBottom1, abacusTop2, abacusBottom2)
+//        return theam
+//    }
+
+    fun setAbacusColumnTheme(abacusType : AbacusBeadType, abacusTop1: AbacusMasterView, abacusBottom1: AbacusMasterView,
+                             abacusTop2: AbacusMasterView? = null, abacusBottom2: AbacusMasterView? = null){
+
+        abacusTop1.setNoOfRowAndBeads(0, 3, 1, abacusType)
+        abacusBottom1.setNoOfRowAndBeads(0, 3, 4, abacusType)
 
         if (abacusTop2 != null && abacusBottom2 != null){
-            abacusTop2.setNoOfRowAndBeads(0, 3, 1, colSpacing,abacusType)
-            abacusBottom2.setNoOfRowAndBeads(0, 3, 4, colSpacing,abacusType)
+            abacusTop2.setNoOfRowAndBeads(0, 3, 1, abacusType)
+            abacusBottom2.setNoOfRowAndBeads(0, 3, 4, abacusType)
         }
     }
 

@@ -23,7 +23,7 @@
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Time Left"
+                android:text="Time Left : "
                 android:layout_marginEnd="@dimen/_2sdp"
                 android:textSize="@dimen/textSizeMedium"
                 app:fontFamily="@font/font_semibold"

@@ -1,7 +1,35 @@
 <resources>
+    <dimen name="height_extra">@dimen/_2sdp</dimen>
+    <dimen name="poligon_width">@dimen/_36sdp</dimen>
+    <dimen name="poligon_height">@dimen/_20sdp</dimen>
+    <dimen name="poligon_space">@dimen/_6sdp</dimen>
+
+    <dimen name="face_width">@dimen/_23sdp</dimen>
+    <dimen name="face_height">@dimen/_20sdp</dimen>
+    <dimen name="face_space">@dimen/_16sdp</dimen>
+
+    <dimen name="star_width">@dimen/_21sdp</dimen>
+    <dimen name="star_height">@dimen/_20sdp</dimen>
+    <dimen name="star_space">@dimen/_14sdp</dimen>
+
+    <dimen name="garnet_width">@dimen/_28sdp</dimen>
+    <dimen name="garnet_height">@dimen/_20sdp</dimen>
+    <dimen name="garnet_space">@dimen/_12sdp</dimen>
+
+    <dimen name="diamond_width">@dimen/_24sdp</dimen>
+    <dimen name="diamond_height">@dimen/_20sdp</dimen>
+    <dimen name="diamond_space">@dimen/_13sdp</dimen>
+
+    <dimen name="square_width_height">@dimen/_20sdp</dimen>
+    <dimen name="square_space">@dimen/_14sdp</dimen>
+
     <dimen name="bead_dimens">@dimen/_22sdp</dimen>
     <dimen name="bead_dimens_width">@dimen/_40sdp</dimen>
     <dimen name="bead_dimens_extra_space">@dimen/_3sdp</dimen>
+
+    <dimen name="bead_dimens_setting">@dimen/_13sdp</dimen>
+    <dimen name="bead_dimens_width_setting">@dimen/_24sdp</dimen>
+    <dimen name="bead_dimens_extra_space_setting">@dimen/_3sdp</dimen>
 
     <dimen name="bead_dimens_exam">@dimen/_10sdp</dimen>
     <dimen name="bead_dimens_width_exam">@dimen/_18sdp</dimen>
@@ -10,6 +38,9 @@
     <dimen name="bead_dimens_exam_result">@dimen/_8sdp</dimen>
     <dimen name="bead_dimens_width_exam_result">@dimen/_14sdp</dimen>
     <dimen name="bead_dimens_extra_space_exam_result">@dimen/_1sdp</dimen>
+
+    <dimen name="bead_column">@dimen/_45sdp</dimen>
+    <dimen name="bead_column_paid">@dimen/_36sdp</dimen>
 
     <dimen name="minus_two">-2.00dp</dimen>
     <dimen name="minus_twofive">-4dp</dimen>

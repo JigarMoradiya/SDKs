@@ -7,7 +7,7 @@ import android.text.style.ForegroundColorSpan
 import android.util.DisplayMetrics
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AbacusType
+import com.jigar.me.data.local.data.AbacusContent
 
 object ViewUtils {
     fun convertDpToPixel(dp: Float, context: Context): Int {
@@ -89,7 +89,7 @@ object ViewUtils {
         }.parse()
     }
 
-    fun getTable(context: Context, tableOf: Int, highlightedPosition: Int,themeContent : AbacusType? = null): SpannableString {
+    fun getTable(context: Context, tableOf: Int, highlightedPosition: Int,themeContent : AbacusContent? = null): SpannableString {
         var table = ""
         var start = 0
         var end = 0
@@ -110,7 +110,11 @@ object ViewUtils {
         }
         val spannableString = SpannableString(table)
         val color = if (themeContent != null){
-            CommonUtils.mixTwoColors(ContextCompat.getColor(context,themeContent.dividerColor1), ContextCompat.getColor(context,themeContent.resetBtnColor8), 0.20f)
+            if (themeContent.equals(AppConstants.Settings.theam_Poligon_Silver) || themeContent.equals(AppConstants.Settings.theam_Poligon_Brown)){
+                ContextCompat.getColor(context,R.color.black)
+            }else{
+                CommonUtils.mixTwoColors(ContextCompat.getColor(context,themeContent.dividerColor1), ContextCompat.getColor(context,themeContent.resetBtnColor8), 0.20f)
+            }
         }else{
             ContextCompat.getColor(context, R.color.purple_A700)
         }

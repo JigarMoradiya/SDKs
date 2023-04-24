@@ -4,8 +4,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AbacusType
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.databinding.RowQuestionLayoutBinding
+import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
 import com.jigar.me.utils.ViewUtils
@@ -17,7 +18,7 @@ import kotlin.collections.ArrayList
 
 class AbacusAdditionSubtractionTypeAdapter(
     private var abacusItems: ArrayList<HashMap<String, String>>,
-    private val mListener: HintListener, private var isStepByStep: Boolean, private val abacusType : AbacusType? = null
+    private val mListener: HintListener, private var isStepByStep: Boolean, private val abacusType : AbacusContent? = null
 ) :
     RecyclerView.Adapter<AbacusAdditionSubtractionTypeAdapter.FormViewHolder>() {
     interface HintListener {
@@ -55,7 +56,11 @@ class AbacusAdditionSubtractionTypeAdapter(
         if (isStepByStep) {
             if (currentStep == position) {
                 val color = if (abacusType != null){
-                    CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+                    if (abacusType.equals(AppConstants.Settings.theam_Poligon_Silver) || abacusType.equals(AppConstants.Settings.theam_Poligon_Brown)){
+                        ContextCompat.getColor(context,R.color.black)
+                    }else{
+                        CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+                    }
                 }else{
                     ContextCompat.getColor(context, R.color.red)
                 }

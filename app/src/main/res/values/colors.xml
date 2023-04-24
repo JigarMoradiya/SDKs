@@ -140,9 +140,22 @@
     <color name="abacus_rod_coffee_bg">#FFF8E1</color>
     <color name="abacus_rod_coffee_dark">#EF6C00</color>
 
+    <color name="abacus_rod_brown">#D7CCC8</color>
+    <color name="abacus_rod_brown_bg">#EFEBE9</color>
+    <color name="abacus_rod_brown_dark">#4E342E</color>
+
+
     <color name="abacus_rod_black">#939393</color>
     <color name="abacus_rod_black_bg">#F3F3F3</color>
     <color name="abacus_rod_black_dark">#2E2E2E</color>
+
+    <color name="abacus_rod_gray">#E0E0E0</color>
+    <color name="abacus_rod_gray_bg">#F5F5F5</color>
+    <color name="abacus_rod_gray_dark">#424242</color>
+
+    <color name="abacus_rod_silver">#CFD8DC</color>
+    <color name="abacus_rod_silver_bg">#ECEFF1</color>
+    <color name="abacus_rod_silver_dark">#37474F</color>
 
     <color name="colorAccent_light">#3c4a70</color>
     <color name="colorAccent_Dark">#1A2C5A</color>
@@ -211,6 +224,7 @@
     <color name="answer">#EEFDFF</color>
     <color name="answerDefault">#EEFDFF</color>
     <color name="answerText">#333333</color>
+    <color name="black_light">#5A5A5A</color>
 
     <!--reds-->
     <color name="red_50">#FFEBEE</color>

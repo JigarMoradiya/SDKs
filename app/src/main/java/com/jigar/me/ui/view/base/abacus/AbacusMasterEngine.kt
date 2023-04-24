@@ -7,10 +7,9 @@ import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Looper
-import com.jigar.me.R
+import androidx.core.content.ContextCompat
 import com.jigar.me.data.local.data.AbacusBeadType
-import com.jigar.me.data.pref.AppPreferencesHelper
-import com.jigar.me.utils.AppConstants
+import com.jigar.me.data.local.data.AbacusContent
 import java.io.Serializable
 import java.util.*
 
@@ -19,15 +18,15 @@ class AbacusMasterEngine(
     private val numColumns: Int,
     private val noOfBeads: Int,
     private val singleBeadValue: Int,
-    private val context: Context,
+    context: Context,
     roadDrawable: Drawable?,
     selectedBeadDrawable: Drawable?,
     beads: Array<Drawable?>,
     isBeadStackFromBottom: Boolean,
-    private val colSpacing: Int,
+    private val abacusContent: AbacusContent,
     noOfRows_used: Int,
     extraHeight : Int = 0,
-    private val beadType : AbacusBeadType
+    beadType : AbacusBeadType
 ) {
     class BeadState : Serializable {
         var numRows = 0
@@ -48,50 +47,8 @@ class AbacusMasterEngine(
     private var canvas : Canvas?= null
 
     init {
-//        val beadDrawable = beads[0]
-//        beadWidth = beadDrawable!!.minimumWidth + colSpacing
-//        beadHeight = beadDrawable.minimumHeight
-
-        // size set manually
-        if (beadType == AbacusBeadType.Exam){
-            val sizes = context.resources.getDimension(R.dimen.bead_dimens_exam).toInt()
-
-            val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
-                AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            val sizes_width = if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
-                context.resources.getDimension(R.dimen.bead_dimens_width_exam).toInt()
-            }else{
-                sizes
-            }
-
-            beadWidth = sizes_width + colSpacing
-            beadHeight = sizes
-        }else  if (beadType == AbacusBeadType.ExamResult){
-            val sizes = context.resources.getDimension(R.dimen.bead_dimens_exam_result).toInt()
-            val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
-                AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            val sizes_width = if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
-                context.resources.getDimension(R.dimen.bead_dimens_width_exam_result).toInt()
-            }else{
-                sizes
-            }
-            beadWidth = sizes_width + colSpacing
-            beadHeight = sizes
-        }else{
-            val sizes = context.resources.getDimension(R.dimen.bead_dimens).toInt()
-
-            val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
-                AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            val sizes_width = if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
-                context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
-            }else{
-                sizes
-            }
-
-            beadWidth = sizes_width + colSpacing
-            beadHeight = sizes
-        }
-
+        beadWidth = abacusContent.beadWidth + abacusContent.beadSpace
+        beadHeight = abacusContent.beadHeight
 
         borderWidth = 1
         rowHeight = 11 * beadHeight
@@ -175,12 +132,12 @@ class AbacusMasterEngine(
         var i = 1
         val beadPaint = Paint()
         beadPaint.color = Color.WHITE
-//        beadPaint.color = Color.parseColor("#fff4e7")
+//        beadPaint.color = Color.parseColor("#0a3085")
         beadPaint.style = Paint.Style.FILL
         canvas?.drawPaint(beadPaint)
 
         for (r in rows) {
-            r?.draw(canvas, i == rows.size, colSpacing, i)
+            r?.draw(canvas, abacusContent)
             i++
         }
     }

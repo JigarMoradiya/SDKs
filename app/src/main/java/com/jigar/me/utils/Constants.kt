@@ -51,7 +51,7 @@ object Constants {
 
     var Col_Space_eyes = 25F
     var Col_Space_default = 15F
-    var Col_Space_polygon = 10F
+    var Col_Space_polygon = 8F
 
     var Col_Space_full_eyes = 30F
     var Col_Space_full_default = 25F

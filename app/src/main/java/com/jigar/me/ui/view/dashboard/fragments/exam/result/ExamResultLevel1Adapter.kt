@@ -3,6 +3,7 @@ package com.jigar.me.ui.view.dashboard.fragments.exam.result
 import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,7 +12,10 @@ import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.BeginnerExamPaper
 import com.jigar.me.data.local.data.BeginnerExamQuestionType
+import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.pref.AppPreferencesHelper
+import com.jigar.me.databinding.FragmentAbacusSubBinding
+import com.jigar.me.databinding.LayoutAbacusExamBinding
 import com.jigar.me.databinding.RawExamResultLevel1AbacusBinding
 import com.jigar.me.databinding.RawExamResultLevel1Binding
 import com.jigar.me.ui.view.base.abacus.AbacusUtils
@@ -100,35 +104,65 @@ class ExamResultLevel1Adapter(
                     }
 
                     if (data.type == BeginnerExamQuestionType.Count){
+                        mBinding.layoutAbacus1.removeAllViews()
+                        mBinding.layoutAbacus2.removeAllViews()
+                        val abacusBinding1 = LayoutAbacusExamBinding.inflate(context.layoutInflater, null, false)
+                        mBinding.layoutAbacus1.addView(abacusBinding1.root)
 
-                        CoroutineScope(Dispatchers.IO).launch {
-                            AbacusUtils.setAbacusColumnTheme(examAbacusTheme,AbacusBeadType.ExamResult,mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom,mBinding.layoutAbacus2.abacusTop,mBinding.layoutAbacus2.abacusBottom)
-                        }
-                        mBinding.layoutAbacus1.relAbacus.show()
-                        mBinding.layoutAbacus2.relAbacus.hide()
-                        mBinding.layoutAbacus2.abacusTop.hide()
-                        mBinding.layoutAbacus2.abacusBottom.hide()
-                        mBinding.layoutAbacus1.abacusTop.show()
-                        mBinding.layoutAbacus1.abacusBottom.show()
+                        mBinding.layoutAbacus1.show()
+                        mBinding.layoutAbacus2.hide()
                         mBinding.imgSign1.hide()
 
                         CoroutineScope(Dispatchers.IO).launch {
+                            val themeContent = DataProvider.findAbacusThemeType(context,examAbacusTheme, AbacusBeadType.ExamResult)
+                            themeContent.abacusFrameExam135.let {
+                                abacusBinding1.rlAbacusMain.setBackgroundResource(it)
+                            }
+                            themeContent.dividerColor1.let {
+                                abacusBinding1.ivDivider.setBackgroundColor(ContextCompat.getColor(context,it))
+                            }
+                            themeContent.resetBtnColor8.let {
+                                abacusBinding1.ivReset.setColorFilter(ContextCompat.getColor(context,it), android.graphics.PorterDuff.Mode.SRC_IN)
+                            }
+                            AbacusUtils.setAbacusColumnTheme(AbacusBeadType.ExamResult,abacusBinding1.abacusTop,abacusBinding1.abacusBottom)
+                        }
+
+                        CoroutineScope(Dispatchers.IO).launch {
                             delay(500)
-                            AbacusUtils.setNumber(data.value,mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom)
+                            AbacusUtils.setNumber(data.value,abacusBinding1.abacusTop,abacusBinding1.abacusBottom)
                         }
                     }else{
                         val list1ImageCount = data.value.toInt()
                         val list2ImageCount = data.value2.toInt()
-                        CoroutineScope(Dispatchers.IO).launch {
-                            AbacusUtils.setAbacusColumnTheme(examAbacusTheme,AbacusBeadType.ExamResult,mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom,mBinding.layoutAbacus2.abacusTop,mBinding.layoutAbacus2.abacusBottom)
-                        }
+                        mBinding.layoutAbacus1.removeAllViews()
+                        mBinding.layoutAbacus2.removeAllViews()
+                        val abacusBinding1 = LayoutAbacusExamBinding.inflate(context.layoutInflater, null, false)
+                        mBinding.layoutAbacus1.addView(abacusBinding1.root)
+
+                        val abacusBinding2 = LayoutAbacusExamBinding.inflate(context.layoutInflater, null, false)
+                        mBinding.layoutAbacus2.addView(abacusBinding2.root)
+
                         mBinding.imgSign1.show()
-                        mBinding.layoutAbacus2.relAbacus.show()
-                        mBinding.layoutAbacus1.relAbacus.show()
-                        mBinding.layoutAbacus2.abacusTop.show()
-                        mBinding.layoutAbacus2.abacusBottom.show()
-                        mBinding.layoutAbacus1.abacusTop.show()
-                        mBinding.layoutAbacus1.abacusBottom.show()
+                        mBinding.layoutAbacus1.show()
+                        mBinding.layoutAbacus2.show()
+
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val themeContent = DataProvider.findAbacusThemeType(context,examAbacusTheme,AbacusBeadType.ExamResult)
+                            themeContent.abacusFrameExam135.let {
+                                abacusBinding1.rlAbacusMain.setBackgroundResource(it)
+                                abacusBinding2.rlAbacusMain.setBackgroundResource(it)
+                            }
+                            themeContent.dividerColor1.let {
+                                abacusBinding1.ivDivider.setBackgroundColor(ContextCompat.getColor(context,it))
+                                abacusBinding2.ivDivider.setBackgroundColor(ContextCompat.getColor(context,it))
+                            }
+                            themeContent.resetBtnColor8.let {
+                                abacusBinding1.ivReset.setColorFilter(ContextCompat.getColor(context,it), android.graphics.PorterDuff.Mode.SRC_IN)
+                                abacusBinding2.ivReset.setColorFilter(ContextCompat.getColor(context,it), android.graphics.PorterDuff.Mode.SRC_IN)
+                            }
+
+                            AbacusUtils.setAbacusColumnTheme(AbacusBeadType.ExamResult,abacusBinding1.abacusTop,abacusBinding1.abacusBottom,abacusBinding2.abacusTop,abacusBinding2.abacusBottom)
+                        }
 
                         if (data.type == BeginnerExamQuestionType.Additions){
                             mBinding.imgSign1.setImageResource(R.drawable.cal_plus)
@@ -137,7 +171,7 @@ class ExamResultLevel1Adapter(
                         }
                         CoroutineScope(Dispatchers.IO).launch {
                             delay(500)
-                            AbacusUtils.setNumber(list1ImageCount.toString(),mBinding.layoutAbacus1.abacusTop,mBinding.layoutAbacus1.abacusBottom,list2ImageCount.toString(),mBinding.layoutAbacus2.abacusTop,mBinding.layoutAbacus2.abacusBottom)
+                            AbacusUtils.setNumber(list1ImageCount.toString(),abacusBinding1.abacusTop,abacusBinding1.abacusBottom,list2ImageCount.toString(),abacusBinding2.abacusTop,abacusBinding2.abacusBottom)
                         }
                     }
                 }

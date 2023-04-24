@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.ui.view.base.BaseFragment
@@ -64,17 +65,10 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
         isDisplayAbacusNumber = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_abacus_number, true)
 
         val theme = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
-//        if (prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_shape
-//            || prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg) == AppConstants.Settings.theam_Default) {
-//            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.black2))
-//        } else {
-//            binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),R.color.colorAccent_light))
-//        }
-
-        val themeContent = DataProvider.findAbacusThemeType(theme)
-        themeContent?.abacusFrame135?.let { binding.rlAbacusMain.setBackgroundResource(it) }
-        themeContent?.dividerColor1?.let { binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),it)) }
-        themeContent?.resetBtnColor8?.let {
+        val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.None)
+        themeContent.abacusFrame135.let { binding.rlAbacusMain.setBackgroundResource(it) }
+        themeContent.dividerColor1.let { binding.ivDivider.setBackgroundColor(ContextCompat.getColor(requireContext(),it)) }
+        themeContent.resetBtnColor8.let {
             binding.ivReset.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.ivRight.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             binding.ivLeft.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -107,24 +101,9 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     }
 
     private fun setBead() {
-        val theam: String = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Egg)
-        when (theam) {
-            AppConstants.Settings.theam_eyes -> {
-                val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_eyes, requireActivity())
-                binding.abacusTop.setNoOfRowAndBeads(0, final_column, 1, colSpacing)
-                binding.abacusBottom.setNoOfRowAndBeads(0, final_column, 4, colSpacing)
-            }
-            AppConstants.Settings.theam_Default -> {
-                val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_polygon, requireActivity())
-                binding.abacusTop.setNoOfRowAndBeads(0, final_column, 1, colSpacing)
-                binding.abacusBottom.setNoOfRowAndBeads(0, final_column, 4, colSpacing)
-            }
-            else -> {
-                val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_default, requireActivity())
-                binding.abacusTop.setNoOfRowAndBeads(0, final_column, 1, colSpacing)
-                binding.abacusBottom.setNoOfRowAndBeads(0, final_column, 4, colSpacing)
-            }
-        }
+        binding.abacusTop.setNoOfRowAndBeads(0, final_column, 1)
+        binding.abacusBottom.setNoOfRowAndBeads(0, final_column, 4)
+
         binding.abacusTop.onBeadShiftListener = this
         binding.abacusBottom.onBeadShiftListener = this
     }

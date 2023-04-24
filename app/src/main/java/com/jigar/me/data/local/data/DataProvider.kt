@@ -2,12 +2,12 @@ package com.jigar.me.data.local.data
 
 import android.content.Context
 import android.graphics.Color
+import android.util.Log
 import com.jigar.me.R
 import com.jigar.me.data.model.pages.*
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
-import com.jigar.me.utils.extensions.isNotNullOrEmpty
 import com.jigar.me.utils.sudoku.SudokuConst4
 import com.jigar.me.utils.sudoku.SudokuConst6
 import com.jigar.me.utils.sudoku.SudukoConst
@@ -22,49 +22,88 @@ object DataProvider {
         with(list){
             add(AppConstants.Settings.theam_Default)
             add(AppConstants.Settings.theam_Egg)
-            add(AppConstants.Settings.theam_eyes)
+            add(AppConstants.Settings.theam_face)
             add(AppConstants.Settings.theam_shape)
             add(AppConstants.Settings.theam_Star)
         }
         list.shuffle()
         return list
     }
+    private fun getMultipleDimensions(abacusBeadType: AbacusBeadType = AbacusBeadType.None) : Float{
+        return when (abacusBeadType) {
+            AbacusBeadType.SettingPreview -> {
+                0.7f
+            }
+            AbacusBeadType.Exam -> {
+                0.5f
+            }
+            AbacusBeadType.ExamResult -> {
+                0.4f
+            }
+            else -> {
+                1f
+            }
+        }
+    }
+    fun getAbacusThemeFreeTypeList(context: Context,abacusBeadType: AbacusBeadType) : ArrayList<AbacusContent>{
+        val list = ArrayList<AbacusContent>()
+        val multiply = getMultipleDimensions(abacusBeadType)
+        val height = (context.resources.getDimension(R.dimen.poligon_height) * multiply).toInt()
+        val width = (context.resources.getDimension(R.dimen.poligon_width) * multiply).toInt()
+        val space = (context.resources.getDimension(R.dimen.poligon_space) * multiply).toInt()
 
-    fun getAbacusThemeTypeList() : ArrayList<AbacusType>{
-        val list = ArrayList<AbacusType>()
         with(list){
-            add(AbacusType(AppConstants.Settings.theam_Poligon_default,R.drawable.poligon_black,R.drawable.bg_abacus_frame_large_black,R.color.abacus_rod_black,R.color.abacus_rod_black_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Blue,R.drawable.poligon_blue,R.drawable.bg_abacus_frame_large_blue,R.color.abacus_rod_blue,R.color.abacus_rod_blue_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Blue_Sky,R.drawable.poligon_blue_sky,R.drawable.bg_abacus_frame_large_blue_sky,R.color.abacus_rod_blue_sky,R.color.abacus_rod_blue_sky_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Purple,R.drawable.poligon_purple,R.drawable.bg_abacus_frame_large_purple,R.color.abacus_rod_purple,R.color.abacus_rod_purple_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Orange,R.drawable.poligon_orange,R.drawable.bg_abacus_frame_large_orange,R.color.abacus_rod_orange,R.color.abacus_rod_orange_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Tint,R.drawable.poligon_tint,R.drawable.bg_abacus_frame_large_tint,R.color.abacus_rod_tint,R.color.abacus_rod_tint_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Red,R.drawable.poligon_red,R.drawable.bg_abacus_frame_large_red,R.color.abacus_rod_red,R.color.abacus_rod_red_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Green,R.drawable.poligon_green,R.drawable.bg_abacus_frame_large_green,R.color.abacus_rod_green,R.color.abacus_rod_green_dark))
-            add(AbacusType(AppConstants.Settings.theam_Poligon_Pink,R.drawable.poligon_pink,R.drawable.bg_abacus_frame_large_pink,R.color.abacus_rod_pink,R.color.abacus_rod_pink_dark))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_default,R.drawable.poligon_black,R.drawable.bg_abacus_frame_large_black,R.drawable.bg_abacus_frame_large_black_exam,R.color.abacus_rod_black,R.color.abacus_rod_black_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Blue,R.drawable.poligon_blue,R.drawable.bg_abacus_frame_large_blue,R.drawable.bg_abacus_frame_large_blue_exam,R.color.abacus_rod_blue,R.color.abacus_rod_blue_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Purple,R.drawable.poligon_purple,R.drawable.bg_abacus_frame_large_purple,R.drawable.bg_abacus_frame_large_purple_exam,R.color.abacus_rod_purple,R.color.abacus_rod_purple_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Blue_Sky,R.drawable.poligon_blue_sky,R.drawable.bg_abacus_frame_large_blue_sky,R.drawable.bg_abacus_frame_large_blue_sky_exam,R.color.abacus_rod_blue_sky,R.color.abacus_rod_blue_sky_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Orange,R.drawable.poligon_orange,R.drawable.bg_abacus_frame_large_orange,R.drawable.bg_abacus_frame_large_orange_exam,R.color.abacus_rod_orange,R.color.abacus_rod_orange_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Green,R.drawable.poligon_green,R.drawable.bg_abacus_frame_large_green,R.drawable.bg_abacus_frame_large_green_exam,R.color.abacus_rod_green,R.color.abacus_rod_green_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Red,R.drawable.poligon_red,R.drawable.bg_abacus_frame_large_red,R.drawable.bg_abacus_frame_large_red_exam,R.color.abacus_rod_red,R.color.abacus_rod_red_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Tint,R.drawable.poligon_tint,R.drawable.bg_abacus_frame_large_tint,R.drawable.bg_abacus_frame_large_tint_exam,R.color.abacus_rod_tint,R.color.abacus_rod_tint_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Pink,R.drawable.poligon_pink,R.drawable.bg_abacus_frame_large_pink,R.drawable.bg_abacus_frame_large_pink_exam,R.color.abacus_rod_pink,R.color.abacus_rod_pink_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Silver,R.drawable.poligon_silver,R.drawable.bg_abacus_frame_large_silver,R.drawable.bg_abacus_frame_large_silver_exam,R.color.abacus_rod_silver,R.color.abacus_rod_silver_dark,height,width,space))
+            add(AbacusContent(AppConstants.Settings.theam_Poligon_Brown,R.drawable.poligon_brown,R.drawable.bg_abacus_frame_large_brown,R.drawable.bg_abacus_frame_large_brown_dark,R.color.abacus_rod_brown,R.color.abacus_rod_brown_dark,height,width,space))
         }
         return list
     }
-    val abacusThemeList = ArrayList<AbacusType>()
-    fun getAllAbacusThemeTypeList() : ArrayList<AbacusType>{
-        val list = ArrayList<AbacusType>()
-        list.addAll(getAbacusThemeTypeList())
+
+    fun getAbacusThemePaidTypeList(context: Context,abacusBeadType: AbacusBeadType) : ArrayList<AbacusContent>{
+        val list = ArrayList<AbacusContent>()
+        val multiply = getMultipleDimensions(abacusBeadType)
         with(list){
-            add(AbacusType(AppConstants.Settings.theam_shape,R.drawable.shape_square_gray,R.drawable.bg_abacus_frame_large_black,R.color.abacus_rod_black,R.color.abacus_rod_black_dark))
-            add(AbacusType(AppConstants.Settings.theam_eyes,R.drawable.face_gray_open,R.drawable.bg_abacus_frame_large_pink,R.color.abacus_rod_pink,R.color.abacus_rod_pink_dark))
-            add(AbacusType(AppConstants.Settings.theam_Star,R.drawable.star_gray_open,R.drawable.bg_abacus_frame_large_red,R.color.abacus_rod_red,R.color.abacus_rod_red_dark))
-            add(AbacusType(AppConstants.Settings.theam_Egg,R.drawable.egg,R.drawable.bg_abacus_frame_large_black,R.color.abacus_rod_black,R.color.abacus_rod_black_dark))
-        }
-        if (abacusThemeList.isEmpty()){
-            abacusThemeList.addAll(list)
+            add(AbacusContent(AppConstants.Settings.theam_face,R.drawable.face_red_open,R.drawable.bg_abacus_frame_large_red_eye,R.drawable.bg_abacus_frame_large_red_eye_exam,R.color.abacus_rod_red,R.color.abacus_rod_red_dark
+                ,(context.resources.getDimension(R.dimen.face_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.face_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.face_space) * multiply).toInt()))
+            add(AbacusContent(AppConstants.Settings.theam_Star,R.drawable.star_blue_open,R.drawable.bg_abacus_frame_large_red,R.drawable.bg_abacus_frame_large_red_exam,R.color.abacus_rod_red,R.color.abacus_rod_red_dark
+                ,(context.resources.getDimension(R.dimen.star_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.star_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.star_space) * multiply).toInt()))
+            add(AbacusContent(AppConstants.Settings.theam_diamond,R.drawable.diamond_blue,R.drawable.bg_abacus_frame_large_silver,R.drawable.bg_abacus_frame_large_silver_exam,R.color.abacus_rod_silver,R.color.abacus_rod_silver_dark
+                ,(context.resources.getDimension(R.dimen.diamond_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.diamond_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.diamond_space) * multiply).toInt()))
+            add(AbacusContent(AppConstants.Settings.theam_garnet,R.drawable.garnet_purple,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
+                ,(context.resources.getDimension(R.dimen.garnet_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.garnet_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.garnet_space) * multiply).toInt()))
+            add(AbacusContent(AppConstants.Settings.theam_shape,R.drawable.shape_triangle,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
+                ,(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_space) * multiply).toInt()))
+            add(AbacusContent(AppConstants.Settings.theam_Egg,R.drawable.egg3,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
+                ,(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_space) * multiply).toInt()))
         }
         return list
     }
-    fun findAbacusThemeType(type : String) : AbacusType?{
-        if (abacusThemeList.isEmpty()){
-            getAllAbacusThemeTypeList()
+
+    private val abacusThemeList = ArrayList<AbacusContent>()
+    fun getAllAbacusThemeTypeList(context: Context, isPaidThemeAdd : Boolean = true,abacusBeadType: AbacusBeadType) : ArrayList<AbacusContent>{
+        val list = ArrayList<AbacusContent>()
+        list.addAll(getAbacusThemeFreeTypeList(context,abacusBeadType))
+        if (isPaidThemeAdd){
+            list.addAll(getAbacusThemePaidTypeList(context,abacusBeadType))
         }
-        return abacusThemeList.find { it.type == type }
+        abacusThemeList.clear()
+        abacusThemeList.addAll(list)
+        list.shuffle()
+        return list
+    }
+    fun findAbacusThemeType(context: Context, theme : String, abacusBeadType: AbacusBeadType) : AbacusContent{
+        getAllAbacusThemeTypeList(context,abacusBeadType = abacusBeadType)
+        val content : AbacusContent? = abacusThemeList.find { it.type == theme }
+        return content ?: abacusThemeList.first()
     }
     fun getHomeMenuList() : ArrayList<HomeMenu>{
         val list = ArrayList<HomeMenu>()

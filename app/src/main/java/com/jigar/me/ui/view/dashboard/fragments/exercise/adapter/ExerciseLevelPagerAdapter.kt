@@ -1,5 +1,6 @@
 package com.jigar.me.ui.view.dashboard.fragments.exercise.adapter
 
+import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -8,16 +9,19 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.data.local.data.ExerciseLevel
 import com.jigar.me.data.local.data.ExerciseLevelDetail
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.databinding.RawExerciseLevelBinding
 import com.jigar.me.databinding.RawExerciseLevelPagerBinding
+import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
 
 class ExerciseLevelPagerAdapter(var listData: ArrayList<ExerciseLevel>, val prefManager : AppPreferencesHelper,
-                                private val mListener: OnItemClickListener) : PagerAdapter() {
+                                private val mListener: OnItemClickListener,
+                                private val themeContent : AbacusContent? = null) : PagerAdapter() {
     var selectedParentPosition: Int = 0
     var selectedChildPosition : Int = 0
     interface OnItemClickListener {
@@ -29,7 +33,10 @@ class ExerciseLevelPagerAdapter(var listData: ArrayList<ExerciseLevel>, val pref
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = RawExerciseLevelPagerBinding.inflate(container.context.layoutInflater,container,false)
-
+        val context = binding.root.context
+        themeContent?.resetBtnColor8?.let{
+            binding.txtTitle.setTextColor(ContextCompat.getColor(context,it))
+        }
         with(listData[position]){
             binding.data = this
             val childData = this.list[this.selectedChildPos]
@@ -57,7 +64,7 @@ class ExerciseLevelPagerAdapter(var listData: ArrayList<ExerciseLevel>, val pref
             }else{
                 binding.recyclerviewExercise.layoutManager = GridLayoutManager(container.context,5)
             }
-            val adapter = ExerciseLevelAdapter(this.list,position,this.selectedChildPos, object : OnChildItemClickListener {
+            val adapter = ExerciseLevelAdapter(this.list,position,this.selectedChildPos,themeContent, object : OnChildItemClickListener {
                 override fun onExerciseLevelClick(parentPosition: Int,childPosition : Int, child: ExerciseLevelDetail) {
                     selectedParentPosition = parentPosition
                     selectedChildPosition = childPosition
@@ -104,7 +111,8 @@ class ExerciseLevelPagerAdapter(var listData: ArrayList<ExerciseLevel>, val pref
     }
 
 
-    class ExerciseLevelAdapter(private var listData: ArrayList<ExerciseLevelDetail>,val parentPosition: Int,val childPosition: Int, private val mListener: OnChildItemClickListener) :
+    class ExerciseLevelAdapter(private var listData: ArrayList<ExerciseLevelDetail>, val parentPosition: Int, val childPosition: Int,
+                               private val themeContent : AbacusContent? = null, private val mListener: OnChildItemClickListener) :
         RecyclerView.Adapter<ExerciseLevelAdapter.FormViewHolder>() {
         var selectedPosition = childPosition
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormViewHolder {
@@ -115,15 +123,25 @@ class ExerciseLevelPagerAdapter(var listData: ArrayList<ExerciseLevel>, val pref
         override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
             val data: ExerciseLevelDetail = listData[position]
             val context = holder.binding.root.context
+
             with(holder.binding){
                 txtSubTitle.text = (position + 1).toString()
                 if (selectedPosition == position){
                     txtSubTitle.setTextColor(ContextCompat.getColor(context, R.color.white))
                     txtSubTitle.setBackgroundResource(R.drawable.circle_primary)
+                    themeContent?.resetBtnColor8?.let{
+                        val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(context,R.color.white), ContextCompat.getColor(context,it), 0.25f)
+                        txtSubTitle.backgroundTintList = ColorStateList.valueOf(finalColor)
+                    }
                 }else {
                     txtSubTitle.setBackgroundResource(R.drawable.circle_primary_border)
-                    txtSubTitle.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDark))
+                    themeContent?.resetBtnColor8?.let{
+                        val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(context,R.color.white), ContextCompat.getColor(context,it), 0.25f)
+                        txtSubTitle.backgroundTintList = ColorStateList.valueOf(finalColor)
+                        txtSubTitle.setTextColor(finalColor)
+                    }
                 }
+
             }
 
             holder.binding.root.setOnClickListener {

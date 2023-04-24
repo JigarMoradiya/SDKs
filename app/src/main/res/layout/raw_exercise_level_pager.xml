@@ -131,6 +131,7 @@
             android:layout_marginTop="@dimen/activity_padding12"
             android:text="@string/start_exercise"
             android:textAllCaps="false"
+            android:backgroundTint="@color/black"
             app:layout_constraintBottom_toTopOf="@+id/spaceBottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

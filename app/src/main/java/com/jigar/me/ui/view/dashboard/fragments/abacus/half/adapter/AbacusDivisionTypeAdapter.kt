@@ -10,8 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AbacusType
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.databinding.RowQuestionLayoutBinding
+import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
 import com.jigar.me.utils.ViewUtils
@@ -23,7 +24,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AbacusDivisionTypeAdapter(
-    private var abacusItems: ArrayList<HashMap<String, String>>, private var isStepByStep: Boolean, private val abacusType : AbacusType?
+    private var abacusItems: ArrayList<HashMap<String, String>>, private var isStepByStep: Boolean, private val abacusType : AbacusContent?
 ) : RecyclerView.Adapter<AbacusDivisionTypeAdapter.FormViewHolder>() {
 
     private val highlightDetail = HashMap<Int, Pair<Int, Int>>()
@@ -151,7 +152,12 @@ class AbacusDivisionTypeAdapter(
                 Spannable.SPAN_INCLUSIVE_EXCLUSIVE
             )
             val color = if (abacusType != null){
-                CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+                if (abacusType.equals(AppConstants.Settings.theam_Poligon_Silver) || abacusType.equals(
+                        AppConstants.Settings.theam_Poligon_Brown)){
+                    ContextCompat.getColor(context,R.color.black)
+                }else{
+                    CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+                }
             }else{
                 ContextCompat.getColor(context, R.color.red)
             }

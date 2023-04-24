@@ -10,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.databinding.FragmentFullAbacusBinding
@@ -171,28 +172,17 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
         abacusBinding?.ivReset?.onClick { resetClick()}
 
-        val themeContent = DataProvider.findAbacusThemeType(theme)
-        themeContent?.abacusFrame135?.let { abacusBinding?.rlAbacusMain?.setBackgroundResource(it) }
-        themeContent?.dividerColor1?.let { abacusBinding?.ivDivider?.setBackgroundColor(ContextCompat.getColor(requireContext(),it)) }
-        themeContent?.resetBtnColor8?.let {
+        val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.None)
+        abacusBinding?.rlAbacusMain?.setBackgroundResource(themeContent.abacusFrame135)
+        abacusBinding?.ivDivider?.setBackgroundColor(ContextCompat.getColor(requireContext(),themeContent.dividerColor1))
+        themeContent.resetBtnColor8.let {
             abacusBinding?.ivReset?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             abacusBinding?.ivRight?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             abacusBinding?.ivLeft?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
         }
+        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1)
+        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4)
 
-        if (theme.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
-            val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_full_eyes,requireActivity())
-            abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1, colSpacing)
-            abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4, colSpacing)
-        }else if (theme.contains(AppConstants.Settings.theam_Default, ignoreCase = true)) {
-            val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_full_polygon,requireActivity())
-            abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1, colSpacing)
-            abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4, colSpacing)
-        } else {
-            val colSpacing: Int = ViewUtils.convertDpToPixel(Constants.Col_Space_full_default,requireActivity())
-            abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1, colSpacing)
-            abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4, colSpacing)
-        }
         abacusBinding?.abacusTop?.onBeadShiftListener = this@FullAbacusFragment
         abacusBinding?.abacusBottom?.onBeadShiftListener = this@FullAbacusFragment
     }

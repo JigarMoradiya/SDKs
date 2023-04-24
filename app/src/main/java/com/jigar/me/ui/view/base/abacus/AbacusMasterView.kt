@@ -8,13 +8,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.ui.view.base.abacus.AbacusMasterSound.playClickSound
@@ -139,6 +139,8 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
 
     /*todo: need to add this as attribute*/
     private var colSpacing = 15
+    private lateinit var abacusContent: AbacusContent
+    private var theme = AppConstants.Settings.theam_Default
     private var beadState: AbacusMasterEngine.BeadState? = null
     private var defaultState: AbacusMasterEngine.BeadState? = null
     internal var noOfColumn = 1
@@ -161,86 +163,33 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setNoOfRowAndBeads(noOfRows_used, noOfColumn, noOfBeads, colSpacing,beadType)
+        setNoOfRowAndBeads(noOfRows_used, noOfColumn, noOfBeads,beadType)
     }
-
-    fun getNoOfColumn(): Int {
-        return noOfColumn
-    }
-
-//    fun setNoOfBeads(noOfBeads: Int) {
-//        setBeads(noOfBeads)
-//        invalidate()
-//    }
-
     private fun setBeads(noOfBeads: Int) {
         this.noOfBeads = noOfBeads
         if (beadDrawables.isNotEmpty()) {
-
-            // size set manually
-//            layoutParams.height = beadDrawables[0]!!.minimumHeight * (noOfBeads + 1) + ExtraHeight
-            val sizes = if (beadType == AbacusBeadType.Exam){
-                extraHeight = context.resources.getDimension(R.dimen.bead_dimens_extra_space_exam).toInt()
-                resources.getDimension(R.dimen.bead_dimens_exam).toInt()
-            }else if (beadType == AbacusBeadType.ExamResult){
-                extraHeight = context.resources.getDimension(R.dimen.bead_dimens_extra_space_exam_result).toInt()
-                resources.getDimension(R.dimen.bead_dimens_exam_result).toInt()
-            }else{
-                extraHeight = context.resources.getDimension(R.dimen.bead_dimens_extra_space).toInt()
-                resources.getDimension(R.dimen.bead_dimens).toInt()
-            }
-            layoutParams.height = sizes * (noOfBeads + 1) + extraHeight
+            extraHeight = context.resources.getDimension(R.dimen.height_extra).toInt()
+            layoutParams.height = abacusContent.beadHeight * (noOfBeads + 1) + extraHeight
             layoutParams = layoutParams
         }
     }
-
-//    fun setNoOfColumn(noOfColumn: Int) {
-//        setRow(noOfColumn)
-//        invalidate()
-//    }
-
     private fun setRow(noOfRows: Int) {
         noOfColumn = noOfRows
         if (beadDrawables.isNotEmpty()) {
-            // size set manually
-//            layoutParams.width = (beadDrawables[0]!!.minimumWidth + colSpacing) * noOfRows
-            val theme = AppPreferencesHelper(context, AppConstants.PREF_NAME).getCustomParam(
-                AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-            if (beadType == AbacusBeadType.Exam){
-                if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
-                    val sizes = context.resources.getDimension(R.dimen.bead_dimens_width_exam).toInt()
-                    layoutParams.width = (sizes + colSpacing) * noOfRows
-                }else{
-                    val sizes = resources.getDimension(R.dimen.bead_dimens_exam).toInt()
-                    layoutParams.width = (sizes + colSpacing) * noOfRows
-                }
-            }else if (beadType == AbacusBeadType.ExamResult){
-                if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
-                    val sizes = context.resources.getDimension(R.dimen.bead_dimens_width_exam_result).toInt()
-                    layoutParams.width = (sizes + colSpacing) * noOfRows
-                }else{
-                    val sizes = resources.getDimension(R.dimen.bead_dimens_exam_result).toInt()
-                    layoutParams.width = (sizes + colSpacing) * noOfRows
-                }
-            }else{
-                if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
-                    val sizes = context.resources.getDimension(R.dimen.bead_dimens_width).toInt()
-                    layoutParams.width = (sizes + colSpacing) * noOfRows
-                }else{
-                    val sizes = resources.getDimension(R.dimen.bead_dimens).toInt()
-                    layoutParams.width = (sizes + colSpacing) * noOfRows
-                }
-            }
-
+            layoutParams.width = (abacusContent.beadWidth + colSpacing) * noOfRows
             layoutParams = layoutParams
         }
     }
 
-    fun setNoOfRowAndBeads(noOfRows_used: Int, noOfRows: Int, noOfBeads: Int, columnSpacing: Int, beadType : AbacusBeadType = AbacusBeadType.None) {
-//        defaultState = null;
+    fun setNoOfRowAndBeads(noOfRows_used: Int, noOfRows: Int, noOfBeads: Int, beadType : AbacusBeadType = AbacusBeadType.None) {
         this.beadType = beadType
         this.noOfRows_used = noOfRows_used
-        colSpacing = columnSpacing
+
+        theme = AppPreferencesHelper(context,AppConstants.PREF_NAME).getCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
+        abacusContent = DataProvider.findAbacusThemeType(context,theme,beadType)
+        roadDrawable?.setTint(ContextCompat.getColor(context, abacusContent.dividerColor1))
+        colSpacing = abacusContent.beadSpace
+
         setRow(noOfRows)
         setBeads(noOfBeads)
         postInvalidate() // TODO
@@ -291,7 +240,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                     engine = AbacusMasterEngine(
                         it, noOfColumn, noOfBeads, singleBeadValue,
                         context, roadDrawable, selectedBeadDrawable, beadDrawables, isBeadStackFromBottom,
-                        colSpacing, noOfRows_used,extraHeight,beadType
+                        abacusContent, noOfRows_used,extraHeight,beadType
                     )
                 }
                 if (beadState != null) {
@@ -372,7 +321,7 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
     private var prevY = -1
     private var diffTouchAndDrawY = 0
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
+        if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult || beadType == AbacusBeadType.SettingPreview){
             return false
         }
         return try {
@@ -624,10 +573,11 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
         val id = array.getResourceId(R.styleable.AbacusView_beadDrawables, 0)
         roadDrawable = array.getDrawable(R.styleable.AbacusView_roadDrawable)
         selectedBeadDrawable = array.getDrawable(R.styleable.AbacusView_selectedBeadDrawable)
-        val theme = AppPreferencesHelper(context,AppConstants.PREF_NAME).getCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
+
+
         if (theme.equals(AppConstants.Settings.theam_Star, ignoreCase = true)) {
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.star_gray_open)
-        } else if (theme.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
+        } else if (theme.equals(AppConstants.Settings.theam_face, ignoreCase = true)) {
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.face_gray_open)
         } else if (theme.equals(AppConstants.Settings.theam_shape, ignoreCase = true)) {
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.shape_triangle_gray)
@@ -635,10 +585,11 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.poligon_gray)
         } else if (theme.equals(AppConstants.Settings.theam_Egg, ignoreCase = true)) {
             selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.egg)
+        } else if (theme.equals(AppConstants.Settings.theam_diamond, ignoreCase = true)) {
+            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.diamond_gray)
+        }else if (theme.equals(AppConstants.Settings.theam_garnet, ignoreCase = true)) {
+            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.garnet_gray)
         }
-
-        val themeContent = DataProvider.findAbacusThemeType(theme)
-        themeContent?.dividerColor1?.let{ roadDrawable?.setTint(ContextCompat.getColor(context, it))}
 
         noOfColumn = array.getInt(R.styleable.AbacusView_noOfRows, 1)
         noOfBeads = array.getInt(R.styleable.AbacusView_noOfBead, 4)
@@ -654,16 +605,20 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
             imgs.recycle()
         } else {
             beadDrawables = arrayOfNulls(1)
-            if (theme.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
+            if (theme.equals(AppConstants.Settings.theam_face, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.star_red_close)
             } else if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.poligon_gray)
-            } else if (theme.equals(AppConstants.Settings.theam_eyes, ignoreCase = true)) {
+            } else if (theme.equals(AppConstants.Settings.theam_face, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.face_red_close)
             } else if (theme.equals(AppConstants.Settings.theam_shape, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.shape_square_gray)
             } else if (theme.equals(AppConstants.Settings.theam_Egg, ignoreCase = true)) {
                 beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.egg0)
+            } else if (theme.equals(AppConstants.Settings.theam_diamond, ignoreCase = true)) {
+                beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.diamond_gray)
+            } else if (theme.equals(AppConstants.Settings.theam_garnet, ignoreCase = true)) {
+                beadDrawables[0] = ContextCompat.getDrawable(context, R.drawable.garnet_gray)
             }
         }
         array.recycle()

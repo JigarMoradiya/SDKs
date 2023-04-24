@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AbacusType
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.databinding.RowQuestionLayoutBinding
+import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
 import com.jigar.me.utils.ViewUtils
@@ -20,7 +21,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class AbacusMultiplicationTypeAdapter(
-    private var abacusItems: ArrayList<HashMap<String, String>>, private var isStepByStep: Boolean, private val abacusType : AbacusType?
+    private var abacusItems: ArrayList<HashMap<String, String>>, private var isStepByStep: Boolean, private val abacusType : AbacusContent?
 ) :
     RecyclerView.Adapter<AbacusMultiplicationTypeAdapter.FormViewHolder>() {
 
@@ -84,7 +85,7 @@ class AbacusMultiplicationTypeAdapter(
         return abacusItems.size
     }
 
-    fun getTable(context: Context,themeContent : AbacusType? = null): SpannableString? {
+    fun getTable(context: Context,themeContent : AbacusContent? = null): SpannableString? {
         if (highlightDetail.size > 1) {
             val position = highlightDetail[1]!!
             val position0 = highlightDetail[0]!!
@@ -109,7 +110,11 @@ class AbacusMultiplicationTypeAdapter(
             Spannable.SPAN_INCLUSIVE_EXCLUSIVE
         )
         val color = if (abacusType != null){
-            CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+            if (abacusType.equals(AppConstants.Settings.theam_Poligon_Silver) || abacusType.equals(AppConstants.Settings.theam_Poligon_Brown)){
+                ContextCompat.getColor(context,R.color.black)
+            }else{
+                CommonUtils.mixTwoColors(ContextCompat.getColor(context,abacusType.dividerColor1), ContextCompat.getColor(context,abacusType.resetBtnColor8), 0.40f)
+            }
         }else{
             ContextCompat.getColor(context, R.color.red)
         }
