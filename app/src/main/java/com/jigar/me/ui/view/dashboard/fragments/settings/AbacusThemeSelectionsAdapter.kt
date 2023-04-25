@@ -46,10 +46,10 @@ class AbacusThemeSelectionsAdapter(
                 imgTick.invisible()
             }
             root.onClick {
-//                val previousPos = currentPos
-//                currentPos = position
-//                notifyItemChanged(previousPos)
-//                imgTick.show()
+                val previousPos = currentPos
+                currentPos = position
+                notifyItemChanged(previousPos)
+                imgTick.show()
                 mListener.onThemePoligonItemClick(data)
             }
         }

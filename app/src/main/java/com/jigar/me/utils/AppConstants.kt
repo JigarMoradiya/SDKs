@@ -124,6 +124,7 @@ object AppConstants {
             const val theam_Poligon_Orange = "poligon_orange"
             const val theam_Poligon_Purple = "poligon_purple"
             const val theam_Poligon_Pink = "poligon_pink"
+            const val theam_Poligon_Yellow = "poligon_yellow"
             const val theam_Poligon_Red = "poligon_red"
             const val theam_Poligon_Green = "poligon_green"
             const val theam_Poligon_Tint = "poligon_tint"

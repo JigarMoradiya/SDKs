@@ -19,17 +19,6 @@ object AbacusUtils {
         return theam
     }
 
-//    fun Context.setAbacusColumn(prefManager : AppPreferencesHelper,abacusType : AbacusBeadType, abacusTop1: AbacusMasterView, abacusBottom1: AbacusMasterView, abacusTop2: AbacusMasterView? = null, abacusBottom2: AbacusMasterView? = null) : String{
-//        var theam : String
-//        with(prefManager){
-//            val isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y")
-//            setCustomParam(AppConstants.Settings.TheamTempView,DataProvider.getAllAbacusThemeTypeList(this@setAbacusColumn,isPurchased).first().type)
-//            theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
-//        }
-//        setAbacusColumnTheme(theam,abacusType,abacusTop1,abacusBottom1, abacusTop2, abacusBottom2)
-//        return theam
-//    }
-
     fun setAbacusColumnTheme(abacusType : AbacusBeadType, abacusTop1: AbacusMasterView, abacusBottom1: AbacusMasterView,
                              abacusTop2: AbacusMasterView? = null, abacusBottom2: AbacusMasterView? = null){
 

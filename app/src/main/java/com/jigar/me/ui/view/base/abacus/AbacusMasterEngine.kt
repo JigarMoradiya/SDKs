@@ -20,11 +20,9 @@ class AbacusMasterEngine(
     private val singleBeadValue: Int,
     context: Context,
     roadDrawable: Drawable?,
-    selectedBeadDrawable: Drawable?,
     beads: Array<Drawable?>,
     isBeadStackFromBottom: Boolean,
     private val abacusContent: AbacusContent,
-    noOfRows_used: Int,
     extraHeight : Int = 0,
     beadType : AbacusBeadType
 ) {
@@ -68,11 +66,10 @@ class AbacusMasterEngine(
                 isBeadStackFromBottom,
                 noOfBeads,
                 roadDrawable,
-                selectedBeadDrawable,
-                noOfRows_used,
                 numColumns,
                 extraHeight,
-                beadType
+                beadType,
+                abacusContent
             )
         }
     }

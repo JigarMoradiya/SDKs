@@ -2,6 +2,7 @@ package com.jigar.me.ui.view.dashboard.fragments.abacus
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -160,7 +161,11 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             if (isPurchased){
                 setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
             }else{
-                setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+                if (getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default).contains(AppConstants.Settings.theam_Default,true)){
+                    setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
+                }else{
+                    setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+                }
             }
             theme = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
 

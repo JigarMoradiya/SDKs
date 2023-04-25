@@ -10,10 +10,6 @@
         <import type="com.jigar.me.utils.AppConstants" />
 
         <variable
-            name="abacusTheme"
-            type="String" />
-
-        <variable
             name="isStepByStep"
             type="Boolean" />
 
@@ -144,8 +140,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/linearAbacusPreview"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:strokeColor="@color/colorPurple"
-                    app:strokeWidth="@dimen/_1sdp">
+                    app:strokeColor="@color/purple_700"
+                    app:strokeWidth="1dp">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -156,12 +152,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/gradient_card_bg_purple_pink"
                             android:padding="@dimen/activity_padding8"
                             android:text="@string/free_abacus_theme"
-                            android:textColor="@color/white"
+                            android:textColor="@color/purple_700"
                             android:textSize="@dimen/textSizeRegular"
                             app:fontFamily="@font/font_bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.2dp"
+                            android:background="@color/purple_700" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerviewAbacusDefault"
@@ -169,8 +169,8 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/activity_padding8"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            tools:itemCount="5"
                             app:spanCount="4"
+                            tools:itemCount="5"
                             tools:listitem="@layout/row_default_theme">
 
                         </androidx.recyclerview.widget.RecyclerView>
@@ -191,8 +191,8 @@
                     app:layout_constraintEnd_toStartOf="@+id/linearAbacusPreview"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardFreeTheme"
-                    app:strokeColor="@color/colorPurple"
-                    app:strokeWidth="@dimen/_1sdp">
+                    app:strokeColor="@color/indigo_700"
+                    app:strokeWidth="1dp">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
@@ -203,12 +203,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:background="@drawable/gradient_card_bg_blue_purple"
                             android:padding="@dimen/activity_padding8"
                             android:text="@string/paid_abacus_themes"
-                            android:textColor="@color/white"
+                            android:textColor="@color/indigo_700"
                             android:textSize="@dimen/textSizeRegular"
                             app:fontFamily="@font/font_bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.2dp"
+                            android:background="@color/indigo_700" />
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/recyclerviewAbacusPaid"
@@ -216,8 +220,8 @@
                             android:layout_height="wrap_content"
                             android:padding="@dimen/activity_padding8"
                             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                            tools:itemCount="5"
                             app:spanCount="4"
+                            tools:itemCount="5"
                             tools:listitem="@layout/row_default_theme">
 
                         </androidx.recyclerview.widget.RecyclerView>
@@ -240,17 +244,17 @@
                         android:id="@+id/linearAbacus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"/>
+                        android:gravity="center" />
 
                     <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txtPreview"
                         style="@style/mainTitleSmall"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/activity_padding4"
                         android:gravity="center"
-                        android:id="@+id/txtPreview"
-                        android:textSize="@dimen/textSizeExtraSmall"
-                        android:text="@string/preview_of_theme" />
+                        android:text="@string/preview_of_theme"
+                        android:textSize="@dimen/textSizeExtraSmall" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -260,415 +264,427 @@
                     android:orientation="vertical"
                     app:layout_constraintTop_toBottomOf="@+id/cardPaidTheme">
 
-                    <com.google.android.material.card.MaterialCardView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_padding4"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="@dimen/card_corner_radius"
-                        app:cardElevation="@dimen/card_elevation"
-                        app:cardMaxElevation="@dimen/card_elevation"
-                        app:cardUseCompatPadding="true">
+                        android:orientation="horizontal">
 
-                        <androidx.appcompat.widget.LinearLayoutCompat
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_margin="@dimen/activity_padding4"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/card_corner_radius"
+                            app:cardElevation="@dimen/card_elevation"
+                            app:cardMaxElevation="@dimen/card_elevation"
+                            app:cardUseCompatPadding="true"
+                            app:strokeColor="@color/grey_700"
+                            app:strokeWidth="1dp">
 
-                            <RelativeLayout
-                                android:id="@+id/relHintSound"
+                            <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_hint_sound"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_hint_sound"
-                                    app:tint="@color/colorListingHeading" />
-
-                                <com.google.android.material.textview.MaterialTextView
-                                    android:id="@+id/txtHintSound"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toEndOf="@+id/img_hint_sound"
-                                    android:fontFamily="@font/font_bold"
-                                    android:text="@string/txt_setting_hintsound"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/imgHintpaid"
-                                    android:layout_width="@dimen/_24sdp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toEndOf="@+id/txtHintSound"
-                                    android:visibility="@{isPurchased?View.GONE:View.VISIBLE}"
-                                    app:srcCompat="@mipmap/paid_tag" />
-
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/sw_hint_sound"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isHintSound}"
-                                    android:theme="@style/SCBSwitch"
-                                    tools:ignore="MissingPrefix" />
-
-                            </RelativeLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.2dp"
-                                android:background="@color/gray_dark70" />
-
-                            <RelativeLayout
-                                android:id="@+id/relAbacusSound"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_sound"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_setting_sound"
-                                    app:tint="@color/colorListingHeading" />
-
-                                <com.google.android.material.textview.MaterialTextView
+                                <RelativeLayout
+                                    android:id="@+id/relHintSound"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toStartOf="@+id/sw_sound"
-                                    android:layout_toEndOf="@+id/img_sound"
-                                    android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/txt_setting_sound"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/sw_sound"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isAbacusSound}"
-                                    android:theme="@style/SCBSwitch"
-                                    tools:ignore="MissingPrefix" />
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/img_hint_sound"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_hint_sound"
+                                        app:tint="@color/colorListingHeading" />
 
-                            </RelativeLayout>
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/txtHintSound"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toEndOf="@+id/img_hint_sound"
+                                        android:fontFamily="@font/font_bold"
+                                        android:text="@string/txt_setting_hintsound"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.2dp"
-                                android:background="@color/gray_dark70" />
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/imgHintpaid"
+                                        android:layout_width="@dimen/_24sdp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toEndOf="@+id/txtHintSound"
+                                        android:visibility="@{isPurchased?View.GONE:View.VISIBLE}"
+                                        app:srcCompat="@mipmap/paid_tag" />
 
-                            <RelativeLayout
-                                android:id="@+id/relAutoReset"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/sw_hint_sound"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isHintSound}"
+                                        android:theme="@style/SCBSwitch"
+                                        tools:ignore="MissingPrefix" />
 
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/imgAutoReset"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_setting_autoreset"
-                                    app:tint="@color/colorListingHeading" />
+                                </RelativeLayout>
 
-                                <com.google.android.material.textview.MaterialTextView
+                                <View
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toStartOf="@+id/swAutoReset"
-                                    android:layout_toEndOf="@+id/imgAutoReset"
-                                    android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/auto_reset"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray_dark70" />
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/swAutoReset"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isAutoReset}"
-                                    android:theme="@style/SCBSwitch"
-                                    tools:ignore="MissingPrefix" />
-
-                            </RelativeLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.2dp"
-                                android:background="@color/gray_dark70" />
-
-                            <RelativeLayout
-                                android:id="@+id/relNumberPuzzleSound"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_NumberPuzzleSound"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_volume_on"
-                                    app:tint="@color/colorListingHeading" />
-
-                                <com.google.android.material.textview.MaterialTextView
+                                <RelativeLayout
+                                    android:id="@+id/relAbacusSound"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toStartOf="@+id/sw_NumberPuzzleSound"
-                                    android:layout_toEndOf="@+id/img_NumberPuzzleSound"
-                                    android:fontFamily="@font/font_semibold"
-                                    android:text="@string/number_sequences_puzzle_volume"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/sw_NumberPuzzleSound"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isNumberPuzzleSound}"
-                                    android:theme="@style/SCBSwitch"
-                                    tools:ignore="MissingPrefix" />
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/img_sound"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_setting_sound"
+                                        app:tint="@color/colorListingHeading" />
 
-                            </RelativeLayout>
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toStartOf="@+id/sw_sound"
+                                        android:layout_toEndOf="@+id/img_sound"
+                                        android:fontFamily="@font/font_semibold"
+                                        android:gravity="center_vertical"
+                                        android:text="@string/txt_setting_sound"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
+
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/sw_sound"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isAbacusSound}"
+                                        android:theme="@style/SCBSwitch"
+                                        tools:ignore="MissingPrefix" />
+
+                                </RelativeLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray_dark70" />
+
+                                <RelativeLayout
+                                    android:id="@+id/relAutoReset"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/imgAutoReset"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_setting_autoreset"
+                                        app:tint="@color/colorListingHeading" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toStartOf="@+id/swAutoReset"
+                                        android:layout_toEndOf="@+id/imgAutoReset"
+                                        android:fontFamily="@font/font_semibold"
+                                        android:gravity="center_vertical"
+                                        android:text="@string/auto_reset"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
+
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/swAutoReset"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isAutoReset}"
+                                        android:theme="@style/SCBSwitch"
+                                        tools:ignore="MissingPrefix" />
+
+                                </RelativeLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray_dark70" />
+
+                                <RelativeLayout
+                                    android:id="@+id/relNumberPuzzleSound"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/img_NumberPuzzleSound"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_volume_on"
+                                        app:tint="@color/colorListingHeading" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toStartOf="@+id/sw_NumberPuzzleSound"
+                                        android:layout_toEndOf="@+id/img_NumberPuzzleSound"
+                                        android:fontFamily="@font/font_semibold"
+                                        android:text="@string/number_sequences_puzzle_volume"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
+
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/sw_NumberPuzzleSound"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isNumberPuzzleSound}"
+                                        android:theme="@style/SCBSwitch"
+                                        tools:ignore="MissingPrefix" />
+
+                                </RelativeLayout>
 
 
-                        </androidx.appcompat.widget.LinearLayoutCompat>
+                            </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    </com.google.android.material.card.MaterialCardView>
+                        </com.google.android.material.card.MaterialCardView>
 
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_padding4"
-                        app:cardBackgroundColor="@color/white"
-                        app:cardCornerRadius="@dimen/card_corner_radius"
-                        app:cardElevation="@dimen/card_elevation"
-                        app:cardMaxElevation="@dimen/card_elevation"
-                        app:cardUseCompatPadding="true">
-
-                        <androidx.appcompat.widget.LinearLayoutCompat
+                        <com.google.android.material.card.MaterialCardView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_margin="@dimen/activity_padding4"
+                            android:layout_weight="1"
+                            app:cardBackgroundColor="@color/white"
+                            app:cardCornerRadius="@dimen/card_corner_radius"
+                            app:cardElevation="@dimen/card_elevation"
+                            app:cardMaxElevation="@dimen/card_elevation"
+                            app:cardUseCompatPadding="true"
+                            app:strokeColor="@color/grey_700"
+                            app:strokeWidth="1dp">
 
-                            <RelativeLayout
-                                android:id="@+id/relDisplayAbacusNumber"
+                            <androidx.appcompat.widget.LinearLayoutCompat
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_display_abacus_number"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_setting_display_abacus_number"
-                                    app:tint="@color/colorListingHeading" />
-
-                                <com.google.android.material.textview.MaterialTextView
+                                <RelativeLayout
+                                    android:id="@+id/relDisplayAbacusNumber"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toStartOf="@+id/sw_display_abacus_number"
-                                    android:layout_toEndOf="@+id/img_display_abacus_number"
-                                    android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/txt_setting_display_abacus_number"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/sw_display_abacus_number"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isDisplayAbacusNumber}"
-                                    android:theme="@style/SCBSwitch" />
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/img_display_abacus_number"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_setting_display_abacus_number"
+                                        app:tint="@color/colorListingHeading" />
 
-                            </RelativeLayout>
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toStartOf="@+id/sw_display_abacus_number"
+                                        android:layout_toEndOf="@+id/img_display_abacus_number"
+                                        android:fontFamily="@font/font_semibold"
+                                        android:gravity="center_vertical"
+                                        android:text="@string/txt_setting_display_abacus_number"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.2dp"
-                                android:background="@color/gray_dark70" />
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/sw_display_abacus_number"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isDisplayAbacusNumber}"
+                                        android:theme="@style/SCBSwitch" />
 
-                            <RelativeLayout
-                                android:id="@+id/relDisplayHelpMessage"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
+                                </RelativeLayout>
 
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_display_help_message"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_setting_display_help_message"
-                                    app:tint="@color/colorListingHeading" />
-
-                                <com.google.android.material.textview.MaterialTextView
+                                <View
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toStartOf="@+id/sw_display_help_message"
-                                    android:layout_toEndOf="@+id/img_display_help_message"
-                                    android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/txt_setting_display_help_message"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray_dark70" />
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/sw_display_help_message"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isDisplayHelpMessage}"
-                                    android:theme="@style/SCBSwitch" />
-
-                            </RelativeLayout>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.2dp"
-                                android:background="@color/gray_dark70" />
-
-                            <RelativeLayout
-                                android:id="@+id/relHideTable"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
-
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_hide_table"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_hide_table"
-                                    app:tint="@color/colorListingHeading" />
-
-                                <com.google.android.material.textview.MaterialTextView
+                                <RelativeLayout
+                                    android:id="@+id/relDisplayHelpMessage"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toStartOf="@+id/sw_hide_table"
-                                    android:layout_toEndOf="@+id/img_hide_table"
-                                    android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/txt_setting_hide_table"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/sw_hide_table"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isHideTable}"
-                                    android:theme="@style/SCBSwitch" />
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/img_display_help_message"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_setting_display_help_message"
+                                        app:tint="@color/colorListingHeading" />
 
-                            </RelativeLayout>
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toStartOf="@+id/sw_display_help_message"
+                                        android:layout_toEndOf="@+id/img_display_help_message"
+                                        android:fontFamily="@font/font_semibold"
+                                        android:gravity="center_vertical"
+                                        android:text="@string/txt_setting_display_help_message"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="0.2dp"
-                                android:background="@color/gray_dark70" />
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/sw_display_help_message"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isDisplayHelpMessage}"
+                                        android:theme="@style/SCBSwitch" />
 
-                            <RelativeLayout
-                                android:id="@+id/relLeftHand"
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_32sdp"
-                                android:paddingStart="@dimen/activity_padding8"
-                                android:paddingEnd="@dimen/activity_padding8">
+                                </RelativeLayout>
 
-                                <androidx.appcompat.widget.AppCompatImageView
-                                    android:id="@+id/img_left_hand"
-                                    android:layout_width="@dimen/_16sdp"
-                                    android:layout_height="@dimen/_16sdp"
-                                    android:layout_alignParentStart="true"
-                                    android:layout_centerVertical="true"
-                                    app:srcCompat="@drawable/ic_setting_leftt_hand"
-                                    app:tint="@color/colorListingHeading" />
-
-                                <com.google.android.material.textview.MaterialTextView
+                                <View
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_centerVertical="true"
-                                    android:layout_marginStart="@dimen/activity_padding8"
-                                    android:layout_toStartOf="@+id/sw_left_hand"
-                                    android:layout_toEndOf="@+id/img_left_hand"
-                                    android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
-                                    android:text="@string/txt_setting_left_hand"
-                                    android:textColor="@color/colorListingHeading"
-                                    android:textSize="@dimen/textSizeMedium"
-                                    android:textStyle="normal" />
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray_dark70" />
 
-                                <androidx.appcompat.widget.SwitchCompat
-                                    android:id="@+id/sw_left_hand"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_centerVertical="true"
-                                    android:checked="@{isLeftHand}"
-                                    android:theme="@style/SCBSwitch" />
+                                <RelativeLayout
+                                    android:id="@+id/relHideTable"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
 
-                            </RelativeLayout>
-                        </androidx.appcompat.widget.LinearLayoutCompat>
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/img_hide_table"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_hide_table"
+                                        app:tint="@color/colorListingHeading" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toStartOf="@+id/sw_hide_table"
+                                        android:layout_toEndOf="@+id/img_hide_table"
+                                        android:fontFamily="@font/font_semibold"
+                                        android:gravity="center_vertical"
+                                        android:text="@string/txt_setting_hide_table"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
+
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/sw_hide_table"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isHideTable}"
+                                        android:theme="@style/SCBSwitch" />
+
+                                </RelativeLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.2dp"
+                                    android:background="@color/gray_dark70" />
+
+                                <RelativeLayout
+                                    android:id="@+id/relLeftHand"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/_32sdp"
+                                    android:paddingStart="@dimen/activity_padding8"
+                                    android:paddingEnd="@dimen/activity_padding8">
+
+                                    <androidx.appcompat.widget.AppCompatImageView
+                                        android:id="@+id/img_left_hand"
+                                        android:layout_width="@dimen/_16sdp"
+                                        android:layout_height="@dimen/_16sdp"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_centerVertical="true"
+                                        app:srcCompat="@drawable/ic_setting_leftt_hand"
+                                        app:tint="@color/colorListingHeading" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_marginStart="@dimen/activity_padding8"
+                                        android:layout_toStartOf="@+id/sw_left_hand"
+                                        android:layout_toEndOf="@+id/img_left_hand"
+                                        android:fontFamily="@font/font_semibold"
+                                        android:gravity="center_vertical"
+                                        android:text="@string/txt_setting_left_hand"
+                                        android:textColor="@color/colorListingHeading"
+                                        android:textSize="@dimen/textSizeMedium"
+                                        android:textStyle="normal" />
+
+                                    <androidx.appcompat.widget.SwitchCompat
+                                        android:id="@+id/sw_left_hand"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:checked="@{isLeftHand}"
+                                        android:theme="@style/SCBSwitch" />
+
+                                </RelativeLayout>
+                            </androidx.appcompat.widget.LinearLayoutCompat>
 
 
-                    </com.google.android.material.card.MaterialCardView>
+                        </com.google.android.material.card.MaterialCardView>
 
+                    </LinearLayout>
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="match_parent"
@@ -678,7 +694,9 @@
                         app:cardCornerRadius="@dimen/card_corner_radius"
                         app:cardElevation="@dimen/card_elevation"
                         app:cardMaxElevation="@dimen/card_elevation"
-                        app:cardUseCompatPadding="true">
+                        app:cardUseCompatPadding="true"
+                        app:strokeColor="@color/grey_700"
+                        app:strokeWidth="1dp">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"

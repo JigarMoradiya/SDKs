@@ -122,6 +122,8 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
 
     }
     private fun setTheme() {
+        selectedFreePosition = -1
+        selectedPaidPosition = -1
         val freeList = DataProvider.getAbacusThemeFreeTypeList(requireContext(),AbacusBeadType.Exam)
         if (prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default).contains(AppConstants.Settings.theam_Default,true)){
             val position : Int? = freeList.indexOfFirst { it.type.equals(prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default),true) }
@@ -139,7 +141,6 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
         }
         abacusThemeFreeAdapter.selectedPos(selectedFreePosition)
         abacusThemePaidAdapter.selectedPos(selectedPaidPosition)
-        binding.abacusTheme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
     }
 
     private fun setPreviewTheme(theme : String) {
@@ -210,19 +211,22 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
 
     private fun onThemeClick(themeType: String) {
         if (themeType != prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)){
+
             when {
                 themeType.contains(AppConstants.Settings.theam_Default,true) -> {
                     prefManager.setCustomParam(AppConstants.Settings.Theam,themeType)
-                    setTheme()
+                    abacusThemePaidAdapter.selectedPos(-1)
                 }
                 isPurchased -> {
                     prefManager.setCustomParam(AppConstants.Settings.Theam,themeType)
-                    setTheme()
+                    abacusThemeFreeAdapter.selectedPos(-1)
                 }
                 else -> {
+                    abacusThemeFreeAdapter.selectedPos(-1)
                     requireContext().toastS(getString(R.string.txt_setting_hintsound_purchase))
                 }
             }
+            setPreviewTheme(themeType)
         }
     }
 

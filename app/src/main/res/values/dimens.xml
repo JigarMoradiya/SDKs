@@ -39,8 +39,8 @@
     <dimen name="bead_dimens_width_exam_result">@dimen/_14sdp</dimen>
     <dimen name="bead_dimens_extra_space_exam_result">@dimen/_1sdp</dimen>
 
-    <dimen name="bead_column">@dimen/_45sdp</dimen>
-    <dimen name="bead_column_paid">@dimen/_36sdp</dimen>
+    <dimen name="bead_column">@dimen/_40sdp</dimen>
+    <dimen name="bead_column_paid">@dimen/_34sdp</dimen>
 
     <dimen name="minus_two">-2.00dp</dimen>
     <dimen name="minus_twofive">-4dp</dimen>

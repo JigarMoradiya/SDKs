@@ -112,6 +112,10 @@
     <color name="abacus_rod_pink_bg">#FCE4EC</color>
     <color name="abacus_rod_pink_dark">#C2185B</color>
 
+    <color name="abacus_rod_yellow">#F7F1BD</color>
+    <color name="abacus_rod_yellow_bg">#FFFDE7</color>
+    <color name="abacus_rod_yellow_dark">#D19B14</color>
+
     <color name="abacus_rod_red">#FFCDD2</color>
     <color name="abacus_rod_red_bg">#FFEBEE</color>
     <color name="abacus_rod_red_dark">#C62828</color>

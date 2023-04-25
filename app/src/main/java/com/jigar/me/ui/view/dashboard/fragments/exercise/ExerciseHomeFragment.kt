@@ -46,7 +46,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     private var totalTimeLeft = 0L
     private var isPurchased = false
     private var themeContent : AbacusContent? = null
-    private var theam = AppConstants.Settings.theam_Default
+    private var theme = AppConstants.Settings.theam_Default
     private var isResetRunning = false
     private lateinit var exerciseLevelPagerAdapter: ExerciseLevelPagerAdapter
     private lateinit var exerciseAdditionSubtractionAdapter: ExerciseAdditionSubtractionAdapter
@@ -76,7 +76,21 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         }
     }
     private fun initViews() {
-        val theme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
+        with(prefManager){
+            isPurchased = getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+            if (isPurchased){
+                setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
+            }else{
+                if (getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default).contains(AppConstants.Settings.theam_Default,true)){
+                    setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
+                }else{
+                    setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+                }
+            }
+            theme = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+
+        }
+
         themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.None)
         themeContent?.dividerColor1?.let{
             val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.85f)
@@ -366,18 +380,6 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     }
 
     private fun setAbacus() {
-        with(prefManager){
-            isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                    || getCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"") == "Y")
-            if (isPurchased){
-                setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
-            }else{
-                setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
-            }
-            theam = getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
-
-        }
-
         binding.linearAbacus.removeAllViews()
         abacusBinding = FragmentAbacusSubBinding.inflate(layoutInflater, null, false)
         binding.linearAbacus.addView(abacusBinding?.root)

@@ -13,19 +13,19 @@
             android:id="@+id/imgAbacus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="@dimen/activity_padding4"
-            android:layout_centerVertical="true"
-            android:adjustViewBounds="true"
             android:layout_centerInParent="true"
+            android:adjustViewBounds="true"
+            android:padding="@dimen/activity_padding4"
             app:srcCompat="@drawable/poligon_orange" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgTick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_16sdp"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_marginTop="-10dp"
+            android:layout_height="@dimen/_12sdp"
             android:layout_centerHorizontal="true"
-            app:srcCompat="@drawable/ic_selected_theme" />
+            android:layout_below="@+id/imgAbacus"
+            app:srcCompat="@drawable/ic_select_theme" />
 
     </RelativeLayout>
 </layout>

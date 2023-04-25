@@ -187,12 +187,17 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
 
         theme = AppPreferencesHelper(context,AppConstants.PREF_NAME).getCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
         abacusContent = DataProvider.findAbacusThemeType(context,theme,beadType)
-        roadDrawable?.setTint(ContextCompat.getColor(context, abacusContent.dividerColor1))
+        setThemeContent()
         colSpacing = abacusContent.beadSpace
 
         setRow(noOfRows)
         setBeads(noOfBeads)
         postInvalidate() // TODO
+    }
+
+    private fun setThemeContent() {
+        roadDrawable?.setTint(ContextCompat.getColor(context, abacusContent.dividerColor1))
+//        selectedBeadDrawable = ContextCompat.getDrawable(context, abacusContent.selectedBeadDrawable)
     }
 
     private fun doDraw(canvas: Canvas?) {
@@ -239,8 +244,8 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
                 selectedPositions?.let{
                     engine = AbacusMasterEngine(
                         it, noOfColumn, noOfBeads, singleBeadValue,
-                        context, roadDrawable, selectedBeadDrawable, beadDrawables, isBeadStackFromBottom,
-                        abacusContent, noOfRows_used,extraHeight,beadType
+                        context, roadDrawable, beadDrawables, isBeadStackFromBottom,
+                        abacusContent, extraHeight,beadType
                     )
                 }
                 if (beadState != null) {
@@ -563,7 +568,6 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
 
     companion object {
         var extraHeight = 0
-        var beadDimesions = 0
     }
 
     init {
@@ -573,23 +577,6 @@ class AbacusMasterView(context: Context, attrs: AttributeSet?) :
         val id = array.getResourceId(R.styleable.AbacusView_beadDrawables, 0)
         roadDrawable = array.getDrawable(R.styleable.AbacusView_roadDrawable)
         selectedBeadDrawable = array.getDrawable(R.styleable.AbacusView_selectedBeadDrawable)
-
-
-        if (theme.equals(AppConstants.Settings.theam_Star, ignoreCase = true)) {
-            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.star_gray_open)
-        } else if (theme.equals(AppConstants.Settings.theam_face, ignoreCase = true)) {
-            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.face_gray_open)
-        } else if (theme.equals(AppConstants.Settings.theam_shape, ignoreCase = true)) {
-            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.shape_triangle_gray)
-        } else if (theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true)) {
-            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.poligon_gray)
-        } else if (theme.equals(AppConstants.Settings.theam_Egg, ignoreCase = true)) {
-            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.egg)
-        } else if (theme.equals(AppConstants.Settings.theam_diamond, ignoreCase = true)) {
-            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.diamond_gray)
-        }else if (theme.equals(AppConstants.Settings.theam_garnet, ignoreCase = true)) {
-            selectedBeadDrawable = ContextCompat.getDrawable(context, R.drawable.garnet_gray)
-        }
 
         noOfColumn = array.getInt(R.styleable.AbacusView_noOfRows, 1)
         noOfBeads = array.getInt(R.styleable.AbacusView_noOfBead, 4)

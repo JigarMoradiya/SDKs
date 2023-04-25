@@ -124,28 +124,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     private fun initViews() {
-        val theme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
-        themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
-        themeContent?.resetBtnColor8?.let{
-            val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.75f)
-            binding.ivDivider1.setBackgroundColor(finalColor)
-            binding.cardQuestions.setStrokeColor(ColorStateList.valueOf(finalColor))
-            binding.txtTitle.setTextColor(ContextCompat.getColor(requireContext(),it))
-            binding.tvAns.setTextColor(ContextCompat.getColor(requireContext(),it))
-
-            themeContent?.dividerColor1?.let {it2 ->
-                val finalColor40 = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),it2), ContextCompat.getColor(requireContext(),it), 0.40f)
-                binding.tvAnsNumber.setTextColor(finalColor40)
-            }
-
-            themeContent?.dividerColor1?.let {it2 ->
-                val finalColor60 = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),it2), ContextCompat.getColor(requireContext(),it), 0.60f)
-                binding.cardHint.setStrokeColor(ColorStateList.valueOf(finalColor60))
-                binding.cardHint2.setStrokeColor(ColorStateList.valueOf(finalColor60))
-            }
-
-        }
-
         adapterAdditionSubtraction = AbacusAdditionSubtractionTypeAdapter(arrayListOf(), this, true,themeContent)
         adapterMultiplication = AbacusMultiplicationTypeAdapter(arrayListOf(), true,themeContent)
         adapterDivision = AbacusDivisionTypeAdapter(arrayListOf(), true,themeContent)
@@ -174,6 +152,31 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             bannerAds()
         }
     }
+
+    private fun setThemeColor() {
+        val theme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
+        themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
+        themeContent?.resetBtnColor8?.let{
+            val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.75f)
+            binding.ivDivider1.setBackgroundColor(finalColor)
+            binding.cardQuestions.setStrokeColor(ColorStateList.valueOf(finalColor))
+            binding.txtTitle.setTextColor(ContextCompat.getColor(requireContext(),it))
+            binding.tvAns.setTextColor(ContextCompat.getColor(requireContext(),it))
+
+            themeContent?.dividerColor1?.let {it2 ->
+                val finalColor40 = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),it2), ContextCompat.getColor(requireContext(),it), 0.40f)
+                binding.tvAnsNumber.setTextColor(finalColor40)
+            }
+
+            themeContent?.dividerColor1?.let {it2 ->
+                val finalColor60 = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),it2), ContextCompat.getColor(requireContext(),it), 0.60f)
+                binding.cardHint.setStrokeColor(ColorStateList.valueOf(finalColor60))
+                binding.cardHint2.setStrokeColor(ColorStateList.valueOf(finalColor60))
+            }
+
+        }
+    }
+
     private fun bannerAds() {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y"
             && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y"
@@ -222,7 +225,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }else{
             notOfflineSupportDialog2()
         }
-
     }
     private fun notOfflineSupportDialog2() {
         CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.no_internet_working),getString(R.string.for_offline_support_msg)
@@ -283,18 +285,20 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         } else {
             goBack()
         }
+        setThemeColor()
     }
 
     private fun setTempTheme() {
-        if (isPurchased){
-            prefManager.setCustomParam(
-                AppConstants.Settings.TheamTempView,
-                prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
-            )
-        }else{
-            prefManager.setCustomParam(
-                AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default
-            )
+        with(prefManager){
+            if (isPurchased){
+                setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
+            }else{
+                if (getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default).contains(AppConstants.Settings.theam_Default,true)){
+                    setCustomParam(AppConstants.Settings.TheamTempView,getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default))
+                }else{
+                    setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+                }
+            }
         }
     }
 

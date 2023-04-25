@@ -4,8 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Point
 import android.graphics.drawable.Drawable
-import android.os.Looper
 import android.text.TextUtils
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
@@ -13,7 +13,6 @@ import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
 import java.util.*
-import java.util.logging.Handler
 
 class AbacusMasterRowEngine(
     private val context: Context,
@@ -25,11 +24,10 @@ class AbacusMasterRowEngine(
     private val isBeadStackFromBottom: Boolean,
     private var numBeads: Int,
     private val roadDrawable: Drawable?,
-    private val selectedBeadDrawable: Drawable?,
-    private val noOfRows_used: Int,
     private var numColumns: Int,
     private var extraHeight : Int,
-    private val beadType : AbacusBeadType
+    private val beadType : AbacusBeadType,
+    private val abacusContent: AbacusContent
 ) {
 
     var tempBeads: IntArray? = null
@@ -56,13 +54,10 @@ class AbacusMasterRowEngine(
     /**
      * The horizontal location of the center of each bead on the row
      */
-//     var beads: IntArray? = null
-//      var tempBeads: IntArray? = null
     private lateinit var tempBeads_new: IntArray
 
     private var beadDrawables_eyes: ArrayList<Drawable?> = arrayListOf()
     private var beadDrawables_eyes_smaile: ArrayList<Drawable?> = arrayListOf()
-    private var isColorFull: Boolean = false
     private var selectedPositions: ArrayList<Int>? = null
     private var theme = AppConstants.Settings.theam_Default
     init{
@@ -73,145 +68,21 @@ class AbacusMasterRowEngine(
         beadDrawables_eyes_smaile = ArrayList()
         theme = AppPreferencesHelper(context,AppConstants.PREF_NAME)
             .getCustomParam(AppConstants.Settings.TheamTempView, AppConstants.Settings.theam_Default)
-        when {
-            theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context, R.drawable.poligon_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.poligon_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.poligon_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.poligon_gray))
-
-                for(i in 0..3){
-                    when{
-                        theme.equals(AppConstants.Settings.theam_Poligon_Blue, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_blue))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Blue_Sky, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_blue_sky))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Green, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_green))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Pink, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_pink))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Orange, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_orange))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Purple, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_purple))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Red, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_red))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Tint, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_tint))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Silver, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_silver))
-                        }
-                        theme.equals(AppConstants.Settings.theam_Poligon_Brown, ignoreCase = true) -> {
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_brown))
-                        }
-                        else ->{
-                            beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_black))
-                        }
-                    }
+        for(i in 0..3){
+            when {
+                theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true) -> {
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context, abacusContent.topBeadClose))
+                    beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,abacusContent.topBeadOpen))
                 }
-
-
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_blue))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_blue))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_blue))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.poligon_blue))
-            }
-            theme.equals(AppConstants.Settings.theam_face, ignoreCase = true) -> {
-                if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_gray_close))
-                }else{
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_pink_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_orange_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_blue_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.face_green_close))
+                else -> {
+                    beadDrawables_eyes.add(ContextCompat.getDrawable(context, abacusContent.bottomBeadClose[i]))
+                    beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,abacusContent.bottomBeadOpen[i]))
                 }
-
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.face_pink_open))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.face_orange_open))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.face_blue_open))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.face_green_open))
-            }
-            theme.equals(AppConstants.Settings.theam_shape, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.shape_triangle_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.shape_stone_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.shape_circle_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.shape_hexagon_gray))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.shape_triangle))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.shape_stone))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.shape_circle))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.shape_hexagon))
-            }
-            theme.equals(AppConstants.Settings.theam_Star, ignoreCase = true) -> {
-                if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_gray_close))
-                }else{
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_yellow_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_blue_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_orange_close))
-                    beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.star_green_close))
-                }
-
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_yellow_open))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_blue_open))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_orange_open))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.star_green_open))
-            }
-            theme.equals(AppConstants.Settings.theam_Egg, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.egg))
-
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg1))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg4))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg2))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.egg3))
-            }
-            theme.equals(AppConstants.Settings.theam_diamond, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.diamond_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.diamond_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.diamond_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.diamond_gray))
-
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.diamond_purple))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.diamond_yellow))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.diamond_blue))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.diamond_green))
-            }
-            theme.equals(AppConstants.Settings.theam_garnet, ignoreCase = true) -> {
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.garnet_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.garnet_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.garnet_gray))
-                beadDrawables_eyes.add(ContextCompat.getDrawable(context,R.drawable.garnet_gray))
-
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.garnet_green))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.garnet_purple))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.garnet_blue))
-                beadDrawables_eyes_smaile.add(ContextCompat.getDrawable(context,R.drawable.garnet_orange))
             }
         }
-//        rowPaint = Paint()
+
         beads = IntArray(numBeads)
         setSelectedPosition(selectedPosition)
-        isColorFull = AppPreferencesHelper(
-            context,
-            AppConstants.PREF_NAME
-        ).getCustomParamBoolean(AppConstants.Settings.abacus_colorful,true)
-
     }
 
     fun setSelectedPosition(selectedPosition: Int) {
@@ -350,256 +221,48 @@ class AbacusMasterRowEngine(
             if (beadDrawables.size == drawablePos) {
                 drawablePos = 0
             }
-            var beadDrawable = beadDrawables[drawablePos]
 
-            if (isBeadStackFromBottom) {
+            val beadDrawable: Drawable? = if (isBeadStackFromBottom) {
                 val temp = beads[i] + 2
-//                Log.e("jigarLogs","i = "+i)
-//                Log.e("jigarLogs","beads = "+beads[i])
-//                Log.e("jigarLogs","temp = "+temp)
-//                Log.e("jigarLogs","tempvalue = "+tempvalue)
-                beadDrawable = if (tempvalue > temp && tempvalue != -1) {
+                if (tempvalue > temp && tempvalue != -1) {
                     beadDrawables_eyes_smaile[drawablePos]!!
                 } else {
                     beadDrawables_eyes[drawablePos]!!
                 }
-//                if (tempvalue > temp && tempvalue != -1) {
-//                    beadDrawable = if (!isColorFull || noOfRows_used >= col) {
-//                        when {
-//                            theam.equals(AppConstants.Settings.theam_Egg,ignoreCase = true) -> ContextCompat.getDrawable(context,R.drawable.egg)!!
-//                            else -> beadDrawables_eyes_smaile[drawablePos]!!
-//                        }
-//                    } else {
-//                        beadDrawables_eyes_smaile[drawablePos]!!
-//                    }
-//                } else {
-//                    beadDrawable = if (!isColorFull || noOfRows_used >= col) {
-//                        when {
-//                            theam.equals(AppConstants.Settings.theam_Egg,ignoreCase = true) -> ContextCompat.getDrawable(context,R.drawable.egg)!!
-//                            else -> beadDrawables_eyes[drawablePos]!!
-//                        }
-//                    } else {
-//                        beadDrawables_eyes[drawablePos]!!
-//                    }
-//                }
             } else {
-//                Log.e("jigarLogs","Top beads = "+beads[i])
                 if (beads[i] > 0) {
-                    when {
-                        theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true) -> {
-                            when{
-                                theme.equals(AppConstants.Settings.theam_Poligon_Blue, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_blue)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Blue_Sky, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_blue_sky)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Green, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_green)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Pink, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_pink)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Orange, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_orange)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Purple, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_purple)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Red, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_red)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Tint, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_tint)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Silver, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_silver)!!
-                                }
-                                theme.equals(AppConstants.Settings.theam_Poligon_Brown, ignoreCase = true) -> {
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_brown)!!
-                                }
-                                else ->{
-                                    beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_black)!!
-                                }
-                            }
-                        }
-                        theme.equals(AppConstants.Settings.theam_face, ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.face_red_open)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_shape,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.shape_square)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_Star,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.star_red_open)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_Egg,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.egg0)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_diamond,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.diamond_red)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_garnet,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.garnet_red)!!
-                        }
-                    }
+                    ContextCompat.getDrawable(context,abacusContent.topBeadOpen)!!
                 }else{
-                    when {
-                        theme.contains(AppConstants.Settings.theam_Poligon_default, ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_gray)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_face, ignoreCase = true) -> {
-                            beadDrawable = if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
-                                ContextCompat.getDrawable(context,R.drawable.face_gray_close)!!
-                            }else{
-                                ContextCompat.getDrawable(context,R.drawable.face_red_close)!!
-                            }
-
-                        }
-                        theme.equals(AppConstants.Settings.theam_shape,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.shape_square_gray)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_Star,ignoreCase = true) -> {
-                            beadDrawable = if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult){
-                                ContextCompat.getDrawable(context,R.drawable.star_gray_close)!!
-                            }else{
-                                ContextCompat.getDrawable(context,R.drawable.star_red_close)!!
-                            }
-
-                        }
-                        theme.equals(AppConstants.Settings.theam_Egg,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.egg)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_diamond,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.diamond_gray)!!
-                        }
-                        theme.equals(AppConstants.Settings.theam_garnet,ignoreCase = true) -> {
-                            beadDrawable = ContextCompat.getDrawable(context,R.drawable.garnet_gray)!!
-                        }
-
-                    }
+                    ContextCompat.getDrawable(context,abacusContent.topBeadClose)!!
                 }
-
-
-                // bottom beads
-//                if (beads[i] > 0) {
-//                    if (!isColorFull || noOfRows_used >= col) {
-//                        when {
-//                            theam.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_gray)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_eyes, ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.face_gray_open)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_shape,ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.shape_square_gray)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_Star,ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.star_gray_open)!!
-//                            }
-//                            theam.equals(
-//                                AppConstants.Settings.theam_Egg,
-//                                ignoreCase = true
-//                            ) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.egg)!!
-//                            }
-//                        }
-//                    } else {
-//                        when {
-//                            theam.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_blue)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_eyes, ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.face_red_open)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_shape,ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.shape_square)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_Star,ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.star_red_open)!!
-//                            }
-//                            theam.equals(
-//                                AppConstants.Settings.theam_Egg,
-//                                ignoreCase = true
-//                            ) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.egg0)!!
-//                            }
-//                        }
-//                    }
-//                } else {
-//                    if (!isColorFull || noOfRows_used >= col) {
-//                        when {
-//                            theam.equals(AppConstants.Settings.theam_eyes, ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.face_gray_open)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_Poligon,ignoreCase = true) -> {
-//                                beadDrawable = beadDrawables_eyes[drawablePos]!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_shape,ignoreCase = true) -> {
-//                                beadDrawable = beadDrawables_eyes[drawablePos]!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_Star,ignoreCase = true) -> {
-//                                beadDrawable = beadDrawables_eyes[drawablePos]!!
-//                            }
-//                            theam.equals(
-//                                AppConstants.Settings.theam_Egg,
-//                                ignoreCase = true
-//                            ) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.egg)!!
-//                            }
-//                        }
-//                    } else {
-//                        when {
-//                            theam.equals(AppConstants.Settings.theam_Poligon, ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.poligon_gray)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_eyes, ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.face_red_close)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_shape,ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.shape_square_gray)!!
-//                            }
-//                            theam.equals(AppConstants.Settings.theam_Star,ignoreCase = true) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.star_red_close)!!
-//                            }
-//                            theam.equals(
-//                                AppConstants.Settings.theam_Egg,
-//                                ignoreCase = true
-//                            ) -> {
-//                                beadDrawable = ContextCompat.getDrawable(context,R.drawable.egg0)!!
-//                            }
-//                        }
-//                        //                        beadDrawable = context.getResources().getDrawable(R.drawable.abacus_face_blue);
+            }
+//            var isBeadSelected = false
+//            if (tempBeads != null && tempBeads!!.size > i && tempBeads!![i] != beads[i] && selectedBeadDrawable != null) {
+//                /*bead is selected*/
+//                when {
+//                    !theme.equals(AppConstants.Settings.theam_shape, ignoreCase = true) -> {
+////                        beadDrawable = selectedBeadDrawable
 //                    }
 //                }
-            }
-            var isBeadSelected = false
-            if (tempBeads != null && tempBeads!!.size > i && tempBeads!![i] != beads[i] && selectedBeadDrawable != null) {
-                /*bead is selected*/
-                when {
-                    !theme.equals(AppConstants.Settings.theam_shape, ignoreCase = true) -> {
-                        beadDrawable = selectedBeadDrawable
-                    }
-                }
-                isBeadSelected = true
-            }
-            if (isColorFull || isBeadSelected) {
-                beadDrawable?.setBounds(
-                    position.x + rowSpacing / 2,
-                    position.y + beads[i] + if (!isBeadStackFromBottom) extraHeight else 0,
-                    position.x + beadWidth - rowSpacing / 2,
-                    position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) extraHeight else 0
-                )
-                canvas?.let { beadDrawable?.draw(it) }
-            }
-            if (!isColorFull) {
-                beadDrawable?.setBounds(
-                    position.x + rowSpacing / 2,
-                    position.y + beads[i] + if (!isBeadStackFromBottom) extraHeight else 0,
-                    position.x + beadWidth - rowSpacing / 2,
-                    position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) extraHeight else 0
-                )
-                canvas?.let { beadDrawable?.draw(it) }
-            }
+//                isBeadSelected = true
+//            }
+//            if (isBeadSelected) {
+//                beadDrawable?.setBounds(
+//                    position.x + rowSpacing / 2,
+//                    position.y + beads[i] + if (!isBeadStackFromBottom) extraHeight else 0,
+//                    position.x + beadWidth - rowSpacing / 2,
+//                    position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) extraHeight else 0
+//                )
+//                canvas.let { beadDrawable?.draw(it) }
+//            }
+
+            beadDrawable?.setBounds(
+                position.x + rowSpacing / 2,
+                position.y + beads[i] + if (!isBeadStackFromBottom) extraHeight else 0,
+                position.x + beadWidth - rowSpacing / 2,
+                position.y + beads[i] + beadHeight + if (!isBeadStackFromBottom) extraHeight else 0
+            )
+            canvas.let { beadDrawable?.draw(it) }
 
             // TODO Draw direction
             drawablePos++
