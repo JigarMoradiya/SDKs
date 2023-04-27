@@ -6,11 +6,13 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.setMargins
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.DataProvider
-import com.jigar.me.databinding.FragmentAbacusSubBinding
+import com.jigar.me.databinding.FragmentAbacusSubKidBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
 import com.jigar.me.ui.view.base.abacus.AbacusMasterCompleteListener
@@ -22,11 +24,10 @@ import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.setAbacusResetShakeAnimation
 import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.ArrayList
 
 @AndroidEntryPoint
 class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
-    private lateinit var binding: FragmentAbacusSubBinding
+    private lateinit var binding: FragmentAbacusSubKidBinding
     // Settings Constants
     private var isDisplayAbacusNumber = true
 
@@ -55,7 +56,7 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
         return fragment
     }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentAbacusSubBinding.inflate(inflater, container, false)
+        binding = FragmentAbacusSubKidBinding.inflate(inflater, container, false)
         initViews()
         initListener()
         return binding.root
@@ -101,6 +102,33 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     }
 
     private fun setBead() {
+        if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
+            binding.imgKidRight.show()
+            binding.imgKidHandRight.show()
+            val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
+            params.setMargins(0)
+            binding.relAbacus.layoutParams = params
+
+            if (DataProvider.generateIndex() == 0){
+                binding.imgKidRight.setImageResource(R.drawable.ic_boy_abacus_right)
+                binding.imgKidHandRight.setImageResource(R.drawable.ic_boy_abacus_hand_right)
+            }else{
+                binding.imgKidRight.setImageResource(R.drawable.ic_girl_abacus_right)
+                binding.imgKidHandRight.setImageResource(R.drawable.ic_girl_abacus_hand_right)
+            }
+        }else{
+            binding.imgKidLeft.show()
+            binding.imgKidHandLeft.show()
+
+            if (DataProvider.generateIndex() == 0){
+                binding.imgKidLeft.setImageResource(R.drawable.ic_girl_abacus_left)
+                binding.imgKidHandLeft.setImageResource(R.drawable.ic_girl_abacus_hand_left)
+            }else{
+                binding.imgKidLeft.setImageResource(R.drawable.ic_boy_abacus_left)
+                binding.imgKidHandLeft.setImageResource(R.drawable.ic_boy_abacus_hand_left)
+            }
+
+        }
         binding.abacusTop.setNoOfRowAndBeads(0, final_column, 1)
         binding.abacusBottom.setNoOfRowAndBeads(0, final_column, 4)
 

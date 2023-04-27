@@ -2,7 +2,6 @@ package com.jigar.me.ui.view.dashboard.fragments.abacus
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,7 @@ import androidx.navigation.Navigation
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.DataProvider
-import com.jigar.me.databinding.FragmentAbacusSubBinding
+import com.jigar.me.databinding.FragmentAbacusSubKidBinding
 import com.jigar.me.databinding.FragmentFullAbacusBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
@@ -22,11 +21,10 @@ import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.confirm_alerts.dialogs.ToddlerRangeDialog
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.Constants
-import com.jigar.me.utils.ViewUtils
 import com.jigar.me.utils.extensions.dp
 import com.jigar.me.utils.extensions.isNetworkAvailable
 import com.jigar.me.utils.extensions.onClick
+import com.jigar.me.utils.extensions.show
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -37,7 +35,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     AbacusMasterBeadShiftListener,
     OnAbacusValueChangeListener {
     private lateinit var binding: FragmentFullAbacusBinding
-    private var abacusBinding: FragmentAbacusSubBinding? = null
+    private var abacusBinding: FragmentAbacusSubKidBinding? = null
     private var values: Int = 1
     private var random_min: Int = 0
     private var random_max: Int = 0
@@ -47,7 +45,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private var isResetRunning = false
     private var isPurchased = false
     private var is1stTime = false
-    private var resetX = 0f
     private var theme = AppConstants.Settings.theam_Egg
     private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -68,8 +65,8 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
                 binding.txtResetEveryTime.setPadding(0,16.dp,0,0)
-                binding.txtRangeLable?.setPadding(0,16.dp,0,0)
-                binding.txtRandom?.setPadding(0,16.dp,0,0)
+                binding.txtRangeLable.setPadding(0,16.dp,0,0)
+                binding.txtRandom.setPadding(0,16.dp,0,0)
                 binding.txtStartWith1.setPadding(0,16.dp,0,0)
             } catch (e: Exception) {
             }
@@ -172,8 +169,17 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         }
 
         binding.linearAbacus.removeAllViews()
-        abacusBinding = FragmentAbacusSubBinding.inflate(layoutInflater, null, false)
+        abacusBinding = FragmentAbacusSubKidBinding.inflate(layoutInflater, null, false)
         binding.linearAbacus.addView(abacusBinding?.root)
+        if (DataProvider.generateIndex() == 0){
+            abacusBinding?.imgKidLeft?.setImageResource(R.drawable.ic_boy_abacus_left)
+            abacusBinding?.imgKidHandLeft?.setImageResource(R.drawable.ic_boy_abacus_hand_left)
+        }else{
+            abacusBinding?.imgKidLeft?.setImageResource(R.drawable.ic_girl_abacus_left)
+            abacusBinding?.imgKidHandLeft?.setImageResource(R.drawable.ic_girl_abacus_hand_left)
+        }
+        abacusBinding?.imgKidLeft?.show()
+        abacusBinding?.imgKidHandLeft?.show()
 
         abacusBinding?.ivReset?.onClick { resetClick()}
 

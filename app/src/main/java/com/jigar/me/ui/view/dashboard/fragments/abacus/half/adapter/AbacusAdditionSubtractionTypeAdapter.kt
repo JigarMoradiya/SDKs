@@ -1,5 +1,6 @@
 package com.jigar.me.ui.view.dashboard.fragments.abacus.half.adapter
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView

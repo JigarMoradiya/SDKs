@@ -124,10 +124,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     private fun initViews() {
-        adapterAdditionSubtraction = AbacusAdditionSubtractionTypeAdapter(arrayListOf(), this, true,themeContent)
-        adapterMultiplication = AbacusMultiplicationTypeAdapter(arrayListOf(), true,themeContent)
-        adapterDivision = AbacusDivisionTypeAdapter(arrayListOf(), true,themeContent)
-
         if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
             setLeftAbacusRules()
         }else{
@@ -154,8 +150,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     private fun setThemeColor() {
-        val theme = prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default)
-        themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
         themeContent?.resetBtnColor8?.let{
             val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.75f)
             binding.ivDivider1.setBackgroundColor(finalColor)
@@ -299,6 +293,13 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     setCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
                 }
             }
+
+            val theme = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
+            themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
+
+            adapterAdditionSubtraction = AbacusAdditionSubtractionTypeAdapter(arrayListOf(), this@HalfAbacusFragment, true,themeContent)
+            adapterMultiplication = AbacusMultiplicationTypeAdapter(arrayListOf(), true,themeContent)
+            adapterDivision = AbacusDivisionTypeAdapter(arrayListOf(), true,themeContent)
         }
     }
 

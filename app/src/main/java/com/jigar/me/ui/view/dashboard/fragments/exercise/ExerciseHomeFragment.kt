@@ -19,6 +19,7 @@ import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.jigar.me.R
 import com.jigar.me.data.local.data.*
+import com.jigar.me.databinding.FragmentAbacusExerciseBinding
 import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.databinding.FragmentExerciseHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
@@ -39,7 +40,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
     ExerciseLevelPagerAdapter.OnItemClickListener,
     ExerciseCompleteDialog.ExerciseCompleteDialogInterface {
     private lateinit var binding: FragmentExerciseHomeBinding
-    private var abacusBinding: FragmentAbacusSubBinding? = null
+    private var abacusBinding: FragmentAbacusExerciseBinding? = null
     private lateinit var mNavController: NavController
     private var valuesAnswer: Int = -1
     private var currentSumVal = 0f
@@ -91,7 +92,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
 
         }
 
-        themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.None)
+        themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.Exercise)
         themeContent?.dividerColor1?.let{
             val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.85f)
             binding.cardMain.backgroundTintList = ColorStateList.valueOf(finalColor)
@@ -381,8 +382,19 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
 
     private fun setAbacus() {
         binding.linearAbacus.removeAllViews()
-        abacusBinding = FragmentAbacusSubBinding.inflate(layoutInflater, null, false)
+        abacusBinding = FragmentAbacusExerciseBinding.inflate(layoutInflater, null, false)
         binding.linearAbacus.addView(abacusBinding?.root)
+
+//        if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" // local
+//            && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" && // if yes in firebase
+//            (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") != "Y" // if not purchased
+//                    && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y")) {
+//            abacusBinding?.imgKidTop?.setImageResource(R.drawable.ic_kids_top_small)
+//            abacusBinding?.imgKidTopHand?.setImageResource(R.drawable.ic_kids_top_hand_small)
+//        }else{
+//            abacusBinding?.imgKidTop?.setImageResource(R.drawable.ic_kids_top)
+//            abacusBinding?.imgKidTopHand?.setImageResource(R.drawable.ic_kids_top_hand)
+//        }
 
         abacusBinding?.ivReset?.onClick {
             if (binding.linearExerciseAddSub.isVisible){
@@ -404,8 +416,8 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
             abacusBinding?.ivLeft?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
         }
 
-        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 7, 1)
-        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 7, 4)
+        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 7, 1,AbacusBeadType.Exercise)
+        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 7, 4,AbacusBeadType.Exercise)
 
         abacusBinding?.abacusTop?.onBeadShiftListener = this
         abacusBinding?.abacusBottom?.onBeadShiftListener = this

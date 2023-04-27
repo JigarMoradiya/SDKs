@@ -30,6 +30,7 @@ object DataProvider {
         return list
     }
     private fun getMultipleDimensions(abacusBeadType: AbacusBeadType = AbacusBeadType.None) : Float{
+        Log.e("jigarLogs","abacusBeadType = "+abacusBeadType)
         return when (abacusBeadType) {
             AbacusBeadType.SettingPreview -> {
                 0.7f
@@ -39,6 +40,9 @@ object DataProvider {
             }
             AbacusBeadType.ExamResult -> {
                 0.4f
+            }
+            AbacusBeadType.Exercise -> {
+                0.9f
             }
             else -> {
                 1f
@@ -77,29 +81,35 @@ object DataProvider {
         }else{
             arrayListOf(R.drawable.face_pink_close,R.drawable.face_orange_close,R.drawable.face_blue_close,R.drawable.face_green_close)
         }
+
+        val faceCloseTop = if (abacusBeadType == AbacusBeadType.Exam || abacusBeadType == AbacusBeadType.ExamResult){
+            R.drawable.face_gray_close
+        }else{
+            R.drawable.face_red_close
+        }
         val faceOpenList = arrayListOf(R.drawable.face_pink_close,R.drawable.face_orange_close,R.drawable.face_blue_close,R.drawable.face_green_close)
         val starCloseList = arrayListOf(R.drawable.star_gray_close,R.drawable.star_gray_close,R.drawable.star_gray_close,R.drawable.star_gray_close)
         val starOpenList = arrayListOf(R.drawable.star_yellow_open,R.drawable.star_blue_open,R.drawable.star_orange_open,R.drawable.star_green_open)
         val diamondCloseList = arrayListOf(R.drawable.diamond_gray,R.drawable.diamond_gray,R.drawable.diamond_gray,R.drawable.diamond_gray)
         val diamondOpenList = arrayListOf(R.drawable.diamond_purple,R.drawable.diamond_yellow,R.drawable.diamond_blue,R.drawable.diamond_green)
         val garnetCloseList = arrayListOf(R.drawable.garnet_gray,R.drawable.garnet_gray,R.drawable.garnet_gray,R.drawable.garnet_gray)
-        val garnetOpenList = arrayListOf(R.drawable.garnet_green,R.drawable.garnet_purple,R.drawable.garnet_blue,R.drawable.garnet_orange)
-        val shapeCloseList = arrayListOf(R.drawable.shape_triangle_gray,R.drawable.shape_stone_gray,R.drawable.shape_circle_gray,R.drawable.shape_hexagon_gray)
-        val shapeOpenList = arrayListOf(R.drawable.shape_triangle,R.drawable.shape_stone,R.drawable.shape_circle,R.drawable.shape_hexagon)
+        val garnetOpenList = arrayListOf(R.drawable.garnet_purple,R.drawable.garnet_orange,R.drawable.garnet_blue,R.drawable.garnet_green)
+        val shapeCloseList = arrayListOf(R.drawable.shape_stone_gray,R.drawable.shape_triangle_gray,R.drawable.shape_circle_gray,R.drawable.shape_hexagon_gray)
+        val shapeOpenList = arrayListOf(R.drawable.shape_stone,R.drawable.shape_triangle,R.drawable.shape_circle,R.drawable.shape_hexagon)
         val eggCloseList = arrayListOf(R.drawable.egg,R.drawable.egg,R.drawable.egg,R.drawable.egg)
-        val eggOpenList = arrayListOf(R.drawable.egg0,R.drawable.egg1,R.drawable.egg2,R.drawable.egg3)
+        val eggOpenList = arrayListOf(R.drawable.egg1,R.drawable.egg4,R.drawable.egg2,R.drawable.egg3)
         with(list){
             add(AbacusContent(AppConstants.Settings.theam_face,R.drawable.face_red_open,R.drawable.bg_abacus_frame_large_red_eye,R.drawable.bg_abacus_frame_large_red_eye_exam,R.color.abacus_rod_red,R.color.abacus_rod_red_dark
-                ,(context.resources.getDimension(R.dimen.face_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.face_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.face_space) * multiply).toInt(),R.drawable.face_red_close,R.drawable.face_red_open,faceCloseList,faceOpenList))
-            add(AbacusContent(AppConstants.Settings.theam_Star,R.drawable.star_blue_open,R.drawable.bg_abacus_frame_large_red,R.drawable.bg_abacus_frame_large_red_exam,R.color.abacus_rod_red,R.color.abacus_rod_red_dark
-                ,(context.resources.getDimension(R.dimen.star_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.star_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.star_space) * multiply).toInt(),R.drawable.star_red_close,R.drawable.star_red_open,starCloseList,starOpenList))
-            add(AbacusContent(AppConstants.Settings.theam_diamond,R.drawable.diamond_blue,R.drawable.bg_abacus_frame_large_silver,R.drawable.bg_abacus_frame_large_silver_exam,R.color.abacus_rod_silver,R.color.abacus_rod_silver_dark
+                ,(context.resources.getDimension(R.dimen.face_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.face_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.face_space) * multiply).toInt(),faceCloseTop,R.drawable.face_red_open,faceCloseList,faceOpenList))
+            add(AbacusContent(AppConstants.Settings.theam_Star,R.drawable.star_red_open,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
+                ,(context.resources.getDimension(R.dimen.star_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.star_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.star_space) * multiply).toInt(),R.drawable.star_gray_close,R.drawable.star_red_open,starCloseList,starOpenList))
+            add(AbacusContent(AppConstants.Settings.theam_diamond,R.drawable.diamond_red,R.drawable.bg_abacus_frame_large_silver,R.drawable.bg_abacus_frame_large_silver_exam,R.color.abacus_rod_silver,R.color.abacus_rod_silver_dark
                 ,(context.resources.getDimension(R.dimen.diamond_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.diamond_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.diamond_space) * multiply).toInt(),R.drawable.diamond_gray,R.drawable.diamond_red,diamondCloseList,diamondOpenList))
-            add(AbacusContent(AppConstants.Settings.theam_garnet,R.drawable.garnet_purple,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
+            add(AbacusContent(AppConstants.Settings.theam_garnet,R.drawable.garnet_red,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
                 ,(context.resources.getDimension(R.dimen.garnet_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.garnet_width) * multiply).toInt(),(context.resources.getDimension(R.dimen.garnet_space) * multiply).toInt(),R.drawable.garnet_gray,R.drawable.garnet_red,garnetCloseList,garnetOpenList))
-            add(AbacusContent(AppConstants.Settings.theam_shape,R.drawable.shape_triangle,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
+            add(AbacusContent(AppConstants.Settings.theam_shape,R.drawable.shape_stone,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
                 ,(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_space) * multiply).toInt(),R.drawable.shape_square_gray,R.drawable.shape_square,shapeCloseList,shapeOpenList))
-            add(AbacusContent(AppConstants.Settings.theam_Egg,R.drawable.egg3,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
+            add(AbacusContent(AppConstants.Settings.theam_Egg,R.drawable.egg0,R.drawable.bg_abacus_frame_large_gray,R.drawable.bg_abacus_frame_large_gray_exam,R.color.abacus_rod_gray,R.color.abacus_rod_gray_dark
                 ,(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_width_height) * multiply).toInt(),(context.resources.getDimension(R.dimen.square_space) * multiply).toInt(),R.drawable.egg,R.drawable.egg0,eggCloseList,eggOpenList))
         }
         return list

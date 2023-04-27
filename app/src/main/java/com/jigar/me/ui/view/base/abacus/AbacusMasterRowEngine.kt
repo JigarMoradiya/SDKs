@@ -155,30 +155,26 @@ class AbacusMasterRowEngine(
      * @return Current value set on the row, or -1 if indeterminate
      */
     fun getValue(): Int {
-        var `val` = 0
+        var value = 0
         if (beads[0] >= 0.5 * beadHeight) {
-            `val` = numBeads
+            value = numBeads
         } else {
-//            if (numBeads == 1) {
-//                val = beads[0] < beadHeight ? 1 : 0;
-//            } else {
             for (i in 0 until numBeads - 1) {
                 if (beads[i + 1] - beads[i] >= 1.5 * beadHeight) {
-                    `val` = numBeads - 1 - i
+                    value = numBeads - 1 - i
                     break
                 }
                 if (beads[numBeads - 1] <= height - 1.5 * beadHeight) {
-                    `val` = 0
+                    value = 0
                     break
                 }
-                //                }
             }
         }
 
         return if (isBeadStackFromBottom) {
-            numBeads - `val`
+            numBeads - value
         } else {
-            `val`
+            value
         }
     }
 
@@ -187,15 +183,14 @@ class AbacusMasterRowEngine(
         val road = roadDrawable!!
         // TODO
         val rowThickness = road.minimumWidth
-        if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult || beadType == AbacusBeadType.SettingPreview){
-            val startX = position.x + beadWidth / 2 - rowThickness / 3
-            val endX = position.x + beadWidth / 2 + rowThickness / 3
-            road.setBounds(startX,position.y, endX,position.y + height + extraHeight)
+        val divideThickness = if (beadType == AbacusBeadType.Exam || beadType == AbacusBeadType.ExamResult || beadType == AbacusBeadType.SettingPreview){
+            3f
         }else{
-            val startX = position.x + beadWidth / 2 - rowThickness / 2
-            val endX = position.x + beadWidth / 2 + rowThickness / 2
-            road.setBounds(startX,position.y,endX,position.y + height + extraHeight)
+            2.5f
         }
+        val startX = position.x + beadWidth / 2 - (rowThickness.toFloat() / divideThickness).toInt()
+        val endX = position.x + beadWidth / 2 + (rowThickness.toFloat() / divideThickness).toInt()
+        road.setBounds(startX,position.y,endX,position.y + height + extraHeight)
         road.draw(canvas!!)
 
 

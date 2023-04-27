@@ -162,7 +162,6 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
             }
 
             override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                Log.e("jigarLogs","newInterstitialAd")
                 // Show the ad if it's ready. Otherwise toast and reload the ad.
                 interstitialAd.show(requireActivity())
                 if (isAdsCountReset){
@@ -179,7 +178,6 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
             }
 
             override fun onAdLoaded(interstitialAd: AdManagerInterstitialAd) {
-                Log.e("jigarLogs","newAdxInterstitialAd")
                 // Show the ad if it's ready. Otherwise toast and reload the ad.
                 interstitialAd.show(requireActivity())
                 if (isAdsCountReset){
@@ -208,10 +206,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
             }
             val isAdmob = prefManager.getCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,true)
             val adView = if (isAdmob){
-                Log.e("jigarLogs","newBannner")
                 AdView(requireContext())
             }else{
-                Log.e("jigarLogs","newADXBannner")
                 AdManagerAdView(requireContext())
             }
             adView.setAdSize(AdSize.BANNER)
