@@ -138,15 +138,32 @@
             app:layout_constraintStart_toEndOf="@+id/scrollMenu"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/txtTitle"
-                style="@style/mainTitle"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/linearTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:gravity="center_vertical"
-                tools:text="@string/app_name" />
+                android:gravity="center">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTitle"
+                    style="@style/mainTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    tools:text="@string/app_name" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txtTitleHand"
+                    style="@style/mainTitleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/activity_padding6"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/black"
+                    tools:text="@string/use_left_hand_to_move_beads" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTable"
@@ -195,7 +212,6 @@
                 android:visibility="gone"
                 tools:visibility="visible" />
 
-
             <RelativeLayout
                 android:id="@+id/linearQuestions"
                 android:layout_width="match_parent"
@@ -216,17 +232,38 @@
                         app:srcCompat="@drawable/bg_abacus" />
 
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvAnsNumber"
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_170sdp"
                         android:layout_centerInParent="true"
-                        android:fontFamily="@font/font_extra_bold"
                         android:gravity="center"
-                        android:shadowColor="@color/colorPrimaryDark"
-                        android:shadowRadius="3"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="@dimen/textSizeAbacusNumber" />
+                        android:orientation="vertical">
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAnsNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/font_extra_bold"
+                            android:gravity="center"
+                            android:shadowColor="@color/colorPrimaryDark"
+                            android:shadowRadius="3"
+                            android:textColor="@color/colorAccent"
+                            android:textSize="@dimen/textSizeAbacusNumber"
+                            tools:text="100" />
+
+                        <com.google.android.material.textview.MaterialTextView
+                            android:id="@+id/tvAnsNumberWord"
+                            style="@style/mainTitleSmall"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/_30sdp"
+                            android:gravity="center"
+                            android:includeFontPadding="false"
+                            android:maxLines="2"
+                            android:textSize="@dimen/textSizeRegular"
+                            tools:text="One hundred" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </RelativeLayout>
 
@@ -268,7 +305,6 @@
                         android:id="@+id/cardQuestions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/activity_padding4"
                         app:cardBackgroundColor="@color/white"
                         app:cardCornerRadius="@dimen/_12sdp"
                         app:cardElevation="@dimen/card_elevation"
@@ -332,7 +368,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:background="@color/transparent"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:visibility="visible">
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardHint2"
@@ -344,8 +381,8 @@
                     app:cardElevation="@dimen/card_elevation4"
                     app:cardMaxElevation="@dimen/card_elevation4"
                     app:cardUseCompatPadding="true"
-                    app:strokeWidth="@dimen/_1sdp"
-                    app:strokeColor="@color/blue_300">
+                    app:strokeColor="@color/blue_300"
+                    app:strokeWidth="@dimen/_1sdp">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/txt_hint_table"

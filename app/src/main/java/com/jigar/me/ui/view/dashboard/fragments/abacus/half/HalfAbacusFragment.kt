@@ -42,7 +42,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAdditionSubtractionTypeAdapter.HintListener{
-    private lateinit var binding: FragmentHalfAbacusBinding
+    lateinit var binding: FragmentHalfAbacusBinding
     private var hintPage : String? = null
     private var fileAbacus : String? = null
     private var themeContent : AbacusContent? = null
@@ -126,8 +126,10 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private fun initViews() {
         if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
             setLeftAbacusRules()
+            binding.txtTitleHand.text = HtmlCompat.fromHtml("(Use your <b><font color='#FF0000'>Left Hand</font></b> to move beads)",HtmlCompat.FROM_HTML_MODE_LEGACY)
         }else{
             setRightAbacusRules()
+            binding.txtTitleHand.text = HtmlCompat.fromHtml("(Use your <b><font color='#FF0000'>Right Hand</font></b> to move beads)",HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
         isDisplayHelpMessage = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_help_message, true)
         isHintSound = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting__hint_sound, false)
@@ -140,7 +142,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            binding.txtTitle.setPadding(0,16.dp,0,0)
+            binding.linearTitle.setPadding(0,16.dp,0,0)
         }
         startAbacus()
         lifecycleScope.launch {
@@ -151,6 +153,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
     private fun setThemeColor() {
         themeContent?.resetBtnColor8?.let{
+            binding.tvAnsNumberWord.setTextColor(ContextCompat.getColor(requireContext(),it))
             val finalColor = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),R.color.white), ContextCompat.getColor(requireContext(),it), 0.75f)
             binding.ivDivider1.setBackgroundColor(finalColor)
             binding.cardQuestions.setStrokeColor(ColorStateList.valueOf(finalColor))
@@ -176,6 +179,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y"
             && !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
             showAMBannerAds(binding.adView,getString(R.string.banner_ad_unit_id_abacus))
+//            showAMBannerAds1(binding.myTemplate,getString(R.string.banner_ad_unit_id_abacus))
         }
     }
     private fun initListener() {
@@ -242,42 +246,48 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         if (currentPosTemp!= null){
             current_pos = currentPosTemp
         }
-        if (abacusType == AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
-            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2,"") == "Y")
-            setTempTheme()
-            val abacus = if (!fileAbacus.isNullOrEmpty()){
-                requireContext().readJsonAsset(fileAbacus)
-            }else{
-                requireContext().readJsonAsset("abacus.json")
-            }
+        when (abacusType) {
+            AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2,"") == "Y")
+                setTempTheme()
+                val abacus = if (!fileAbacus.isNullOrEmpty()){
+                    requireContext().readJsonAsset(fileAbacus)
+                }else{
+                    requireContext().readJsonAsset("abacus.json")
+                }
 
-            val type = object : TypeToken<List<PojoAbacus>>() {}.type
-            val temp: List<PojoAbacus> = Gson().fromJson(abacus,type)
-            temp.filter { it.id == pageId}.also {
-                if (it.isNotNullOrEmpty()){
-                    total = it.size
-                    val listTemp = if (isPurchased){it}else{it.take(20)}
-                    setAbacusOfPagesAdditionSubtraction(listTemp)
+                val type = object : TypeToken<List<PojoAbacus>>() {}.type
+                val temp: List<PojoAbacus> = Gson().fromJson(abacus,type)
+                temp.filter { it.id == pageId}.also {
+                    if (it.isNotNullOrEmpty()){
+                        total = it.size
+                        val listTemp = if (isPurchased){it}else{it.take(20)}
+                        setAbacusOfPagesAdditionSubtraction(listTemp)
+                    }
                 }
             }
-        } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeMultiplication) {
-            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
-            setTempTheme()
-            setDataOfMultiplication(true)
-        } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeDivision) {
-            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
-            setTempTheme()
-            setDataOfDivision(true)
-        } else if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber) {
-            isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                    || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"") == "Y")
-            setTempTheme()
-            setDataOfNumber(true)
-        } else {
-            goBack()
+            AppConstants.Extras_Comman.AbacusTypeMultiplication -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
+                setTempTheme()
+                setDataOfMultiplication(true)
+            }
+            AppConstants.Extras_Comman.AbacusTypeDivision -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
+                setTempTheme()
+                setDataOfDivision(true)
+            }
+            AppConstants.Extras_Comman.AbacusTypeNumber -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"") == "Y")
+                setTempTheme()
+                setDataOfNumber(true)
+            }
+            else -> {
+                goBack()
+            }
         }
         setThemeColor()
     }
@@ -343,6 +353,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 column = ans.length - 1
             }
             binding.tvAnsNumber.text = number.toString()
+            binding.tvAnsNumberWord.text = requireContext().convert(number)
+
             binding.relativeQueNumber.show()
             replaceAbacusFragment(column, noOfDecimalPlace)
         }

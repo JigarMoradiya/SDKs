@@ -29,14 +29,37 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txtFreeMode"
+            style="@style/mainTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_padding20"
+            android:text="@string/free_mode"
+            android:shadowRadius="0.1"
+            android:shadowColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/swFreeMode" />
+
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/swFreeMode"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_30sdp"
+            android:theme="@style/SCBSwitch"
+            android:paddingHorizontal="@dimen/activity_padding6"
+            app:layout_constraintEnd_toEndOf="@+id/txtFreeMode"
+            app:layout_constraintStart_toStartOf="@+id/txtFreeMode"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtAbacus"
             style="@style/mainTitle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/title_margin"
-            app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintEnd_toStartOf="@+id/txtStartWith1"
-            app:layout_constraintStart_toEndOf="@+id/cardBack"
+            app:layout_constraintBottom_toBottomOf="@+id/cardBack"
+            app:layout_constraintStart_toEndOf="@+id/txtFreeMode"
             app:layout_constraintTop_toTopOf="@+id/cardBack"
             tools:text="SET 1" />
 
@@ -62,7 +85,7 @@
             android:theme="@style/SCBSwitch"
             app:layout_constraintEnd_toEndOf="@+id/txtStartWith1"
             app:layout_constraintStart_toStartOf="@+id/txtStartWith1"
-            app:layout_constraintTop_toBottomOf="@+id/txtResetEveryTime" />
+            app:layout_constraintTop_toTopOf="@+id/swReset" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRandom"
@@ -85,7 +108,7 @@
             android:checked="false"
             android:theme="@style/SCBSwitch"
             app:layout_constraintEnd_toStartOf="@+id/txtRange"
-            app:layout_constraintTop_toBottomOf="@+id/txtResetEveryTime" />
+            app:layout_constraintTop_toTopOf="@+id/swReset" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtRangeLable"
@@ -153,6 +176,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/swReset"/>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearAbacusFreeMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

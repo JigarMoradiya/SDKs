@@ -21,10 +21,7 @@ import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.confirm_alerts.dialogs.ToddlerRangeDialog
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.extensions.dp
-import com.jigar.me.utils.extensions.isNetworkAvailable
-import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.show
+import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -45,7 +42,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private var isResetRunning = false
     private var isPurchased = false
     private var is1stTime = false
-    private var theme = AppConstants.Settings.theam_Egg
+    private var theme = AppConstants.Settings.theam_Default
     private lateinit var mNavController: NavController
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentFullAbacusBinding.inflate(inflater, container, false)
@@ -61,13 +58,14 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
     private fun initViews() {
         setAbacus()
-        setSwitchs(true)
+        setSwitchs()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
-                binding.txtResetEveryTime.setPadding(0,16.dp,0,0)
-                binding.txtRangeLable.setPadding(0,16.dp,0,0)
-                binding.txtRandom.setPadding(0,16.dp,0,0)
-                binding.txtStartWith1.setPadding(0,16.dp,0,0)
+                binding.txtFreeMode.setPadding(0,8.dp,0,0)
+                binding.txtResetEveryTime.setPadding(0,12.dp,0,0)
+                binding.txtRangeLable.setPadding(0,12.dp,0,0)
+                binding.txtRandom.setPadding(0,12.dp,0,0)
+                binding.txtStartWith1.setPadding(0,12.dp,0,0)
             } catch (e: Exception) {
             }
         }
@@ -78,6 +76,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         binding.swRandom.onClick { switchRandomClick() }
         binding.swReset.onClick { switchResetClick() }
         binding.swResetStarting.onClick { switchResetStartingClick() }
+        binding.swFreeMode.onClick { switchFreeMode() }
         binding.txtRange.onClick { rangeClick() }
     }
 
@@ -109,7 +108,18 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     private fun switchResetStartingClick() {
         prefManager.setCustomParamInt(AppConstants.Settings.Toddler_No,
             prefManager.getCustomParamInt(AppConstants.Settings.SW_Range_min,1))
-        setSwitchs(true)
+        setSwitchs()
+    }
+
+    private fun switchFreeMode() {
+        if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode,"") == "Y") {
+            prefManager.setCustomParam(AppConstants.Settings.SW_FreeMode, "N")
+            binding.swFreeMode.isChecked = false
+        } else {
+            prefManager.setCustomParam(AppConstants.Settings.SW_FreeMode, "Y")
+            binding.swFreeMode.isChecked = true
+        }
+        setSwitchs()
     }
 
     private fun rangeClick() {
@@ -126,10 +136,10 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                 } else {
                     setCustomParam(AppConstants.Settings.SW_Random,"Y")
                 }
-                setSwitchs(true)
+                setSwitchs()
             } else {
                 setCustomParam(AppConstants.Settings.SW_Random,"N")
-                setSwitchs(false)
+                setSwitchs()
                 notPurchaseDialog()
             }
         }
@@ -169,8 +179,24 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         }
 
         binding.linearAbacus.removeAllViews()
+        binding.linearAbacusFreeMode.removeAllViews()
         abacusBinding = FragmentAbacusSubKidBinding.inflate(layoutInflater, null, false)
-        binding.linearAbacus.addView(abacusBinding?.root)
+        val abacusBeadType = if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode, "") == "Y"){
+            binding.linearAbacusFreeMode.addView(abacusBinding?.root)
+            binding.linearAbacusFreeMode.show()
+            binding.linearAbacus.hide()
+            abacusBinding?.viewNumbers?.show()
+            abacusBinding?.viewNumbersBottom?.show()
+            AbacusBeadType.FreeMode
+        }else{
+            binding.linearAbacus.addView(abacusBinding?.root)
+            binding.linearAbacus.show()
+            binding.linearAbacusFreeMode.hide()
+            AbacusBeadType.None
+        }
+
+        val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,abacusBeadType)
+
         if (DataProvider.generateIndex() == 0){
             abacusBinding?.imgKidLeft?.setImageResource(R.drawable.ic_boy_abacus_left)
             abacusBinding?.imgKidHandLeft?.setImageResource(R.drawable.ic_boy_abacus_hand_left)
@@ -183,7 +209,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
         abacusBinding?.ivReset?.onClick { resetClick()}
 
-        val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,AbacusBeadType.None)
         abacusBinding?.rlAbacusMain?.setBackgroundResource(themeContent.abacusFrame135)
         abacusBinding?.ivDivider?.setBackgroundColor(ContextCompat.getColor(requireContext(),themeContent.dividerColor1))
         themeContent.resetBtnColor8.let {
@@ -191,38 +216,74 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             abacusBinding?.ivRight?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             abacusBinding?.ivLeft?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
         }
-        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1)
-        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4)
+        abacusBinding?.abacusTop?.setNoOfRowAndBeads(0, 9, 1,abacusBeadType)
+        abacusBinding?.abacusBottom?.setNoOfRowAndBeads(0, 9, 4,abacusBeadType)
 
         abacusBinding?.abacusTop?.onBeadShiftListener = this@FullAbacusFragment
         abacusBinding?.abacusBottom?.onBeadShiftListener = this@FullAbacusFragment
     }
-    private fun setSwitchs(isSpeak: Boolean) {
+    private fun setSwitchs() {
         with(prefManager){
-            binding.swRandom.isChecked = getCustomParam(AppConstants.Settings.SW_Random, "") == "Y"
-            binding.swReset.isChecked = getCustomParam(AppConstants.Settings.SW_Reset, "") == "Y"
-            random_min = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
-            random_max = getCustomParamInt(AppConstants.Settings.SW_Range_max,101)
-            binding.txtRange.text = requireContext().resources.getString(R.string.txt_From) + " " + random_min + " " + requireContext().resources.getString(
-                R.string.txt_To
-            ) + " " + (random_max - 1)
-            if (getCustomParam(AppConstants.Settings.SW_Random, "") != "Y") {
-                values = getCustomParamInt(AppConstants.Settings.Toddler_No, random_min)
-            } else if (getCustomParam(AppConstants.Settings.SW_Random,"") == "Y") {
-                values = genrateRandom()
-            }
-            total_count = getCustomParamInt(AppConstants.Settings.Toddler_No_Count,1)
-            binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
+            binding.swFreeMode.isChecked = getCustomParam(AppConstants.Settings.SW_FreeMode, "") == "Y"
+            setFreeMode()
+        }
+    }
 
-            lifecycleScope.launch {
-                delay(300)
-                is1stTime = true
-                if (requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
-                    goToNextValue()
-                }else{
-                    notOfflineSupportDialog()
+    private fun setFreeMode() {
+        with(prefManager){
+            if (getCustomParam(AppConstants.Settings.SW_FreeMode, "") == "Y"){
+                binding.swRandom.hide()
+                binding.swResetStarting.hide()
+                binding.swReset.hide()
+                binding.txtRange.hide()
+
+                binding.txtStartWith1.hide()
+                binding.txtRandom.hide()
+                binding.txtRangeLable.hide()
+                binding.txtResetEveryTime.hide()
+
+                binding.txtAbacus.hide()
+                values = -143 // temp
+            }else{
+                binding.swRandom.show()
+                binding.swResetStarting.show()
+                binding.swReset.show()
+                binding.txtRange.show()
+
+                binding.txtStartWith1.show()
+                binding.txtRandom.show()
+                binding.txtRangeLable.show()
+                binding.txtResetEveryTime.show()
+
+                binding.txtAbacus.show()
+
+                binding.swRandom.isChecked = getCustomParam(AppConstants.Settings.SW_Random, "") == "Y"
+                binding.swReset.isChecked = getCustomParam(AppConstants.Settings.SW_Reset, "") == "Y"
+                random_min = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
+                random_max = getCustomParamInt(AppConstants.Settings.SW_Range_max,101)
+                binding.txtRange.text = requireContext().resources.getString(R.string.txt_From) + " " + random_min + " " + requireContext().resources.getString(
+                    R.string.txt_To
+                ) + " " + (random_max - 1)
+                if (getCustomParam(AppConstants.Settings.SW_Random, "") != "Y") {
+                    values = getCustomParamInt(AppConstants.Settings.Toddler_No, random_min)
+                } else if (getCustomParam(AppConstants.Settings.SW_Random,"") == "Y") {
+                    values = genrateRandom()
+                }
+                total_count = getCustomParamInt(AppConstants.Settings.Toddler_No_Count,1)
+                binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
+
+                lifecycleScope.launch {
+                    delay(300)
+                    is1stTime = true
+                    if (requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+                        goToNextValue()
+                    }else{
+                        notOfflineSupportDialog()
+                    }
                 }
             }
+
+            setAbacus()
         }
     }
 
@@ -238,7 +299,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             setCustomParamInt(AppConstants.Settings.SW_Range_min,fromValue.toInt())
             setCustomParamInt(AppConstants.Settings.SW_Range_max,toValue.toInt() + 1)
             setCustomParamInt(AppConstants.Settings.Toddler_No,getCustomParamInt(AppConstants.Settings.SW_Range_min,1))
-            setSwitchs(true)
+            setSwitchs()
         }
     }
 

@@ -33,6 +33,9 @@
 <!--    <string name="interstitial_ad_unit_id_number_puzzle_complete">ca-app-pub-3940256099942544/1033173712</string>-->
 <!--    <string name="interstitial_ad_unit_id_exercise">ca-app-pub-3940256099942544/1033173712</string>-->
 
+    <string name="native_ad_unit_id_test">ca-app-pub-5759468493922763/4658789878</string>
+
+    <string name="banner_ad_unit_id_video">ca-app-pub-5759468493922763/9435037042</string>
     <string name="banner_ad_unit_id_abacus">ca-app-pub-5759468493922763/9552869463</string>
     <string name="banner_ad_unit_id_practise_material">ca-app-pub-5759468493922763/7125661457</string>
     <string name="banner_ad_unit_id_exam">ca-app-pub-5759468493922763/8179760812</string>
@@ -74,6 +77,7 @@
     <!--  Tour page  -->
     <string name="SKIP">SKIP</string>
     <string name="DONE">DONE</string>
+    <string name="done_">Done</string>
     <string name="tourTitle1">Abacus Child Learning Application</string>
     <string name="tourTitle2">Mathematics Rules</string>
     <string name="tourTitle3">Practice Material</string>
@@ -306,6 +310,7 @@
     <string name="nursery_class_material">Nursery Class Material</string>
     <string name="recommended">Recommended</string>
     <string name="popular">Popular</string>
+    <string name="useful">Useful</string>
     <string name="favourite">Favourite</string>
     <string name="hot">Hot</string>
     <string name="new_">New</string>
@@ -374,7 +379,7 @@
     <string name="you_are_clever">You are clever</string>
     <string name="you_are_on_the_right_track">You are on the right track</string>
     <string name="good_job">Good job</string>
-    <string name="not_bad">Not bad</string>
+    <string name="not_bad">Not bad, you can do batter from this</string>
 
     <string name="other_app_s_by_brainapptech_team">Other App\'s by BrainAppTech Team</string>
     <string name="offline_not_supported">Offline not supported</string>
@@ -386,4 +391,51 @@
     <string name="free_abacus_theme">Free Abacus Themes</string>
     <string name="paid_abacus_themes">Paid Abacus Themes</string>
     <string name="preview_of_theme">Preview of Theme</string>
+    <string name="welcome_to_abacus_application">Welcome to Abacus application</string>
+    <string name="please_choose_your_anonymous_name_and_avatar">Please choose child\'s anonymous\nname and avatar</string>
+    <string name="choose_child_avatar">Choose child\'s avatar</string>
+    <string name="please_select_avatar">Please select avatar</string>
+    <string name="please_enter_anonymously_name">Please enter anonymous name</string>
+    <string name="enter_child_s_name">Enter child\'s name</string>
+    <string name="select_abacus_bead_theme_nbase_on_your_favourite_color">Select Abacus theme base on your favourite color</string>
+    <string name="okay_let_s_start">Okay, let\'s start</string>
+    <string name="will_select_later_from_settings">Will select later from settings</string>
+    <string name="free_mode">Free Mode?</string>
+    <string name="video_tutorials">Video Tutorials</string>
+    <string name="use_left_hand_to_move_beads">(Use your <b><font color='#00FF00'>Left Hand</font></b> to move beads)</string>
+    <string name="use_right_hand_to_move_beads">(Use your <b><font color='#00FF00'>Right Hand</font></b> to move beads)</string>
+
+
+    <string name="Hundred">Hundred</string>
+    <string name="Thousand">Thousand</string>
+    <string name="Lakh">Lakh</string>
+    <string name="Crore">Crore</string>
+    <string name="Minus">Minus</string>
+    <string name="One">One</string>
+    <string name="Two">Two</string>
+    <string name="Three">Three</string>
+    <string name="Four">Four</string>
+    <string name="Five">Five</string>
+    <string name="Six">Six</string>
+    <string name="Seven">Seven</string>
+    <string name="Eight">Eight</string>
+    <string name="Nine">Nine</string>
+    <string name="Ten">Ten</string>
+    <string name="Eleven">Eleven</string>
+    <string name="Twelve">Twelve</string>
+    <string name="Thirteen">Thirteen</string>
+    <string name="Fourteen">Fourteen</string>
+    <string name="Fifteen">Fifteen</string>
+    <string name="Sixteen">Sixteen</string>
+    <string name="Seventeen">Seventeen</string>
+    <string name="Eighteen">Eighteen</string>
+    <string name="Nineteen">Nineteen</string>
+    <string name="Twenty">Twenty</string>
+    <string name="Thirty">Thirty</string>
+    <string name="Forty">Forty</string>
+    <string name="Fifty">Fifty</string>
+    <string name="Sixty">Sixty</string>
+    <string name="Seventy">Seventy</string>
+    <string name="Eighty">Eighty</string>
+    <string name="Ninety">Ninety</string>
 </resources>

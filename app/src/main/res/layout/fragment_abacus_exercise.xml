@@ -39,9 +39,9 @@
             <RelativeLayout
                 android:id="@+id/rlAbacusMain"
                 android:layout_width="wrap_content"
-                tools:layout_width="@dimen/_150sdp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_abacus_frame_large_red">
+                android:background="@drawable/bg_abacus_frame_large_red"
+                tools:layout_width="@dimen/_250sdp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/rlAbacus"

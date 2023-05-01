@@ -34,7 +34,7 @@ import com.jigar.me.databinding.LayoutAbacusExamBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusUtils
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
-import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.ExamCompleteDialog
+import com.jigar.me.ui.view.confirm_alerts.dialogs.ExamCompleteDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.*
 import com.jigar.me.utils.extensions.*
@@ -190,6 +190,19 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
                     mBinding.layoutAbacus2.removeAllViews()
                     val abacusBinding1 = LayoutAbacusExamBinding.inflate(layoutInflater, null, false)
                     mBinding.layoutAbacus1.addView(abacusBinding1.root)
+                    abacusBinding1.tvCurrentVal.hide()
+                    if (DataProvider.generateIndex() == 0){
+                        abacusBinding1.imgKidLeft.setImageResource(R.drawable.ic_boy_abacus_left)
+                        abacusBinding1.imgKidHandLeft.setImageResource(R.drawable.ic_boy_abacus_hand_left)
+                    }else{
+                        abacusBinding1.imgKidLeft.setImageResource(R.drawable.ic_girl_abacus_left)
+                        abacusBinding1.imgKidHandLeft.setImageResource(R.drawable.ic_girl_abacus_hand_left)
+                    }
+                    abacusBinding1.imgKidLeft.show()
+                    abacusBinding1.imgKidHandLeft.show()
+
+                    abacusBinding1.imgKidRight.hide()
+                    abacusBinding1.imgKidHandRight.hide()
 
                     mBinding.layoutAbacus1.show()
                     mBinding.layoutAbacus2.hide()
@@ -263,6 +276,32 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
 
                     val abacusBinding2 = LayoutAbacusExamBinding.inflate(layoutInflater, null, false)
                     mBinding.layoutAbacus2.addView(abacusBinding2.root)
+
+                    abacusBinding1.tvCurrentVal.hide()
+                    abacusBinding2.tvCurrentVal.hide()
+
+                    abacusBinding1.imgKidLeft.show()
+                    abacusBinding1.imgKidHandLeft.show()
+                    abacusBinding1.imgKidRight.hide()
+                    abacusBinding1.imgKidHandRight.hide()
+
+                    abacusBinding2.imgKidLeft.hide()
+                    abacusBinding2.imgKidHandLeft.hide()
+                    abacusBinding2.imgKidRight.show()
+                    abacusBinding2.imgKidHandRight.show()
+
+                    if (DataProvider.generateIndex() == 0){
+                        abacusBinding1.imgKidLeft.setImageResource(R.drawable.ic_boy_abacus_left)
+                        abacusBinding1.imgKidHandLeft.setImageResource(R.drawable.ic_boy_abacus_hand_left)
+                        abacusBinding2.imgKidRight.setImageResource(R.drawable.ic_girl_abacus_right)
+                        abacusBinding2.imgKidHandRight.setImageResource(R.drawable.ic_girl_abacus_hand_right)
+                    }else{
+                        abacusBinding1.imgKidLeft.setImageResource(R.drawable.ic_girl_abacus_left)
+                        abacusBinding1.imgKidHandLeft.setImageResource(R.drawable.ic_girl_abacus_hand_left)
+                        abacusBinding2.imgKidRight.setImageResource(R.drawable.ic_boy_abacus_right)
+                        abacusBinding2.imgKidHandRight.setImageResource(R.drawable.ic_boy_abacus_hand_right)
+                    }
+
 
                     mBinding.imgSign1.show()
                     mBinding.layoutAbacus1.show()
@@ -396,7 +435,7 @@ class Level1ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialog
         val previousCount = prefManager.getCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,0)
         prefManager.setCustomParamInt(AppConstants.Extras_Comman.examGivenCount + examLevel,(previousCount+1))
 
-        ExamCompleteDialog.showPopup(requireActivity(),totalTime,"0",totalWrong.toString(),right.toString(),listExam.size.toString(),this)
+        ExamCompleteDialog.showPopup(requireActivity(),totalTime,"0",totalWrong.toString(),right.toString(),listExam.size.toString(),this,prefManager)
     }
 
     private fun onViewClick(clickType: String) {

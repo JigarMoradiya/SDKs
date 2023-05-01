@@ -366,7 +366,7 @@ class ExerciseHomeFragment : BaseFragment(), AbacusMasterBeadShiftListener, OnAb
         if (!isResetRunning) {
             AbacusMasterSound.playResetSound(requireContext())
             isResetRunning = true
-            abacusBinding?.ivReset?.y = 0f
+//            abacusBinding?.ivReset?.y = 0f
             abacusBinding?.ivReset?.animate()?.setDuration(200)
                 ?.translationYBy((abacusBinding?.ivReset?.height!! / 2).toFloat())?.withEndAction {
                     abacusBinding?.ivReset?.animate()?.setDuration(200)

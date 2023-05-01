@@ -167,16 +167,15 @@
                     android:textSize="@dimen/textSizeSmall" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/linearWrongAnswer"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical"
-                app:layout_constraintEnd_toStartOf="@+id/linearSkipAnswer"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/linearRightAnswer"
-                app:layout_constraintTop_toTopOf="@+id/linearTotalQuestion">
+                app:layout_constraintTop_toTopOf="@+id/linearTotalTime">
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="@dimen/_24sdp"
@@ -206,44 +205,18 @@
                     android:textSize="@dimen/textSizeSmall" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linearSkipAnswer"
-                android:layout_width="0dp"
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvResultTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:visibility="gone"
-                android:orientation="vertical"
+                style="@style/mainTitleSmall"
+                android:textSize="@dimen/textSizeRegular"
+                app:fontFamily="@font/font_extra_bold"
+                android:layout_marginTop="@dimen/activity_padding12"
+                android:text="@string/better_luck_for_next_time"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/linearWrongAnswer"
-                app:layout_constraintTop_toTopOf="@+id/linearTotalTime">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="@dimen/_36sdp"
-                    android:layout_height="@dimen/_36sdp"
-                    app:srcCompat="@mipmap/ic_question_skip" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/txtSkipQue"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/activity_padding12"
-                    android:fontFamily="@font/font_bold"
-                    android:gravity="center"
-                    android:text="20"
-                    android:textColor="@color/colorYellowDark"
-                    android:textSize="@dimen/textSizeLarge" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_2sdp"
-                    android:alpha="0.8"
-                    android:fontFamily="@font/font_semibold"
-                    android:gravity="center"
-                    android:text="@string/SkipQue"
-                    android:textColor="@color/colorYellowDark"
-                    android:textSize="@dimen/textSizeSmall" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime"  />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnGiveExamAgain"
@@ -252,12 +225,12 @@
                 android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/give_exam_again"
-                android:layout_marginTop="@dimen/activity_padding20"
+                android:layout_marginTop="@dimen/activity_padding12"
                 android:layout_marginEnd="@dimen/activity_padding8"
                 app:layout_constraintEnd_toStartOf="@+id/btnCheckResult"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime" />
+                app:layout_constraintTop_toBottomOf="@+id/tvResultTitle" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCheckResult"
@@ -265,13 +238,12 @@
                 style="@style/btnMedium"
                 android:textAllCaps="false"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/activity_padding20"
                 android:layout_marginStart="@dimen/activity_padding8"
                 android:text="@string/checkResult"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btnGiveExamAgain"
-                app:layout_constraintTop_toBottomOf="@+id/linearTotalTime" />
+                app:layout_constraintTop_toTopOf="@+id/btnGiveExamAgain" />
 
 
             <com.google.android.material.textview.MaterialTextView

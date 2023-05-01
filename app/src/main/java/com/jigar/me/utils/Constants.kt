@@ -10,6 +10,9 @@ object Constants {
     const val NOTIFICATION_PERMISSION = "notification_permission"
     const val PREF_IS_REFERRAL_RECORDED: String = "pref_is_referral_recorded"
 
+    const val avatarId = "avatarId"
+    const val childName = "childName"
+
     const val examLevelBeginner = "Beginner"
     const val examLevelIntermediate = "Intermediate"
     const val examLevelExpert = "Expert"
@@ -25,14 +28,12 @@ object Constants {
     const val notificationTypeMaterialNursery = "material_nursery"
     const val notificationTypeExam = "exam"
     const val notificationTypeExercise = "exercise"
-    const val notificationTypeSudoku = "sudoku"
     const val notificationTypeNumberSequence = "number_sequence"
     const val notificationTypeSetting = "setting"
     const val notificationTypePurchase = "purchase"
     const val notificationTypeYoutube = "youtube"
     const val notificationTypeRate = "rate"
     const val notificationTypeShare = "share"
-    const val notificationTypeURL = "url"
 
     const val bottomSheetWidthBaseOnRatio10 = 10
     const val bottomSheetWidthBaseOnRatio6 = 6

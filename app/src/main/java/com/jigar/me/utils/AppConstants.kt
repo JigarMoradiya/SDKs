@@ -71,6 +71,11 @@ object AppConstants {
         }
     }
 
+    annotation class RemoteConfig {
+        companion object {
+            var videoList = "video"
+        }
+    }
     annotation class AbacusProgress {
         companion object {
             var PREF_PAGE_SUM = "pageSum"
@@ -140,6 +145,7 @@ object AppConstants {
 
             var Toddler_No = "Toddler_No"
             var Toddler_No_Count = "Toddler_No_Count"
+            var SW_FreeMode = "SW_FreeMode"
             var SW_Random = "SW_Random"
             var SW_Reset = "SW_Reset"
             var SW_Range_min = "SW_Range_min"

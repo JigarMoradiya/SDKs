@@ -3,8 +3,10 @@ package com.jigar.me.ui.view.dashboard.fragments.exam.result
 import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
+import androidx.core.view.setMargins
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -108,6 +110,11 @@ class ExamResultLevel1Adapter(
                         mBinding.layoutAbacus2.removeAllViews()
                         val abacusBinding1 = LayoutAbacusExamBinding.inflate(context.layoutInflater, null, false)
                         mBinding.layoutAbacus1.addView(abacusBinding1.root)
+                        abacusBinding1.tvCurrentVal.hide()
+
+                        val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
+                        params.setMargins(0)
+                        abacusBinding1.relAbacus.layoutParams = params
 
                         mBinding.layoutAbacus1.show()
                         mBinding.layoutAbacus2.hide()
@@ -141,6 +148,14 @@ class ExamResultLevel1Adapter(
 
                         val abacusBinding2 = LayoutAbacusExamBinding.inflate(context.layoutInflater, null, false)
                         mBinding.layoutAbacus2.addView(abacusBinding2.root)
+
+                        abacusBinding1.tvCurrentVal.hide()
+                        abacusBinding2.tvCurrentVal.hide()
+
+                        val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
+                        params.setMargins(0)
+                        abacusBinding2.relAbacus.layoutParams = params
+                        abacusBinding1.relAbacus.layoutParams = params
 
                         mBinding.imgSign1.show()
                         mBinding.layoutAbacus1.show()

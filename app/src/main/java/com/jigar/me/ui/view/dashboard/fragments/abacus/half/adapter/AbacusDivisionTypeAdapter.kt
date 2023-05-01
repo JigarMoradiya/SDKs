@@ -69,7 +69,7 @@ class AbacusDivisionTypeAdapter(
             val highlightPOs = highlightDetail[position]
             if (highlightPOs != null) {
                 if (!isClear) {
-                    holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.black_text))
+                    holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.abacus_place_holder))
                     if (!TextUtils.isEmpty(data[Constants.Que])) {
                         holder.binding.tvQuestion.text = span(
                             data[Constants.Que],
@@ -77,8 +77,8 @@ class AbacusDivisionTypeAdapter(
                         )
                     }
                 } else {
-                    holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.black_text))
-                    holder.binding.tvQuestion.setTextColor(ContextCompat.getColor(context, R.color.black_text))
+                    holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.abacus_place_holder))
+                    holder.binding.tvQuestion.setTextColor(ContextCompat.getColor(context, R.color.abacus_place_holder))
                 }
             }
             if (position == 1 && abacusItems.size > 2) {
@@ -146,7 +146,7 @@ class AbacusDivisionTypeAdapter(
         if (!TextUtils.isEmpty(text) && startPosition <= text!!.length && endPosition <= text.length) {
             val wordtoSpan = SpannableString(text)
             wordtoSpan.setSpan(
-                ForegroundColorSpan(ContextCompat.getColor(context, R.color.black_text)),
+                ForegroundColorSpan(ContextCompat.getColor(context, R.color.abacus_place_holder)),
                 0,
                 text.length,
                 Spannable.SPAN_INCLUSIVE_EXCLUSIVE

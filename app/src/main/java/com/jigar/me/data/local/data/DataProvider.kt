@@ -17,6 +17,26 @@ import kotlin.random.Random.Default.nextInt
 
 
 object DataProvider {
+    fun getAvatarList() : ArrayList<AvatarImages>{
+        val list = ArrayList<AvatarImages>()
+        with(list){
+            add(AvatarImages(1,R.drawable.ic_avatar_girl_01))
+            add(AvatarImages(2,R.drawable.ic_avatar_girl_02))
+            add(AvatarImages(3,R.drawable.ic_avatar_girl_03))
+            add(AvatarImages(4,R.drawable.ic_avatar_girl_04))
+            add(AvatarImages(5,R.drawable.ic_avatar_girl_05))
+            add(AvatarImages(6,R.drawable.ic_avatar_girl_06))
+            add(AvatarImages(1001,R.drawable.ic_avatar_man_01))
+            add(AvatarImages(1002,R.drawable.ic_avatar_man_02))
+            add(AvatarImages(1003,R.drawable.ic_avatar_man_03))
+            add(AvatarImages(1004,R.drawable.ic_avatar_man_04))
+            add(AvatarImages(1005,R.drawable.ic_avatar_man_05))
+            add(AvatarImages(1006,R.drawable.ic_avatar_man_06))
+            add(AvatarImages(1007,R.drawable.ic_avatar_man_07))
+            add(AvatarImages(1008,R.drawable.ic_avatar_man_08))
+        }
+        return list
+    }
     fun getAbacusThemeTypesList() : ArrayList<String>{
         val list = ArrayList<String>()
         with(list){
@@ -30,18 +50,17 @@ object DataProvider {
         return list
     }
     private fun getMultipleDimensions(abacusBeadType: AbacusBeadType = AbacusBeadType.None) : Float{
-        Log.e("jigarLogs","abacusBeadType = "+abacusBeadType)
         return when (abacusBeadType) {
-            AbacusBeadType.SettingPreview -> {
-                0.7f
+            AbacusBeadType.ExamResult -> {
+                0.4f
             }
             AbacusBeadType.Exam -> {
                 0.5f
             }
-            AbacusBeadType.ExamResult -> {
-                0.4f
+            AbacusBeadType.SettingPreview -> {
+                0.7f
             }
-            AbacusBeadType.Exercise -> {
+            AbacusBeadType.FreeMode, AbacusBeadType.Exercise -> {
                 0.9f
             }
             else -> {
@@ -87,7 +106,7 @@ object DataProvider {
         }else{
             R.drawable.face_red_close
         }
-        val faceOpenList = arrayListOf(R.drawable.face_pink_close,R.drawable.face_orange_close,R.drawable.face_blue_close,R.drawable.face_green_close)
+        val faceOpenList = arrayListOf(R.drawable.face_pink_open,R.drawable.face_orange_open,R.drawable.face_blue_open,R.drawable.face_green_open)
         val starCloseList = arrayListOf(R.drawable.star_gray_close,R.drawable.star_gray_close,R.drawable.star_gray_close,R.drawable.star_gray_close)
         val starOpenList = arrayListOf(R.drawable.star_yellow_open,R.drawable.star_blue_open,R.drawable.star_orange_open,R.drawable.star_green_open)
         val diamondCloseList = arrayListOf(R.drawable.diamond_gray,R.drawable.diamond_gray,R.drawable.diamond_gray,R.drawable.diamond_gray)
@@ -132,7 +151,7 @@ object DataProvider {
         val content : AbacusContent? = abacusThemeList.find { it.type == theme }
         return content ?: abacusThemeList.first()
     }
-    fun getHomeMenuList() : ArrayList<HomeMenu>{
+    fun getHomeMenuList(context: Context) : ArrayList<HomeMenu>{
         val list = ArrayList<HomeMenu>()
         with(list){
             add(HomeMenu(AppConstants.HomeClicks.Menu_Starter,R.drawable.home_menu_starter))
@@ -141,11 +160,11 @@ object DataProvider {
             add(HomeMenu(AppConstants.HomeClicks.Menu_Addition_Subtraction,R.drawable.home_menu_subtraction))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Multiplication,R.drawable.home_menu_multiplication))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Division,R.drawable.home_menu_division))
-            add(HomeMenu(AppConstants.HomeClicks.Menu_Exercise,R.drawable.home_menu_exercise))
-            add(HomeMenu(AppConstants.HomeClicks.Menu_DailyExam,R.drawable.home_menu_exam))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Exercise,R.drawable.home_menu_exercise,context.getString(R.string.popular)))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_DailyExam,R.drawable.home_menu_exam,context.getString(R.string.favourite)))
             add(HomeMenu(AppConstants.HomeClicks.Menu_PractiseMaterial,R.drawable.home_menu_material))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Number_Puzzle,R.drawable.home_menu_number_sequence))
-            add(HomeMenu(AppConstants.HomeClicks.Menu_Click_Youtube,R.drawable.home_menu_tutorial))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Click_Youtube,R.drawable.home_menu_tutorial,context.getString(R.string.useful)))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Purchase,R.drawable.home_menu_purchase))
         }
         return list
@@ -1338,6 +1357,46 @@ object DataProvider {
         data[Constants.Sign] = "/"
         list_abacus.add(data)
         return list_abacus
+    }
+
+
+    fun getTensList(context: Context) : java.util.ArrayList<String> {
+        val tens : java.util.ArrayList<String> = arrayListOf()
+        tens.add("")
+        tens.add("")
+        tens.add(context.resources.getString(R.string.Twenty))
+        tens.add(context.resources.getString(R.string.Thirty))
+        tens.add(context.resources.getString(R.string.Forty))
+        tens.add(context.resources.getString(R.string.Fifty))
+        tens.add(context.resources.getString(R.string.Sixty))
+        tens.add(context.resources.getString(R.string.Seventy))
+        tens.add(context.resources.getString(R.string.Eighty))
+        tens.add(context.resources.getString(R.string.Ninety))
+        return tens
+    }
+    fun getUnitsList(context: Context) : java.util.ArrayList<String> {
+        val units : java.util.ArrayList<String> = arrayListOf()
+        units.add("")
+        units.add(context.resources.getString(R.string.One))
+        units.add(context.resources.getString(R.string.Two))
+        units.add(context.resources.getString(R.string.Three))
+        units.add(context.resources.getString(R.string.Four))
+        units.add(context.resources.getString(R.string.Five))
+        units.add(context.resources.getString(R.string.Six))
+        units.add(context.resources.getString(R.string.Seven))
+        units.add(context.resources.getString(R.string.Eight))
+        units.add(context.resources.getString(R.string.Nine))
+        units.add(context.resources.getString(R.string.Ten))
+        units.add(context.resources.getString(R.string.Eleven))
+        units.add(context.resources.getString(R.string.Twelve))
+        units.add(context.resources.getString(R.string.Thirteen))
+        units.add(context.resources.getString(R.string.Fourteen))
+        units.add(context.resources.getString(R.string.Fifteen))
+        units.add(context.resources.getString(R.string.Sixteen))
+        units.add(context.resources.getString(R.string.Seventeen))
+        units.add(context.resources.getString(R.string.Eighteen))
+        units.add(context.resources.getString(R.string.Nineteen))
+        return units
     }
 
 }

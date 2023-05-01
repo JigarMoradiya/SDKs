@@ -10,6 +10,9 @@
             android:id="@+id/action_homeFragment_to_fullAbacusFragment"
             app:destination="@id/fullAbacusFragment" />
         <action
+            android:id="@+id/action_homeFragment_to_youtubeVideoFragment"
+            app:destination="@id/youtubeVideoFragment" />
+        <action
             android:id="@+id/action_homeFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
         <action
@@ -47,6 +50,16 @@
         android:name="com.jigar.me.ui.view.dashboard.fragments.abacus.FullAbacusFragment">
         <action
             android:id="@+id/action_fullAbacusFragment_to_purchaseFragment"
+            app:destination="@id/purchaseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/youtubeVideoFragment"
+        android:name="com.jigar.me.ui.view.dashboard.fragments.youtubevideo.YoutubeVideoFragment">
+        <action
+            android:id="@+id/action_youtubeVideoFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_youtubeVideoFragment_to_purchaseFragment"
             app:destination="@id/purchaseFragment" />
     </fragment>
     <fragment

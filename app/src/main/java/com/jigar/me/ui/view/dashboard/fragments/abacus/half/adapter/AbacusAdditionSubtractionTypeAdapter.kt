@@ -70,10 +70,10 @@ class AbacusAdditionSubtractionTypeAdapter(
 
             } else {
                 holder.binding.tvSymbol.setTextColor(
-                    ContextCompat.getColor(context, R.color.black_text)
+                    ContextCompat.getColor(context, R.color.abacus_place_holder)
                 )
                 holder.binding.tvQuestion.setTextColor(
-                    ContextCompat.getColor(context, R.color.black_text)
+                    ContextCompat.getColor(context, R.color.abacus_place_holder)
                 )
             }
         }

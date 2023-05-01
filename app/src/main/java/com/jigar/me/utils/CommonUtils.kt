@@ -11,10 +11,25 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import java.util.*
 
 
 object CommonUtils {
 
+    fun getCurrentTimeMessage():String{
+        val calendar = Calendar.getInstance()
+        val timeOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+        //        6 AM - 12 PM Morning slots
+//        12 PM - 5 PM Afternoon slots
+//        5 PM - 9 PM Evening Slots
+//        9 PM - 6 AM Night Slots
+        return when (timeOfDay) {
+            in 6..11 -> "Good Morning"
+            in 12..16 -> "Good Afternoon"
+//                in 17..20 -> "Good Evening"
+            else -> "Good Evening"
+        }
+    }
     fun calculateNoOfColumns(columnWidthDp: Float, parentWidth : Float): Int {
         // For example columnWidthdp=180
 //        val displayMetrics = context.resources.displayMetrics

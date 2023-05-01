@@ -5,7 +5,9 @@ import android.graphics.drawable.Drawable
 
 data class ColorData(val color: Int, val darkColor: Int)
 data class HomeBanner(val type: String, val image: Int? = null, val bitmap: Bitmap? = null)
-data class HomeMenu(val type: Int, val image: Int)
+data class HomeMenu(val type: Int, val image: Int,val tag : String = "")
+
+data class AvatarImages(val id: Int, val image: Int)
 data class AbacusContent(val type: String, val beadImage: Int, val abacusFrame135 : Int, val abacusFrameExam135 : Int, val dividerColor1 : Int, val resetBtnColor8 : Int, val beadHeight : Int, val beadWidth : Int, val beadSpace : Int,
                          val topBeadClose : Int, val topBeadOpen : Int, var bottomBeadClose: ArrayList<Int>, var bottomBeadOpen: ArrayList<Int>)
 data class OtherApps(val type: Int, val image: Int,val name : String, val url : String)

@@ -26,16 +26,12 @@ class HomeMenuAdapter(
 
     override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
         val data = listData[position]
-        val context = holder.binding.root.context
         holder.binding.imgMenu.setImageResource(data.image)
-        if (data.type == AppConstants.HomeClicks.Menu_Exercise){
-            holder.binding.txtTag.show()
-            holder.binding.txtTag.text = context.getString(R.string.popular)
-        }else if (data.type == AppConstants.HomeClicks.Menu_DailyExam){
-            holder.binding.txtTag.show()
-            holder.binding.txtTag.text = context.getString(R.string.favourite)
-        }else{
+        if (data.tag.isEmpty()){
             holder.binding.txtTag.hide()
+        }else {
+            holder.binding.txtTag.show()
+            holder.binding.txtTag.text = data.tag
         }
         holder.binding.root.onClick {
             mListener.onItemHomeMenuClick(data)

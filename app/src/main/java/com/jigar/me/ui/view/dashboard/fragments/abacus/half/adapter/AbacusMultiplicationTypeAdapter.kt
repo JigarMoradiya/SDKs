@@ -59,14 +59,14 @@ class AbacusMultiplicationTypeAdapter(
         if (isStepByStep) {
             val highlightPOs = highlightDetail[position]!!
             if (!isClear) {
-                holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.black_text))
+                holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.abacus_place_holder))
                 holder.binding.tvQuestion.text = span(
                     data[Constants.Que],
                     highlightPOs, context
                 )
             } else {
-                holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.black_text))
-                holder.binding.tvQuestion.setTextColor(ContextCompat.getColor(context, R.color.black_text))
+                holder.binding.tvSymbol.setTextColor(ContextCompat.getColor(context, R.color.abacus_place_holder))
+                holder.binding.tvQuestion.setTextColor(ContextCompat.getColor(context, R.color.abacus_place_holder))
             }
         }
     }
@@ -104,7 +104,7 @@ class AbacusMultiplicationTypeAdapter(
     private fun span(text: String?, position: Int, context: Context): Spannable {
         val wordtoSpan = SpannableString(text)
         wordtoSpan.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(context, R.color.black_text)),
+            ForegroundColorSpan(ContextCompat.getColor(context, R.color.abacus_place_holder)),
             0,
             text!!.length,
             Spannable.SPAN_INCLUSIVE_EXCLUSIVE

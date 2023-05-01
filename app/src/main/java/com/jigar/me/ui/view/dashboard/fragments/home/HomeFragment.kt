@@ -5,6 +5,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,18 +19,29 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.jigar.me.BuildConfig
 import com.jigar.me.MyApplication
 import com.jigar.me.R
+import com.jigar.me.data.local.data.AvatarImages
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.local.data.HomeBanner
 import com.jigar.me.data.local.data.HomeMenu
+import com.jigar.me.data.model.PojoAbacus
+import com.jigar.me.data.model.VideoData
 import com.jigar.me.databinding.FragmentHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.OtherApplicationBottomSheet
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.SelelctAvatarProfileDialog
+import com.jigar.me.ui.view.confirm_alerts.dialogs.SelectThemeDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
+import com.jigar.me.utils.CommonUtils
+import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.openURL
 import com.jigar.me.utils.extensions.openYoutube
@@ -41,7 +53,7 @@ import java.util.*
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
-    HomeMenuAdapter.OnItemClickListener {
+    HomeMenuAdapter.OnItemClickListener, SelelctAvatarProfileDialog.AvatarProfileDialogInterface {
     private lateinit var binding: FragmentHomeBinding
     private var root : View? = null
     private val appViewModel by viewModels<AppViewModel>()
@@ -58,6 +70,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     private val DELAY_MS: Long = 5000 //delay in milliseconds before task is to be executed
     private val PERIOD_MS: Long = 5000 // time in milliseconds between successive task executions.
 
+    private lateinit var mFirebaseRemoteConfig  : FirebaseRemoteConfig
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         if (root == null){
             binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -72,11 +85,13 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
     private fun initViews() {
-        homeMenuAdapter = HomeMenuAdapter(DataProvider.getHomeMenuList(),this)
+        avatarProfileCloseDialog()
+        homeMenuAdapter = HomeMenuAdapter(DataProvider.getHomeMenuList(requireContext()),this)
         binding.recyclerviewMenu.adapter = homeMenuAdapter
         getTrackData()
         setViewPager()
         getFBConstant()
+        firebaseConfig()
     }
     override fun onItemHomeMenuClick(data: HomeMenu) {
         moveToClick(data.type)
@@ -101,9 +116,31 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     }
 
     private fun initListener() {
+        binding.cardEditImage.onClick {
+            SelelctAvatarProfileDialog.showPopup(requireActivity(),prefManager,this@HomeFragment)
+        }
         binding.cardSettingTop.onClick { moveToClick(AppConstants.HomeClicks.Menu_Setting) }
         binding.cardAboutUs.onClick { moveToClick(AppConstants.HomeClicks.Menu_AboutUs) }
-        binding.txtOtherApps.onClick { OtherApplicationBottomSheet.showPopup(requireActivity()) }
+        binding.txtOtherApps.onClick {
+            OtherApplicationBottomSheet.showPopup(requireActivity())
+//            SelectThemeDialog.showPopup(requireActivity(), prefManager)
+        }
+    }
+    override fun avatarProfileCloseDialog() {
+        val id = prefManager.getCustomParamInt(Constants.avatarId,0)
+        if (id == 0){
+            binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage()
+        }else{
+            val avatarList = DataProvider.getAvatarList()
+            val avatar : AvatarImages? = avatarList.find { it.id == id }
+            if (avatar != null){
+                binding.imgUserProfile.setImageResource(avatar.image)
+                binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage().plus(" "+prefManager.getCustomParam(Constants.childName,"")+"!")
+            }else{
+                binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage()
+            }
+
+        }
     }
     private fun checkPurchase() {
         appViewModel.getInAppPurchase().observe(viewLifecycleOwner) { listData ->
@@ -205,7 +242,11 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
                 requireContext().shareIntent()
             }
             AppConstants.HomeClicks.Menu_Click_Youtube -> {
-                requireContext().openYoutube()
+                if (prefManager.getCustomParam(AppConstants.RemoteConfig.videoList,"").isEmpty()){
+                    requireContext().openYoutube()
+                }else{
+                    mNavController?.navigate(R.id.action_homeFragment_to_youtubeVideoFragment)
+                }
             }
         }
     }
@@ -235,10 +276,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
                         val pageSum: String = prefManager.getCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM, "{}")
                         val objJson = JSONObject(pageSum)
                         objJson.put(pageId, (position + 1))
-                        prefManager.setCustomParam(
-                                AppConstants.AbacusProgress.PREF_PAGE_SUM,
-                                objJson.toString()
-                            )
+                        prefManager.setCustomParam(AppConstants.AbacusProgress.PREF_PAGE_SUM,objJson.toString())
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }
@@ -322,6 +360,34 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         }
 
     }
+
+    private fun firebaseConfig() {
+        var tries = 0
+        mFirebaseRemoteConfig = FirebaseRemoteConfig.getInstance()
+        val configSettings = FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(5)
+            .build()
+        mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings)
+        mFirebaseRemoteConfig.fetchAndActivate()
+            .addOnCompleteListener(requireActivity()) { task ->
+                tries++
+                if (tries>3){
+                    mFirebaseRemoteConfig.setConfigSettingsAsync(configSettings.toBuilder().setFetchTimeoutInSeconds(20).build())
+                }
+                if (task.isSuccessful) {
+                    val video: String = mFirebaseRemoteConfig.getString(AppConstants.RemoteConfig.videoList)
+                    with(prefManager){
+                        if (video.length > 5){
+                            setCustomParam(AppConstants.RemoteConfig.videoList,video)
+                        }else{
+                            setCustomParam(AppConstants.RemoteConfig.videoList,"")
+                        }
+
+                    }
+                }
+            }
+    }
+
 
 
 }

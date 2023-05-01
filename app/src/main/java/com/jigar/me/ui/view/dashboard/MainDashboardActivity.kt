@@ -1,12 +1,10 @@
 package com.jigar.me.ui.view.dashboard
 
-import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.MenuItem
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
@@ -25,6 +23,7 @@ import com.jigar.me.databinding.ActivityMainDashboardBinding
 import com.jigar.me.ui.view.base.BaseActivity
 import com.jigar.me.ui.view.base.inapp.BillingRepository
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
+import com.jigar.me.ui.view.confirm_alerts.dialogs.SelectThemeDialog
 import com.jigar.me.ui.view.dashboard.fragments.abacus.half.HalfAbacusFragment
 import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.ExamFragment
 import com.jigar.me.ui.view.dashboard.fragments.exam.doexam.Level1ExamFragment
@@ -36,19 +35,21 @@ import com.jigar.me.utils.Constants
 import com.jigar.me.utils.checkPermissions
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.log
+import com.jigar.me.utils.extensions.show
 import com.jigar.me.utils.extensions.toastS
 import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainDashboardActivity : BaseActivity(){
+class MainDashboardActivity : BaseActivity() {
     lateinit var navController: NavController
     lateinit var navHostFragment: NavHostFragment
     private var selectedFragment: Int = -1
     private val inAppViewModel by viewModels<InAppViewModel>()
     private val appViewModel by viewModels<AppViewModel>()
     private lateinit var binding: ActivityMainDashboardBinding
+
     companion object {
         @JvmStatic
         fun getInstance(context: Context?) {
@@ -68,23 +69,25 @@ class MainDashboardActivity : BaseActivity(){
         initViews()
         initListener()
         initObserver()
-        if (!prefManager.getCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,false)){
+        if (!prefManager.getCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED, false)) {
             recordReferral()
         }
     }
 
     private fun initObserver() {
         inAppViewModel.inAppInit()
-        appViewModel.getInAppPurchase().observe(this){
+        appViewModel.getInAppPurchase().observe(this) {
             setPurchase(it)
         }
-        if (BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             OneSignal.setEmail("jigar@gmail.com")
+//            binding.viewBG.show()
         }
     }
 
     private fun setNavigationGraph() {
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -92,6 +95,7 @@ class MainDashboardActivity : BaseActivity(){
             showToolbarTitle(destination.id)
         }
     }
+
     private fun initToolBar() {
         setSupportActionBar(binding.toolbar)
     }
@@ -99,18 +103,23 @@ class MainDashboardActivity : BaseActivity(){
     private fun initViews() {
         setNavigationGraph()
         onMainActivityBack()
-        this.checkPermissions(Constants.NOTIFICATION_PERMISSION,requestMultiplePermissions)
-
+        this.checkPermissions(Constants.NOTIFICATION_PERMISSION, requestMultiplePermissions)
     }
 
     // permission result
-    private var requestMultiplePermissions = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-        permissions.entries.filter { !it.value }.also{
-            if (it.isEmpty()){
-            }else{
-                notificationPermissionPopup()
+    private var requestMultiplePermissions =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            permissions.entries.filter { !it.value }.also {
+                if (it.isEmpty()) {
+                    setDefaultTheme()
+                } else {
+                    notificationPermissionPopup()
+                }
             }
         }
+
+    private fun setDefaultTheme() {
+        SelectThemeDialog.showPopup(this, prefManager)
     }
 
     /**
@@ -118,21 +127,27 @@ class MainDashboardActivity : BaseActivity(){
      */
     private var resumeActivityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            if (activityResult.resultCode == RESULT_OK) {
-            }
+            setDefaultTheme()
         }
 
     private fun notificationPermissionPopup() {
-        CommonConfirmationBottomSheet.showPopup(this,getString(R.string.permission_alert),getString(R.string.notification_permission_msg)
-            ,getString(R.string.okay),getString(R.string.give_later), icon = R.drawable.ic_alert,
-            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+        CommonConfirmationBottomSheet.showPopup(this,
+            getString(R.string.permission_alert),
+            getString(R.string.notification_permission_msg),
+            getString(R.string.okay),
+            getString(R.string.give_later),
+            icon = R.drawable.ic_alert,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener {
                 override fun onConfirmationYesClick(bundle: Bundle?) {
                     val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                     val uri: Uri = Uri.fromParts("package", packageName, null)
                     intent.data = uri
                     resumeActivityResultLauncher.launch(intent)
                 }
-                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+
+                override fun onConfirmationNoClick(bundle: Bundle?) {
+                    setDefaultTheme()
+                }
             })
     }
 
@@ -140,8 +155,9 @@ class MainDashboardActivity : BaseActivity(){
     private fun initListener() {
 
     }
+
     private fun setPurchase(listData: List<InAppPurchaseDetails>) {
-        with(prefManager){
+        with(prefManager) {
             setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
             setCustomParam(AppConstants.Purchase.Purchase_All, "N")
             setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
@@ -165,7 +181,10 @@ class MainDashboardActivity : BaseActivity(){
                             setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, true)
                         }
                         BillingRepository.AbacusSku.PRODUCT_ID_level1_lifetime -> {
-                            setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"Y")
+                            setCustomParam(
+                                AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,
+                                "Y"
+                            )
                         }
                         BillingRepository.AbacusSku.PRODUCT_ID_level2_lifetime -> {
                             setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "Y")
@@ -182,7 +201,10 @@ class MainDashboardActivity : BaseActivity(){
                         BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month1,
                         BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3 -> {
                             setCustomParam(AppConstants.Purchase.Purchase_Ads, "Y")
-                            setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"Y")
+                            setCustomParam(
+                                AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,
+                                "Y"
+                            )
                             setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "Y")
                             setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "Y")
                         }
@@ -202,21 +224,24 @@ class MainDashboardActivity : BaseActivity(){
 //            }
         }
     }
+
     private fun showToolbarTitle(id: Int) {
         when (id) {
             R.id.homeFragment -> {
                 binding.toolbar.hide()
             }
-            else ->{
+            else -> {
                 binding.toolbar.hide()
             }
         }
     }
+
     private fun showOnlyBackArrow() { //  Hide bottom navigation bar, Show toolbar back icon
         supportActionBar?.setDisplayShowTitleEnabled(false)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
     }
+
     private fun onMainActivityBack() {
         onBackPressedDispatcher.addCallback(
             this, // lifecycle owner
@@ -265,6 +290,7 @@ class MainDashboardActivity : BaseActivity(){
             }
         }
     }
+
     private fun navigationUp() {
         navController.navigateUp()
     }
@@ -283,21 +309,24 @@ class MainDashboardActivity : BaseActivity(){
 //                        val referrerClickTime: Long = response.referrerClickTimestampSeconds*1000
 //                        val appInstallTime: Long = response.installBeginTimestampSeconds*1000
 
-                        log("referrerUrl : "+referrerUrl)
+                        log("referrerUrl : " + referrerUrl)
 //                        if (referrerUrl.contains("utm_source=referral")){
-                            referrerUrl.split("&").forEach { term ->
-                                if (term.contains("=") && term.split("=").size>1){
-                                    val param = term.split("=")[0]
-                                    val value = term.split("=")[1]
-                                    when(param){
-                                        "utm_source" -> {
-                                            log("Found utm_source in Installation and value is $value")
-                                            MyApplication.logEvent(value, null)
-                                            prefManager.setCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,true)
-                                        }
+                        referrerUrl.split("&").forEach { term ->
+                            if (term.contains("=") && term.split("=").size > 1) {
+                                val param = term.split("=")[0]
+                                val value = term.split("=")[1]
+                                when (param) {
+                                    "utm_source" -> {
+                                        log("Found utm_source in Installation and value is $value")
+                                        MyApplication.logEvent(value, null)
+                                        prefManager.setCustomParamBoolean(
+                                            Constants.PREF_IS_REFERRAL_RECORDED,
+                                            true
+                                        )
                                     }
                                 }
                             }
+                        }
 //                        }else{
 //                            prefManager.setCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,true)
 //                        }

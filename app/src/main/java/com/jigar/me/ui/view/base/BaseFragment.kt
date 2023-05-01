@@ -8,8 +8,6 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.admanager.AdManagerAdRequest
 import com.google.android.gms.ads.admanager.AdManagerAdView
@@ -17,24 +15,24 @@ import com.google.android.gms.ads.admanager.AdManagerInterstitialAd
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.nativead.NativeAd
+import com.google.android.gms.ads.nativead.NativeAdOptions
+import com.google.gson.Gson
 import com.jigar.me.R
-import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.show
 import com.jigar.me.utils.extensions.toastS
+import com.jigar.me.utils.native_ad.TemplateView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 abstract class BaseFragment : Fragment(), CoroutineScope {
     lateinit var prefManager : AppPreferencesHelper
-//    lateinit var mNavController: NavController
 
     private lateinit var job: Job
     override val coroutineContext: CoroutineContext
@@ -52,13 +50,8 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        setNavigationGraph()
         txtToSpeechInit()
     }
-
-//    private fun setNavigationGraph() {
-//        mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
-//    }
 
     fun showToast(id : Int){
         requireContext().toastS(getString(id))
@@ -222,4 +215,46 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
             ex.printStackTrace()
         }
     }
+//    fun showAMBannerAds1(adViewLayout: TemplateView, adUnit : String) {
+//        Log.e("jigarLogs","showAMBannerAds welcome")
+//
+////        val adLoader = AdLoader.Builder(requireContext(), "ca-app-pub-3940256099942544/2247696110")
+//        val adLoader = AdLoader.Builder(requireContext(), getString(R.string.native_ad_unit_id_test))
+//            .forNativeAd { ad : NativeAd ->
+//                // Show the ad.
+//                Log.e("jigarLogs","unifiedNativeAd adChoicesInfo = "+Gson().toJson(ad.adChoicesInfo?.images))
+//                Log.e("jigarLogs","unifiedNativeAd adChoicesInfo = "+Gson().toJson(ad.adChoicesInfo?.text))
+//                Log.e("jigarLogs","unifiedNativeAd advertiser = "+Gson().toJson(ad.advertiser))
+//                Log.e("jigarLogs","unifiedNativeAd price = "+Gson().toJson(ad.price))
+//                Log.e("jigarLogs","unifiedNativeAd responseInfo = "+Gson().toJson(ad.responseInfo?.responseExtras))
+//                Log.e("jigarLogs","unifiedNativeAd starRating = "+Gson().toJson(ad.starRating))
+//                Log.e("jigarLogs","unifiedNativeAd store = "+Gson().toJson(ad.store))
+//                Log.e("jigarLogs","unifiedNativeAd body = "+Gson().toJson(ad.body))
+//                Log.e("jigarLogs","unifiedNativeAd callToAction = "+Gson().toJson(ad.callToAction))
+//                Log.e("jigarLogs","unifiedNativeAd headline = "+Gson().toJson(ad.headline))
+//                Log.e("jigarLogs","unifiedNativeAd images = "+Gson().toJson(ad.images))
+//                Log.e("jigarLogs","unifiedNativeAd extras = "+Gson().toJson(ad.extras))
+////                Log.e("jigarLogs","unifiedNativeAd mediaContent = "+Gson().toJson(ad.mediaContent))
+//                Log.e("jigarLogs","unifiedNativeAd muteThisAdReasons = "+Gson().toJson(ad.muteThisAdReasons))
+//                for (key in ad.responseInfo?.responseExtras?.keySet()!!) {
+//                    Log.e("jigarLogs","unifiedNativeAd extras vallue = "+ad.responseInfo?.responseExtras!!.getString(key))
+//
+//                }
+//                adViewLayout.setNativeAd(ad)
+//            }
+//            .withAdListener(object : AdListener() {
+//                override fun onAdFailedToLoad(adError: LoadAdError) {
+//                    // Handle the failure by logging, altering the UI, and so on.
+//                    Log.e("jigarLogs","onAdFailedToLoad = "+adError.message)
+//                }
+//            })
+//            .withNativeAdOptions(
+//                NativeAdOptions.Builder()
+//                // Methods in the NativeAdOptions.Builder class can be
+//                // used here to specify individual options settings.
+//                .build())
+//            .build()
+//        adLoader.loadAd(AdRequest.Builder().build())
+//
+//    }
 }

@@ -31,13 +31,11 @@ import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.databinding.FragmentExamBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
-import com.jigar.me.ui.view.confirm_alerts.dialogs.exam.ExamCompleteDialog
+import com.jigar.me.ui.view.confirm_alerts.dialogs.ExamCompleteDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.*
 import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.collections.ArrayList
@@ -340,7 +338,7 @@ class ExamFragment : BaseFragment(), ExamCompleteDialog.TestCompleteDialogInterf
                 totalSkip.toString(),
                 totalWrong.toString(),
                 right.toString(),list_abacus.size.toString(),
-                this@ExamFragment
+                this@ExamFragment, prefManager
             )
         }
     }

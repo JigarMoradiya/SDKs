@@ -12,38 +12,414 @@
             android:id="@+id/imgKidLeft"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:adjustViewBounds="true"
             android:paddingBottom="@dimen/_30sdp"
             android:scaleType="fitEnd"
-            android:adjustViewBounds="true"
             android:visibility="gone"
-            tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/relAbacus"
-            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
-            app:srcCompat="@drawable/ic_boy_abacus_left" />
+            app:srcCompat="@drawable/ic_boy_abacus_left"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgKidRight"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="-5dp"
+            android:adjustViewBounds="true"
             android:paddingBottom="@dimen/_30sdp"
             android:scaleType="fitEnd"
-            android:layout_marginStart="-9dp"
-            android:adjustViewBounds="true"
             android:visibility="gone"
-            tools:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
             app:layout_constraintStart_toEndOf="@+id/relAbacus"
             app:layout_constraintTop_toTopOf="@+id/relAbacus"
-            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
-            app:srcCompat="@drawable/ic_girl_abacus_right" />
+            app:srcCompat="@drawable/ic_girl_abacus_right"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/viewNumbers"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:paddingHorizontal="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/relAbacus"
+            app:layout_constraintStart_toStartOf="@+id/relAbacus"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/activity_padding4"
+                android:weightSum="9">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/red_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="500000000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVery3ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/purple_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="50000000"
+
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/indigo_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="5000000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVeryExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/blue_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="500000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVeryExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/cyan_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="50000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/teal_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="5000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/green_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="500"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/lime_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="50"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/orange_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="5"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/viewNumbersBottom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/relAbacus"
+            app:layout_constraintStart_toStartOf="@+id/relAbacus"
+            app:layout_constraintTop_toBottomOf="@+id/relAbacus"
+            tools:visibility="visible">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_12sdp"
+                android:orientation="horizontal"
+                android:weightSum="9">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/red_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="100000000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVery3ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/purple_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="10000000"
+
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/indigo_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="1000000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVeryExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/blue_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="100000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeVeryExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/cyan_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="10000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/teal_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="1000"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/green_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="100"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/lime_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="10"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/orange_700"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSizeSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="9"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:orientation="horizontal">
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Ten Crores"
+                    android:textColor="@color/red_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Crores"
+                    android:textColor="@color/purple_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Ten Lakhs"
+                    android:textColor="@color/indigo_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Lakhs"
+                    android:textColor="@color/blue_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Ten\nThousands"
+                    android:textColor="@color/cyan_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Thousands"
+                    android:textColor="@color/teal_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Hundreds"
+                    android:textColor="@color/green_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Tens"
+                    android:textColor="@color/lime_800"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="Ones"
+                    android:textColor="@color/orange_700"
+                    android:textSize="@dimen/textSizeVery2ExtraSmall"
+                    app:fontFamily="@font/font_extra_bold" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <RelativeLayout
             android:id="@+id/relAbacus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-9dp"
+            android:layout_marginStart="-5dp"
             app:layout_constraintStart_toEndOf="@+id/imgKidLeft"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toBottomOf="@+id/viewNumbers">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivReset"
@@ -59,9 +435,9 @@
                 android:id="@+id/cardAbacusMain"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="4dp"
                 android:layout_marginTop="@dimen/_15sdp"
-                android:layout_marginBottom="@dimen/_6sdp"
-                android:layout_marginHorizontal="8dp"
+                android:layout_marginBottom="@dimen/_4sdp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardElevation="@dimen/_2sdp"
@@ -72,7 +448,8 @@
                     android:id="@+id/rlAbacusMain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_abacus_frame_large_red">
+                    android:background="@drawable/bg_abacus_frame_large_red"
+                    tools:layout_width="@dimen/_356sdp">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/rlAbacus"
@@ -177,7 +554,7 @@
                 android:includeFontPadding="false"
                 android:text="0"
                 android:textColor="@color/white"
-                android:textSize="@dimen/textSizeLarge"
+                android:textSize="@dimen/textSizeRegular"
                 app:fontFamily="@font/font_extra_bold" />
 
 
@@ -206,29 +583,29 @@
             android:id="@+id/imgKidHandLeft"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:scaleType="fitStart"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_marginStart="-2dp"
             android:paddingBottom="@dimen/_30sdp"
+            android:scaleType="fitStart"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
             app:layout_constraintStart_toEndOf="@+id/imgKidLeft"
             app:layout_constraintTop_toTopOf="@+id/relAbacus"
-            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
-            app:srcCompat="@drawable/ic_boy_abacus_hand_left" />
+            app:srcCompat="@drawable/ic_boy_abacus_hand_left"
+            tools:visibility="visible" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/imgKidHandRight"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:scaleType="fitEnd"
-            android:visibility="gone"
-            tools:visibility="visible"
             android:layout_marginEnd="-2dp"
             android:paddingBottom="@dimen/_30sdp"
+            android:scaleType="fitEnd"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
             app:layout_constraintEnd_toStartOf="@+id/imgKidRight"
             app:layout_constraintTop_toTopOf="@+id/relAbacus"
-            app:layout_constraintBottom_toBottomOf="@+id/relAbacus"
-            app:srcCompat="@drawable/ic_girl_abacus_hand_right" />
+            app:srcCompat="@drawable/ic_girl_abacus_hand_right"
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

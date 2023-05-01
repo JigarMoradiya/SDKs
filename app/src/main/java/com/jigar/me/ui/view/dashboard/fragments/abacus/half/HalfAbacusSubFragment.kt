@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.view.setMargins
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
@@ -102,33 +103,40 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
     }
 
     private fun setBead() {
-        if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
-            binding.imgKidRight.show()
-            binding.imgKidHandRight.show()
+        val isHideTable = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_hide_table, false)
+        if (isHideTable || final_column <= 5){
+            if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
+                binding.imgKidRight.show()
+                binding.imgKidHandRight.show()
+                val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
+                params.setMargins(0)
+                binding.relAbacus.layoutParams = params
+
+                if (DataProvider.generateIndex() == 0){
+                    binding.imgKidRight.setImageResource(R.drawable.ic_boy_abacus_right)
+                    binding.imgKidHandRight.setImageResource(R.drawable.ic_boy_abacus_hand_right)
+                }else{
+                    binding.imgKidRight.setImageResource(R.drawable.ic_girl_abacus_right)
+                    binding.imgKidHandRight.setImageResource(R.drawable.ic_girl_abacus_hand_right)
+                }
+            }else{
+                binding.imgKidLeft.show()
+                binding.imgKidHandLeft.show()
+
+                if (DataProvider.generateIndex() == 0){
+                    binding.imgKidLeft.setImageResource(R.drawable.ic_girl_abacus_left)
+                    binding.imgKidHandLeft.setImageResource(R.drawable.ic_girl_abacus_hand_left)
+                }else{
+                    binding.imgKidLeft.setImageResource(R.drawable.ic_boy_abacus_left)
+                    binding.imgKidHandLeft.setImageResource(R.drawable.ic_boy_abacus_hand_left)
+                }
+            }
+        }else{
             val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
             params.setMargins(0)
             binding.relAbacus.layoutParams = params
-
-            if (DataProvider.generateIndex() == 0){
-                binding.imgKidRight.setImageResource(R.drawable.ic_boy_abacus_right)
-                binding.imgKidHandRight.setImageResource(R.drawable.ic_boy_abacus_hand_right)
-            }else{
-                binding.imgKidRight.setImageResource(R.drawable.ic_girl_abacus_right)
-                binding.imgKidHandRight.setImageResource(R.drawable.ic_girl_abacus_hand_right)
-            }
-        }else{
-            binding.imgKidLeft.show()
-            binding.imgKidHandLeft.show()
-
-            if (DataProvider.generateIndex() == 0){
-                binding.imgKidLeft.setImageResource(R.drawable.ic_girl_abacus_left)
-                binding.imgKidHandLeft.setImageResource(R.drawable.ic_girl_abacus_hand_left)
-            }else{
-                binding.imgKidLeft.setImageResource(R.drawable.ic_boy_abacus_left)
-                binding.imgKidHandLeft.setImageResource(R.drawable.ic_boy_abacus_hand_left)
-            }
-
         }
+
         binding.abacusTop.setNoOfRowAndBeads(0, final_column, 1)
         binding.abacusBottom.setNoOfRowAndBeads(0, final_column, 4)
 
@@ -297,11 +305,6 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
         if (type) {
             binding.resettoContinue.show()
             startTimerForToolTips()
-//            if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
-//                startTimerForToolTips()
-//            }else{
-//                CommonUtils.blinkView(binding.ivReset,3)
-//            }
         } else {
             binding.resettoContinue.hide()
         }
@@ -363,7 +366,7 @@ class HalfAbacusSubFragment : BaseFragment(), AbacusMasterBeadShiftListener {
         setAbacusRowCountAndInvalidate(final_column)
     }
 
-    fun setAbacusRowCountAndInvalidate(column: Int) {
+    private fun setAbacusRowCountAndInvalidate(column: Int) {
         final_column = column
         if (isAdded) {
             binding.abacusTop.noOfColumn = column

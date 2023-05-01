@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.setMargins
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
@@ -55,12 +57,12 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
         binding.recyclerviewAbacusDefault.post {
             val columnFree = CommonUtils.calculateNoOfColumns((resources.getDimension(R.dimen.bead_column).toInt().dp.toFloat()),binding.recyclerviewAbacusDefault.width.dp.toFloat())
             binding.recyclerviewAbacusDefault.layoutManager = GridLayoutManager(requireContext(),columnFree)
-            abacusThemeFreeAdapter = AbacusThemeSelectionsAdapter(DataProvider.getAbacusThemeFreeTypeList(requireContext(),AbacusBeadType.Exam),this@SettingsFragment, selectedFreePosition)
+            abacusThemeFreeAdapter = AbacusThemeSelectionsAdapter(DataProvider.getAbacusThemeFreeTypeList(requireContext(),AbacusBeadType.SettingPreview),this@SettingsFragment, selectedFreePosition)
             binding.recyclerviewAbacusDefault.adapter = abacusThemeFreeAdapter
 
             val columnPaid = CommonUtils.calculateNoOfColumns((resources.getDimension(R.dimen.bead_column_paid).toInt().dp.toFloat()),binding.recyclerviewAbacusDefault.width.dp.toFloat())
             binding.recyclerviewAbacusPaid.layoutManager = GridLayoutManager(requireContext(),columnPaid)
-            abacusThemePaidAdapter = AbacusThemeSelectionsAdapter(DataProvider.getAbacusThemePaidTypeList(requireContext(),AbacusBeadType.Exam),this@SettingsFragment, selectedPaidPosition, true)
+            abacusThemePaidAdapter = AbacusThemeSelectionsAdapter(DataProvider.getAbacusThemePaidTypeList(requireContext(),AbacusBeadType.SettingPreview),this@SettingsFragment, selectedPaidPosition, true)
             binding.recyclerviewAbacusPaid.adapter = abacusThemePaidAdapter
 
             setTheme()
@@ -124,7 +126,7 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
     private fun setTheme() {
         selectedFreePosition = -1
         selectedPaidPosition = -1
-        val freeList = DataProvider.getAbacusThemeFreeTypeList(requireContext(),AbacusBeadType.Exam)
+        val freeList = DataProvider.getAbacusThemeFreeTypeList(requireContext(),AbacusBeadType.SettingPreview)
         if (prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default).contains(AppConstants.Settings.theam_Default,true)){
             val position : Int? = freeList.indexOfFirst { it.type.equals(prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default),true) }
             if (position != null && position != -1){
@@ -132,7 +134,7 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
                 setPreviewTheme(freeList[position].type)
             }
         }else{
-            val paidList = DataProvider.getAbacusThemePaidTypeList(requireContext(),AbacusBeadType.Exam)
+            val paidList = DataProvider.getAbacusThemePaidTypeList(requireContext(),AbacusBeadType.SettingPreview)
             val position : Int? = paidList.indexOfFirst { it.type.equals(prefManager.getCustomParam(AppConstants.Settings.Theam,AppConstants.Settings.theam_Default),true) }
             if (position != null && position != -1){
                 selectedPaidPosition = position
@@ -148,12 +150,16 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
         binding.linearAbacus.removeAllViews()
         binding.linearAbacusPreview.invisible()
 
-
         lifecycleScope.launch {
             val abacusBinding : LayoutAbacusExamBinding = LayoutAbacusExamBinding.inflate(layoutInflater, null, false)
 //        val abacusBinding : FragmentAbacusSubBinding = FragmentAbacusSubBinding.inflate(layoutInflater, null, false)
+
+            val params = ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT,ConstraintLayout.LayoutParams.WRAP_CONTENT)
+            params.setMargins(0)
+            abacusBinding.relAbacus.layoutParams = params
+
             binding.linearAbacus.addView(abacusBinding.root)
-            val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.Exam)
+            val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.SettingPreview)
             themeContent.abacusFrameExam135.let {
                 abacusBinding.rlAbacusMain.setBackgroundResource(it)
             }

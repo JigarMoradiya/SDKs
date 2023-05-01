@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.InsetDrawable
-import android.util.Log
 import android.view.Gravity
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
@@ -19,14 +18,15 @@ import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.databinding.DialogExerciseCompleteBinding
 import com.jigar.me.ui.view.dashboard.fragments.exercise.adapter.ExerciseAdditionSubtractionResultAdapter
 import com.jigar.me.ui.view.dashboard.fragments.exercise.adapter.ExerciseMultiplicationDivisionResultAdapter
+import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.*
 
 object ExerciseCompleteDialog {
 
     var alertdialog: AlertDialog? = null
 
-    fun showPopup(context: Context, listExercise : MutableList<ExerciseList>,prefManager : AppPreferencesHelper,
-                  currentParentData: ExerciseLevel?,currentChildData : ExerciseLevelDetail?, listener: ExerciseCompleteDialogInterface) {
+    fun showPopup(context: Context, listExercise : MutableList<ExerciseList>, prefManager : AppPreferencesHelper,
+                  currentParentData: ExerciseLevel?, currentChildData : ExerciseLevelDetail?, listener: ExerciseCompleteDialogInterface) {
 
         val alertLayout = DialogExerciseCompleteBinding.inflate(context.layoutInflater,null,false)
         val alertBuilder = AlertDialog.Builder(context)
@@ -44,58 +44,85 @@ object ExerciseCompleteDialog {
             }else{
                 val totalClearExercise = (previousClearExercises + 1)
                 prefManager.setCustomParamInt("Exercise_count_"+currentChildData?.id,totalClearExercise)
-                if (totalClearExercise == 3){
-                    prefManager.setCustomParamBoolean("Exercise_"+currentChildData?.id,true)
-                    alertLayout.tvResult.text = "Congratulations, you clear this exercise 3 time in a row and get 3 star badge."
-                }else if (totalClearExercise == 2){
-                    alertLayout.tvResult.text = "Congratulations, clear one more time this exercise of 80% result and got 3 star badge."
-                }else if (totalClearExercise == 1){
-                    alertLayout.tvResult.text = "Congratulations, To get 3 star badge you need to clear this exercise 2 more time in row."
+                when (totalClearExercise) {
+                    3 -> {
+                        prefManager.setCustomParamBoolean("Exercise_"+currentChildData?.id,true)
+                        alertLayout.tvResult.text = "Congratulations, you clear this exercise 3 time in a row and get 3 star badge."
+                    }
+                    2 -> {
+                        alertLayout.tvResult.text = "Congratulations, clear one more time this exercise of 80% result and got 3 star badge."
+                    }
+                    1 -> {
+                        alertLayout.tvResult.text = "Congratulations, To get 3 star badge you need to clear this exercise 2 more time in row."
+                    }
                 }
-            }
-
-            if (percentage == 100F){
-                val index = DataProvider.generateIndex(3)
-                val msg = if (index == 0){
-                    context.getString(R.string.unstoppable_great_job)
-                }else if (index == 1){
-                    context.getString(R.string.you_are_so_intelligent)
-                }else { // index = 2
-                    context.getString(R.string.you_are_so_genius)
-                }
-                alertLayout.tvResultTitle.text = msg
-
-            }else if (percentage >= 90F){
-                val index = DataProvider.generateIndex(3)
-                val msg = if (index == 0){
-                    context.getString(R.string.you_are_brilliant)
-                }else if (index == 1){
-                    context.getString(R.string.you_are_glorious)
-                }else { // index = 2
-                    context.getString(R.string.you_are_clever)
-                }
-                alertLayout.tvResultTitle.text = msg
-            }else if (percentage >= 80F){
-                val index = DataProvider.generateIndex(1)
-                val msg = if (index == 0){
-                    context.getString(R.string.you_are_on_the_right_track)
-                }else { // index = 1
-                    context.getString(R.string.you_are_on_the_right_track)
-                }
-                alertLayout.tvResultTitle.text = msg
             }
         }else{
-            if (listExercise.size == 5){
-                if (percentage >= 60F){
-                    alertLayout.tvResultTitle.text = context.getString(R.string.not_bad)
+           prefManager.setCustomParamInt("Exercise_count_"+currentChildData?.id,0)
+        }
+
+        val userName = prefManager.getCustomParam(Constants.childName,"")
+        var msgPrefix = ""
+        if (userName.isNotEmpty()){
+            msgPrefix = "$userName, "
+        }
+        val msg = if (percentage == 100F){
+            alertLayout.tvResultTitle.setTextColor(ContextCompat.getColor(context,R.color.green_800))
+            val index = DataProvider.generateIndex(3)
+            when (index) {
+                0 -> {
+                    context.getString(R.string.unstoppable_great_job)
                 }
-            }else{
-                if (percentage >= 70F){
-                    alertLayout.tvResultTitle.text = context.getString(R.string.not_bad)
+                1 -> {
+                    context.getString(R.string.you_are_so_intelligent)
+                }
+                else -> { // index = 2
+                    context.getString(R.string.you_are_so_genius)
                 }
             }
+        }else if (percentage >= 90F || (listExercise.size == 5 && percentage >= 80F)){
+            alertLayout.tvResultTitle.setTextColor(ContextCompat.getColor(context,R.color.blue_800))
+            val index = DataProvider.generateIndex(3)
+            when (index) {
+                0 -> {
+                    context.getString(R.string.you_are_brilliant)
+                }
+                1 -> {
+                    context.getString(R.string.you_are_glorious)
+                }
+                else -> { // index = 2
+                    context.getString(R.string.you_are_clever)
+                }
+            }
+        }else if (percentage >= 80F){
+            alertLayout.tvResultTitle.setTextColor(ContextCompat.getColor(context,R.color.purple_800))
 
-            prefManager.setCustomParamInt("Exercise_count_"+currentChildData?.id,0)
+            val index = DataProvider.generateIndex(1)
+            when (index) {
+                0 -> {
+                    context.getString(R.string.you_are_on_the_right_track)
+                }
+                else -> { // index = 1
+                    context.getString(R.string.you_are_on_the_right_track)
+                }
+            }
+        }else if (percentage >= 70F){
+            alertLayout.tvResultTitle.setTextColor(ContextCompat.getColor(context,R.color.lime_800))
+            context.getString(R.string.good_job)
+        }else if (percentage >= 60F){
+            alertLayout.tvResultTitle.setTextColor(ContextCompat.getColor(context,R.color.orange_800))
+            if (userName.isNotEmpty()){
+                msgPrefix = "$userName "
+            }
+            context.getString(R.string.not_bad)
+        }else{
+            alertLayout.tvResultTitle.setTextColor(ContextCompat.getColor(context,R.color.red_800))
+            context.getString(R.string.better_luck_for_next_time)
+        }
+        if (msgPrefix.isEmpty()){
+            alertLayout.tvResultTitle.text = msg
+        }else{
+            alertLayout.tvResultTitle.text = msgPrefix.plus(msg.lowercase())
         }
 
         if (listExercise.first().question.contains("x")){
