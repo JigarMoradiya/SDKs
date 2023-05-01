@@ -58,12 +58,11 @@
             android:id="@+id/cardBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_1sdp"
             app:cardBackgroundColor="@color/light_back"
             app:cardCornerRadius="@dimen/_16sdp"
             app:cardElevation="@dimen/card_elevation"
             app:cardMaxElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
+            android:layout_margin="@dimen/icons_margin2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 

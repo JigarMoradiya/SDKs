@@ -21,12 +21,11 @@
             android:id="@+id/cardBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_1sdp"
+            android:layout_margin="@dimen/icons_margin2"
             android:elevation="@dimen/card_elevation"
             app:cardBackgroundColor="@color/light_back"
             app:cardCornerRadius="@dimen/_16sdp"
             app:cardMaxElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -41,81 +40,82 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
+            style="@style/mainTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/title_margin"
             android:text="@{title}"
-            tools:text="Pages of Number"
-            style="@style/mainTitle"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
-            app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
+            app:layout_constraintEnd_toStartOf="@+id/linearTopEnd"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack"
+            tools:text="Pages of Number" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardSettingTop"
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/linearTopEnd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_1sdp"
-            android:elevation="@dimen/card_elevation"
-            app:cardBackgroundColor="@color/light_setting"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardMaxElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toStartOf="@+id/cardYoutube"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:padding="@dimen/activity_padding8"
-                app:srcCompat="@drawable/ic_home_setting" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardYoutube"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_1sdp"
-            android:elevation="@dimen/card_elevation"
-            app:cardBackgroundColor="@color/light_youtube"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardMaxElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
-            app:layout_constraintEnd_toStartOf="@+id/cardPurchase"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:padding="@dimen/activity_padding8"
-                app:srcCompat="@drawable/ic_youtube" />
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardPurchase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_1sdp"
-            android:elevation="@dimen/card_elevation"
-            app:cardBackgroundColor="@color/light_purchase"
-            app:cardCornerRadius="@dimen/_16sdp"
-            app:cardMaxElevation="@dimen/card_elevation"
-            app:cardUseCompatPadding="true"
+            android:orientation="horizontal"
+            android:padding="@dimen/icons_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="@dimen/_32sdp"
-                android:layout_height="@dimen/_32sdp"
-                android:padding="@dimen/activity_padding8"
-                app:srcCompat="@drawable/ic_purchase" />
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardSettingTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icons_margin"
+                android:elevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/light_setting"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardMaxElevation="@dimen/card_elevation">
 
-        </com.google.android.material.card.MaterialCardView>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:padding="@dimen/activity_padding8"
+                    app:srcCompat="@drawable/ic_home_setting" />
 
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardYoutube"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icons_margin"
+                android:elevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/light_youtube"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardMaxElevation="@dimen/card_elevation">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:padding="@dimen/activity_padding8"
+                    app:srcCompat="@drawable/ic_youtube" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardPurchase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/icons_margin"
+                android:elevation="@dimen/card_elevation"
+                app:cardBackgroundColor="@color/light_purchase"
+                app:cardCornerRadius="@dimen/_16sdp"
+                app:cardMaxElevation="@dimen/card_elevation">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="@dimen/_32sdp"
+                    android:layout_height="@dimen/_32sdp"
+                    android:padding="@dimen/activity_padding8"
+                    app:srcCompat="@drawable/ic_purchase" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewPage"

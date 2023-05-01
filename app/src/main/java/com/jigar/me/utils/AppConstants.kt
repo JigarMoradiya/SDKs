@@ -121,6 +121,7 @@ object AppConstants {
 
             var abacus_colorful = "abacus_colorful"
 
+            var isSetTheam = "isSetTheam"
             var Theam = "Theam"
             var TheamTempView = "TheamTempView"
             const val theam_Poligon_default = "Poligon" // black
@@ -143,6 +144,8 @@ object AppConstants {
             const val theam_shape = "Shape"
             const val theam_Star = "Star"
 
+            var Free_Mode_Beads_Move_Count = "free_mode_beads_move_count"
+            var Free_Mode_Beads_Move_Count_Limit = 70
             var Toddler_No = "Toddler_No"
             var Toddler_No_Count = "Toddler_No_Count"
             var SW_FreeMode = "SW_FreeMode"

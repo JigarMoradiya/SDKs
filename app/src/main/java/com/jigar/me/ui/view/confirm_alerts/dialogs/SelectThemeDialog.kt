@@ -27,7 +27,7 @@ import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.*
 
 object SelectThemeDialog {
-    fun showPopup(activity: Activity,prefManager : AppPreferencesHelper) {
+    fun showPopup(activity: Activity,prefManager : AppPreferencesHelper,listener : DialogInterface) {
         val alertLayout = DialogSelectThemeBinding.inflate(activity.layoutInflater,null,false)
         val alertBuilder = AlertDialog.Builder(activity)
         alertBuilder.setView(alertLayout.root)
@@ -37,9 +37,11 @@ object SelectThemeDialog {
         with(alertLayout){
             btnDone.onClick {
                 alertdialog.dismiss()
+                listener.themeCloseDialogClick()
             }
             tvNo.onClick {
                 alertdialog.dismiss()
+                listener.themeCloseDialogClick()
             }
 
             var selectedFreePosition = -1
@@ -109,4 +111,7 @@ object SelectThemeDialog {
 
     }
 
+    interface DialogInterface {
+        fun themeCloseDialogClick()
+    }
 }

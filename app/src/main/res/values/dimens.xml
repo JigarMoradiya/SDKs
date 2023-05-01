@@ -68,7 +68,9 @@
     <dimen name="activity_padding8">@dimen/_8sdp</dimen>
     <dimen name="activity_padding6">@dimen/_6sdp</dimen>
     <dimen name="activity_padding4">@dimen/_4sdp</dimen>
-    <dimen name="title_margin">@dimen/_4sdp</dimen>
+    <dimen name="icons_margin">@dimen/_4sdp</dimen>
+    <dimen name="icons_margin2">@dimen/_8sdp</dimen>
+    <dimen name="title_margin">@dimen/_8sdp</dimen>
 
     <dimen name="sudoku_number_dimen">@dimen/_36sdp</dimen>
     <dimen name="exercise_number_dimen">@dimen/_28sdp</dimen>
@@ -84,8 +86,8 @@
     <dimen name="home_menu_margin">@dimen/_5sdp</dimen>
     <dimen name="home_menu_corner">@dimen/_12sdp</dimen>
     <dimen name="exam_option_width">@dimen/_120sdp</dimen>
-    <dimen name="exam_option_round">@dimen/_40sdp</dimen>
-    <dimen name="exam_option_round_corner">@dimen/_20sdp</dimen>
+    <dimen name="exam_option_round">@dimen/_38sdp</dimen>
+    <dimen name="exam_option_round_corner">@dimen/_19sdp</dimen>
 
     <dimen name="quiz_progress_height">@dimen/_8sdp</dimen>
 

@@ -11,10 +11,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AbacusBeadType
-import com.jigar.me.data.local.data.BeginnerExamPaper
-import com.jigar.me.data.local.data.BeginnerExamQuestionType
-import com.jigar.me.data.local.data.DataProvider
+import com.jigar.me.data.local.data.*
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.databinding.FragmentAbacusSubBinding
 import com.jigar.me.databinding.LayoutAbacusExamBinding
@@ -33,7 +30,7 @@ import kotlinx.coroutines.launch
 
 class ExamResultLevel1Adapter(
     private var listData: List<BeginnerExamPaper>,
-    private val examAbacusTheme: String,
+    private val themeContent: AbacusContent,
     private val lifecycleScope: LifecycleCoroutineScope
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -121,7 +118,7 @@ class ExamResultLevel1Adapter(
                         mBinding.imgSign1.hide()
 
                         CoroutineScope(Dispatchers.IO).launch {
-                            val themeContent = DataProvider.findAbacusThemeType(context,examAbacusTheme, AbacusBeadType.ExamResult)
+
                             themeContent.abacusFrameExam135.let {
                                 abacusBinding1.rlAbacusMain.setBackgroundResource(it)
                             }
@@ -162,7 +159,6 @@ class ExamResultLevel1Adapter(
                         mBinding.layoutAbacus2.show()
 
                         CoroutineScope(Dispatchers.IO).launch {
-                            val themeContent = DataProvider.findAbacusThemeType(context,examAbacusTheme,AbacusBeadType.ExamResult)
                             themeContent.abacusFrameExam135.let {
                                 abacusBinding1.rlAbacusMain.setBackgroundResource(it)
                                 abacusBinding2.rlAbacusMain.setBackgroundResource(it)

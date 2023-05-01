@@ -36,7 +36,6 @@ import com.jigar.me.utils.checkPermissions
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.log
 import com.jigar.me.utils.extensions.show
-import com.jigar.me.utils.extensions.toastS
 import com.onesignal.OneSignal
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -81,7 +80,7 @@ class MainDashboardActivity : BaseActivity() {
         }
         if (BuildConfig.DEBUG) {
             OneSignal.setEmail("jigar@gmail.com")
-//            binding.viewBG.show()
+            binding.viewBG.show()
         }
     }
 
@@ -103,6 +102,23 @@ class MainDashboardActivity : BaseActivity() {
     private fun initViews() {
         setNavigationGraph()
         onMainActivityBack()
+        if (!prefManager.getCustomParamBoolean(AppConstants.Settings.isSetTheam, false)) {
+            SelectThemeDialog.showPopup(
+                this,
+                prefManager,
+                object : SelectThemeDialog.DialogInterface {
+                    override fun themeCloseDialogClick() {
+                        prefManager.setCustomParamBoolean(AppConstants.Settings.isSetTheam, true)
+                        checkNotificationPermission()
+                    }
+                })
+        } else {
+            checkNotificationPermission()
+        }
+
+    }
+
+    private fun checkNotificationPermission() {
         this.checkPermissions(Constants.NOTIFICATION_PERMISSION, requestMultiplePermissions)
     }
 
@@ -110,24 +126,17 @@ class MainDashboardActivity : BaseActivity() {
     private var requestMultiplePermissions =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
             permissions.entries.filter { !it.value }.also {
-                if (it.isEmpty()) {
-                    setDefaultTheme()
-                } else {
+                if (it.isNotEmpty()) {
                     notificationPermissionPopup()
                 }
             }
         }
-
-    private fun setDefaultTheme() {
-        SelectThemeDialog.showPopup(this, prefManager)
-    }
 
     /**
      * Activity Result For Resume Result
      */
     private var resumeActivityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-            setDefaultTheme()
         }
 
     private fun notificationPermissionPopup() {
@@ -145,9 +154,7 @@ class MainDashboardActivity : BaseActivity() {
                     resumeActivityResultLauncher.launch(intent)
                 }
 
-                override fun onConfirmationNoClick(bundle: Bundle?) {
-                    setDefaultTheme()
-                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
             })
     }
 
@@ -212,16 +219,16 @@ class MainDashboardActivity : BaseActivity() {
                 }
             }
 
-//            if (BuildConfig.DEBUG){
-//                setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
-//                setCustomParam(AppConstants.Purchase.Purchase_All, "N")
-//                setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
-//                setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
-//                setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "N")
-//                setCustomParam(AppConstants.Purchase.Purchase_Ads, "N")
-//                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "N")
-//                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "N")
-//            }
+            if (BuildConfig.DEBUG) {
+                setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
+                setCustomParam(AppConstants.Purchase.Purchase_All, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Ads, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "N")
+                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "N")
+            }
         }
     }
 

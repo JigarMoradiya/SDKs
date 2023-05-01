@@ -1,5 +1,6 @@
 package com.jigar.me.ui.view.dashboard.fragments.abacus.half
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
@@ -142,7 +143,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            binding.linearTitle.setPadding(0,16.dp,0,0)
+            binding.linearTitle.setPadding(0,12.dp,0,0)
         }
         startAbacus()
         lifecycleScope.launch {
@@ -1276,6 +1277,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     // abacus ui rules
+    @SuppressLint("SuspiciousIndentation")
     private fun setRightAbacusRules() {
         val paramsAds = binding.adView.layoutParams as RelativeLayout.LayoutParams
         paramsAds.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
@@ -1291,6 +1293,17 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         paramscardTable.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
         paramscardTable.addRule(RelativeLayout.ALIGN_PARENT_TOP)
         binding.cardTable.layoutParams = paramscardTable
+
+        val paramsTitle = binding.linearTitle.layoutParams as RelativeLayout.LayoutParams
+        paramsTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+        if (abacusType != AppConstants.Extras_Comman.AbacusTypeNumber && abacusType != AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
+            paramsTitle.addRule(RelativeLayout.END_OF, R.id.cardTable)
+        }
+        binding.linearTitle.layoutParams = paramsTitle
+        lifecycleScope.launch {
+            delay(500)
+            binding.linearTitle.show()
+        }
 
         val paramsRelativeTable = binding.relativeTable.layoutParams as RelativeLayout.LayoutParams
         paramsRelativeTable.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
@@ -1318,6 +1331,16 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         binding.cardHint.layoutParams = paramsHint
     }
     private fun setLeftAbacusRules() {
+
+        val paramsTitle = binding.linearTitle.layoutParams as RelativeLayout.LayoutParams
+        paramsTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+        paramsTitle.addRule(RelativeLayout.END_OF, R.id.relAbacus)
+        binding.linearTitle.layoutParams = paramsTitle
+        lifecycleScope.launch {
+            delay(500)
+            binding.linearTitle.show()
+        }
+
         val paramsAds = binding.adView.layoutParams as RelativeLayout.LayoutParams
         paramsAds.addRule(RelativeLayout.ALIGN_PARENT_START)
         paramsAds.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)

@@ -154,7 +154,7 @@ object DataProvider {
     fun getHomeMenuList(context: Context) : ArrayList<HomeMenu>{
         val list = ArrayList<HomeMenu>()
         with(list){
-            add(HomeMenu(AppConstants.HomeClicks.Menu_Starter,R.drawable.home_menu_starter))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Starter,R.drawable.home_menu_starter,context.getString(R.string.new_)))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Number,R.drawable.home_menu_number))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Addition,R.drawable.home_menu_addition))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Addition_Subtraction,R.drawable.home_menu_subtraction))

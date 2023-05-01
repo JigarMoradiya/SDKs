@@ -129,23 +129,30 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
         }
     }
     // load Interstitial ads
-    fun showAMFullScreenAds(adUnit: String) {
-        val count = prefManager.getCustomParamInt(AppConstants.Purchase.AdsShowCount, 0)
-        if (count == 7) {
+    fun showAMFullScreenAds(adUnit: String, isShowAdsDirect : Boolean = false) {
+        val isShowAd = if (isShowAdsDirect) true else{
+            val count = prefManager.getCustomParamInt(AppConstants.Purchase.AdsShowCount, 0)
+            if (count == 7) {
+                true
+            } else {
+                val newCount = if (count > 8){
+                    1
+                }else{
+                    count + 1
+                }
+                prefManager.setCustomParamInt(AppConstants.Purchase.AdsShowCount, newCount)
+                false
+            }
+        }
+        if (isShowAd){
             val isAdmob = prefManager.getCustomParamBoolean(AppConstants.AbacusProgress.isAdmob,true)
             if (isAdmob){
                 newInterstitialAd(adUnit,true)
             }else{
                 newAdxInterstitialAd(adUnit,true)
             }
-        } else {
-            val newCount = if (count > 8){
-                1
-            }else{
-                count + 1
-            }
-            prefManager.setCustomParamInt(AppConstants.Purchase.AdsShowCount, newCount)
         }
+
     }
 
     fun newInterstitialAd(adUnit: String,isAdsCountReset : Boolean = false) {

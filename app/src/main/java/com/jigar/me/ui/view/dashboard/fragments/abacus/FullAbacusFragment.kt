@@ -2,6 +2,7 @@ package com.jigar.me.ui.view.dashboard.fragments.abacus
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -78,6 +79,17 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         binding.swResetStarting.onClick { switchResetStartingClick() }
         binding.swFreeMode.onClick { switchFreeMode() }
         binding.txtRange.onClick { rangeClick() }
+
+        binding.cardSettingTop.onClick { goToSetting() }
+        binding.cardYoutube.onClick { requireContext().openYoutube() }
+        binding.cardPurchase.onClick { goToPurchase()  }
+    }
+
+    private fun goToPurchase() {
+        mNavController.navigate(R.id.action_fullAbacusFragment_to_purchaseFragment)
+    }
+    private fun goToSetting() {
+        mNavController.navigate(R.id.action_fullAbacusFragment_to_settingsFragment)
     }
 
     private fun resetClick() {
@@ -112,7 +124,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     }
 
     private fun switchFreeMode() {
-        if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode,"") == "Y") {
+        if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode,"Y") == "Y") {
             prefManager.setCustomParam(AppConstants.Settings.SW_FreeMode, "N")
             binding.swFreeMode.isChecked = false
         } else {
@@ -157,10 +169,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             })
     }
 
-    private fun goToPurchase() {
-        mNavController.navigate(R.id.action_fullAbacusFragment_to_purchaseFragment)
-    }
-
     private fun setAbacus() {
         with(prefManager){
             isPurchased = (getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
@@ -181,7 +189,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         binding.linearAbacus.removeAllViews()
         binding.linearAbacusFreeMode.removeAllViews()
         abacusBinding = FragmentAbacusSubKidBinding.inflate(layoutInflater, null, false)
-        val abacusBeadType = if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode, "") == "Y"){
+        val abacusBeadType = if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode, "Y") == "Y"){
             binding.linearAbacusFreeMode.addView(abacusBinding?.root)
             binding.linearAbacusFreeMode.show()
             binding.linearAbacus.hide()
@@ -224,14 +232,14 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     }
     private fun setSwitchs() {
         with(prefManager){
-            binding.swFreeMode.isChecked = getCustomParam(AppConstants.Settings.SW_FreeMode, "") == "Y"
+            binding.swFreeMode.isChecked = getCustomParam(AppConstants.Settings.SW_FreeMode, "Y") == "Y"
             setFreeMode()
         }
     }
 
     private fun setFreeMode() {
         with(prefManager){
-            if (getCustomParam(AppConstants.Settings.SW_FreeMode, "") == "Y"){
+            if (getCustomParam(AppConstants.Settings.SW_FreeMode, "Y") == "Y"){
                 binding.swRandom.hide()
                 binding.swResetStarting.hide()
                 binding.swReset.hide()
@@ -244,6 +252,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
                 binding.txtAbacus.hide()
                 values = -143 // temp
+                is1stTime = true
             }else{
                 binding.swRandom.show()
                 binding.swResetStarting.show()
@@ -359,43 +368,65 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     }
     override fun onAbacusValueChange(abacusView: View, sum: Float) {
         with(prefManager){
-            if (sum.toInt() == values) {
-                binding.swResetStarting.isChecked = false
-                if (getCustomParam(AppConstants.Settings.SW_Random,"") != "Y") {
-                    values++
-                    if (values > 9999999) {
-                        values = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
+            if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode,"Y") == "Y") {
+                if (!is1stTime){
+                    var count = getCustomParamInt(AppConstants.Settings.Free_Mode_Beads_Move_Count,0)
+                    Log.e("jigarLogs","count = "+count)
+                    if (count == AppConstants.Settings.Free_Mode_Beads_Move_Count_Limit){
+                        count = 0
+                        ads(true)
                     }
-                    setCustomParamInt(AppConstants.Settings.Toddler_No,values)
-                } else if (getCustomParam(AppConstants.Settings.SW_Random,"") == "Y") {
-                    random_min = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
-                    random_max = getCustomParamInt(AppConstants.Settings.SW_Range_max,101)
-                    binding.txtRange.text = requireContext().resources.getString(R.string.txt_From) + " " + random_min + " " + requireContext().resources.getString(
-                        R.string.txt_To
-                    ) + " " + random_max
-                    values = genrateRandom()
-                }
-                total_count = getCustomParamInt(AppConstants.Settings.Toddler_No_Count,1)
-                total_count++
-                if (total_count > 99999999) {
-                    total_count = 1
-                }
-                setCustomParamInt(AppConstants.Settings.Toddler_No_Count,total_count)
-                lifecycleScope.launch {
-                    delay(300)
-                    if (getCustomParam(AppConstants.Settings.SW_Reset,"") == "Y") {
-                        resetAbacus()
+                    count++
+                    setCustomParamInt(AppConstants.Settings.Free_Mode_Beads_Move_Count,count)
+                }else{
+                    lifecycleScope.launch {
+                        delay(300)
+                        is1stTime = false
                     }
-                    is1stTime = false
-                    if (requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
-                        goToNextValue()
-                    }else{
-                        notOfflineSupportDialog()
-                    }
-//                    speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
                 }
-                binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
-//                ads()
+
+
+            }else{
+                if (sum.toInt() == values) {
+                    binding.swResetStarting.isChecked = false
+                    if (getCustomParam(AppConstants.Settings.SW_Random,"") != "Y") {
+                        values++
+                        if (values > 9999999) {
+                            values = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
+                        }
+                        setCustomParamInt(AppConstants.Settings.Toddler_No,values)
+                    } else if (getCustomParam(AppConstants.Settings.SW_Random,"") == "Y") {
+                        random_min = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
+                        random_max = getCustomParamInt(AppConstants.Settings.SW_Range_max,101)
+                        binding.txtRange.text = requireContext().resources.getString(R.string.txt_From) + " " + random_min + " " + requireContext().resources.getString(
+                            R.string.txt_To
+                        ) + " " + random_max
+                        values = genrateRandom()
+                    }
+                    total_count = getCustomParamInt(AppConstants.Settings.Toddler_No_Count,1)
+                    total_count++
+                    if (total_count > 99999999) {
+                        total_count = 1
+                    }
+                    setCustomParamInt(AppConstants.Settings.Toddler_No_Count,total_count)
+                    lifecycleScope.launch {
+                        delay(300)
+                        if (getCustomParam(AppConstants.Settings.SW_Reset,"") == "Y") {
+                            resetAbacus()
+                        }
+                        is1stTime = false
+                        if (requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+                            goToNextValue()
+                        }else{
+                            notOfflineSupportDialog()
+                        }
+    //                    speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
+                    }
+                    binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
+    //                ads()
+                } else {
+
+                }
             }
         }
 
@@ -408,11 +439,12 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         }
     }
 
-    private fun ads() {
+    private fun ads(isShowAdDirect : Boolean = false) {
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
             prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&
             !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
-            showAMFullScreenAds(getString(R.string.interstitial_ad_unit_id_abacus_full_screen))
+            Log.e("jigarLogs","ads welcome")
+            showAMFullScreenAds(getString(R.string.interstitial_ad_unit_id_abacus_full_screen),isShowAdDirect)
         }
     }
 

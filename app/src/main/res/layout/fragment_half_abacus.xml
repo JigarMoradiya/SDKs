@@ -26,19 +26,19 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:padding="@dimen/icons_margin">
 
 
                 <com.google.android.material.card.MaterialCardView
                     android:id="@+id/cardBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_1sdp"
+                    android:layout_margin="@dimen/icons_margin"
                     android:elevation="@dimen/card_elevation"
                     app:cardBackgroundColor="@color/light_back"
                     app:cardCornerRadius="@dimen/_16sdp"
-                    app:cardMaxElevation="@dimen/card_elevation"
-                    app:cardUseCompatPadding="true">
+                    app:cardMaxElevation="@dimen/card_elevation">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/imgBack"
@@ -53,12 +53,11 @@
                     android:id="@+id/cardResetProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_1sdp"
+                    android:layout_margin="@dimen/icons_margin"
                     android:elevation="@dimen/card_elevation"
                     app:cardBackgroundColor="@color/light_reset_abacus_progress"
                     app:cardCornerRadius="@dimen/_16sdp"
-                    app:cardMaxElevation="@dimen/card_elevation"
-                    app:cardUseCompatPadding="true">
+                    app:cardMaxElevation="@dimen/card_elevation">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_32sdp"
@@ -72,12 +71,11 @@
                     android:id="@+id/cardSettingTop"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_1sdp"
+                    android:layout_margin="@dimen/icons_margin"
                     android:elevation="@dimen/card_elevation"
                     app:cardBackgroundColor="@color/light_setting"
                     app:cardCornerRadius="@dimen/_16sdp"
-                    app:cardMaxElevation="@dimen/card_elevation"
-                    app:cardUseCompatPadding="true">
+                    app:cardMaxElevation="@dimen/card_elevation">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_32sdp"
@@ -92,13 +90,11 @@
                     android:id="@+id/cardYoutube"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_1sdp"
+                    android:layout_margin="@dimen/icons_margin"
                     android:elevation="@dimen/card_elevation"
-                    android:visibility="gone"
                     app:cardBackgroundColor="@color/light_youtube"
                     app:cardCornerRadius="@dimen/_16sdp"
-                    app:cardMaxElevation="@dimen/card_elevation"
-                    app:cardUseCompatPadding="true">
+                    app:cardMaxElevation="@dimen/card_elevation">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_32sdp"
@@ -112,12 +108,11 @@
                     android:id="@+id/cardPurchase"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/_1sdp"
+                    android:layout_margin="@dimen/icons_margin"
                     android:elevation="@dimen/card_elevation"
                     app:cardBackgroundColor="@color/light_purchase"
                     app:cardCornerRadius="@dimen/_16sdp"
-                    app:cardMaxElevation="@dimen/card_elevation"
-                    app:cardUseCompatPadding="true">
+                    app:cardMaxElevation="@dimen/card_elevation">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_32sdp"
@@ -142,13 +137,16 @@
                 android:id="@+id/linearTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="visible"
+                android:layout_marginBottom="@dimen/activity_padding12"
                 android:gravity="center">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txtTitle"
                     style="@style/mainTitle"
+                    android:paddingHorizontal="@dimen/icons_margin2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
@@ -160,6 +158,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_padding6"
+                    android:paddingHorizontal="@dimen/icons_margin2"
                     android:gravity="center_vertical"
                     android:textColor="@color/black"
                     tools:text="@string/use_left_hand_to_move_beads" />
@@ -169,13 +168,12 @@
                 android:id="@+id/cardTable"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/_1sdp"
+                android:layout_margin="@dimen/icons_margin2"
                 android:elevation="@dimen/card_elevation"
                 android:visibility="invisible"
                 app:cardBackgroundColor="@color/light_math_table"
                 app:cardCornerRadius="@dimen/_16sdp"
                 app:cardMaxElevation="@dimen/card_elevation"
-                app:cardUseCompatPadding="true"
                 tools:visibility="visible">
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -219,8 +217,8 @@
 
                 <RelativeLayout
                     android:id="@+id/relativeQueNumber"
-                    android:layout_width="@dimen/_270sdp"
-                    android:layout_height="@dimen/_200sdp"
+                    android:layout_width="@dimen/_260sdp"
+                    android:layout_height="@dimen/_190sdp"
                     android:visibility="gone"
                     tools:visibility="visible">
 
@@ -234,7 +232,7 @@
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_170sdp"
+                        android:layout_height="@dimen/_160sdp"
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:orientation="vertical">

@@ -24,6 +24,7 @@ import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.BeginnerExamPaper
 import com.jigar.me.data.local.data.BeginnerExamQuestionType
+import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.dbtable.exam.DailyExamData
 import com.jigar.me.databinding.FragmentExamResultBinding
 import com.jigar.me.databinding.RawExamResultLevel1Binding
@@ -80,7 +81,8 @@ class ExamResultFragment : BaseFragment() {
             binding.recyclerviewResult.itemAnimator = null
             binding.recyclerviewResult.setItemViewCacheSize(listAbacusLevel1.size)
 
-            val dailyExamResultLevel1Adapter = ExamResultLevel1Adapter(listAbacusLevel1,examAbacusTheme,lifecycleScope)
+            val themeContent = DataProvider.findAbacusThemeType(requireContext(),examAbacusTheme, AbacusBeadType.ExamResult)
+            val dailyExamResultLevel1Adapter = ExamResultLevel1Adapter(listAbacusLevel1,themeContent,lifecycleScope)
             binding.recyclerviewResult.adapter = dailyExamResultLevel1Adapter
 
         }else{
