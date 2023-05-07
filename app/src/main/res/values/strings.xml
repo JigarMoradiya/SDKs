@@ -438,4 +438,12 @@
     <string name="Seventy">Seventy</string>
     <string name="Eighty">Eighty</string>
     <string name="Ninety">Ninety</string>
+    <string name="click_here_to_watch_nvideo_tutorial_of_abacus">Click here to <font color='#0000FF'>Watch Video Tutorial</font>\nto learn how <font color='#0000FF'>Abacus</font> tool works.</string>
+    <string name="enable_free_mode">Enable Free Mode</string>
+    <string name="to_know_about_abacus">To know about Abacus</string>
+    <string name="rod_s_bead_value">ROD\'s Bead Value</string>
+    <string name="take_exam_of_your_kid_s_to_check_ability_with_different_type">Take different type of Exam to\n<font color='#FF0000'>check your Kid\'s Ability</font></string>
+    <string name="select_different_type_of_exercise_nto_improve_kid_s_performance">Select different type of\n<font color='#EC407A'>Exercise</font> to improve your\n<font color='#EC407A'>Kid\'s Performance</font></string>
+    <string name="maths_with_fun">MATHS with FUN</string>
+    <string name="help_your_child_to_keep_nactive_always">Help your child to keep\n<font color='#EF6C00'>ACTIVE</font> always</string>
 </resources>

@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.viewpager.widget.ViewPager
@@ -47,6 +48,10 @@ import com.jigar.me.utils.extensions.openURL
 import com.jigar.me.utils.extensions.openYoutube
 import com.jigar.me.utils.extensions.shareIntent
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import me.samlss.lighter.IntroProvider
+import me.samlss.lighter.Lighter
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -71,6 +76,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     private val PERIOD_MS: Long = 5000 // time in milliseconds between successive task executions.
 
     private lateinit var mFirebaseRemoteConfig  : FirebaseRemoteConfig
+    private var lighter : Lighter? = null
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         if (root == null){
             binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -85,14 +91,43 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         mNavController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
     }
     private fun initViews() {
+        // set avatar profile and name
         avatarProfileCloseDialog()
+
         homeMenuAdapter = HomeMenuAdapter(DataProvider.getHomeMenuList(requireContext()),this)
         binding.recyclerviewMenu.adapter = homeMenuAdapter
         getTrackData()
         setViewPager()
         getFBConstant()
         firebaseConfig()
+
+        if (prefManager.getCustomParamBoolean(AppConstants.Settings.isSetTheam, false)) {
+            if (!prefManager.getCustomParamBoolean(AppConstants.Settings.isTourWatch, false)) {
+                showTour()
+            }
+        }
     }
+
+    private fun showTour() {
+            lifecycleScope.launch {
+                delay(1000)
+                lighter = Lighter.with(binding.root)
+                val freeModeViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(0)
+                val videoTutorialViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(10)
+                val exerciseViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(6)
+                val examViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(7)
+                val numberPuzzleViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(9)
+                if (freeModeViewHolder != null && exerciseViewHolder != null && examViewHolder != null && videoTutorialViewHolder != null && numberPuzzleViewHolder != null){
+                    IntroProvider.videoTutorialIntro(prefManager,lighter, (freeModeViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                        (videoTutorialViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                        (exerciseViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                        (examViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                        (numberPuzzleViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain
+                    )
+                }
+            }
+    }
+
     override fun onItemHomeMenuClick(data: HomeMenu) {
         moveToClick(data.type)
     }
@@ -236,6 +271,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
                 mNavController?.navigate(R.id.action_homeFragment_to_purchaseFragment)
             }
             AppConstants.HomeClicks.Menu_AboutUs -> {
+//                showTour()
                 mNavController?.navigate(R.id.action_homeFragment_to_aboutFragment)
             }
             AppConstants.HomeClicks.Menu_Share -> {

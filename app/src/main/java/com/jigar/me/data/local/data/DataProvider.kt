@@ -169,6 +169,17 @@ object DataProvider {
         }
         return list
     }
+    fun getHomeMenuItemPosition(type : Int,context: Context) : Int?{
+        val list = getHomeMenuList(context)
+        var position : Int? = null
+        for (i in list.indices){
+            if (list[i].type == type){
+                position = i
+                break
+            }
+        }
+        return position
+    }
     fun getOtherAppList(): ArrayList<OtherApps> {
         val list = ArrayList<OtherApps>()
         with(list) {

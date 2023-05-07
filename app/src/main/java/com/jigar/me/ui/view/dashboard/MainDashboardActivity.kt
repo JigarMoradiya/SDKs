@@ -80,13 +80,12 @@ class MainDashboardActivity : BaseActivity() {
         }
         if (BuildConfig.DEBUG) {
             OneSignal.setEmail("jigar@gmail.com")
-            binding.viewBG.show()
+//            binding.viewBG.show()
         }
     }
 
     private fun setNavigationGraph() {
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -208,10 +207,7 @@ class MainDashboardActivity : BaseActivity() {
                         BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month1,
                         BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3 -> {
                             setCustomParam(AppConstants.Purchase.Purchase_Ads, "Y")
-                            setCustomParam(
-                                AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,
-                                "Y"
-                            )
+                            setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"Y")
                             setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "Y")
                             setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "Y")
                         }

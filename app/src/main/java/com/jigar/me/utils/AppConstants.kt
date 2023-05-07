@@ -122,6 +122,7 @@ object AppConstants {
             var abacus_colorful = "abacus_colorful"
 
             var isSetTheam = "isSetTheam"
+            var isTourWatch = "isTourWatch"
             var Theam = "Theam"
             var TheamTempView = "TheamTempView"
             const val theam_Poligon_default = "Poligon" // black
