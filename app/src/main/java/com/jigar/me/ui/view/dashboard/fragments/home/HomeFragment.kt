@@ -109,23 +109,23 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     }
 
     private fun showTour() {
-            lifecycleScope.launch {
-                delay(1000)
-                lighter = Lighter.with(binding.root)
-                val freeModeViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(0)
-                val videoTutorialViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(10)
-                val exerciseViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(6)
-                val examViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(7)
-                val numberPuzzleViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(9)
-                if (freeModeViewHolder != null && exerciseViewHolder != null && examViewHolder != null && videoTutorialViewHolder != null && numberPuzzleViewHolder != null){
-                    IntroProvider.videoTutorialIntro(prefManager,lighter, (freeModeViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                        (videoTutorialViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                        (exerciseViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                        (examViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                        (numberPuzzleViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain
-                    )
-                }
+        lifecycleScope.launch {
+            delay(1000)
+            lighter = Lighter.with(binding.root)
+            val freeModeViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(0)
+            val videoTutorialViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(10)
+            val exerciseViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(6)
+            val examViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(7)
+            val numberPuzzleViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(9)
+            if (freeModeViewHolder != null && exerciseViewHolder != null && examViewHolder != null && videoTutorialViewHolder != null && numberPuzzleViewHolder != null){
+                IntroProvider.videoTutorialIntro(prefManager,lighter, (freeModeViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                    (videoTutorialViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                    (exerciseViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                    (examViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                    (numberPuzzleViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain
+                )
             }
+        }
     }
 
     override fun onItemHomeMenuClick(data: HomeMenu) {
@@ -158,7 +158,12 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         binding.cardAboutUs.onClick { moveToClick(AppConstants.HomeClicks.Menu_AboutUs) }
         binding.txtOtherApps.onClick {
             OtherApplicationBottomSheet.showPopup(requireActivity())
-//            SelectThemeDialog.showPopup(requireActivity(), prefManager)
+        }
+
+        binding.txtWelcomeTitle.onClick {
+            if (BuildConfig.DEBUG) {
+                showTour()
+            }
         }
     }
     override fun avatarProfileCloseDialog() {
@@ -271,7 +276,6 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
                 mNavController?.navigate(R.id.action_homeFragment_to_purchaseFragment)
             }
             AppConstants.HomeClicks.Menu_AboutUs -> {
-//                showTour()
                 mNavController?.navigate(R.id.action_homeFragment_to_aboutFragment)
             }
             AppConstants.HomeClicks.Menu_Share -> {
