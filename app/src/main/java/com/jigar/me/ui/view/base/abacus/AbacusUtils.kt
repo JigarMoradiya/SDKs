@@ -31,22 +31,21 @@ object AbacusUtils {
         }
     }
 
-    fun setNumber(questionTemp: String,abacusTop1: AbacusMasterView,abacusBottom1: AbacusMasterView,questionTemp2: String? = null,abacusTop2: AbacusMasterView? = null,abacusBottom2: AbacusMasterView? = null) {
+    fun setNumber(questionTemp: String,abacusTop1: AbacusMasterView,abacusBottom1: AbacusMasterView,questionTemp2: String? = null,abacusTop2: AbacusMasterView? = null,abacusBottom2: AbacusMasterView? = null,totalLength : Int = 3) {
         abacusTop1.postDelayed({
-            setBead(questionTemp,abacusTop1,abacusBottom1)
+            setBead(questionTemp,totalLength,abacusTop1,abacusBottom1)
         },0)
 
         if (questionTemp2 != null && abacusTop2 != null && abacusBottom2 != null){
             abacusTop2.postDelayed({
-                setBead(questionTemp2,abacusTop2,abacusBottom2)
+                setBead(questionTemp2,totalLength,abacusTop2,abacusBottom2)
             },0)
         }
     }
 
-    private fun setBead(questionTemp: String,abacusTop: AbacusMasterView, abacusBottom: AbacusMasterView) {
+    private fun setBead(questionTemp: String,totalLength : Int, abacusTop: AbacusMasterView, abacusBottom: AbacusMasterView) {
         val topPositions = ArrayList<Int>()
         val bottomPositions = ArrayList<Int>()
-        val totalLength = 3
         val remainLength = totalLength - questionTemp.length
         var zero = ""
         for (i in 1..remainLength){

@@ -42,6 +42,7 @@ object Constants {
 
     const val examLevelMaxRecordHistory = 50
     const val sudokuMaxRecordHistory = 25
+    const val homePageShowIntroMaxAppOpen = 25
 
     const val examLevelBeginnerValue = "1"
     const val examLevelIntermediateValue = "2"
@@ -49,25 +50,6 @@ object Constants {
 
     const val EXAM_CLICK_ON_CORRECT_ANSWER_ANIMATION_DURATION: Long = 700
     const val EXAM_CLICK_ON_CORRECT_ANSWER_ANIMATION_ALPHA: Float = 0.2F
-
-    var Col_Space_eyes = 25F
-    var Col_Space_default = 15F
-    var Col_Space_polygon = 8F
-
-    var Col_Space_full_eyes = 30F
-    var Col_Space_full_default = 25F
-    var Col_Space_full_polygon = 15F
-
-    var Col_Space_exercise_polygon = 5F
-    var Col_Space_exercise_default = 20F
-
-    var Col_Space_exam_polygon = 8F
-    var Col_Space_exam_egg = 6F
-    var Col_Space_exam_default = 12F
-
-    var Col_Space_exam_result_polygon = 4F
-    var Col_Space_exam_result_egg = 3F
-    var Col_Space_exam_result_default = 6F
 
     var Que = "Que"
     var Sign = "Sign"

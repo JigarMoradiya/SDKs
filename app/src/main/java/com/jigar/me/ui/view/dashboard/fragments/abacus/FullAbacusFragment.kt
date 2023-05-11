@@ -6,18 +6,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
+import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.databinding.FragmentAbacusSubKidBinding
 import com.jigar.me.databinding.FragmentFullAbacusBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusMasterBeadShiftListener
 import com.jigar.me.ui.view.base.abacus.AbacusMasterView
+import com.jigar.me.ui.view.base.abacus.AbacusUtils
 import com.jigar.me.ui.view.base.abacus.OnAbacusValueChangeListener
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.ui.view.confirm_alerts.dialogs.ToddlerRangeDialog
@@ -26,6 +29,9 @@ import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import me.samlss.lighter.IntroProvider
+import me.samlss.lighter.Lighter
+import me.samlss.lighter.parameter.Direction
 import java.util.*
 
 @AndroidEntryPoint
@@ -34,17 +40,20 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     OnAbacusValueChangeListener {
     private lateinit var binding: FragmentFullAbacusBinding
     private var abacusBinding: FragmentAbacusSubKidBinding? = null
+    private lateinit var themeContent : AbacusContent
     private var values: Int = 1
     private var random_min: Int = 0
     private var random_max: Int = 0
     private var total_count: Int = 1
 
     private var currentSumVal = 0f
+    private var isTourPageRunning = false
     private var isResetRunning = false
     private var isPurchased = false
     private var is1stTime = false
     private var theme = AppConstants.Settings.theam_Default
     private lateinit var mNavController: NavController
+    private var lighter : Lighter? = null
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View {
         binding = FragmentFullAbacusBinding.inflate(inflater, container, false)
         setNavigationGraph()
@@ -58,7 +67,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     }
 
     private fun initViews() {
-        setAbacus()
+//        setAbacus()
         setSwitchs()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             try {
@@ -74,6 +83,8 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
     private fun initListener() {
         binding.cardBack.onClick { mNavController.navigateUp() }
+        binding.txtShowTour.onClick { setThemeLighterTopBeads() }
+        binding.txtShowTourTop.onClick { binding.txtShowTour.performClick() }
         binding.swRandom.onClick { switchRandomClick() }
         binding.swReset.onClick { switchResetClick() }
         binding.swResetStarting.onClick { switchResetStartingClick() }
@@ -202,8 +213,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
             binding.linearAbacusFreeMode.hide()
             AbacusBeadType.None
         }
-
-        val themeContent = DataProvider.findAbacusThemeType(requireContext(),theme,abacusBeadType)
+        themeContent  = DataProvider.findAbacusThemeType(requireContext(),theme,abacusBeadType)
 
         if (DataProvider.generateIndex() == 0){
             abacusBinding?.imgKidLeft?.setImageResource(R.drawable.ic_boy_abacus_left)
@@ -220,6 +230,8 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         abacusBinding?.rlAbacusMain?.setBackgroundResource(themeContent.abacusFrame135)
         abacusBinding?.ivDivider?.setBackgroundColor(ContextCompat.getColor(requireContext(),themeContent.dividerColor1))
         themeContent.resetBtnColor8.let {
+            binding.txtShowTourTop.setTextColor(ContextCompat.getColor(requireContext(),it))
+            binding.txtShowTour.setTextColor(ContextCompat.getColor(requireContext(),it))
             abacusBinding?.ivReset?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             abacusBinding?.ivRight?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
             abacusBinding?.ivLeft?.setColorFilter(ContextCompat.getColor(requireContext(),it), android.graphics.PorterDuff.Mode.SRC_IN)
@@ -229,7 +241,26 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
 
         abacusBinding?.abacusTop?.onBeadShiftListener = this@FullAbacusFragment
         abacusBinding?.abacusBottom?.onBeadShiftListener = this@FullAbacusFragment
+
+        if (!prefManager.getCustomParamBoolean(AppConstants.Settings.isFreeModeTourWatch, false)) {
+            binding.txtShowTour.hide()
+            binding.txtShowTourTop.hide()
+            setThemeLighterTopBeads()
+        }else{
+            setTourVisibility()
+        }
     }
+
+    private fun setTourVisibility() {
+        if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode, "Y") == "Y"){
+            binding.txtShowTour.show()
+            binding.txtShowTourTop.hide()
+        }else{
+            binding.txtShowTour.hide()
+            binding.txtShowTourTop.show()
+        }
+    }
+
     private fun setSwitchs() {
         with(prefManager){
             binding.swFreeMode.isChecked = getCustomParam(AppConstants.Settings.SW_FreeMode, "Y") == "Y"
@@ -369,23 +400,22 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     override fun onAbacusValueChange(abacusView: View, sum: Float) {
         with(prefManager){
             if (prefManager.getCustomParam(AppConstants.Settings.SW_FreeMode,"Y") == "Y") {
-                if (!is1stTime){
-                    var count = getCustomParamInt(AppConstants.Settings.Free_Mode_Beads_Move_Count,0)
-                    Log.e("jigarLogs","count = "+count)
-                    if (count == AppConstants.Settings.Free_Mode_Beads_Move_Count_Limit){
-                        count = 0
-                        ads(true)
-                    }
-                    count++
-                    setCustomParamInt(AppConstants.Settings.Free_Mode_Beads_Move_Count,count)
-                }else{
-                    lifecycleScope.launch {
-                        delay(300)
-                        is1stTime = false
+                if (!isTourPageRunning){
+                    if (!is1stTime){
+                        var count = getCustomParamInt(AppConstants.Settings.Free_Mode_Beads_Move_Count,0)
+                        if (count == AppConstants.Settings.Free_Mode_Beads_Move_Count_Limit){
+                            count = 0
+                            ads(true)
+                        }
+                        count++
+                        setCustomParamInt(AppConstants.Settings.Free_Mode_Beads_Move_Count,count)
+                    }else{
+                        lifecycleScope.launch {
+                            delay(300)
+                            is1stTime = false
+                        }
                     }
                 }
-
-
             }else{
                 if (sum.toInt() == values) {
                     binding.swResetStarting.isChecked = false
@@ -443,7 +473,6 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         if (requireContext().isNetworkAvailable && AppConstants.Purchase.AdsShow == "Y" &&
             prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y" &&
             !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
-            Log.e("jigarLogs","ads welcome")
             showAMFullScreenAds(getString(R.string.interstitial_ad_unit_id_abacus_full_screen),isShowAdDirect)
         }
     }
@@ -461,4 +490,159 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         abacusBinding?.abacusBottom?.reset()
     }
 
+    // TODO abacus tour
+    private fun setThemeLighterTopBeads() {
+        isTourPageRunning = true
+        lighter = Lighter.with(binding.root as ViewGroup)
+        abacusBinding?.let {
+            IntroProvider.abacusTopBottomBeadsIntro(lighter,it.flAbacusTop,it.flAbacusBottom,object : IntroProvider.IntroCloseClickListener {
+                override fun onIntroCloseClick() {
+                    setThemeLighterRod1()
+                }
+            })
+        }
+    }
+
+    private fun setThemeLighterRod1() {
+        lifecycleScope.launch {
+            lighter = Lighter.with(binding.root as ViewGroup)
+            val paramsView1 = abacusBinding?.viewRod1?.layoutParams as RelativeLayout.LayoutParams
+            paramsView1.width = themeContent.beadWidth
+            paramsView1.marginEnd = (themeContent.beadSpace / 2)
+            paramsView1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            abacusBinding?.viewRod1?.layoutParams = paramsView1
+            abacusBinding?.relHighLighter?.show()
+
+            abacusBinding?.let {
+                AbacusUtils.setNumber("9",it.abacusTop,it.abacusBottom,totalLength = 9)
+                delay(300)
+                IntroProvider.abacusRodIntro(lighter, it.viewRod1, Direction.LEFT,R.layout.layout_tip_abacus_rod1,object : IntroProvider.IntroCloseClickListener {
+                    override fun onIntroCloseClick() {
+                        setThemeLighterRod2()
+                    }
+                })
+            }
+        }
+
+    }
+
+    private fun setThemeLighterRod2() {
+        lifecycleScope.launch {
+            val paramsView1 = abacusBinding?.viewRod1?.layoutParams as RelativeLayout.LayoutParams
+            paramsView1.width = themeContent.beadWidth
+            paramsView1.marginEnd = themeContent.beadWidth + themeContent.beadSpace + (themeContent.beadSpace / 2)
+            paramsView1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            abacusBinding?.viewRod1?.layoutParams = paramsView1
+
+            lighter = Lighter.with(binding.root as ViewGroup)
+            abacusBinding?.let {
+                AbacusUtils.setNumber("90",it.abacusTop,it.abacusBottom,totalLength = 9)
+                delay(300)
+                IntroProvider.abacusRodIntro(lighter, it.viewRod1,Direction.LEFT,R.layout.layout_tip_abacus_rod2,object : IntroProvider.IntroCloseClickListener {
+                    override fun onIntroCloseClick() {
+                        setThemeLighterRod3()
+                    }
+                })
+            }
+        }
+    }
+    private fun setThemeLighterRod3() {
+        lifecycleScope.launch {
+            val paramsView2 = abacusBinding?.viewRod1?.layoutParams as RelativeLayout.LayoutParams
+            paramsView2.width = themeContent.beadWidth
+            paramsView2.marginEnd = ((themeContent.beadWidth + themeContent.beadSpace) * 2) + (themeContent.beadSpace / 2)
+            paramsView2.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            abacusBinding?.viewRod1?.layoutParams = paramsView2
+
+            lighter = Lighter.with(binding.root as ViewGroup)
+            abacusBinding?.let {
+                AbacusUtils.setNumber("900",it.abacusTop,it.abacusBottom,totalLength = 9)
+                delay(300)
+                IntroProvider.abacusRodIntro(lighter, it.viewRod1,Direction.LEFT,R.layout.layout_tip_abacus_rod3,object : IntroProvider.IntroCloseClickListener {
+                    override fun onIntroCloseClick() {
+                        setThemeLighterOneColumn()
+                    }
+                })
+            }
+        }
+    }
+
+    private fun setThemeLighterOneColumn() {
+        lifecycleScope.launch {
+            lighter = Lighter.with(binding.root as ViewGroup)
+            val paramsView1 = abacusBinding?.viewRod1?.layoutParams as RelativeLayout.LayoutParams
+            paramsView1.width = themeContent.beadWidth
+            paramsView1.marginEnd = (themeContent.beadSpace / 2)
+            paramsView1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            abacusBinding?.viewRod1?.layoutParams = paramsView1
+
+            abacusBinding?.let {
+                AbacusUtils.setNumber("9",it.abacusTop,it.abacusBottom,totalLength = 9)
+                delay(300)
+                IntroProvider.abacusRodIntro(lighter, it.viewRod1, Direction.LEFT,R.layout.layout_tip_abacus_column1,object : IntroProvider.IntroCloseClickListener {
+                    override fun onIntroCloseClick() {
+                        setThemeLighterTwoColumn()
+                    }
+                })
+            }
+        }
+
+    }
+
+    private fun setThemeLighterTwoColumn() {
+        lifecycleScope.launch {
+            lighter = Lighter.with(binding.root as ViewGroup)
+            val paramsView1 = abacusBinding?.viewRod1?.layoutParams as RelativeLayout.LayoutParams
+            paramsView1.width = themeContent.beadWidth + themeContent.beadWidth + themeContent.beadSpace
+            paramsView1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            abacusBinding?.viewRod1?.layoutParams = paramsView1
+
+            abacusBinding?.let {
+                AbacusUtils.setNumber("99",it.abacusTop,it.abacusBottom,totalLength = 9)
+                delay(300)
+                IntroProvider.abacusRodIntro(lighter, it.viewRod1, Direction.LEFT,R.layout.layout_tip_abacus_column2,object : IntroProvider.IntroCloseClickListener {
+                    override fun onIntroCloseClick() {
+                        setThemeLighterThreeColumn()
+                    }
+                })
+            }
+        }
+
+    }
+
+    private fun setThemeLighterThreeColumn() {
+        lifecycleScope.launch {
+            lighter = Lighter.with(binding.root as ViewGroup)
+            val paramsView1 = abacusBinding?.viewRod1?.layoutParams as RelativeLayout.LayoutParams
+            paramsView1.width = themeContent.beadWidth + ((themeContent.beadWidth + themeContent.beadSpace) * 2)
+            paramsView1.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
+            abacusBinding?.viewRod1?.layoutParams = paramsView1
+
+            abacusBinding?.let {
+                AbacusUtils.setNumber("999",it.abacusTop,it.abacusBottom,totalLength = 9)
+                delay(300)
+                IntroProvider.abacusRodIntro(lighter, it.viewRod1, Direction.LEFT,R.layout.layout_tip_abacus_column3,object : IntroProvider.IntroCloseClickListener {
+                    override fun onIntroCloseClick() {
+                        abacusBinding?.relHighLighter?.hide()
+                        resetAbacusLighter()
+                    }
+                })
+            }
+        }
+
+    }
+
+    private fun resetAbacusLighter() {
+        lighter = Lighter.with(binding.root as ViewGroup)
+        abacusBinding?.let {
+            IntroProvider.abacusRodIntro(lighter, it.ivReset,Direction.LEFT,R.layout.layout_tip_abacus_reset,object : IntroProvider.IntroCloseClickListener {
+                override fun onIntroCloseClick() {
+                    AbacusUtils.setNumber("0",it.abacusTop,it.abacusBottom,totalLength = 9)
+                    prefManager.setCustomParamBoolean(AppConstants.Settings.isFreeModeTourWatch, true)
+                    setTourVisibility()
+                    isTourPageRunning = false
+                }
+            })
+        }
+    }
 }

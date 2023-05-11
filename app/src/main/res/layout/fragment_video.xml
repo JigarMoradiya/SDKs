@@ -21,11 +21,11 @@
             android:id="@+id/cardBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/icons_margin2"
             android:elevation="@dimen/card_elevation"
             app:cardBackgroundColor="@color/light_back"
             app:cardCornerRadius="@dimen/_16sdp"
             app:cardMaxElevation="@dimen/card_elevation"
-            android:layout_margin="@dimen/icons_margin2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -48,7 +48,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
             app:layout_constraintEnd_toStartOf="@+id/cardSettingTop"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/cardSettingTop"

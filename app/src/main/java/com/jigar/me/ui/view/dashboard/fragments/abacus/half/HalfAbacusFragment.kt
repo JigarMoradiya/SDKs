@@ -322,7 +322,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-//            binding.txtTitle.text = (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
             binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
             binding.tvAnsNumber.text = ""
             abacus_type = 0
@@ -369,7 +368,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-//            binding.txtTitle.text = (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
             binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
             binding.tvAns.text = "0"
             binding.tvAns.invisible()
@@ -486,7 +484,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-//            binding.txtTitle.text = (current_pos + 1).toString() + "/" + resources.getString(R.string.unlimited)
             binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
             binding.tvAns.text = "0"
             binding.tvAns.invisible()

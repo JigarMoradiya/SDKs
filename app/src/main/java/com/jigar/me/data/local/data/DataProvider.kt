@@ -37,17 +37,19 @@ object DataProvider {
         }
         return list
     }
-    fun getAbacusThemeTypesList() : ArrayList<String>{
-        val list = ArrayList<String>()
+    fun getHomeMenuRandomIntro() : HomeMenuIntroType{
+        val list = ArrayList<HomeMenuIntroType>()
         with(list){
-            add(AppConstants.Settings.theam_Default)
-            add(AppConstants.Settings.theam_Egg)
-            add(AppConstants.Settings.theam_face)
-            add(AppConstants.Settings.theam_shape)
-            add(AppConstants.Settings.theam_Star)
+            add(HomeMenuIntroType.freeMode)
+            add(HomeMenuIntroType.videoTutorial)
+            add(HomeMenuIntroType.exercise)
+            add(HomeMenuIntroType.exam)
+            add(HomeMenuIntroType.numberPuzzle)
+            add(HomeMenuIntroType.purchase)
         }
         list.shuffle()
-        return list
+        list.shuffle()
+        return list.first()
     }
     private fun getMultipleDimensions(abacusBeadType: AbacusBeadType = AbacusBeadType.None) : Float{
         return when (abacusBeadType) {
@@ -74,7 +76,6 @@ object DataProvider {
         val height = (context.resources.getDimension(R.dimen.poligon_height) * multiply).toInt()
         val width = (context.resources.getDimension(R.dimen.poligon_width) * multiply).toInt()
         val space = (context.resources.getDimension(R.dimen.poligon_space) * multiply).toInt()
-
         with(list){
             add(AbacusContent(AppConstants.Settings.theam_Poligon_default,R.drawable.poligon_black,R.drawable.bg_abacus_frame_large_black,R.drawable.bg_abacus_frame_large_black_exam,R.color.abacus_rod_black,R.color.abacus_rod_black_dark,height,width,space,R.drawable.poligon_gray,R.drawable.poligon_black,arrayListOf(),arrayListOf()))
             add(AbacusContent(AppConstants.Settings.theam_Poligon_Blue,R.drawable.poligon_blue,R.drawable.bg_abacus_frame_large_blue,R.drawable.bg_abacus_frame_large_blue_exam,R.color.abacus_rod_blue,R.color.abacus_rod_blue_dark,height,width,space,R.drawable.poligon_gray,R.drawable.poligon_blue,arrayListOf(),arrayListOf()))

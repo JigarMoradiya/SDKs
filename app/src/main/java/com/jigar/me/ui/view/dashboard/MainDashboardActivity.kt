@@ -101,62 +101,7 @@ class MainDashboardActivity : BaseActivity() {
     private fun initViews() {
         setNavigationGraph()
         onMainActivityBack()
-        if (!prefManager.getCustomParamBoolean(AppConstants.Settings.isSetTheam, false)) {
-            SelectThemeDialog.showPopup(
-                this,
-                prefManager,
-                object : SelectThemeDialog.DialogInterface {
-                    override fun themeCloseDialogClick() {
-                        prefManager.setCustomParamBoolean(AppConstants.Settings.isSetTheam, true)
-                        checkNotificationPermission()
-                    }
-                })
-        } else {
-            checkNotificationPermission()
-        }
-
     }
-
-    private fun checkNotificationPermission() {
-        this.checkPermissions(Constants.NOTIFICATION_PERMISSION, requestMultiplePermissions)
-    }
-
-    // permission result
-    private var requestMultiplePermissions =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            permissions.entries.filter { !it.value }.also {
-                if (it.isNotEmpty()) {
-                    notificationPermissionPopup()
-                }
-            }
-        }
-
-    /**
-     * Activity Result For Resume Result
-     */
-    private var resumeActivityResultLauncher: ActivityResultLauncher<Intent> =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-        }
-
-    private fun notificationPermissionPopup() {
-        CommonConfirmationBottomSheet.showPopup(this,
-            getString(R.string.permission_alert),
-            getString(R.string.notification_permission_msg),
-            getString(R.string.okay),
-            getString(R.string.give_later),
-            icon = R.drawable.ic_alert,
-            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener {
-                override fun onConfirmationYesClick(bundle: Bundle?) {
-                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                    val uri: Uri = Uri.fromParts("package", packageName, null)
-                    intent.data = uri
-                    resumeActivityResultLauncher.launch(intent)
-                }
-
-                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
-            })
-    }
-
 
     private fun initListener() {
 
@@ -215,16 +160,16 @@ class MainDashboardActivity : BaseActivity() {
                 }
             }
 
-            if (BuildConfig.DEBUG) {
-                setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
-                setCustomParam(AppConstants.Purchase.Purchase_All, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Ads, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "N")
-                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "N")
-            }
+//            if (BuildConfig.DEBUG) {
+//                setCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)
+//                setCustomParam(AppConstants.Purchase.Purchase_All, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Ads, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "N")
+//                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "N")
+//            }
         }
     }
 

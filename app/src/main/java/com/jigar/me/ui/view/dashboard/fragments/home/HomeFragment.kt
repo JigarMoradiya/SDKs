@@ -1,14 +1,19 @@
 package com.jigar.me.ui.view.dashboard.fragments.home
 
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.NonNull
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -22,17 +27,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.jigar.me.BuildConfig
 import com.jigar.me.MyApplication
 import com.jigar.me.R
-import com.jigar.me.data.local.data.AvatarImages
-import com.jigar.me.data.local.data.DataProvider
-import com.jigar.me.data.local.data.HomeBanner
-import com.jigar.me.data.local.data.HomeMenu
-import com.jigar.me.data.model.PojoAbacus
-import com.jigar.me.data.model.VideoData
+import com.jigar.me.data.local.data.*
 import com.jigar.me.databinding.FragmentHomeBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
@@ -43,6 +41,7 @@ import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.Constants
+import com.jigar.me.utils.checkPermissions
 import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.openURL
 import com.jigar.me.utils.extensions.openYoutube
@@ -52,6 +51,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import me.samlss.lighter.IntroProvider
 import me.samlss.lighter.Lighter
+import me.samlss.lighter.parameter.Direction
 import org.json.JSONException
 import org.json.JSONObject
 import java.util.*
@@ -101,30 +101,141 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         getFBConstant()
         firebaseConfig()
 
-        if (prefManager.getCustomParamBoolean(AppConstants.Settings.isSetTheam, false)) {
-            if (!prefManager.getCustomParamBoolean(AppConstants.Settings.isTourWatch, false)) {
+        themePopup()
+    }
+
+    private fun menuTour() {
+        lifecycleScope.launch {
+            delay(1000)
+            if (!prefManager.getCustomParamBoolean(AppConstants.Settings.isHomeTourWatch, false)) {
                 showTour()
+            }else if (prefManager.getCustomParamInt(AppConstants.Settings.appOpenCount, 0) == Constants.homePageShowIntroMaxAppOpen) {
+                prefManager.setCustomParamInt(AppConstants.Settings.appOpenCount, 0)
+                val introType = DataProvider.getHomeMenuRandomIntro()
+                lighter = Lighter.with(binding.root)
+                var view : View? = null
+                var directions : Int? = null
+                var layoutId : Int? = null
+                when (introType) {
+                    HomeMenuIntroType.freeMode -> {
+                        view = (binding.recyclerviewMenu.findViewHolderForAdapterPosition(0) as HomeMenuAdapter.FormViewHolder).binding.conMain
+                        directions = Direction.RIGHT
+                        layoutId = R.layout.layout_tip_free_mode
+                    }
+                    HomeMenuIntroType.videoTutorial -> {
+                        view = (binding.recyclerviewMenu.findViewHolderForAdapterPosition(10) as HomeMenuAdapter.FormViewHolder).binding.conMain
+                        directions = Direction.LEFT
+                        layoutId = R.layout.layout_tip_video_tutorial
+                    }
+                    HomeMenuIntroType.exercise -> {
+                        view = (binding.recyclerviewMenu.findViewHolderForAdapterPosition(6) as HomeMenuAdapter.FormViewHolder).binding.conMain
+                        directions = Direction.TOP
+                        layoutId = R.layout.layout_tip_exercise
+                    }
+                    HomeMenuIntroType.exam -> {
+                        view = (binding.recyclerviewMenu.findViewHolderForAdapterPosition(7) as HomeMenuAdapter.FormViewHolder).binding.conMain
+                        directions = Direction.RIGHT
+                        layoutId = R.layout.layout_tip_exam
+                    }
+                    HomeMenuIntroType.numberPuzzle -> {
+                        view = (binding.recyclerviewMenu.findViewHolderForAdapterPosition(9) as HomeMenuAdapter.FormViewHolder).binding.conMain
+                        directions = Direction.TOP
+                        layoutId = R.layout.layout_tip_number_sequence
+                    }
+                    HomeMenuIntroType.purchase -> {
+                        view = (binding.recyclerviewMenu.findViewHolderForAdapterPosition(11) as HomeMenuAdapter.FormViewHolder).binding.conMain
+                        directions = Direction.LEFT
+                        layoutId = R.layout.layout_tip_purchase
+                    }
+                }
+                if (view != null && directions != null && layoutId != null){
+                    IntroProvider.videoTutorialSingleIntro(lighter,view,directions,layoutId)
+                }
             }
+
+            val appOpenCount = prefManager.getCustomParamInt(AppConstants.Settings.appOpenCount, 0)
+            prefManager.setCustomParamInt(AppConstants.Settings.appOpenCount, (appOpenCount+1))
         }
     }
 
-    private fun showTour() {
-        lifecycleScope.launch {
-            delay(1000)
-            lighter = Lighter.with(binding.root)
-            val freeModeViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(0)
-            val videoTutorialViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(10)
-            val exerciseViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(6)
-            val examViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(7)
-            val numberPuzzleViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(9)
-            if (freeModeViewHolder != null && exerciseViewHolder != null && examViewHolder != null && videoTutorialViewHolder != null && numberPuzzleViewHolder != null){
-                IntroProvider.videoTutorialIntro(prefManager,lighter, (freeModeViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                    (videoTutorialViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                    (exerciseViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                    (examViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
-                    (numberPuzzleViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain
-                )
+    private fun themePopup() {
+        if (!prefManager.getCustomParamBoolean(AppConstants.Settings.isSetTheam, false)) {
+            SelectThemeDialog.showPopup(requireActivity(),prefManager,object : SelectThemeDialog.DialogInterface {
+                override fun themeCloseDialogClick() {
+                    prefManager.setCustomParamBoolean(AppConstants.Settings.isSetTheam, true)
+                    checkNotificationPermission()
+                }
+            })
+        } else {
+            checkNotificationPermission()
+        }
+    }
+
+
+    private fun checkNotificationPermission() {
+        if (requireActivity().checkPermissions(Constants.NOTIFICATION_PERMISSION, requestMultiplePermissions)){
+            menuTour()
+        }
+
+    }
+
+    // permission result
+    private var requestMultiplePermissions =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            permissions.entries.filter { !it.value }.also {
+                if (it.isNotEmpty()) {
+                    notificationPermissionPopup()
+                }else{
+                    menuTour()
+                }
             }
+        }
+
+    /**
+     * Activity Result For Resume Result
+     */
+    private var resumeActivityResultLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+            menuTour()
+        }
+
+    private fun notificationPermissionPopup() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),
+            getString(R.string.permission_alert),
+            getString(R.string.notification_permission_msg),
+            getString(R.string.okay),
+            getString(R.string.give_later),
+            icon = R.drawable.ic_alert,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener {
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                    val uri: Uri = Uri.fromParts("package", requireContext().packageName, null)
+                    intent.data = uri
+                    resumeActivityResultLauncher.launch(intent)
+                }
+
+                override fun onConfirmationNoClick(bundle: Bundle?) {
+                    menuTour()
+                }
+            })
+    }
+
+
+
+    private fun showTour() {
+        lighter = Lighter.with(binding.root)
+        val freeModeViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(0)
+        val videoTutorialViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(10)
+        val exerciseViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(6)
+        val examViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(7)
+        val numberPuzzleViewHolder = binding.recyclerviewMenu.findViewHolderForAdapterPosition(9)
+        if (freeModeViewHolder != null && exerciseViewHolder != null && examViewHolder != null && videoTutorialViewHolder != null && numberPuzzleViewHolder != null){
+            IntroProvider.videoTutorialIntro(prefManager,lighter, (freeModeViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                (videoTutorialViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                (exerciseViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                (examViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain,
+                (numberPuzzleViewHolder as HomeMenuAdapter.FormViewHolder).binding.conMain
+            )
         }
     }
 

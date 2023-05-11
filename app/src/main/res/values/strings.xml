@@ -12,27 +12,6 @@
     <string name="app_download_monitor_channel_description">Help Users monitor the number of Files Downloading through App.</string>
     <string name="app_notification_channel_id">app_notification</string>
 
-    <!--    <string name="banner_ad_unit_id">ca-app-pub-5759468493922763/8591840381</string>-->
-    <!--    <string name="interstitial_ad_unit_id">ca-app-pub-5759468493922763/5018160875</string>-->
-
-<!--    <string name="banner_ad_unit_id_abacus">ca-app-pub-3940256099942544/6300978111</string>-->
-<!--    <string name="banner_ad_unit_id_practise_material">ca-app-pub-3940256099942544/6300978111</string>-->
-<!--    <string name="banner_ad_unit_id_exam">ca-app-pub-3940256099942544/6300978111</string>-->
-<!--    <string name="banner_ad_unit_id_exam_result">ca-app-pub-3940256099942544/6300978111</string>-->
-<!--    <string name="banner_ad_unit_id_sudoku">ca-app-pub-3940256099942544/6300978111</string>-->
-<!--    <string name="banner_ad_unit_id_number_puzzle">ca-app-pub-3940256099942544/6300978111</string>-->
-<!--    <string name="banner_ad_unit_id_exercise">ca-app-pub-3940256099942544/6300978111</string>-->
-
-<!--    <string name="interstitial_ad_unit_id_exam_complete_show_result">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_exam_complete_close">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_exam_leave">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_abacus_full_screen">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_abacus_half_screen">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_sudoku">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_number_puzzle_step">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_number_puzzle_complete">ca-app-pub-3940256099942544/1033173712</string>-->
-<!--    <string name="interstitial_ad_unit_id_exercise">ca-app-pub-3940256099942544/1033173712</string>-->
-
     <string name="native_ad_unit_id_test">ca-app-pub-5759468493922763/4658789878</string>
 
     <string name="banner_ad_unit_id_video">ca-app-pub-5759468493922763/9435037042</string>
@@ -124,7 +103,6 @@
     <string name="set_only">Set</string>
 
     <!--  Page list  -->
-    <string name="unlimited">unlimited</string>
     <string name="lessons_of">Pages of</string>
 
     <!--  Abacus  -->
@@ -177,11 +155,6 @@
     <string name="no_thanks_continue_later">No, thanks continue later</string>
     <!--  Settings  -->
     <string name="txt_setting_title">Application Setting</string>
-    <string name="txt_setting_theme">Abacus theme</string>
-    <string name="txt_setting_default_theme">Default Abacus</string>
-    <string name="txt_setting_theme_egg">Egg Theme</string>
-    <string name="txt_setting_theme_Face">Face Theme</string>
-    <string name="txt_setting_theme_Shape">Shape Theme</string>
 
     <string name="txt_setting_hintsound_purchase">For this feature you need to buy paid plan from purchase store.</string>
     <string name="txt_setting_display_abacus_number">Display abacus number</string>
@@ -446,4 +419,21 @@
     <string name="select_different_type_of_exercise_nto_improve_kid_s_performance">Select different type of\n<font color='#EC407A'>Exercise</font> to improve your\n<font color='#EC407A'>Kid\'s Performance</font></string>
     <string name="maths_with_fun">MATHS with FUN</string>
     <string name="help_your_child_to_keep_nactive_always">Help your child to keep\n<font color='#E65100'>ACTIVE</font> always</string>
+    <string name="on_1st_rod">On 1st ROD <font color='#0000ff'>(Once column)</font></string>
+    <string name="on_2nd_rod">On 2nd ROD <font color='#0000ff'>(Tens column)</font></string>
+    <string name="on_3rd_rod">On 3rd ROD <font color='#0000ff'>(Hundreds column)</font></string>
+    <string name="light_rod1_text">each lower bead <font color='#E91E63'>value is 1</font>\nand the upper bead <font color='#2E7D32'>value is 5</font></string>
+    <string name="light_rod2_text">each lower bead <font color='#E91E63'>value is 10</font>\nand the upper bead <font color='#2E7D32'>value is 50</font></string>
+    <string name="light_rod3_text">each lower bead <font color='#E91E63'>value is 100</font>\nand the upper bead <font color='#2E7D32'>value is 500,</font>\nso on..</string>
+    <string name="this_all_are_upper_bead">This all are <font color='#E91E63'>Upper Beads</font></string>
+    <string name="this_all_are_bottom_beads">This all are <font color='#E91E63'>Lower Beads</font></string>
+    <string name="click_here_to_show_nabacus_tour">Click Here to watch\nAbacus Tour</string>
+    <string name="click_here_to_reset_abacus">Click here to <font color='#FF0000'>Reset Abacus</font></string>
+    <string name="now_can_also_subscribe_nweekly_at_low_cost">Now, can also subscribe\n<font color='#00838F'>weekly at low cost</font></string>
+    <string name="represent_the_value_of_0_9">can represent the value of <font color='#FF0000'>0-9</font></string>
+    <string name="represent_the_value_of_0_99">can represent the value of <font color='#FF0000'>0-99</font></string>
+    <string name="represent_the_value_of_0_999">can represent the value of <font color='#FF0000'>0-999</font></string>
+    <string name="one_column">One Column</string>
+    <string name="two_column">Two Column</string>
+    <string name="three_column">Three Column</string>
 </resources>

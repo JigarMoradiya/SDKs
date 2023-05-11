@@ -304,10 +304,10 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:weightSum="9"
-                android:gravity="center"
                 android:layout_marginTop="@dimen/_2sdp"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:weightSum="9">
 
 
                 <com.google.android.material.textview.MaterialTextView
@@ -460,7 +460,7 @@
                             android:id="@+id/flAbacusTop"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/six"
+                            android:layout_marginHorizontal="@dimen/six"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent">
@@ -482,8 +482,8 @@
                             android:id="@+id/rlDivider"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            app:layout_constraintEnd_toEndOf="@+id/flAbacusTop"
-                            app:layout_constraintStart_toStartOf="@+id/flAbacusTop"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/flAbacusTop">
 
                             <androidx.appcompat.widget.AppCompatImageView
@@ -498,7 +498,7 @@
                             android:id="@+id/flAbacusBottom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/six"
+                            android:layout_marginHorizontal="@dimen/six"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@+id/rlDivider">
@@ -536,6 +536,22 @@
                             app:layout_constraintTop_toTopOf="@+id/rlDivider"
                             app:srcCompat="@drawable/road_dot" />
 
+                        <RelativeLayout
+                            android:layout_width="0dp"
+                            android:orientation="horizontal"
+                            android:layout_height="0dp"
+                            android:id="@+id/relHighLighter"
+                            app:layout_constraintStart_toStartOf="@+id/flAbacusTop"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="@+id/flAbacusTop"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <View
+                                android:id="@+id/viewRod1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent" />
+
+                        </RelativeLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </RelativeLayout>

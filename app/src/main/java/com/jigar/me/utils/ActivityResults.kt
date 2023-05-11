@@ -52,8 +52,6 @@ fun Context.checkPermissions(type: String,launcherPermission: ActivityResultLaun
                     }
                 }
             }
-
-
         }
         if (listPermissionsNeeded.isNotEmpty()) {
             launcherPermission.launch(listPermissionsNeeded.toArray(Array(listPermissionsNeeded.size) { "it = $it" }))

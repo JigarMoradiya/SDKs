@@ -52,6 +52,7 @@
     <dimen name="four">4.00dp</dimen>
     <dimen name="five">5.00dp</dimen>
     <dimen name="six">6.00dp</dimen>
+    <dimen name="six_minus">-6.00dp</dimen>
     <dimen name="eight">8.00dp</dimen>
     <dimen name="ten">10.00dp</dimen>
     <dimen name="sixteen">16.00dp</dimen>
