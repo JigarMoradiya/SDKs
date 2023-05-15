@@ -78,10 +78,10 @@ class MainDashboardActivity : BaseActivity() {
         appViewModel.getInAppPurchase().observe(this) {
             setPurchase(it)
         }
-        if (BuildConfig.DEBUG) {
-            OneSignal.setEmail("jigar@gmail.com")
+//        if (BuildConfig.DEBUG) {
+//            OneSignal.setEmail("jigar@gmail.com")
 //            binding.viewBG.show()
-        }
+//        }
     }
 
     private fun setNavigationGraph() {

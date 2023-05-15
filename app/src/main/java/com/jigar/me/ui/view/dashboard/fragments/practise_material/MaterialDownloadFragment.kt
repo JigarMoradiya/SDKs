@@ -24,6 +24,7 @@ import com.jigar.me.ui.view.dashboard.fragments.practise_material.adater.Materia
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
 import com.jigar.me.utils.AppConstants
+import com.jigar.me.utils.Constants
 import com.jigar.me.utils.Resource
 import com.jigar.me.utils.extensions.*
 import com.stfalcon.frescoimageviewer.ImageViewer
@@ -135,7 +136,11 @@ class MaterialDownloadFragment : BaseFragment(), MaterialDownloadAdapter.OnItemC
         }else{
             binding.txtTitle.text = getString(R.string.maths_material)
         }
-        binding.txtStoragePath.text = HtmlCompat.fromHtml("<font color='#EE0000'><b>Download Material Storage Path : </b></font>"+context?.downloadFilePath(),HtmlCompat.FROM_HTML_MODE_COMPACT)
+        if (prefManager.getCustomParam(Constants.appLanguage,"") == Constants.appLanguage_arebic){
+            binding.txtStoragePath.text = HtmlCompat.fromHtml("<font color='#EE0000'><b>تنزيل مسار تخزين المواد التدريبي : </b></font>"+context?.downloadFilePath(),HtmlCompat.FROM_HTML_MODE_COMPACT)
+        }else{
+            binding.txtStoragePath.text = HtmlCompat.fromHtml("<font color='#EE0000'><b>Download Material Storage Path : </b></font>"+context?.downloadFilePath(),HtmlCompat.FROM_HTML_MODE_COMPACT)
+        }
 
         if (requireContext().isNetworkAvailable) {
             if (prefManager.getCustomParam(AppConstants.Extras_Comman.DownloadType + "_" + downloadType,"").isEmpty()) {

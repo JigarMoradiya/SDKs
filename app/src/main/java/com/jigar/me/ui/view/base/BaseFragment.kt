@@ -21,7 +21,9 @@ import com.google.gson.Gson
 import com.jigar.me.R
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
+import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.hide
+import com.jigar.me.utils.extensions.setLocale
 import com.jigar.me.utils.extensions.show
 import com.jigar.me.utils.extensions.toastS
 import com.jigar.me.utils.native_ad.TemplateView
@@ -43,8 +45,9 @@ abstract class BaseFragment : Fragment(), CoroutineScope {
     private var textToSpeech: TextToSpeech? = null
     private var speak = false
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
         prefManager = AppPreferencesHelper(requireContext(), AppConstants.PREF_NAME)
+//        requireContext().setLocale(prefManager.getCustomParam(Constants.appLanguage,"en"))
+        super.onCreate(savedInstanceState)
         job = Job()
     }
 

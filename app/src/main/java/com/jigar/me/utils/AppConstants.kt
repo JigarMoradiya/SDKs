@@ -16,20 +16,7 @@ object AppConstants {
     const val NUMBER_PUZZLE_SAVE = "number_puzzle_save"
     const val NUMBER_PUZZLE_CURRENT_SCORE = "number_puzzle_current_score"
     const val NUMBER_PUZZLE_BEST_SCORE = "number_puzzle_best_score"
-    annotation class HomeBannerTypes {
-        companion object {
-            var banner_rate_us = "banner_rate_us"
-            var banner_share = "banner_share"
-            var banner_purchase = "banner_purchase"
-            var banner_offer = "banner_offer"
-        }
-    }
 
-    interface apiTimeout {
-        companion object {
-            const val Timeout = 60L
-        }
-    }
     annotation class FirebaseEvents {
         companion object {
             var MaterialDownloaded = "abacus_material_download"
@@ -42,9 +29,6 @@ object AppConstants {
             var DailyExamLevel = "exam_level"
 
             var NumberPuzzleSequence = "number_puzzle_squence"
-            var Sudoku = "sudoku"
-            var SudokuLevel = "sudoku_level"
-            var SudokuLevelComplete = "sudoku_level_complete"
 
             var deviceId = "deviceId"
         }

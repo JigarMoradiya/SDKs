@@ -9,6 +9,8 @@ data class AdditionSubtractionCategory(
     var category_id: String? = null,
     @SerializedName("category_name")
     var category_name: String? = null,
+    @SerializedName("category_name_ar")
+    var category_name_ar: String? = null,
     @SerializedName("pages")
     var pages: ArrayList<AdditionSubtractionPage> = arrayListOf()
 )
@@ -20,6 +22,12 @@ data class AdditionSubtractionPage(
     var PageName: String? = null,
     @SerializedName("SortDesc")
     var SortDesc: String? = null,
+
+    @SerializedName("PageName_ar")
+    var PageName_ar: String? = null,
+    @SerializedName("SortDesc_ar")
+    var SortDesc_ar: String? = null,
+
     @SerializedName("hint")
     var hint: String? = null,
     @SerializedName("file")

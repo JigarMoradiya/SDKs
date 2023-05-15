@@ -3,7 +3,7 @@
     <dimen name="height_extra">@dimen/_2sdp</dimen>
     <dimen name="poligon_width">@dimen/_36sdp</dimen>
     <dimen name="poligon_height">@dimen/_20sdp</dimen>
-    <dimen name="poligon_space">@dimen/_6sdp</dimen>
+    <dimen name="poligon_space">@dimen/_3sdp</dimen>
 
     <dimen name="face_width">@dimen/_23sdp</dimen>
     <dimen name="face_height">@dimen/_20sdp</dimen>
@@ -114,7 +114,7 @@
     <dimen name="textSize15">@dimen/_15sdp</dimen>
     <dimen name="textSize16">@dimen/_16sdp</dimen>
     <dimen name="textSize18">@dimen/_18sdp</dimen>
-    <dimen name="textSizeAbacusNumber">@dimen/_80sdp</dimen>
+    <dimen name="textSizeAbacusNumber">@dimen/_70sdp</dimen>
 
     <!-- Profile Image Sizes   -->
     <dimen name="box9SizeWidth">@dimen/_32sdp</dimen>

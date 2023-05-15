@@ -129,7 +129,7 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b901"
@@ -137,7 +137,7 @@
                     android:layout_row="0"
                     android:layout_column="1"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b902"
@@ -145,7 +145,7 @@
                     android:layout_row="0"
                     android:layout_column="2"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b910"
@@ -154,7 +154,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b911"
@@ -163,7 +163,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b912"
@@ -172,7 +172,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b920"
@@ -181,7 +181,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b921"
@@ -190,7 +190,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b922"
@@ -199,7 +199,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
             </GridLayout>
 
             <GridLayout
@@ -219,7 +219,7 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1501"
@@ -227,7 +227,7 @@
                     android:layout_row="0"
                     android:layout_column="1"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1502"
@@ -235,14 +235,14 @@
                     android:layout_row="0"
                     android:layout_column="2"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1503"
                     style="@style/gridBGameStyle15"
                     android:layout_row="0"
                     android:layout_column="3"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1510"
@@ -251,7 +251,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1511"
@@ -260,7 +260,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1512"
@@ -269,7 +269,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1513"
@@ -277,7 +277,7 @@
                     android:layout_row="1"
                     android:layout_column="3"
                     android:layout_marginTop="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1520"
@@ -286,7 +286,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1521"
@@ -295,7 +295,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1522"
@@ -304,7 +304,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1523"
@@ -312,7 +312,7 @@
                     android:layout_row="2"
                     android:layout_column="3"
                     android:layout_marginTop="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1530"
@@ -321,7 +321,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1531"
@@ -330,7 +330,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1532"
@@ -339,7 +339,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b1533"
@@ -347,7 +347,7 @@
                     android:layout_row="3"
                     android:layout_column="3"
                     android:layout_marginTop="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
             </GridLayout>
 
             <GridLayout
@@ -366,7 +366,7 @@
                     android:layout_row="0"
                     android:layout_column="0"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2401"
@@ -374,7 +374,7 @@
                     android:layout_row="0"
                     android:layout_column="1"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2402"
@@ -382,7 +382,7 @@
                     android:layout_row="0"
                     android:layout_column="2"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2403"
@@ -390,14 +390,14 @@
                     android:layout_row="0"
                     android:layout_column="3"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2404"
                     style="@style/gridBGameStyle24"
                     android:layout_row="0"
                     android:layout_column="4"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2410"
@@ -406,7 +406,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2411"
@@ -415,7 +415,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2412"
@@ -424,7 +424,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2413"
@@ -433,7 +433,7 @@
                     android:layout_column="3"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2414"
@@ -441,7 +441,7 @@
                     android:layout_row="1"
                     android:layout_column="4"
                     android:layout_marginTop="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2420"
@@ -450,7 +450,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2421"
@@ -459,7 +459,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2422"
@@ -468,7 +468,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2423"
@@ -477,7 +477,7 @@
                     android:layout_column="3"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2424"
@@ -485,7 +485,7 @@
                     android:layout_row="2"
                     android:layout_column="4"
                     android:layout_marginTop="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2430"
@@ -494,7 +494,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2431"
@@ -503,7 +503,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2432"
@@ -512,7 +512,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2433"
@@ -521,7 +521,7 @@
                     android:layout_column="3"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2434"
@@ -529,7 +529,7 @@
                     android:layout_row="3"
                     android:layout_column="4"
                     android:layout_marginTop="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2440"
@@ -538,7 +538,7 @@
                     android:layout_column="0"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2441"
@@ -547,7 +547,7 @@
                     android:layout_column="1"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2442"
@@ -556,7 +556,7 @@
                     android:layout_column="2"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2443"
@@ -565,7 +565,7 @@
                     android:layout_column="3"
                     android:layout_marginTop="@dimen/button_margin"
                     android:layout_marginRight="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/b2444"
@@ -573,7 +573,7 @@
                     android:layout_row="4"
                     android:layout_column="4"
                     android:layout_marginTop="@dimen/button_margin"
-                    android:contentDescription="@string/button" />
+                     />
             </GridLayout>
         </RelativeLayout>
 

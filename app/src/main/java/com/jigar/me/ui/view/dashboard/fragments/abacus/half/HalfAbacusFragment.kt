@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
@@ -125,12 +126,11 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     private fun initViews() {
+        binding.isLeftHand = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)
         if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
             setLeftAbacusRules()
-            binding.txtTitleHand.text = HtmlCompat.fromHtml("(Use your <b><font color='#FF0000'>Left Hand</font></b> to move beads)",HtmlCompat.FROM_HTML_MODE_LEGACY)
         }else{
             setRightAbacusRules()
-            binding.txtTitleHand.text = HtmlCompat.fromHtml("(Use your <b><font color='#FF0000'>Right Hand</font></b> to move beads)",HtmlCompat.FROM_HTML_MODE_LEGACY)
         }
         isDisplayHelpMessage = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_help_message, true)
         isHintSound = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting__hint_sound, false)
@@ -143,7 +143,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            binding.linearTitle.setPadding(0,12.dp,0,0)
+            binding.txtTitle.setPadding(0,12.dp,0,0)
         }
         startAbacus()
         lifecycleScope.launch {
@@ -159,6 +159,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             binding.ivDivider1.setBackgroundColor(finalColor)
             binding.cardQuestions.setStrokeColor(ColorStateList.valueOf(finalColor))
             binding.txtTitle.setTextColor(ContextCompat.getColor(requireContext(),it))
+            binding.txtTitleHand.setTextColor(ContextCompat.getColor(requireContext(),it))
             binding.tvAns.setTextColor(ContextCompat.getColor(requireContext(),it))
 
             themeContent?.dividerColor1?.let {it2 ->
@@ -180,7 +181,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             && prefManager.getCustomParam(AppConstants.AbacusProgress.Ads,"") == "Y"
             && !isPurchased && prefManager.getCustomParam(AppConstants.Purchase.Purchase_Ads,"") != "Y") { // if not purchased
             showAMBannerAds(binding.adView,getString(R.string.banner_ad_unit_id_abacus))
-//            showAMBannerAds1(binding.myTemplate,getString(R.string.banner_ad_unit_id_abacus))
         }
     }
     private fun initListener() {
@@ -322,7 +322,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
+            binding.txtTitle.text = String.format(getString(R.string.abacus_no),(current_pos + 1))
             binding.tvAnsNumber.text = ""
             abacus_type = 0
             number = if (isRandom) {
@@ -336,7 +336,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             lifecycleScope.launch {
                 delay(500)
                 if (isPurchased && isHintSound) {
-                    speakOut(resources.getString(R.string.speech_set) + " " + number)
+                    speakOut(String.format(resources.getString(R.string.speech_set), " $number"))
                 }
             }
             val answer = java.lang.Double.valueOf(number.toString() + "")
@@ -368,8 +368,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
-            binding.tvAns.text = "0"
+            binding.txtTitle.text = String.format(getString(R.string.abacus_no),(current_pos + 1))
+            binding.tvAns.text = ""
             binding.tvAns.invisible()
             abacus_type = 2
             list_abacus_main = DataProvider.genrateDevide(
@@ -382,7 +382,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 lifecycleScope.launch {
                     delay(500)
                     if (isPurchased && isHintSound) {
-                        speakOut(list_abacus_main[0][Constants.Que].toString() + " divide by " + list_abacus_main[1][Constants.Que])
+                        speakOut(String.format(getString(R.string.speak_divide_by),list_abacus_main[0][Constants.Que].toString(),list_abacus_main[1][Constants.Que].toString()))
                     }
                 }
                 binding.cardAbacusQue.show()
@@ -484,8 +484,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
-            binding.tvAns.text = "0"
+            binding.txtTitle.text = String.format(getString(R.string.abacus_no),(current_pos + 1))
+            binding.tvAns.text = ""
             binding.tvAns.invisible()
             list_abacus_main = DataProvider.genrateMultiplication(
                 Que2_str,
@@ -497,7 +497,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 lifecycleScope.launch {
                     delay(500)
                     if (isPurchased && isHintSound) {
-                        speakOut(list_abacus_main[0][Constants.Que].toString() + " multiply by " + list_abacus_main[1][Constants.Que])
+                        speakOut(String.format(getString(R.string.speak_multiply_by),list_abacus_main[0][Constants.Que].toString(),list_abacus_main[1][Constants.Que].toString()))
                     }
                 }
                 val answer = java.lang.Double.valueOf(list_abacus_main[0][Constants.Que]) * java.lang.Double.valueOf(list_abacus_main[1][Constants.Que])
@@ -537,9 +537,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_already))
             }
         } else {
-//            binding.txtTitle.text = "${(current_pos + 1)}/$total"
-            binding.txtTitle.text = "Abacus No : ".plus((current_pos + 1))
-            binding.tvAns.text = "0"
+            binding.txtTitle.text = String.format(getString(R.string.abacus_no),(current_pos + 1))
+            binding.tvAns.text = ""
             binding.tvAns.invisible()
 
             val datatemp: PojoAbacus = list_abacus[current_pos]
@@ -570,7 +569,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 val finalDatatemp: PojoAbacus = datatemp
                 lifecycleScope.launch {
                     delay(700)
-                    speakOut(resources.getString(R.string.speech_set) + " " + finalDatatemp.q0)
+                    speakOut(String.format(resources.getString(R.string.speech_set), " " + finalDatatemp.q0))
                 }
             }
             if (new_column < datatemp.q0.length) {
@@ -927,9 +926,9 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     override fun onCheckHint(hint: String?, que: String?, Sign: String?) {
         if (isPurchased && isHintSound) {
             if (Sign == "-") {
-                speakOut(resources.getString(R.string.speech_set_minus) + " " + que)
+                speakOut(String.format(resources.getString(R.string.speech_set_minus), " $que"))
             } else {
-                speakOut(resources.getString(R.string.speech_set_plus) + " " + que)
+                speakOut(String.format(resources.getString(R.string.speech_set_plus), " $que"))
             }
         }
 
@@ -944,12 +943,12 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             binding.relativeTable.hide()
             binding.txtHint.text = "$Sign$que = $hint"
             val temp_hint = "$Sign$que = $hint"
-            speek_hint = temp_hint.replace("-", " minus ").replace("+", " plus ")
-                .replace("=", " equal to ")
+            speek_hint = temp_hint.replace("-", " "+getString(R.string.minus)+" ").replace("+", " "+getString(R.string.plus)+" ")
+                .replace("=", " "+getString(R.string.equal_to)+" ")
             lifecycleScope.launch {
                 delay(1500)
                 if (isPurchased && isHintSound) {
-                    speakOut(resources.getString(R.string.speech_formula_for) + " " + speek_hint)
+                    speakOut(String.format(resources.getString(R.string.speech_formula_for), " $speek_hint"))
                 }
             }
         } else if (hintPage.isNullOrEmpty()){
@@ -995,7 +994,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             }
             if (binding.relAbacus.visibility == View.GONE){
                 lifecycleScope.launch {
-                    delay(500)
+                    delay(200)
                     binding.relAbacus.show()
                 }
             }
@@ -1029,9 +1028,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                             adapterAdditionSubtraction.goToNextStep()
                         }
                         if (adapterAdditionSubtraction.getCurrentStep() == list_abacus_main.size) {
-                            val finalans =
-                                (adapterAdditionSubtraction.getFinalSumVal()
-                                    .toString() + "").toFloat()
+                            val finalans = (adapterAdditionSubtraction.getFinalSumVal().toString() + "").toFloat()
                             onAbacusValueSubmit(finalans)
                         }
                     } else {
@@ -1116,7 +1113,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
-            binding.tvAns.text = "0"
+            binding.tvAns.text = ""
             binding.tvAns.invisible()
             binding.cardHint.hide()
             current_pos++
@@ -1245,14 +1242,13 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 isMoveNext = true
             }
         }
-
         reset()
     }
 
     private fun reset() {
         abacusFragment?.resetAbacus()
         if (abacusType != AppConstants.Extras_Comman.AbacusTypeNumber) {
-            binding.tvAns.text = "0"
+            binding.tvAns.text = ""
             binding.tvAns.invisible()
             when (abacus_type) {
                 0 -> {
@@ -1291,15 +1287,26 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         paramscardTable.addRule(RelativeLayout.ALIGN_PARENT_TOP)
         binding.cardTable.layoutParams = paramscardTable
 
-        val paramsTitle = binding.linearTitle.layoutParams as RelativeLayout.LayoutParams
+        val paramsTitle = binding.txtTitle.layoutParams as RelativeLayout.LayoutParams
         paramsTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP)
-        if (abacusType != AppConstants.Extras_Comman.AbacusTypeNumber && abacusType != AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
+        if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber) {
+            paramsTitle.addRule(RelativeLayout.START_OF, R.id.relAbacus)
+        }else if (abacusType != AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
             paramsTitle.addRule(RelativeLayout.END_OF, R.id.cardTable)
         }
-        binding.linearTitle.layoutParams = paramsTitle
+        binding.txtTitle.layoutParams = paramsTitle
         lifecycleScope.launch {
-            delay(500)
-            binding.linearTitle.show()
+            delay(400)
+            binding.txtTitle.show()
+        }
+
+        val paramsTitleHand = binding.txtTitleHand.layoutParams as RelativeLayout.LayoutParams
+        paramsTitleHand.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        paramsTitleHand.addRule(RelativeLayout.START_OF, R.id.relAbacus)
+        binding.txtTitleHand.layoutParams = paramsTitleHand
+        lifecycleScope.launch {
+            delay(400)
+            binding.txtTitleHand.show()
         }
 
         val paramsRelativeTable = binding.relativeTable.layoutParams as RelativeLayout.LayoutParams
@@ -1329,13 +1336,22 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
     private fun setLeftAbacusRules() {
 
-        val paramsTitle = binding.linearTitle.layoutParams as RelativeLayout.LayoutParams
-        paramsTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP)
+        val paramsTitle = binding.txtTitle.layoutParams as RelativeLayout.LayoutParams
+        paramsTitle.addRule(RelativeLayout.CENTER_HORIZONTAL)
         paramsTitle.addRule(RelativeLayout.END_OF, R.id.relAbacus)
-        binding.linearTitle.layoutParams = paramsTitle
+        binding.txtTitle.layoutParams = paramsTitle
         lifecycleScope.launch {
-            delay(500)
-            binding.linearTitle.show()
+            delay(400)
+            binding.txtTitle.show()
+        }
+
+        val paramsTitleHand = binding.txtTitleHand.layoutParams as RelativeLayout.LayoutParams
+        paramsTitleHand.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM)
+        paramsTitleHand.addRule(RelativeLayout.END_OF, R.id.relAbacus)
+        binding.txtTitleHand.layoutParams = paramsTitleHand
+        lifecycleScope.launch {
+            delay(400)
+            binding.txtTitleHand.show()
         }
 
         val paramsAds = binding.adView.layoutParams as RelativeLayout.LayoutParams
@@ -1363,7 +1379,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         paramsQuestionsMain.addRule(RelativeLayout.CENTER_VERTICAL)
         paramsQuestionsMain.addRule(RelativeLayout.END_OF, R.id.relAbacus)
         binding.linearQuestions.layoutParams = paramsQuestionsMain
-
 
         val paramsQueNumber = binding.relativeQueNumber.layoutParams as RelativeLayout.LayoutParams
         paramsQueNumber.addRule(RelativeLayout.ALIGN_PARENT_END)

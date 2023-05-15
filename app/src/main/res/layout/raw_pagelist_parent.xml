@@ -16,13 +16,12 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/activity_padding8"
             android:text="@{title}"
             android:layout_marginTop="@dimen/activity_padding8"
             style="@style/mainTitleSmall"
-            app:layout_constraintEnd_toStartOf="@+id/txtTotal"
             app:layout_constraintStart_toEndOf="@+id/imgIcon"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Lesson 1" />

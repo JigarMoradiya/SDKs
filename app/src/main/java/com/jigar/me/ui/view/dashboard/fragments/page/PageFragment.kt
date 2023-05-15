@@ -1,11 +1,9 @@
 package com.jigar.me.ui.view.dashboard.fragments.page
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.google.gson.Gson
@@ -20,9 +18,7 @@ import com.jigar.me.ui.view.dashboard.fragments.page.adapter.AdditionSubtraction
 import com.jigar.me.ui.view.dashboard.fragments.page.adapter.DivisionPageListAdapter
 import com.jigar.me.ui.view.dashboard.fragments.page.adapter.MultiplicationPageListAdapter
 import com.jigar.me.ui.view.dashboard.fragments.page.adapter.SingleDigitPageListAdapter
-import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.Resource
 import com.jigar.me.utils.extensions.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,13 +29,10 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
     private lateinit var binding: FragmentPageBinding
     private lateinit var mNavController: NavController
     private var root : View? = null
-    private val apiViewModel by viewModels<AppViewModel>()
 
     private var from = 0
-    private var title = ""
     private var listSingleDigitPages: MutableList<SingleDigitCategory> = arrayListOf()
-    private val singleDigitPageListAdapter: SingleDigitPageListAdapter =
-        SingleDigitPageListAdapter(arrayListOf(), this)
+    private lateinit var singleDigitPageListAdapter: SingleDigitPageListAdapter
 
     private var listMultiplicationPages: MutableList<MultiplicationCategory> = arrayListOf()
     private val multiplicationPageListAdapter: MultiplicationPageListAdapter =
@@ -50,8 +43,7 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
         DivisionPageListAdapter(arrayListOf(), this)
 
     private var listAdditionSubtractionsPages: List<AdditionSubtractionCategory> = arrayListOf()
-    private val additionSubtractionPageListAdapter: AdditionSubtractionPageListAdapter =
-        AdditionSubtractionPageListAdapter(arrayListOf(), this)
+    private lateinit var additionSubtractionPageListAdapter: AdditionSubtractionPageListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,9 +65,7 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
     }
     private fun initViews() {
         from = PageFragmentArgs.fromBundle(requireArguments()).from
-        title = PageFragmentArgs.fromBundle(requireArguments()).title
-
-        binding.title = resources.getString(R.string.lessons_of) + " " + title
+        binding.title = PageFragmentArgs.fromBundle(requireArguments()).title
         if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
             getPages()
         } else {
@@ -140,15 +130,15 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
 
     private fun fillSingleDigitPages() {
         if (listSingleDigitPages.isEmpty()) {
-            listSingleDigitPages = DataProvider.getSingleDigitPages()
+            listSingleDigitPages = DataProvider.getSingleDigitPages(requireContext())
         }
+        singleDigitPageListAdapter = SingleDigitPageListAdapter(listSingleDigitPages, this,prefManager)
         binding.recyclerviewPage.adapter = singleDigitPageListAdapter
-        singleDigitPageListAdapter.setData(listSingleDigitPages)
     }
 
     private fun fillMultiplicationPages() {
         if (listMultiplicationPages.isEmpty()) {
-            listMultiplicationPages = DataProvider.getMultiplicationPages()
+            listMultiplicationPages = DataProvider.getMultiplicationPages(requireContext())
         }
         binding.recyclerviewPage.adapter = multiplicationPageListAdapter
         multiplicationPageListAdapter.setData(listMultiplicationPages)
@@ -156,16 +146,16 @@ class PageFragment : BaseFragment(), SingleDigitPageListAdapter.OnItemClickListe
 
     private fun fillDivisionPages() {
         if (listDivisionPages.isEmpty()) {
-            listDivisionPages = DataProvider.getDivisionPages()
+            listDivisionPages = DataProvider.getDivisionPages(requireContext())
         }
         binding.recyclerviewPage.adapter = divisionPageListAdapter
         divisionPageListAdapter.setData(listDivisionPages)
     }
 
     private fun setAdditionSubtractionPages(dataList: List<AdditionSubtractionCategory>) {
-        binding.recyclerviewPage.adapter = additionSubtractionPageListAdapter
         listAdditionSubtractionsPages = dataList
-        additionSubtractionPageListAdapter.setData(listAdditionSubtractionsPages)
+        additionSubtractionPageListAdapter = AdditionSubtractionPageListAdapter(listAdditionSubtractionsPages, this,prefManager)
+        binding.recyclerviewPage.adapter = additionSubtractionPageListAdapter
     }
 
     override fun onSingleDigitItemClick(data: SingleDigitPages) {

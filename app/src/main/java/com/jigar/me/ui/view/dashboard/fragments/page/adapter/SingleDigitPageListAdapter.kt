@@ -1,22 +1,24 @@
 package com.jigar.me.ui.view.dashboard.fragments.page.adapter
 
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
 import com.jigar.me.data.model.pages.SingleDigitCategory
 import com.jigar.me.data.model.pages.SingleDigitPages
+import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.databinding.RawPagelistChildBinding
 import com.jigar.me.databinding.RawPagelistParentBinding
 import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.CommonUtils.getCurrentSumFromPref
+import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
 
 class SingleDigitPageListAdapter(
-    private var listData: ArrayList<SingleDigitCategory>,
-    private val mListener: OnItemClickListener
+    private var listData: MutableList<SingleDigitCategory>,
+    private val mListener: OnItemClickListener,
+    val prefManager: AppPreferencesHelper
 ) :
     RecyclerView.Adapter<SingleDigitPageListAdapter.FormViewHolder>() {
     interface OnItemClickListener {
@@ -40,7 +42,7 @@ class SingleDigitPageListAdapter(
     override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
         val data: SingleDigitCategory = listData[position]
         holder.binding.title = data.category_name
-        val childAdapter = SingleDigitPageListChildAdapter(data.pages,mListener)
+        val childAdapter = SingleDigitPageListChildAdapter(data.pages,mListener,prefManager)
         holder.binding.recyclerviewPage.adapter = childAdapter
     }
 
@@ -55,7 +57,8 @@ class SingleDigitPageListAdapter(
 
     class SingleDigitPageListChildAdapter(
         private var listData: List<SingleDigitPages>,
-        private val mListener: OnItemClickListener
+        private val mListener: OnItemClickListener,
+        val prefManager: AppPreferencesHelper
     ) :
         RecyclerView.Adapter<SingleDigitPageListChildAdapter.FormViewHolder>() {
 
@@ -70,7 +73,12 @@ class SingleDigitPageListAdapter(
             val data: SingleDigitPages = listData[position]
             val context = holder.binding.txtTitle.context
             holder.binding.title = data.PageName
-            holder.binding.desc = data.from.toString() + " - " + data.to
+            if (prefManager.getCustomParam(Constants.appLanguage,"") == Constants.appLanguage_arebic){
+                holder.binding.desc = data.to.toString() + " - " + data.from
+            }else{
+                holder.binding.desc = data.from.toString() + " - " + data.to
+            }
+
 
             if (data.PageName == null) {
                 holder.binding.title = data.from.toString() + " " + context.resources.getString(R.string.to_) + " " + data.to+" "+context.resources.getString(R.string.numbers)

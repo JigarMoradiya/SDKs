@@ -78,8 +78,8 @@
 
     <com.jigar.me.utils.widget.viewpager.CustomViewPagerSpeed
         android:id="@+id/viewPager"
-        android:layout_width="@dimen/_205sdp"
-        android:layout_height="@dimen/_44sdp"
+        android:layout_width="@dimen/_200sdp"
+        android:layout_height="@dimen/_42sdp"
         android:overScrollMode="never"
         android:scrollbars="none"
         app:layout_constraintEnd_toStartOf="@+id/linearTopEnd"
@@ -93,6 +93,9 @@
         app:layout_constraintStart_toStartOf="@+id/viewPager"
         app:layout_constraintTop_toBottomOf="@+id/viewPager"
         app:spi_dotSelectedColor="@color/colorPrimary"
+        app:spi_dotSize="@dimen/_4sdp"
+        app:spi_dotSpacing="@dimen/_4sdp"
+        app:spi_dotSelectedSize="@dimen/_6sdp"
         app:spi_looped="true" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -172,10 +175,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableStart="@drawable/ic_other_apps"
-        android:drawablePadding="@dimen/activity_padding8"
+        android:drawablePadding="@dimen/activity_padding6"
         android:fontFamily="@font/font_extra_bold"
         android:gravity="center_vertical"
-        android:padding="@dimen/activity_padding8"
+        android:padding="@dimen/activity_padding6"
         android:text="@string/check_other_application_by_us"
         android:textColor="@color/orange_500"
         android:textSize="@dimen/textSizeLarge"

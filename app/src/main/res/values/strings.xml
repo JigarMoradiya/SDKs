@@ -2,10 +2,23 @@
 
 <!--    <string name="app_name">Abacus child learning application</string>-->
     <string name="download_folder">Abacus Downloads</string>
+    <string name="share_text_msg">Abacus child learning application!\nAbacus will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\nDownload Abacus App from Google Play Store \uD83D\uDC47\uD83D\uDC47\uD83D\uDC47\uD83D\uDE0D\uD83D\uDE07\n</string>
     <string name="txt_mail">info.brainapptech@gmail.com</string>
     <string name="material_customization">If you want any customization on material like change to Logo, add watermark, etc.. you can contact us on info.brainapptech@gmail.com</string>
     <string name="privacy_policy_text">Here we declare the Privacy Policy for Abacus - Child Learning Application android mobile application.\n\nAbacus - Child Learning Application is a mathematical tools used for calculation. This app will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\nAbacus is suitable for children age 5 and up, who know about numbers and some basic addition and subtraction.\n\n<b>All application data collocting by Brainapptech Team and we are responsible for that if any issue regarding to data. Content not have any violent, sexual or nudity and drugs so all the people can use it and special kids below 9 year.</b>\n\n<b><font color='#FF0000'>Benefits of Abacus - Child Learning Application : </font></b>\n- Boosting the calculation skills making them better and faster.<br />- Sharpens concentration and comprehension.\n- Increases endurance for stress and pressure.<br />- It helps in better reading and writing.\n- Sharpens listening skills.\n- One of major benefits of Abacus program is that it makes mathematics meaningful, useful and fun for the children.\n- Specially this Abacus program is very effective for those who do not like studying math.\n\n<b><font color='#0000EE'>Give exam</font></b> as per your children level and determine result.\n<b><font color='#0000EE'>Download practice material</font></b> available, its not only math your kids can learn all about around us.\n- Kids can <b><font color='#0000EE'>learn about Pets animals, Farm animals, Mammal animals, Sea animals, Wild animals, Birds, Fruits, Vegetables, Shapes,</font></b> etc..\n- <b><font color='#0000EE'>Count the objects, Fill the blank, Less than &amp; Greater than &amp; Equals, Odds &amp; Evens number.</font></b>\n- Know about Abacus, Identify beads of abacus, Draw beads of abacus.\n- Learn about Number, Addition &amp; Subtraction, Multiplication &amp; Division.\n\nApplication contain ads but its not harmfull to child. We contolled ads to showing in application. We blocked all the Sensitive Categories ads which can harmfull to kids.\n\nWe are responsible for all content which are showing in application and we declare in Privacy Policy.\n\nIn application following permission is used.\n1) INTERNET - For data load and ads loading.\n\nBest Regarding,\nBrainapptech Team.</string>
     <string name="default_notification_channel_id">abacus_public_notification</string>
+
+    <!--  TTS  -->
+    <string name="speech_formula_for">formula for %1$s</string>
+    <string name="speech_set_minus">set minus %1$s</string>
+    <string name="speech_set_plus">set plus %1$s</string>
+    <string name="speech_set">Set %1$s</string>
+    <string name="random">Random</string>
+    <string name="to_">to</string>
+    <string name="numbers">Numbers</string>
+    <string name="minus">minus</string>
+    <string name="plus">plus</string>
+    <string name="equal_to">equal to</string>
 
     <string name="app_download_monitor_channel_name">App Download Monitor</string>
     <string name="app_download_monitor_channel_id">app_download_monitor_service</string>
@@ -48,24 +61,12 @@
     <string name="no_internet">Please check your network connection.</string>
     <string name="no_internet_working">Your internet is not working</string>
     <string name="for_offline_support_msg">For offline support you need to purchase paid plan.</string>
-    <string name="request_timeout">Request timed out. Please try again later.</string>
     <string name="some_thing_wrong">Some thing went wrong, Please try again after sometime.</string>
-    <string name="connection_error">You are offline. Kindly check your network connection.</string>
-    <string name="session_expired">Your session has expired, please log in again.</string>
 
     <!--  Tour page  -->
     <string name="SKIP">SKIP</string>
     <string name="DONE">DONE</string>
     <string name="done_">Done</string>
-    <string name="tourTitle1">Abacus Child Learning Application</string>
-    <string name="tourTitle2">Mathematics Rules</string>
-    <string name="tourTitle3">Practice Material</string>
-    <string name="tourTitle4">Daily Test</string>
-    <string name="tourSubTitle1">Everything for child to learn &amp;\ngrow there brain</string>
-    <string name="tourSubTitle2">Help your children to learn about\nAbacus, Numbers, Addition,\nSubtraction, Multiplication &amp; Division</string>
-    <string name="tourSubTitle3">Using the practice material to learn\nmore about maths and all about\naround to us</string>
-    <string name="tourSubTitle4">Give the daily exam as per\nyour child level &amp;\ndetermine the result</string>
-    <string name="agree_privacy_policy">By continue, you agree to our\n<font color='#0000EE'><u>Privacy Policy</u></font></string>
     <string name="PrivacyPolicy">Privacy Policy</string>
     <string name="PrivacyPolicy_"><font color='#0000EE'><u>Privacy Policy</u></font></string>
     <!--  Comman  -->
@@ -75,10 +76,13 @@
     <string name="txtNo">NO</string>
     <string name="notification">Notification</string>
 
-    <string name="appUpdateFail">Failed to Update the Application.</string>
-    <string name="appUpdateSuccess">Application update Successful.</string>
-
     <!--  Home Page  -->
+    <string name="page_title_Number">Pages of Number</string>
+    <string name="page_title_Addition">Pages of Addition</string>
+    <string name="page_title_AdditionSubtraction">Pages of Addition &amp; Subtraction</string>
+    <string name="page_title_Multiplication">Pages of Multiplication</string>
+    <string name="page_title_Division">Pages of Division</string>
+
     <string name="Number">Number</string>
     <string name="Addition">Addition</string>
     <string name="AdditionSubtraction">Addition &amp; Subtraction</string>
@@ -101,9 +105,6 @@
     <string name="txt_start_with_1">Start With 1?</string>
     <string name="txt_Range">Range</string>
     <string name="set_only">Set</string>
-
-    <!--  Page list  -->
-    <string name="lessons_of">Pages of</string>
 
     <!--  Abacus  -->
     <string name="language_not_supported">This language is not supported!</string>
@@ -165,20 +166,10 @@
     <string name="txt_setting_final_answer">Final Answer</string>
     <string name="txt_setting_sound">Abacus sound</string>
     <string name="txt_setting_hintsound">Abacus hint sound</string>
-    <!--  TTS  -->
-    <string name="speech_formula_for" translatable="false">formula for</string>
-    <string name="speech_set_minus" translatable="false">set minus</string>
-    <string name="speech_set_plus" translatable="false">set plus</string>
-    <string name="speech_set" translatable="false">Set</string>
-    <string name="random" translatable="false">Random</string>
-    <string name="to_" translatable="false">to</string>
-    <string name="numbers" translatable="false">Numbers</string>
 
     <!--  Daily Exam  -->
-
     <string name="testResult">Exam\'s Result</string>
     <string name="child_level">Select Exam Level as per Kid\'s Ability</string>
-    <string name="select_sudoku_child_level">Select type as per Kid\'s Ability for Play Sudoku</string>
 
     <string name="TapCorrectAns">Click on Correct Answer</string>
     <string name="Time">Time</string>
@@ -198,8 +189,6 @@
     <string name="download_now">Download</string>
     <string name="worksheet">Worksheet</string>
     <string name="downloading">Downloading..</string>
-    <string name="may_take_a_moment">Please wait! This may take a moment.</string>
-    <string name="material_download_for_ready_use">Your practice material is ready for use.\nStorage path :</string>
     <string name="download_txt1"><![CDATA[- Download material, Print itself & do Practice at any time.]]></string>
     <string name="download_txt2">- This is not only math, your kids can learn all about around us.</string>
     <string name="download_txt3"><![CDATA[- Count the objects, Fill the blank, Less than & Greater than & Equals, Odds & Evens number.]]></string>
@@ -208,19 +197,10 @@
     <string name="download_txt6"><![CDATA[- Learn about Number, Addition & Subtraction, Multiplication & Division.]]></string>
     <string name="download_txt7">More material coming soon...</string>
 
-    <!--  Tutorial  -->
-
     <!--  Rating dailog  -->
-    <string name="we_need_your_help">We need your help!</string>
-    <string name="kindly_rate_us">Kindly Rate Us</string>
-    <string name="abacus_child_learning_app">Abacus Child learning app,</string>
-    <string name="kindly_support_us_by_rating_us_on_playstore">Kindly support us by\nrating us on Playstore</string>
     <string name="rate_now">Rate Now</string>
-    <string name="next_time">Next Time</string>
-    <string name="i_have_already_rated_this_application">I have already rated this application</string>
     <string name="play_store_not_found">Play store not found in device.</string>
     <string name="gmail_not_found">Gmail app is not installed in device.</string>
-    <string name="reset_to_go_next">Press here to reset\nand go next Abacus</string>
 
     <!--  Purchase Info  -->
     <string name="txt_free">Free</string>
@@ -248,7 +228,6 @@
 
     <string name="signPlus">+</string>
     <string name="signMinus">-</string>
-    <string name="select_the_empty_answer_box_and_tap_on_correct_answer">Select the empty answer box and Tap on Correct Answer</string>
     <string name="select_correct_answers">Select Correct Answers</string>
     <string name="right_answer">Right Answer</string>
     <string name="wrong_answer">Wrong Answer</string>
@@ -260,20 +239,15 @@
     <string name="exam_history">Exam History</string>
     <string name="history_of">History of</string>
     <string name="no_exam_giving_yet">No Exam Giving Yet</string>
-    <string name="no_sudoku_giving_yet">No Sudoku Play Yet</string>
     <string name="check_result">Check Result</string>
     <string name="count_the">Counting of</string>
     <string name="additions_of">Additions of</string>
     <string name="subtraction_of">Subtractions of</string>
-    <string name="star_theme">Star Theme</string>
     <string name="auto_reset">Abacus auto reset?</string>
     <string name="join_now">Join now <b>→</b></string>
     <string name="share_now">Share now <b>→</b></string>
+    <string name="share_now_">Share now</string>
     <string name="share">Share</string>
-    <string name="join_to_our_paid_version_desc">Join to our paid version to get unlimited Abacus, no Advertisement and much more..</string>
-    <string name="get_the_most_out_of_abacus">Get the most out of Abacus</string>
-    <string name="share_app_msg">Kindly support us by sharing application with your Family and Friends.</string>
-    <string name="rate_app_msg">Kindly support us by rating us on google Playstore.</string>
     <string name="suitable_to_age_5_and_up">Suitable to age 5 and up</string>
     <string name="suitable_to_age_4_5">Suitable to age 4 and 5</string>
     <string name="maths_material">Maths Material</string>
@@ -288,10 +262,6 @@
     <string name="hot">Hot</string>
     <string name="new_">New</string>
 
-    <string name="txt_completed_level">Congratulations, you completed this Sudoku</string>
-    <string name="txt_select_box_empty">Select Empty box</string>
-    <string name="txt_select_box">Select box</string>
-    <string name="Hint_come">Come tomorrow for next hint</string>
     <string name="notes">Notes</string>
     <string name="hint">Hint</string>
     <string name="completed">Completed</string>
@@ -301,7 +271,6 @@
     <string name="_24_number_puzzle">24 Number Puzzle</string>
     <string name="_15_number_puzzle">15 Number Puzzle</string>
     <string name="_8_number_puzzle">8 Number Puzzle</string>
-    <string name="button">button</string>
     <string name="score">Score</string>
     <string name="bestScore">Best Score</string>
     <string name="number_sequences_puzzle">Number Sequence Puzzle</string>
@@ -321,20 +290,14 @@
     <string name="no_i_want_to_close">No, I want to close</string>
     <string name="you_completed_this_puzzle_in_moves">You completed this puzzle in %1$s moves</string>
     <string name="this_is_your_best_moves_in_puzzle">This is your best moves in %1$s</string>
-    <string name="but_your_best_moves_in_puzzle_is">But, your best moves in %1$s is</string>
+    <string name="but_your_best_moves_in_puzzle_is">But, your best moves in %1$s is %2$s</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="yes_i_want_to_close">Yes, I want to close</string>
     <string name="no_i_don_t_want">No, I don\'t want</string>
     <string name="please_close">Please close</string>
     <string name="submit">Submit</string>
-    <string name="_4_by_4_sudoku">4 By 4 Sudoku</string>
-    <string name="_6_by_6_sudoku">6 By 6 Sudoku</string>
-    <string name="_9_by_9_sudoku">9 By 9 Sudoku</string>
-    <string name="medium">Medium</string>
-    <string name="easy">Easy</string>
-    <string name="hard">Hard</string>
-    <string name="very_hard">Very Hard</string>
+
     <string name="select_your_exercise">Select your Exercise</string>
     <string name="clear_each_exercise_to_get_80_of_3_times_in_a_row">To clear each exercise, get 80% of 3 times in a row.</string>
     <string name="start_exercise">Start Exercise</string>
@@ -355,8 +318,8 @@
     <string name="not_bad">Not bad, you can do batter from this</string>
 
     <string name="other_app_s_by_brainapptech_team">Other App\'s by BrainAppTech Team</string>
-    <string name="offline_not_supported">Offline not supported</string>
-    <string name="now_offline_support_"><font color='#FF0000'>Now offline support</font> for Abacus starter, Number, Addition, Subtraction, Multiplication, Division, Abacus Exercise and Exam.</string>
+    <string name="offline_not_supported">Offline is not supported</string>
+    <string name="now_offline_support_"><font color='#FF0000'>Offline support</font> for Free mode, Number, Addition, Subtraction, Multiplication, Division, Exercise and Exam.</string>
     <string name="check_other_application_by_us">Check other application by us.</string>
 
     <string name="notification_permission_msg">Notification permission is required to get alert related to Abacus!</string>
@@ -370,15 +333,23 @@
     <string name="please_select_avatar">Please select avatar</string>
     <string name="please_enter_anonymously_name">Please enter anonymous name</string>
     <string name="enter_child_s_name">Enter child\'s name</string>
-    <string name="select_abacus_bead_theme_nbase_on_your_favourite_color">Select Abacus theme base on your favourite color</string>
+    <string name="select_abacus_bead_theme_nbase_on_your_favourite_color">Select Abacus theme base on kid\'s favourite color</string>
     <string name="okay_let_s_start">Okay, let\'s start</string>
-    <string name="will_select_later_from_settings">Will select later from settings</string>
+    <string name="will_select_later_from_settings">Will change later from settings</string>
     <string name="free_mode">Free Mode?</string>
     <string name="video_tutorials">Video Tutorials</string>
-    <string name="use_left_hand_to_move_beads">(Use your <b><font color='#00FF00'>Left Hand</font></b> to move beads)</string>
-    <string name="use_right_hand_to_move_beads">(Use your <b><font color='#00FF00'>Right Hand</font></b> to move beads)</string>
+    <string name="use_left_hand_to_move_beads">Use your <b><font color='#00FF00'>Left Hand</font></b> to move beads</string>
+    <string name="use_right_hand_to_move_beads">Use your <b><font color='#00FF00'>Right Hand</font></b> to move beads</string>
 
-
+    <string name="ten_crores">Ten Crores</string>
+    <string name="crores">Crores</string>
+    <string name="ten_lakhs">Ten Lakhs</string>
+    <string name="lakhs">Lakhs</string>
+    <string name="ten_nthousands">Ten\nThousands</string>
+    <string name="thousands">Thousands</string>
+    <string name="hundreds">Hundreds</string>
+    <string name="tens">Tens</string>
+    <string name="ones">Ones</string>
     <string name="Hundred">Hundred</string>
     <string name="Thousand">Thousand</string>
     <string name="Lakh">Lakh</string>
@@ -427,7 +398,7 @@
     <string name="light_rod3_text">each lower bead <font color='#E91E63'>value is 100</font>\nand the upper bead <font color='#2E7D32'>value is 500,</font>\nso on..</string>
     <string name="this_all_are_upper_bead">This all are <font color='#E91E63'>Upper Beads</font></string>
     <string name="this_all_are_bottom_beads">This all are <font color='#E91E63'>Lower Beads</font></string>
-    <string name="click_here_to_show_nabacus_tour">Click Here to watch\nAbacus Tour</string>
+    <string name="click_here_to_show_nabacus_tour">Click Here to show\nAbacus Tour</string>
     <string name="click_here_to_reset_abacus">Click here to <font color='#FF0000'>Reset Abacus</font></string>
     <string name="now_can_also_subscribe_nweekly_at_low_cost">Now, can also subscribe\n<font color='#00838F'>weekly at low cost</font></string>
     <string name="represent_the_value_of_0_9">can represent the value of <font color='#FF0000'>0-9</font></string>
@@ -436,4 +407,100 @@
     <string name="one_column">One Column</string>
     <string name="two_column">Two Column</string>
     <string name="three_column">Three Column</string>
+    <string name="good_morning">Good Morning</string>
+    <string name="good_afternoon">Good Afternoon</string>
+    <string name="good_evening">Good Evening</string>
+    <string name="abacus_no">Abacus No : %1$d</string>
+
+    <string name="number_1_50">1 to 50 Numbers</string>
+    <string name="number_51_100">51 to 100 Numbers</string>
+    <string name="number_101_200">101 to 200 Numbers</string>
+    <string name="random_numbers">Random Numbers</string>
+    <string name="number_201_300">201 to 300 Numbers</string>
+    <string name="number_301_500">301 to 500 Numbers</string>
+    <string name="number_501_1000">501 to 1000 Numbers</string>
+
+    <string name="multiplications_2d_1d">2D x 1D multiplications</string>
+    <string name="multiplications_3d_1d">3D x 1D multiplications</string>
+    <string name="multiplications_2d_2d">2D x 2D multiplications</string>
+    <string name="multiplications_3d_2d">3D x 2D multiplications</string>
+
+    <string name="Multiplicationpage1">Multiplication of 2 with 2 digits</string>
+    <string name="Multiplicationpage2">Multiplication of 3 with 2 digits</string>
+    <string name="Multiplicationpage3">Multiplication of 4 with 2 digits</string>
+    <string name="Multiplicationpage4">Multiplication of 2,3,4 with 2 digits</string>
+    <string name="Multiplicationpage5">Multiplication of 5 with 2 digits</string>
+    <string name="Multiplicationpage6">Multiplication of 6 with 2 digits</string>
+    <string name="Multiplicationpage7">Multiplication of 7 with 2 digits</string>
+    <string name="Multiplicationpage8">Multiplication of 5,6,7 with 2 digits</string>
+    <string name="Multiplicationpage9">Multiplication of 8 with 2 digits</string>
+    <string name="Multiplicationpage10">Multiplication of 9 with 2 digits</string>
+    <string name="Multiplicationpage11">Multiplication of 8,9 with 2 digits</string>
+    <string name="Multiplicationpage12">Random Multiplication with 2 digits</string>
+
+    <string name="Multiplicationpage13">Multiplication of 2 with 3 digits</string>
+    <string name="Multiplicationpage14">Multiplication of 3 with 3 digits</string>
+    <string name="Multiplicationpage15">Multiplication of 4 with 3 digits</string>
+    <string name="Multiplicationpage16">Multiplication of 2,3,4 with 3 digits</string>
+    <string name="Multiplicationpage17">Multiplication of 5 with 3 digits</string>
+    <string name="Multiplicationpage18">Multiplication of 6 with 3 digits</string>
+    <string name="Multiplicationpage19">Multiplication of 7 with 3 digits</string>
+    <string name="Multiplicationpage20">Multiplication of 5,6,7 with 3 digits</string>
+    <string name="Multiplicationpage21">Multiplication of 8 with 3 digits</string>
+    <string name="Multiplicationpage22">Multiplication of 9 with 3 digits</string>
+    <string name="Multiplicationpage23">Multiplication of 8,9 with 3 digits</string>
+    <string name="Multiplicationpage24">Random Multiplication with 3 digits</string>
+
+    <string name="Multiplicationpage25">2 digits multiplication with end of 2</string>
+    <string name="Multiplicationpage26">2 digits multiplication with end of 3</string>
+    <string name="Multiplicationpage27">2 digits multiplication with end of 4</string>
+    <string name="Multiplicationpage28">2 digits multiplication with end of 5</string>
+    <string name="Multiplicationpage29">2 digits multiplication with end of 6</string>
+    <string name="Multiplicationpage30">2 digits multiplication with end of 7</string>
+    <string name="Multiplicationpage31">2 digits multiplication with end of 8</string>
+    <string name="Multiplicationpage32">2 digits multiplication with end of 9</string>
+    <string name="Multiplicationpage33">2 digits multiplication with 2 digits</string>
+
+    <string name="Multiplicationpage34">3 digits multiplication with end of 2</string>
+    <string name="Multiplicationpage35">3 digits multiplication with end of 3</string>
+    <string name="Multiplicationpage36">3 digits multiplication with end of 4</string>
+    <string name="Multiplicationpage37">3 digits multiplication with end of 5</string>
+    <string name="Multiplicationpage38">3 digits multiplication with end of 6</string>
+    <string name="Multiplicationpage39">3 digits multiplication with end of 7</string>
+    <string name="Multiplicationpage40">3 digits multiplication with end of 8</string>
+    <string name="Multiplicationpage41">3 digits multiplication with end of 9</string>
+    <string name="Multiplicationpage42">3 digits multiplication with 2 digits</string>
+
+    <string name="divide_by_single_digit">Divide by single digit</string>
+    <string name="divide_by_two_digit">Divide by two digit</string>
+    <string name="Devidepage1">Divide by 2</string>
+    <string name="Devidepage2">Divide by 3</string>
+    <string name="Devidepage3">Divide by 4</string>
+    <string name="Devidepage4">Divide by 2,3,4</string>
+    <string name="Devidepage5">Divide by 5</string>
+    <string name="Devidepage6">Divide by 6</string>
+    <string name="Devidepage7">Divide by 7</string>
+    <string name="Devidepage8">Divide by 5,6,7</string>
+    <string name="Devidepage9">Divide by 8</string>
+    <string name="Devidepage10">Divide by 9</string>
+    <string name="Devidepage11">Divide by 8,9</string>
+    <string name="Devidepage12">Divide by Random</string>
+    <string name="Devidepage22">Divide by end with 0</string>
+    <string name="Devidepage23">Divide by end with 1</string>
+    <string name="Devidepage13">Divide by end with 2</string>
+    <string name="Devidepage14">Divide by end with 3</string>
+    <string name="Devidepage15">Divide by end with 4</string>
+    <string name="Devidepage16">Divide by end with 5</string>
+    <string name="Devidepage17">Divide by end with 6</string>
+    <string name="Devidepage18">Divide by end with 7</string>
+    <string name="Devidepage19">Divide by end with 8</string>
+    <string name="Devidepage20">Divide by end with 9</string>
+    <string name="Devidepage21">Divide by Random</string>
+
+    <string name="we_need_your_help">We need your Help!</string>
+    <string name="kindly_support_us_by_rating_an_application">Kindly support us by <font color='#4BB6EF'>rating an application</font> on google Playstore.</string>
+    <string name="kindly_support_us_by_sharing_an_application">Kindly support us by <font color='#4BB6EF'>sharing an application</font> with your Friends and Family.</string>
+
+    <string name="speak_divide_by">%1$s divide by %2$s</string>
+    <string name="speak_multiply_by">%1$s multiply %2$s</string>
 </resources>

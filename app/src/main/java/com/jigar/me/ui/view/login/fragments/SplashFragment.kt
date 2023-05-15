@@ -92,7 +92,7 @@ class SplashFragment : BaseFragment() {
 
     private fun nextPage() {
         lifecycleScope.launch {
-            delay(2000)
+            delay(3000)
             MainDashboardActivity.getInstance(requireContext())
         }
     }

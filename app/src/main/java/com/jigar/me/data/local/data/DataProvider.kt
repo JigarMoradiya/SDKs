@@ -697,60 +697,60 @@ object DataProvider {
         return color
     }
     // TODO SingleDigit Pages
-    fun getSingleDigitPages(): MutableList<SingleDigitCategory>{
+    fun getSingleDigitPages(context: Context): MutableList<SingleDigitCategory>{
         val listCategory: MutableList<SingleDigitCategory> = arrayListOf()
-        listCategory.add(SingleDigitCategory("1 to 50 Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.number_1_50),
             listOf(SingleDigitPages("1",1, 10, false),
                 SingleDigitPages("2",11, 20, false),
                 SingleDigitPages("3",21, 30, false),
                 SingleDigitPages("4",31, 40, false),
                 SingleDigitPages("5",41, 50, false),
-                SingleDigitPages("6",1, 50, true,"Random")
+                SingleDigitPages("6",1, 50, true,context.getString(R.string.random))
             )))
-        listCategory.add(SingleDigitCategory("51 to 100 Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.number_51_100),
             listOf(SingleDigitPages("7",51, 60, false),
                 SingleDigitPages("8",61, 70, false),
                 SingleDigitPages("9",71, 80, false),
                 SingleDigitPages("10",81, 90, false),
                 SingleDigitPages("11",91, 100, false),
-                SingleDigitPages("12",51, 100, true,"Random")
+                SingleDigitPages("12",51, 100, true,context.getString(R.string.random))
             )))
-        listCategory.add(SingleDigitCategory("101 to 200 Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.number_101_200),
             listOf(SingleDigitPages("14",101, 150, false),
                 SingleDigitPages("15",151, 200, false),
-                SingleDigitPages("37",101, 200, true,"Random") // new
+                SingleDigitPages("37",101, 200, true,context.getString(R.string.random)) // new
             )))
-        listCategory.add(SingleDigitCategory("Random Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.random_numbers),
             listOf(SingleDigitPages("13",1, 100, true),
                 SingleDigitPages("38",101, 200, true), // new
                 SingleDigitPages("16",1, 200, true)
             )))
-        listCategory.add(SingleDigitCategory("201 to 300 Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.number_201_300),
             listOf(SingleDigitPages("17",201, 250, false),
                 SingleDigitPages("18",251, 300, false),
-                SingleDigitPages("39",201, 300, true,"Random"), // new
-                SingleDigitPages("19",101, 300, true,"Random")
+                SingleDigitPages("39",201, 300, true,context.getString(R.string.random)), // new
+                SingleDigitPages("19",101, 300, true,context.getString(R.string.random))
             )))
-        listCategory.add(SingleDigitCategory("301 to 500 Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.number_301_500),
             listOf(SingleDigitPages("20",301, 350, false),
                 SingleDigitPages("21",351, 400, false),
                 SingleDigitPages("22",401, 450, false),
                 SingleDigitPages("23",451, 500, false)
             )))
-        listCategory.add(SingleDigitCategory("Random Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.random_numbers),
             listOf(SingleDigitPages("24",301, 500, true),
                 SingleDigitPages("25",101, 500, true),
                 SingleDigitPages("26",1, 500, true)
             )))
-        listCategory.add(SingleDigitCategory("501 to 1000 Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.number_501_1000),
             listOf(SingleDigitPages("27",501, 600, false),
                 SingleDigitPages("28",601, 700, false),
                 SingleDigitPages("29",701, 800, false),
-                SingleDigitPages("30",501, 800, true,"Random"),
+                SingleDigitPages("30",501, 800, true,context.getString(R.string.random)),
                 SingleDigitPages("31",801, 900, false),
                 SingleDigitPages("32",901, 1000, false)
             )))
-        listCategory.add(SingleDigitCategory("Random Numbers",
+        listCategory.add(SingleDigitCategory(context.getString(R.string.random_numbers),
             listOf(SingleDigitPages("33",501, 700, true),
                 SingleDigitPages("34",701, 900, true),
                 SingleDigitPages("40",801, 1000, true),
@@ -761,96 +761,96 @@ object DataProvider {
         return listCategory
     }
     // TODO Multiplication Pages
-    fun getMultiplicationPages(): MutableList<MultiplicationCategory>{
+    fun getMultiplicationPages(context: Context): MutableList<MultiplicationCategory>{
         val listCategory: MutableList<MultiplicationCategory> = arrayListOf()
-        listCategory.add(MultiplicationCategory("2D x 1D multiplications",
-            listOf(MultiplicationPages(Constants.Multiplicationpage1, "2", "", 2,"1"),
-                MultiplicationPages(Constants.Multiplicationpage2, "3", "", 2,"2"),
-                MultiplicationPages(Constants.Multiplicationpage3, "4", "", 2,"3"),
-                MultiplicationPages(Constants.Multiplicationpage4, "", "234", 2,"4"),
-                MultiplicationPages(Constants.Multiplicationpage5, "5", "", 2,"5"),
-                MultiplicationPages(Constants.Multiplicationpage6, "6", "", 2,"6"),
-                MultiplicationPages(Constants.Multiplicationpage7, "7", "", 2,"7"),
-                MultiplicationPages(Constants.Multiplicationpage8, "", "567", 2,"8"),
-                MultiplicationPages(Constants.Multiplicationpage9, "8", "", 2,"9"),
-                MultiplicationPages(Constants.Multiplicationpage10, "9", "", 2,"10"),
-                MultiplicationPages(Constants.Multiplicationpage11, "", "89", 2,"11"),
-                MultiplicationPages(Constants.Multiplicationpage12, "", "1..9", 2,"12")
+        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_2d_1d),
+            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage1), "2", "", 2,"1"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage2), "3", "", 2,"2"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage3), "4", "", 2,"3"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage4), "", "234", 2,"4"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage5), "5", "", 2,"5"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage6), "6", "", 2,"6"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage7), "7", "", 2,"7"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage8), "", "567", 2,"8"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage9), "8", "", 2,"9"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage10), "9", "", 2,"10"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage11), "", "89", 2,"11"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage12), "", "1..9", 2,"12")
             )))
 
-        listCategory.add(MultiplicationCategory("3D x 1D multiplications",
-            listOf(MultiplicationPages(Constants.Multiplicationpage13, "2", "", 3,"13"),
-                MultiplicationPages(Constants.Multiplicationpage14, "3", "", 3,"14"),
-                MultiplicationPages(Constants.Multiplicationpage15, "4", "", 3,"15"),
-                MultiplicationPages(Constants.Multiplicationpage16, "", "234", 3,"16"),
-                MultiplicationPages(Constants.Multiplicationpage17, "5", "", 3,"17"),
-                MultiplicationPages(Constants.Multiplicationpage18, "6", "", 3,"18"),
-                MultiplicationPages(Constants.Multiplicationpage19, "7", "", 3,"19"),
-                MultiplicationPages(Constants.Multiplicationpage20, "", "567", 3,"20"),
-                MultiplicationPages(Constants.Multiplicationpage21, "8", "", 3,"21"),
-                MultiplicationPages(Constants.Multiplicationpage22, "9", "", 3,"22"),
-                MultiplicationPages(Constants.Multiplicationpage23, "", "89", 3,"23"),
-                MultiplicationPages(Constants.Multiplicationpage24, "", "1..9", 3,"24")
+        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_3d_1d),
+            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage13), "2", "", 3,"13"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage14), "3", "", 3,"14"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage15), "4", "", 3,"15"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage16), "", "234", 3,"16"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage17), "5", "", 3,"17"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage18), "6", "", 3,"18"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage19), "7", "", 3,"19"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage20), "", "567", 3,"20"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage21), "8", "", 3,"21"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage22), "9", "", 3,"22"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage23), "", "89", 3,"23"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage24), "", "1..9", 3,"24")
             )))
 
-        listCategory.add(MultiplicationCategory("2D x 2D multiplications",
-            listOf(MultiplicationPages(Constants.Multiplicationpage25, "", "02", 2,"25"),
-                MultiplicationPages(Constants.Multiplicationpage26, "", "03", 2,"26"),
-                MultiplicationPages(Constants.Multiplicationpage27, "", "04", 2,"27"),
-                MultiplicationPages(Constants.Multiplicationpage28, "", "05", 2,"28"),
-                MultiplicationPages(Constants.Multiplicationpage29, "", "06", 2,"29"),
-                MultiplicationPages(Constants.Multiplicationpage30, "", "07", 2,"30"),
-                MultiplicationPages(Constants.Multiplicationpage31, "", "08", 2,"31"),
-                MultiplicationPages(Constants.Multiplicationpage32, "", "09", 2,"32"),
-                MultiplicationPages(Constants.Multiplicationpage33, "ran2", "", 2,"33")
+        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_2d_2d),
+            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage25), "", "02", 2,"25"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage26), "", "03", 2,"26"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage27), "", "04", 2,"27"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage28), "", "05", 2,"28"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage29), "", "06", 2,"29"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage30), "", "07", 2,"30"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage31), "", "08", 2,"31"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage32), "", "09", 2,"32"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage33), "ran2", "", 2,"33")
             )))
 
-        listCategory.add(MultiplicationCategory("3D x 2D multiplications",
-            listOf(MultiplicationPages(Constants.Multiplicationpage34, "", "02", 3,"34"),
-                MultiplicationPages(Constants.Multiplicationpage35, "", "03", 3,"35"),
-                MultiplicationPages(Constants.Multiplicationpage36, "", "04", 3,"36"),
-                MultiplicationPages(Constants.Multiplicationpage37, "", "05", 3,"37"),
-                MultiplicationPages(Constants.Multiplicationpage38, "", "06", 3,"38"),
-                MultiplicationPages(Constants.Multiplicationpage39, "", "07", 3,"39"),
-                MultiplicationPages(Constants.Multiplicationpage40, "", "08", 3,"40"),
-                MultiplicationPages(Constants.Multiplicationpage41, "", "09", 3,"41"),
-                MultiplicationPages(Constants.Multiplicationpage42, "ran2", "", 3,"42")
+        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_3d_2d),
+            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage34), "", "02", 3,"34"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage35), "", "03", 3,"35"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage36), "", "04", 3,"36"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage37), "", "05", 3,"37"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage38), "", "06", 3,"38"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage39), "", "07", 3,"39"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage40), "", "08", 3,"40"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage41), "", "09", 3,"41"),
+                MultiplicationPages(context.getString(R.string.Multiplicationpage42), "ran2", "", 3,"42")
             )))
 
         return listCategory
     }
     // TODO Division Pages
-    fun getDivisionPages(): MutableList<DivisionCategory>{
+    fun getDivisionPages(context: Context): MutableList<DivisionCategory>{
         val listCategory: MutableList<DivisionCategory> = arrayListOf()
-        listCategory.add(DivisionCategory("Divide by single digit",
-            listOf(DivisionPages(Constants.Devidepage1, "2", "","1"),
-                DivisionPages(Constants.Devidepage2, "3", "","2"),
-                DivisionPages(Constants.Devidepage3, "4", "","3"),
-                DivisionPages(Constants.Devidepage4, "", "234","4"),
-                DivisionPages(Constants.Devidepage5, "5", "","5"),
-                DivisionPages(Constants.Devidepage6, "6", "","6"),
-                DivisionPages(Constants.Devidepage7, "7", "","7"),
-                DivisionPages(Constants.Devidepage8, "", "567","8"),
-                DivisionPages(Constants.Devidepage9, "8", "","9"),
-                DivisionPages(Constants.Devidepage10, "9", "","10"),
-                DivisionPages(Constants.Devidepage11, "", "89","11"),
-                DivisionPages(Constants.Devidepage12, "", "1..9","12")
+        listCategory.add(DivisionCategory(context.getString(R.string.divide_by_single_digit),
+            listOf(DivisionPages(context.getString(R.string.Devidepage1), "2", "","1"),
+                DivisionPages(context.getString(R.string.Devidepage2), "3", "","2"),
+                DivisionPages(context.getString(R.string.Devidepage3), "4", "","3"),
+                DivisionPages(context.getString(R.string.Devidepage4), "", "234","4"),
+                DivisionPages(context.getString(R.string.Devidepage5), "5", "","5"),
+                DivisionPages(context.getString(R.string.Devidepage6), "6", "","6"),
+                DivisionPages(context.getString(R.string.Devidepage7), "7", "","7"),
+                DivisionPages(context.getString(R.string.Devidepage8), "", "567","8"),
+                DivisionPages(context.getString(R.string.Devidepage9), "8", "","9"),
+                DivisionPages(context.getString(R.string.Devidepage10), "9", "","10"),
+                DivisionPages(context.getString(R.string.Devidepage11), "", "89","11"),
+                DivisionPages(context.getString(R.string.Devidepage12), "", "1..9","12")
             )))
 
-        listCategory.add(DivisionCategory("Divide by two digit",
+        listCategory.add(DivisionCategory(context.getString(R.string.divide_by_two_digit),
             listOf(
-                DivisionPages(Constants.Devidepage22, "", "00","22"),
-                DivisionPages(Constants.Devidepage23, "", "01","23"),
-                DivisionPages(Constants.Devidepage13, "", "02","13"),
-                DivisionPages(Constants.Devidepage14, "", "03","14"),
-                DivisionPages(Constants.Devidepage15, "", "04","15"),
-                DivisionPages(Constants.Devidepage16, "", "05","16"),
-                DivisionPages(Constants.Devidepage17, "", "06","17"),
-                DivisionPages(Constants.Devidepage18, "", "07","18"),
-                DivisionPages(Constants.Devidepage19, "", "08","19"),
-                DivisionPages(Constants.Devidepage20, "", "09","20"),
-                DivisionPages(Constants.Devidepage21, "ran2", "","21"),
-                DivisionPages(Constants.Devidepage21, "ran2_1", "","24"),
+                DivisionPages(context.getString(R.string.Devidepage22), "", "00","22"),
+                DivisionPages(context.getString(R.string.Devidepage23), "", "01","23"),
+                DivisionPages(context.getString(R.string.Devidepage13), "", "02","13"),
+                DivisionPages(context.getString(R.string.Devidepage14), "", "03","14"),
+                DivisionPages(context.getString(R.string.Devidepage15), "", "04","15"),
+                DivisionPages(context.getString(R.string.Devidepage16), "", "05","16"),
+                DivisionPages(context.getString(R.string.Devidepage17), "", "06","17"),
+                DivisionPages(context.getString(R.string.Devidepage18), "", "07","18"),
+                DivisionPages(context.getString(R.string.Devidepage19), "", "08","19"),
+                DivisionPages(context.getString(R.string.Devidepage20), "", "09","20"),
+                DivisionPages(context.getString(R.string.Devidepage21), "ran2", "","21"),
+                DivisionPages(context.getString(R.string.Devidepage21), "ran2_1", "","24"),
             )))
 
         return listCategory

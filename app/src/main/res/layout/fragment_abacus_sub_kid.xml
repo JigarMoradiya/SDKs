@@ -316,7 +316,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Ten Crores"
+                    android:text="@string/ten_crores"
                     android:textColor="@color/red_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -327,7 +327,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Crores"
+                    android:text="@string/crores"
                     android:textColor="@color/purple_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -338,7 +338,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Ten Lakhs"
+                    android:text="@string/ten_lakhs"
                     android:textColor="@color/indigo_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -349,7 +349,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Lakhs"
+                    android:text="@string/lakhs"
                     android:textColor="@color/blue_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -360,7 +360,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Ten\nThousands"
+                    android:text="@string/ten_nthousands"
                     android:textColor="@color/cyan_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -371,7 +371,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Thousands"
+                    android:text="@string/thousands"
                     android:textColor="@color/teal_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -382,7 +382,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Hundreds"
+                    android:text="@string/hundreds"
                     android:textColor="@color/green_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -393,7 +393,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Tens"
+                    android:text="@string/tens"
                     android:textColor="@color/lime_800"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />
@@ -404,7 +404,7 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="Ones"
+                    android:text="@string/ones"
                     android:textColor="@color/orange_700"
                     android:textSize="@dimen/textSizeVery2ExtraSmall"
                     app:fontFamily="@font/font_extra_bold" />

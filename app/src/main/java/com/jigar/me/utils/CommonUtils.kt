@@ -5,6 +5,7 @@ import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.LinearInterpolator
+import com.jigar.me.R
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.extensions.show
 import org.json.JSONException
@@ -16,7 +17,7 @@ import java.util.*
 
 object CommonUtils {
 
-    fun getCurrentTimeMessage():String{
+    fun getCurrentTimeMessage(context: Context):String{
         val calendar = Calendar.getInstance()
         val timeOfDay = calendar.get(Calendar.HOUR_OF_DAY)
         //        6 AM - 12 PM Morning slots
@@ -24,10 +25,10 @@ object CommonUtils {
 //        5 PM - 9 PM Evening Slots
 //        9 PM - 6 AM Night Slots
         return when (timeOfDay) {
-            in 6..11 -> "Good Morning"
-            in 12..16 -> "Good Afternoon"
+            in 6..11 -> context.getString(R.string.good_morning)
+            in 12..16 -> context.getString(R.string.good_afternoon)
 //                in 17..20 -> "Good Evening"
-            else -> "Good Evening"
+            else -> context.getString(R.string.good_evening)
         }
     }
     fun calculateNoOfColumns(columnWidthDp: Float, parentWidth : Float): Int {

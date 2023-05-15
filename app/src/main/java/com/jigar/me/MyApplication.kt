@@ -156,19 +156,19 @@ class MyApplication : Application() {
                             moveToDestination(R.id.fullAbacusFragment)
                         }
                         Constants.notificationTypeNumber -> {
-                            moveToPages(AppConstants.HomeClicks.Menu_Number,getString(R.string.Number))
+                            moveToPages(AppConstants.HomeClicks.Menu_Number,getString(R.string.page_title_Number))
                         }
                         Constants.notificationTypeAddition -> {
-                            moveToPages(AppConstants.HomeClicks.Menu_Addition,getString(R.string.Addition))
+                            moveToPages(AppConstants.HomeClicks.Menu_Addition,getString(R.string.page_title_Addition))
                         }
                         Constants.notificationTypeSubtraction -> {
-                            moveToPages(AppConstants.HomeClicks.Menu_Addition_Subtraction,getString(R.string.AdditionSubtraction))
+                            moveToPages(AppConstants.HomeClicks.Menu_Addition_Subtraction,getString(R.string.page_title_AdditionSubtraction))
                         }
                         Constants.notificationTypeMultiplication -> {
-                            moveToPages(AppConstants.HomeClicks.Menu_Multiplication,getString(R.string.Multiplication))
+                            moveToPages(AppConstants.HomeClicks.Menu_Multiplication,getString(R.string.page_title_Multiplication))
                         }
                         Constants.notificationTypeDivision -> {
-                            moveToPages(AppConstants.HomeClicks.Menu_Division,getString(R.string.Division))
+                            moveToPages(AppConstants.HomeClicks.Menu_Division,getString(R.string.page_title_Division))
                         }
                         Constants.notificationTypeMaterial -> {
                             moveToDestination(R.id.materialHomeFragment)

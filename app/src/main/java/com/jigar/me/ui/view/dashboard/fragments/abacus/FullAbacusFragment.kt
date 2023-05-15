@@ -463,7 +463,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
     }
 
     private fun goToNextValue() {
-        speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
+        speakOut(String.format(resources.getString(R.string.speech_set), " $values"))
         if (!is1stTime){
             ads()
         }

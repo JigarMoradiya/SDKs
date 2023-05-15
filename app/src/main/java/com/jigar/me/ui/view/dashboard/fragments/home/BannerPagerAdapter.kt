@@ -10,6 +10,7 @@ import com.jigar.me.data.local.data.HomeBanner
 import com.jigar.me.databinding.RawHomeBannerPagerBinding
 import com.jigar.me.databinding.RawPurchaseBinding
 import com.jigar.me.utils.AppConstants
+import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
 
@@ -21,23 +22,19 @@ class BannerPagerAdapter(var listData: ArrayList<HomeBanner>,
     }
 
 
-    fun addPurchaseBanner(data : HomeBanner){
-        listData.filter { it.type == AppConstants.HomeBannerTypes.banner_purchase }.also {
-            if (it.isNullOrEmpty()){
-                listData.add(data)
-                notifyDataSetChanged()
-            }
-        }
-    }
+//    fun addPurchaseBanner(data : HomeBanner){
+//        listData.filter { it.type == AppConstants.HomeBannerTypes.banner_purchase }.also {
+//            if (it.isNullOrEmpty()){
+//                listData.add(data)
+//                notifyDataSetChanged()
+//            }
+//        }
+//    }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         val binding = RawHomeBannerPagerBinding.inflate(container.context.layoutInflater,container,false)
         with(listData[position]){
-            if (this.bitmap != null){
-                binding.img.setImageBitmap(this.bitmap)
-            }else{
-                this.image?.let { binding.img.setImageResource(it) }
-            }
+            binding.isRateUsType = this.type == Constants.banner_rate_us
             binding.root.onClick {
                 mListener.onBannerItemClick(this@with)
             }

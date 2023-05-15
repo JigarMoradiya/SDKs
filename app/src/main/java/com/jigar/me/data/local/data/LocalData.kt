@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 
 data class ColorData(val color: Int, val darkColor: Int)
-data class HomeBanner(val type: String, val image: Int? = null, val bitmap: Bitmap? = null)
+data class HomeBanner(val type: String)
 data class HomeMenu(val type: Int, val image: Int,val tag : String = "")
 
 data class AvatarImages(val id: Int, val image: Int)

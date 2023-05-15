@@ -98,12 +98,11 @@
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTitle"
             style="@style/mainTitle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/title_margin"
             android:text="@string/txt_setting_title"
             app:layout_constraintBottom_toBottomOf="@+id/cardBack"
-            app:layout_constraintEnd_toStartOf="@+id/cardPurchase"
             app:layout_constraintStart_toEndOf="@+id/cardBack"
             app:layout_constraintTop_toTopOf="@+id/cardBack" />
 
@@ -148,7 +147,7 @@
                         android:orientation="vertical">
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:padding="@dimen/activity_padding8"
@@ -199,7 +198,7 @@
                         android:orientation="vertical">
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:padding="@dimen/activity_padding8"
@@ -311,6 +310,7 @@
                                         android:layout_toEndOf="@+id/img_hint_sound"
                                         android:fontFamily="@font/font_bold"
                                         android:text="@string/txt_setting_hintsound"
+                                        android:gravity="center_vertical|left"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
                                         android:textStyle="normal" />
@@ -359,14 +359,14 @@
                                         app:tint="@color/colorListingHeading" />
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/activity_padding8"
                                         android:layout_toStartOf="@+id/sw_sound"
                                         android:layout_toEndOf="@+id/img_sound"
                                         android:fontFamily="@font/font_semibold"
-                                        android:gravity="center_vertical"
+                                        android:gravity="center_vertical|left"
                                         android:text="@string/txt_setting_sound"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
@@ -406,14 +406,14 @@
                                         app:tint="@color/colorListingHeading" />
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/activity_padding8"
                                         android:layout_toStartOf="@+id/swAutoReset"
                                         android:layout_toEndOf="@+id/imgAutoReset"
                                         android:fontFamily="@font/font_semibold"
-                                        android:gravity="center_vertical"
+                                        android:gravity="center_vertical|left"
                                         android:text="@string/auto_reset"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
@@ -453,7 +453,7 @@
                                         app:tint="@color/colorListingHeading" />
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/activity_padding8"
@@ -461,6 +461,7 @@
                                         android:layout_toEndOf="@+id/img_NumberPuzzleSound"
                                         android:fontFamily="@font/font_semibold"
                                         android:text="@string/number_sequences_puzzle_volume"
+                                        android:gravity="center_vertical|left"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
                                         android:textStyle="normal" />
@@ -517,14 +518,14 @@
                                         app:tint="@color/colorListingHeading" />
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/activity_padding8"
                                         android:layout_toStartOf="@+id/sw_display_abacus_number"
                                         android:layout_toEndOf="@+id/img_display_abacus_number"
                                         android:fontFamily="@font/font_semibold"
-                                        android:gravity="center_vertical"
+                                        android:gravity="center_vertical|left"
                                         android:text="@string/txt_setting_display_abacus_number"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
@@ -563,14 +564,14 @@
                                         app:tint="@color/colorListingHeading" />
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/activity_padding8"
                                         android:layout_toStartOf="@+id/sw_display_help_message"
                                         android:layout_toEndOf="@+id/img_display_help_message"
+                                        android:layout_centerVertical="true"
                                         android:fontFamily="@font/font_semibold"
-                                        android:gravity="center_vertical"
+                                        android:gravity="center_vertical|left"
                                         android:text="@string/txt_setting_display_help_message"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
@@ -609,14 +610,14 @@
                                         app:tint="@color/colorListingHeading" />
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/activity_padding8"
                                         android:layout_toStartOf="@+id/sw_hide_table"
                                         android:layout_toEndOf="@+id/img_hide_table"
                                         android:fontFamily="@font/font_semibold"
-                                        android:gravity="center_vertical"
+                                        android:gravity="center_vertical|left"
                                         android:text="@string/txt_setting_hide_table"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
@@ -655,14 +656,14 @@
                                         app:tint="@color/colorListingHeading" />
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_centerVertical="true"
                                         android:layout_marginStart="@dimen/activity_padding8"
                                         android:layout_toStartOf="@+id/sw_left_hand"
                                         android:layout_toEndOf="@+id/img_left_hand"
                                         android:fontFamily="@font/font_semibold"
-                                        android:gravity="center_vertical"
+                                        android:gravity="center_vertical|left"
                                         android:text="@string/txt_setting_left_hand"
                                         android:textColor="@color/colorListingHeading"
                                         android:textSize="@dimen/textSizeMedium"
@@ -720,14 +721,14 @@
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/txt_step_tick"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="@dimen/activity_padding8"
                                     android:layout_toStartOf="@+id/img_step_tick"
                                     android:layout_toEndOf="@+id/img_step"
                                     android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
+                                    android:gravity="center_vertical|left"
                                     android:text="@string/txt_setting_step_by_step"
                                     android:textColor="@color/colorListingHeading"
                                     android:textSize="@dimen/textSizeMedium"
@@ -768,14 +769,14 @@
 
                                 <com.google.android.material.textview.MaterialTextView
                                     android:id="@+id/txt_final_tick"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="match_parent"
                                     android:layout_centerVertical="true"
                                     android:layout_marginStart="@dimen/activity_padding8"
                                     android:layout_toStartOf="@+id/img_final_tick"
                                     android:layout_toEndOf="@+id/img_final"
                                     android:fontFamily="@font/font_semibold"
-                                    android:gravity="center_vertical"
+                                    android:gravity="center_vertical|left"
                                     android:text="@string/txt_setting_final_answer"
                                     android:textColor="@color/colorListingHeading"
                                     android:textSize="@dimen/textSizeMedium"

@@ -6,6 +6,8 @@ import android.app.NotificationManager
 import android.content.Context
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.content.Intent
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.Insets
 import android.graphics.drawable.ColorDrawable
@@ -30,6 +32,7 @@ import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
 import java.io.File
 import java.io.IOException
+import java.util.*
 
 
  @Suppress("UNCHECKED_CAST")
@@ -163,10 +166,8 @@ fun Context.openURL(url : String) {
     }
 }
 fun Context.shareIntent() {
-    val msg = "Abacus child learning application!\n" +
-            "Abacus will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\n" +
-            "Download Abacus App from Google Play Store \uD83D\uDC47\uD83D\uDC47\uD83D\uDC47\uD83D\uDE0D\uD83D\uDE07\n" +
-            "https://play.google.com/store/apps/details?id=${packageName}"
+    val txt = getString(R.string.share_text_msg)
+    val msg = txt + "\nhttps://play.google.com/store/apps/details?id=${packageName}"
     val sharingIntent = Intent(Intent.ACTION_SEND)
     sharingIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
     sharingIntent.type = "text/plain"

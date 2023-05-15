@@ -17,8 +17,8 @@ android {
         applicationId 'com.jigar.me'
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 84
-        versionName "8.0.4"
+        versionCode 85
+        versionName "8.0.5"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -44,6 +44,20 @@ android {
                 buildConfigField "String", "ONE_SIGNAL", one_signal_id
                 resValue "string", "app_name", "Abacus Child Leaning App"
             }
+        }
+    }
+
+    bundle {
+        language {
+            enableSplit = false
+        }
+        density {
+            // This property is set to true by default.
+            enableSplit = true
+        }
+        abi {
+            // This property is set to true by default.
+            enableSplit = true
         }
     }
 

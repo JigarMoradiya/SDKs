@@ -252,13 +252,13 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
             }
         })
         val bannerListData: ArrayList<HomeBanner> = arrayListOf()
-        bannerListData.add(HomeBanner(AppConstants.HomeBannerTypes.banner_rate_us,R.drawable.banner_rate))
-        bannerListData.add(HomeBanner(AppConstants.HomeBannerTypes.banner_share,R.drawable.banner_share))
+        bannerListData.add(HomeBanner(Constants.banner_rate_us))
+        bannerListData.add(HomeBanner(Constants.banner_share))
         bannerPagerAdapter = BannerPagerAdapter(bannerListData,this@HomeFragment)
         binding.viewPager.adapter = bannerPagerAdapter
         binding.viewPager.setPageTransformer( true , DepthPageTransformer() )
         binding.indicatorPager.attachToPager(binding.viewPager)
-        checkPurchase()
+//        checkPurchase()
     }
 
     private fun initListener() {
@@ -266,7 +266,10 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
             SelelctAvatarProfileDialog.showPopup(requireActivity(),prefManager,this@HomeFragment)
         }
         binding.cardSettingTop.onClick { moveToClick(AppConstants.HomeClicks.Menu_Setting) }
-        binding.cardAboutUs.onClick { moveToClick(AppConstants.HomeClicks.Menu_AboutUs) }
+        binding.cardAboutUs.onClick {
+//            prefManager.setCustomParam(Constants.appLanguage,Constants.appLanguage_arebic)
+            moveToClick(AppConstants.HomeClicks.Menu_AboutUs)
+        }
         binding.txtOtherApps.onClick {
             OtherApplicationBottomSheet.showPopup(requireActivity())
         }
@@ -280,27 +283,27 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
     override fun avatarProfileCloseDialog() {
         val id = prefManager.getCustomParamInt(Constants.avatarId,0)
         if (id == 0){
-            binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage()
+            binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage(requireContext())
         }else{
             val avatarList = DataProvider.getAvatarList()
             val avatar : AvatarImages? = avatarList.find { it.id == id }
             if (avatar != null){
                 binding.imgUserProfile.setImageResource(avatar.image)
-                binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage().plus(" "+prefManager.getCustomParam(Constants.childName,"")+"!")
+                binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage(requireContext()).plus(" "+prefManager.getCustomParam(Constants.childName,"")+"!")
             }else{
-                binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage()
+                binding.txtWelcomeTitle.text = CommonUtils.getCurrentTimeMessage(requireContext())
             }
 
         }
     }
     private fun checkPurchase() {
-        appViewModel.getInAppPurchase().observe(viewLifecycleOwner) { listData ->
-            if (listData.isNullOrEmpty()) {
-                if (::bannerPagerAdapter.isInitialized){
-                    bannerPagerAdapter.addPurchaseBanner(HomeBanner(AppConstants.HomeBannerTypes.banner_purchase,R.drawable.banner_purchase))
-                }
-            }
-        }
+//        appViewModel.getInAppPurchase().observe(viewLifecycleOwner) { listData ->
+//            if (listData.isNullOrEmpty()) {
+//                if (::bannerPagerAdapter.isInitialized){
+//                    bannerPagerAdapter.addPurchaseBanner(HomeBanner(AppConstants.HomeBannerTypes.banner_purchase,R.drawable.banner_purchase))
+//                }
+//            }
+//        }
     }
 
     private fun autoScrollBanner() {
@@ -331,15 +334,15 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         // firebase event
         MyApplication.logEvent(data.type, null)
         when (data.type) {
-            AppConstants.HomeBannerTypes.banner_rate_us -> {
+            Constants.banner_rate_us -> {
                 requireContext().openURL("https://play.google.com/store/apps/details?id=${requireContext().packageName}")
             }
-            AppConstants.HomeBannerTypes.banner_share -> {
+            Constants.banner_share -> {
                 moveToClick(AppConstants.HomeClicks.Menu_Share)
             }
-            AppConstants.HomeBannerTypes.banner_purchase, AppConstants.HomeBannerTypes.banner_offer -> {
-                moveToClick(AppConstants.HomeClicks.Menu_Purchase)
-            }
+//            Constants.banner_purchase, Constants.banner_offer -> {
+//                moveToClick(AppConstants.HomeClicks.Menu_Purchase)
+//            }
         }
     }
 
@@ -349,23 +352,23 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
                 mNavController?.navigate(R.id.action_homeFragment_to_fullAbacusFragment)
             }
             AppConstants.HomeClicks.Menu_Number -> {
-                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Number))
+                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.page_title_Number))
                 mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Addition -> {
-                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Addition))
+                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.page_title_Addition))
                 mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Addition_Subtraction -> {
-                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.AdditionSubtraction))
+                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.page_title_AdditionSubtraction))
                 mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Multiplication -> {
-                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Multiplication))
+                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.page_title_Multiplication))
                 mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Division -> {
-                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.Division))
+                val action = HomeFragmentDirections.actionHomeFragmentToPageFragment(clickType,resources.getString(R.string.page_title_Division))
                 mNavController?.navigate(action)
             }
             AppConstants.HomeClicks.Menu_Exercise -> {
