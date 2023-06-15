@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jigar.me.R
 import com.jigar.me.data.local.data.HomeMenu
+import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.databinding.RawHomeMenuBinding
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.extensions.hide
@@ -12,7 +13,10 @@ import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.show
 
 class HomeMenuAdapter(
-    private var listData: List<HomeMenu>,private val mListener: OnItemClickListener
+    private var listData: List<HomeMenu>,
+    val prefManager: AppPreferencesHelper,
+    private val mListener: OnItemClickListener,
+    var dimension: Int
 ) : RecyclerView.Adapter<HomeMenuAdapter.FormViewHolder>() {
     interface OnItemClickListener {
         fun onItemHomeMenuClick(data: HomeMenu)
@@ -25,6 +29,13 @@ class HomeMenuAdapter(
     }
 
     override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
+        val context = holder.binding.conMain.context
+        if (dimension < 150){
+            dimension = context.resources.getDimension(R.dimen.home_menu).toInt()
+        }
+        holder.binding.conMain.layoutParams.width = dimension
+        holder.binding.conMain.layoutParams.height = dimension
+
         val data = listData[position]
         holder.binding.imgMenu.setImageResource(data.image)
         if (data.tag.isEmpty()){
@@ -33,8 +44,8 @@ class HomeMenuAdapter(
             holder.binding.txtTag.show()
             holder.binding.txtTag.text = data.tag
         }
-        holder.binding.root.onClick {
-            mListener.onItemHomeMenuClick(data)
+        holder.binding.conMain.onClick {
+            mListener.onItemHomeMenuClick(listData[holder.adapterPosition])
         }
     }
 

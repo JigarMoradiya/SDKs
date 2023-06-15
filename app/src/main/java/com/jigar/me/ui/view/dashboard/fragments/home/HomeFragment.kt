@@ -19,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.eftimoff.viewpagertransformers.DepthPageTransformer
 import com.google.firebase.database.DataSnapshot
@@ -94,14 +95,25 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
         // set avatar profile and name
         avatarProfileCloseDialog()
 
-        homeMenuAdapter = HomeMenuAdapter(DataProvider.getHomeMenuList(requireContext()),this)
-        binding.recyclerviewMenu.adapter = homeMenuAdapter
-        getTrackData()
-        setViewPager()
         getFBConstant()
         firebaseConfig()
+        getTrackData()
+        setViewPager()
+        binding.linearMenu.post {
+            val list = DataProvider.getHomeMenuList(requireContext())
+            val column = (list.size / 2)
+            val height = binding.linearMenu.height / 2
+            val width = binding.linearMenu.width / column
+            homeMenuAdapter = if (width > height){
+                HomeMenuAdapter(list,prefManager,this,height)
+            }else{
+                HomeMenuAdapter(list,prefManager,this,width)
+            }
+            binding.recyclerviewMenu.layoutManager = GridLayoutManager(requireContext(),column)
+            binding.recyclerviewMenu.adapter = homeMenuAdapter
 
-        themePopup()
+            themePopup()
+        }
     }
 
     private fun menuTour() {

@@ -1,4 +1,5 @@
 <resources>
+    <dimen name="home_menu">@dimen/_90sdp</dimen>
     <dimen name="card_stork">@dimen/_2sdp</dimen>
     <dimen name="height_extra">@dimen/_2sdp</dimen>
     <dimen name="poligon_width">@dimen/_36sdp</dimen>

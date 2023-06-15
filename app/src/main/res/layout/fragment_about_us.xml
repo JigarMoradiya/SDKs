@@ -60,7 +60,7 @@
                             android:adjustViewBounds="true"
                             android:layout_width="wrap_content"
                             android:layout_height="@dimen/_60sdp"
-                            app:srcCompat="@drawable/logo" />
+                            app:srcCompat="@drawable/logo_right" />
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="wrap_content"
@@ -209,7 +209,6 @@
                 android:id="@+id/txtOtherApps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/activity_padding8"
                 android:fontFamily="@font/font_extra_bold"
                 android:text="@string/other_app_s_by_brainapptech_team"
                 android:textColor="@color/teal_900"
@@ -218,39 +217,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearShareRate" />
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:id="@+id/linearOtherApps"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewOtherApps"
+                android:layout_width="@dimen/_200sdp"
+                android:layout_height="@dimen/_100sdp"
+                android:orientation="vertical"
+                android:overScrollMode="never"
+                android:scrollbars="none"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                tools:itemCount="2"
                 android:layout_marginHorizontal="@dimen/activity_padding6"
                 android:layout_marginTop="@dimen/activity_padding10"
-                android:orientation="horizontal"
-                android:weightSum="100"
-                app:layout_constraintTop_toBottomOf="@+id/txtOtherApps">
+                tools:listitem="@layout/raw_home_menu" />
 
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="10dp"
-                    android:layout_weight="16.5" />
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerviewOtherApps"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="67"
-                    android:orientation="vertical"
-                    android:overScrollMode="never"
-                    android:scrollbars="none"
-                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                    app:spanCount="2"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/raw_home_menu" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="10dp"
-                    android:layout_weight="16.5" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

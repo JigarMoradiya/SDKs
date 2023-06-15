@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
@@ -53,7 +52,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private var Que2_str = "" // required only for Multiplication and Division
     private var Que2_type = "" //required only for Multiplication and Division
     private var Que1_digit_type = 0 // required only for Multiplication
-    private var total = 0 // required only for addition subtraction
     private var From = 0 // required only for number
     private var To = 0 // required only for number
     private var isRandom = false // required only for number
@@ -65,6 +63,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     private var isPurchased = false
     private var isDisplayHelpMessage = true
     private var isStepByStep = false
+    private var isAnswerWithTools = false
     private var isAutoRefresh = false
     private var isHideTable = false
     private var isHintSound = false
@@ -127,15 +126,50 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
     private fun initViews() {
         binding.isLeftHand = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)
+
+        isDisplayHelpMessage = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_help_message, true)
+        isHintSound = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting__hint_sound, false)
+        isHideTable = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_hide_table, false)
+        isStepByStep = prefManager.getCustomParam(AppConstants.Settings.Setting_answer,AppConstants.Settings.Setting_answer_Step) == AppConstants.Settings.Setting_answer_Step
+        isAnswerWithTools = prefManager.getCustomParam(AppConstants.Settings.Setting_answer,AppConstants.Settings.Setting_answer_Step) == AppConstants.Settings.Setting_answer_with_tools
         if (prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_left_hand, true)){
             setLeftAbacusRules()
         }else{
             setRightAbacusRules()
         }
-        isDisplayHelpMessage = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_display_help_message, true)
-        isHintSound = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting__hint_sound, false)
-        isHideTable = prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_hide_table, false)
-        isStepByStep = prefManager.getCustomParam(AppConstants.Settings.Setting_answer,AppConstants.Settings.Setting_answer_Step) == AppConstants.Settings.Setting_answer_Step
+
+        when (abacusType) {
+            AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2,"") == "Y")
+            }
+            AppConstants.Extras_Comman.AbacusTypeMultiplication -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
+            }
+            AppConstants.Extras_Comman.AbacusTypeDivision -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
+            }
+            AppConstants.Extras_Comman.AbacusTypeNumber -> {
+                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
+                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"") == "Y")
+            }
+        }
+        // set abacus theme base on purchase or share preferences
+        setTempTheme()
+
+        if (isAnswerWithTools && !isPurchased){ // revert if isAnswerWithtools set and not purchase
+            isAnswerWithTools = false
+            isStepByStep = true
+            prefManager.setCustomParam(AppConstants.Settings.Setting_answer,AppConstants.Settings.Setting_answer_Step)
+        }
+
+        if (isHintSound && !isPurchased){ // revert if isHistSound set and not purchased
+            isHintSound = false
+            prefManager.setCustomParamBoolean(AppConstants.Settings.Setting__hint_sound, false)
+        }
+
         isAutoRefresh = if (isStepByStep){
             prefManager.getCustomParamBoolean(AppConstants.Settings.Setting_auto_reset_abacus, false)
         }else{
@@ -161,6 +195,9 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             binding.txtTitle.setTextColor(ContextCompat.getColor(requireContext(),it))
             binding.txtTitleHand.setTextColor(ContextCompat.getColor(requireContext(),it))
             binding.tvAns.setTextColor(ContextCompat.getColor(requireContext(),it))
+
+            binding.txtUseAbacusToolsTitle.setTextColor(ContextCompat.getColor(requireContext(),it))
+            binding.btnNextAbacus.setBackgroundColor(ContextCompat.getColor(requireContext(),it))
 
             themeContent?.dividerColor1?.let {it2 ->
                 val finalColor40 = CommonUtils.mixTwoColors(ContextCompat.getColor(requireContext(),it2), ContextCompat.getColor(requireContext(),it), 0.40f)
@@ -191,6 +228,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         binding.cardPurchase.onClick { goToPurchase()  }
         binding.cardTable.onClick { tableClick() }
         binding.relativeTable.onClick { binding.relativeTable.hide() }
+        binding.btnNextAbacus.onClick { goToNextAbacus() }
     }
 
     private fun tableClick() {
@@ -230,7 +268,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
             clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
                 override fun onConfirmationYesClick(bundle: Bundle?) {
-                    binding.cardPurchase.performClick()
+                    goToPurchase()
                 }
                 override fun onConfirmationNoClick(bundle: Bundle?){
                     if (requireContext().isNetworkAvailable){
@@ -249,9 +287,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
         when (abacusType) {
             AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction -> {
-                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2,"") == "Y")
-                setTempTheme()
                 val abacus = if (!fileAbacus.isNullOrEmpty()){
                     requireContext().readJsonAsset(fileAbacus)
                 }else{
@@ -262,28 +297,20 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 val temp: List<PojoAbacus> = Gson().fromJson(abacus,type)
                 temp.filter { it.id == pageId}.also {
                     if (it.isNotNullOrEmpty()){
-                        total = it.size
-                        val listTemp = if (isPurchased){it}else{it.take(20)}
-                        setAbacusOfPagesAdditionSubtraction(listTemp)
+//                        val listTemp = if (isPurchased){it}else{it.take(20)}
+//                        val listTemp = it.take(5)
+//                        setAbacusOfPagesAdditionSubtraction(listTemp)
+                        setAbacusOfPagesAdditionSubtraction(it)
                     }
                 }
             }
             AppConstants.Extras_Comman.AbacusTypeMultiplication -> {
-                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
-                setTempTheme()
                 setDataOfMultiplication(true)
             }
             AppConstants.Extras_Comman.AbacusTypeDivision -> {
-                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3,"") == "Y")
-                setTempTheme()
                 setDataOfDivision(true)
             }
             AppConstants.Extras_Comman.AbacusTypeNumber -> {
-                isPurchased = (prefManager.getCustomParam(AppConstants.Purchase.Purchase_All,"") == "Y"
-                        || prefManager.getCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"") == "Y")
-                setTempTheme()
                 setDataOfNumber(true)
             }
             else -> {
@@ -306,7 +333,11 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             }
 
             val theme = prefManager.getCustomParam(AppConstants.Settings.TheamTempView,AppConstants.Settings.theam_Default)
-            themeContent = DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
+            themeContent = if (isAnswerWithTools){
+                DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
+            }else{
+                DataProvider.findAbacusThemeType(requireContext(),theme, AbacusBeadType.None)
+            }
 
             adapterAdditionSubtraction = AbacusAdditionSubtractionTypeAdapter(arrayListOf(), this@HalfAbacusFragment, true,themeContent)
             adapterMultiplication = AbacusMultiplicationTypeAdapter(arrayListOf(), true,themeContent)
@@ -372,11 +403,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             binding.tvAns.text = ""
             binding.tvAns.invisible()
             abacus_type = 2
-            list_abacus_main = DataProvider.genrateDevide(
-                Que2_str,
-                Que2_type,
-                current_pos
-            )
+            list_abacus_main = DataProvider.genrateDevide(Que2_str,Que2_type,current_pos)
             var column = 3
             if (list_abacus_main.size == 2) {
                 lifecycleScope.launch {
@@ -391,17 +418,17 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 //                adapter_type2.setData(list_abacus_main, isStepByStep)
                 adapterDivision.clearIterationCount()
                 val divisor = Integer.valueOf(list_abacus_main[1][Constants.Que]!!)
-                val finalAns = adapterDivision.getDivideIterationCount(
-                    list_abacus_main[0][Constants.Que]!!,
-                    divisor
-                )
-                for (i in 1 until adapterDivision.getTotalRequiredIteration()) {
-                    val data: HashMap<String, String> = HashMap<String, String>()
-                    data[Constants.Que] = ""
-                    data[Constants.Sign] = ""
-                    data[Constants.Hint] = ""
-                    list_abacus_main.add(data)
+                val finalAns = adapterDivision.getDivideIterationCount(list_abacus_main[0][Constants.Que]!!,divisor)
+                if (!isAnswerWithTools){
+                    for (i in 1 until adapterDivision.getTotalRequiredIteration()) {
+                        val data: HashMap<String, String> = HashMap<String, String>()
+                        data[Constants.Que] = ""
+                        data[Constants.Sign] = ""
+                        data[Constants.Hint] = ""
+                        list_abacus_main.add(data)
+                    }
                 }
+
                 adapterDivision.setDefaultHighlight()
                 binding.recyclerview.layoutManager?.requestLayout()
                 adapterDivision.notifyDataSetChanged()
@@ -527,23 +554,29 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     // api response
     private fun setAbacusOfPagesAdditionSubtraction(dataList: List<PojoAbacus>) {
         list_abacus = dataList
-        setDataOfAdditionSubtraction()
+        setDataOfAdditionSubtraction(true)
     }
-    private fun setDataOfAdditionSubtraction() {
-        if (current_pos >= list_abacus.size) {
-            if (isPurchased) {
-                paidPageAlreadyCompletedDialog()
-            } else {
+    private fun setDataOfAdditionSubtraction(fromTop: Boolean) {
+        if (!isPurchased && current_pos >= AppConstants.Purchase.Purchase_limit_free) {
+            if (fromTop) {
                 freePageCompleteDialog(getString(R.string.txt_page_completed_already))
+            } else {
+                freePageCompleteDialog(getString(R.string.txt_page_completed_free))
             }
         } else {
             binding.txtTitle.text = String.format(getString(R.string.abacus_no),(current_pos + 1))
             binding.tvAns.text = ""
             binding.tvAns.invisible()
 
-            val datatemp: PojoAbacus = list_abacus[current_pos]
+            val datatemp: PojoAbacus = if (current_pos > (list_abacus.size - 1)){
+                val listTemp: ArrayList<PojoAbacus> = list_abacus as ArrayList<PojoAbacus>
+                listTemp.shuffle()
+                listTemp.first()
+            }else{
+                list_abacus[current_pos]
+            }
 
-            if (!hintPage.isNullOrEmpty()) {
+            if (!hintPage.isNullOrEmpty() && !isAnswerWithTools) {
                 if (isDisplayHelpMessage) {
                     binding.cardHint.show()
                 } else {
@@ -576,7 +609,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 new_column = datatemp.q0.length
             }
 
-            if (list_abacus[current_pos].s1.isNotEmpty()) {
+            if (datatemp.s1.isNotEmpty()) {
                 data = HashMap()
                 data[Constants.Que] = datatemp.q1
                 data[Constants.Hint] = datatemp.h1?:""
@@ -589,7 +622,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     || datatemp.s1 == "+"
                 ) {
                     abacus_type = 0
-                    if (!list_abacus[current_pos].s2.isNullOrEmpty()) {
+                    if (!datatemp.s2.isNullOrEmpty()) {
                         data = HashMap()
                         data[Constants.Que] = datatemp.q2?:""
                         data[Constants.Hint] = datatemp.h2?:""
@@ -598,7 +631,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                         if (new_column < (datatemp.q2?:"").length) {
                             new_column = (datatemp.q2?:"").length
                         }
-                        if (!list_abacus[current_pos].s3.isNullOrEmpty()) {
+                        if (!datatemp.s3.isNullOrEmpty()) {
                             data = HashMap()
                             data[Constants.Que] = datatemp.q3?:""
                             data[Constants.Hint] = datatemp.h3?:""
@@ -607,7 +640,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                             if (new_column < (datatemp.q3?:"").length) {
                                 new_column = (datatemp.q3?:"").length
                             }
-                            if (!list_abacus[current_pos].s4.isNullOrEmpty()) {
+                            if (!datatemp.s4.isNullOrEmpty()) {
                                 data = HashMap()
                                 data[Constants.Que] = datatemp.q4?:""
                                 data[Constants.Hint] = datatemp.h4?:""
@@ -616,7 +649,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                                 if (new_column < (datatemp.q4?:"").length) {
                                     new_column = (datatemp.q4?:"").length
                                 }
-                                if (!list_abacus[current_pos].s5.isNullOrEmpty()) {
+                                if (!datatemp.s5.isNullOrEmpty()) {
                                     data = HashMap()
                                     data[Constants.Que] = datatemp.q5?:""
                                     data[Constants.Hint] = datatemp.h5?:""
@@ -692,19 +725,16 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                     adapterDivision.setData(list_abacus_main, isStepByStep)
                     adapterDivision.clearIterationCount()
                     val divisor = Integer.valueOf(list_abacus_main[1][Constants.Que])
-                    val finalAns = adapterDivision.getDivideIterationCount(
-                        list_abacus_main[0][Constants.Que]!!,
-                        divisor
-                    )
-
-                    for (i in 1 until adapterDivision.getTotalRequiredIteration()) {
-                        data = HashMap()
-                        data[Constants.Que] = ""
-                        data[Constants.Sign] = ""
-                        data[Constants.Hint] = ""
-                        list_abacus_main.add(data)
+                    val finalAns = adapterDivision.getDivideIterationCount(list_abacus_main[0][Constants.Que]!!,divisor)
+                    if (!isAnswerWithTools){
+                        for (i in 1 until adapterDivision.getTotalRequiredIteration()) {
+                            data = HashMap()
+                            data[Constants.Que] = ""
+                            data[Constants.Sign] = ""
+                            data[Constants.Hint] = ""
+                            list_abacus_main.add(data)
+                        }
                     }
-
                     adapterDivision.setDefaultHighlight()
                     binding.recyclerview.layoutManager?.requestLayout()
                     adapterDivision.notifyDataSetChanged()
@@ -809,34 +839,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
                 }
             })
     }
-    // purchased and page already completed
-    private fun paidPageAlreadyCompletedDialog() {
-        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_page_complete),getString(R.string.txt_page_completed_already_purchased)
-            ,getString(R.string.yes_i_want_to_start),getString(R.string.no_thanks), icon = R.drawable.ic_alert_complete_page,
-            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
-                override fun onConfirmationYesClick(bundle: Bundle?) {
-                    resetProgressConfirm()
-                }
-
-                override fun onConfirmationNoClick(bundle: Bundle?) {
-                    goBack()
-                }
-            })
-    }
-    // purchased and page completed
-    private fun paidPageCompleteDialog() {
-        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_page_complete),getString(R.string.txt_page_completed_msg)
-            ,getString(R.string.yes_i_want_to_start),getString(R.string.no_thanks_continue_later), icon = R.drawable.ic_complete,
-            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
-                override fun onConfirmationYesClick(bundle: Bundle?) {
-                    resetProgressConfirm()
-                }
-
-                override fun onConfirmationNoClick(bundle: Bundle?) {
-                    goBack()
-                }
-            })
-    }
     // purchased and reset page progress
     private fun paidResetPageProgressDialog() {
         CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_reset_page),getString(R.string.txt_reset_page_alert)
@@ -859,6 +861,10 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         mNavController.navigateUp()
     }
     private fun setTableDataAndVisiblilty() {
+        // if answer with abacus tools then return
+        if (isAnswerWithTools){
+            return
+        }
         if (list_abacus_main.size >= 2) {
             if (abacus_type == 1) {
                 val spannableString = adapterMultiplication.getTable(requireContext(),themeContent)
@@ -924,6 +930,10 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
 
     override fun onCheckHint(hint: String?, que: String?, Sign: String?) {
+        // if answer with abacus tools then return
+        if (isAnswerWithTools){
+            return
+        }
         if (isPurchased && isHintSound) {
             if (Sign == "-") {
                 speakOut(String.format(resources.getString(R.string.speech_set_minus), " $que"))
@@ -977,27 +987,31 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
     }
 
     private fun replaceAbacusFragment(column: Int, noOfDecimalPlace: Int) {
-        this.final_column = column
-        this.noOfDecimalPlace = noOfDecimalPlace
-
         try {
-            abacusFragment = HalfAbacusSubFragment().newInstance(column, noOfDecimalPlace, abacus_type)
-            if (abacusFragment != null){
-                abacusFragment?.setOnAbacusValueChangeListener(this)
-                val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
-                transaction.replace(
-                    R.id.flAbacus,
-                    abacusFragment!!,
-                    abacusFragment?.javaClass?.simpleName
-                )
-                transaction.commit()
-            }
-            if (binding.relAbacus.visibility == View.GONE){
-                lifecycleScope.launch {
-                    delay(200)
-                    binding.relAbacus.show()
+            if (isAnswerWithTools){
+                binding.flAbacus.hide()
+                binding.linearYourAbacusTools.show()
+                binding.relAbacus.show()
+            }else{
+                this.final_column = column
+                this.noOfDecimalPlace = noOfDecimalPlace
+                abacusFragment = HalfAbacusSubFragment().newInstance(column, noOfDecimalPlace, abacus_type)
+                binding.flAbacus.show()
+                binding.linearYourAbacusTools.hide()
+                if (abacusFragment != null){
+                    abacusFragment?.setOnAbacusValueChangeListener(this)
+                    val transaction: FragmentTransaction = parentFragmentManager.beginTransaction()
+                    transaction.replace(R.id.flAbacus,abacusFragment!!,abacusFragment?.javaClass?.simpleName)
+                    transaction.commit()
+                }
+                if (!binding.relAbacus.isVisible){
+                    lifecycleScope.launch {
+                        delay(200)
+                        binding.relAbacus.show()
+                    }
                 }
             }
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -1005,13 +1019,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
 
     override fun onAbacusValueChange(abacusView: View, sum: Float) {
         if (isMoveNext) {
-            if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
-                moveToNext()
-                isMoveNext = false
-            }else{
-                notOfflineSupportDialog()
-            }
-
+            goToNextAbacus()
             return
         }
         if (abacus_type == 0) {
@@ -1091,6 +1099,15 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
     }
 
+    private fun goToNextAbacus() {
+        if(requireContext().isNetworkAvailable || prefManager.getCustomParamBoolean(AppConstants.Purchase.isOfflineSupport, false)){
+            moveToNext()
+            isMoveNext = false
+        }else{
+            notOfflineSupportDialog()
+        }
+    }
+
     private fun moveToNext() {
         updateToFirebase(current_pos)
 
@@ -1099,19 +1116,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             prefManager.saveCurrentSum(pageId,current_pos)
             prefManager.setCustomParamInt(pageId + "value", number + 1)
             setDataOfNumber(false)
-        } else if (abacus_type == 0 && current_pos == list_abacus.size - 1) {
-            // page complete
-            prefManager.setCustomParam(
-                AppConstants.AbacusProgress.CompleteAbacusPos + pageId,
-                current_pos.toString()
-            )
-            current_pos++
-            prefManager.saveCurrentSum(pageId,current_pos)
-            if (isPurchased) {
-                paidPageCompleteDialog()
-            } else {
-                freePageCompleteDialog(getString(R.string.txt_page_completed_free))
-            }
         } else {
             binding.tvAns.text = ""
             binding.tvAns.invisible()
@@ -1121,7 +1125,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             when (abacus_type) {
                 0 -> {
                     adapterAdditionSubtraction.reset()
-                    setDataOfAdditionSubtraction()
+                    setDataOfAdditionSubtraction(false)
                 }
                 1 -> {
                     adapterMultiplication.reset()
@@ -1142,7 +1146,7 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
             ,getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_sad_emoji,isCancelable = false,
             clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
                 override fun onConfirmationYesClick(bundle: Bundle?) {
-                    binding.cardPurchase.performClick()
+                    goToPurchase()
                 }
                 override fun onConfirmationNoClick(bundle: Bundle?){
                     if (requireContext().isNetworkAvailable){
@@ -1291,8 +1295,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         paramsTitle.addRule(RelativeLayout.ALIGN_PARENT_TOP)
         if (abacusType == AppConstants.Extras_Comman.AbacusTypeNumber) {
             paramsTitle.addRule(RelativeLayout.START_OF, R.id.relAbacus)
-        }else if (abacusType != AppConstants.Extras_Comman.AbacusTypeAdditionSubtraction) {
-            paramsTitle.addRule(RelativeLayout.END_OF, R.id.cardTable)
+        }else {
+            paramsTitle.addRule(RelativeLayout.CENTER_HORIZONTAL)
         }
         binding.txtTitle.layoutParams = paramsTitle
         lifecycleScope.launch {
@@ -1310,8 +1314,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         }
 
         val paramsRelativeTable = binding.relativeTable.layoutParams as RelativeLayout.LayoutParams
-        paramsRelativeTable.addRule(RelativeLayout.ALIGN_PARENT_LEFT)
         paramsRelativeTable.addRule(RelativeLayout.BELOW, R.id.cardTable)
+        paramsRelativeTable.addRule(RelativeLayout.LEFT_OF, R.id.relAbacus)
         binding.relativeTable.layoutParams = paramsRelativeTable
 
         val paramsQuestionsMain = binding.linearQuestions.layoutParams as RelativeLayout.LayoutParams
@@ -1324,10 +1328,21 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         paramsQueNumber.addRule(RelativeLayout.CENTER_VERTICAL)
         binding.relativeQueNumber.layoutParams = paramsQueNumber
 
-        val paramsQuestions = binding.cardAbacusQue.layoutParams as RelativeLayout.LayoutParams
-        paramsQuestions.addRule(RelativeLayout.ALIGN_PARENT_START)
-        paramsQuestions.addRule(RelativeLayout.CENTER_VERTICAL)
-        binding.cardAbacusQue.layoutParams = paramsQuestions
+        binding.imgRightAbacusTools.hide()
+        binding.imgLeftAbacusTools.hide()
+        if (isAnswerWithTools){
+            val paramsQuestions = binding.cardAbacusQue.layoutParams as RelativeLayout.LayoutParams
+            paramsQuestions.addRule(RelativeLayout.CENTER_IN_PARENT)
+            binding.cardAbacusQue.layoutParams = paramsQuestions
+
+            binding.imgRightAbacusTools.show()
+        }else{
+            val paramsQuestions = binding.cardAbacusQue.layoutParams as RelativeLayout.LayoutParams
+            paramsQuestions.addRule(RelativeLayout.ALIGN_PARENT_START)
+            paramsQuestions.addRule(RelativeLayout.CENTER_VERTICAL)
+            binding.cardAbacusQue.layoutParams = paramsQuestions
+        }
+
 
         val paramsHint = binding.cardHint.layoutParams as RelativeLayout.LayoutParams
         paramsHint.addRule(RelativeLayout.CENTER_VERTICAL)
@@ -1335,7 +1350,6 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         binding.cardHint.layoutParams = paramsHint
     }
     private fun setLeftAbacusRules() {
-
         val paramsTitle = binding.txtTitle.layoutParams as RelativeLayout.LayoutParams
         paramsTitle.addRule(RelativeLayout.CENTER_HORIZONTAL)
         paramsTitle.addRule(RelativeLayout.END_OF, R.id.relAbacus)
@@ -1370,8 +1384,8 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         binding.cardTable.layoutParams = paramscardTable
 
         val paramsRelativeTable = binding.relativeTable.layoutParams as RelativeLayout.LayoutParams
-        paramsRelativeTable.addRule(RelativeLayout.ALIGN_PARENT_RIGHT)
         paramsRelativeTable.addRule(RelativeLayout.BELOW, R.id.cardTable)
+        paramsRelativeTable.addRule(RelativeLayout.END_OF, R.id.relAbacus)
         binding.relativeTable.layoutParams = paramsRelativeTable
 
         val paramsQuestionsMain = binding.linearQuestions.layoutParams as RelativeLayout.LayoutParams
@@ -1385,14 +1399,24 @@ class HalfAbacusFragment : BaseFragment(), OnAbacusValueChangeListener, AbacusAd
         paramsQueNumber.addRule(RelativeLayout.CENTER_VERTICAL)
         binding.relativeQueNumber.layoutParams = paramsQueNumber
 
-        val paramsQuestions = binding.cardAbacusQue.layoutParams as RelativeLayout.LayoutParams
-        paramsQuestions.addRule(RelativeLayout.ALIGN_PARENT_END)
-        paramsQuestions.addRule(RelativeLayout.CENTER_VERTICAL)
-        binding.cardAbacusQue.layoutParams = paramsQuestions
+        binding.imgRightAbacusTools.hide()
+        binding.imgLeftAbacusTools.hide()
+        if (isAnswerWithTools){
+            val paramsQuestions = binding.cardAbacusQue.layoutParams as RelativeLayout.LayoutParams
+            paramsQuestions.addRule(RelativeLayout.CENTER_IN_PARENT)
+            binding.cardAbacusQue.layoutParams = paramsQuestions
+            binding.imgLeftAbacusTools.show()
+        }else{
+            val paramsQuestions = binding.cardAbacusQue.layoutParams as RelativeLayout.LayoutParams
+            paramsQuestions.addRule(RelativeLayout.ALIGN_PARENT_END)
+            paramsQuestions.addRule(RelativeLayout.CENTER_VERTICAL)
+            binding.cardAbacusQue.layoutParams = paramsQuestions
+        }
 
         val paramsHint = binding.cardHint.layoutParams as RelativeLayout.LayoutParams
         paramsHint.addRule(RelativeLayout.CENTER_VERTICAL)
         paramsHint.addRule(RelativeLayout.START_OF, R.id.cardAbacusQue)
         binding.cardHint.layoutParams = paramsHint
     }
+
 }

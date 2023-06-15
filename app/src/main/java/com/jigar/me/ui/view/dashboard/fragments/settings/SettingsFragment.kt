@@ -19,6 +19,7 @@ import com.jigar.me.databinding.FragmentSettingsBinding
 import com.jigar.me.databinding.LayoutAbacusExamBinding
 import com.jigar.me.ui.view.base.BaseFragment
 import com.jigar.me.ui.view.base.abacus.AbacusUtils
+import com.jigar.me.ui.view.confirm_alerts.bottomsheets.CommonConfirmationBottomSheet
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.CommonUtils
 import com.jigar.me.utils.extensions.*
@@ -73,7 +74,7 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
 
     private fun initListener() {
         binding.cardBack.onClick { mNavController.navigateUp() }
-        binding.cardPurchase.onClick { mNavController.navigate(R.id.action_settingsFragment_to_purchaseFragment) }
+        binding.cardPurchase.onClick { goToPurchase() }
 
         binding.relHintSound.onClick { onOnOffClick(AppConstants.Settings.Setting__hint_sound,binding.isHintSound) }
         binding.swHintSound.onClick { onOnOffClick(AppConstants.Settings.Setting__hint_sound,binding.isHintSound) }
@@ -101,8 +102,30 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
 
         binding.relAnswerStep.onClick { onAbacusAnswerClick(AppConstants.Settings.Setting_answer_Step) }
         binding.relAnswerFinal.onClick { onAbacusAnswerClick(AppConstants.Settings.Setting_answer_Final) }
+        binding.relAnswerPhysical.onClick {
+            if (isPurchased){
+                onAbacusAnswerClick(AppConstants.Settings.Setting_answer_with_tools)
+            }else{
+                paidPlanDialog()
+            }
+        }
 
     }
+    private fun paidPlanDialog() {
+        CommonConfirmationBottomSheet.showPopup(requireActivity(),getString(R.string.txt_purchase_alert), getString(R.string.need_paid_plan_msg),
+            getString(R.string.yes_i_want_to_purchase),getString(R.string.no_purchase_later), icon = R.drawable.ic_alert_not_purchased,
+            clickListener = object : CommonConfirmationBottomSheet.OnItemClickListener{
+                override fun onConfirmationYesClick(bundle: Bundle?) {
+                    goToPurchase()
+                }
+                override fun onConfirmationNoClick(bundle: Bundle?) = Unit
+            })
+    }
+
+    private fun goToPurchase() {
+        mNavController.navigate(R.id.action_settingsFragment_to_purchaseFragment)
+    }
+
     private fun setSettings() {
         with(prefManager){
             binding.isDisplayHelpMessage = getCustomParamBoolean(AppConstants.Settings.Setting_display_help_message, true)
@@ -185,6 +208,8 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
 
     private fun setAbacusAnswer() {
         binding.isStepByStep = prefManager.getCustomParam(AppConstants.Settings.Setting_answer,AppConstants.Settings.Setting_answer_Step) == AppConstants.Settings.Setting_answer_Step
+        binding.isFinalAnswer = prefManager.getCustomParam(AppConstants.Settings.Setting_answer,AppConstants.Settings.Setting_answer_Step) == AppConstants.Settings.Setting_answer_Final
+        binding.isAnswerWithTool = prefManager.getCustomParam(AppConstants.Settings.Setting_answer,AppConstants.Settings.Setting_answer_Step) == AppConstants.Settings.Setting_answer_with_tools
     }
 
     private fun onAbacusAnswerClick(answerType: String) {
@@ -201,7 +226,7 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
                     prefManager.setCustomParamBoolean(type, true)
                 }else{
                     prefManager.setCustomParamBoolean(type, false)
-                    requireContext().toastS(getString(R.string.txt_setting_hintsound_purchase))
+                    paidPlanDialog()
                 }
             }
         }else{
@@ -229,7 +254,7 @@ class SettingsFragment : BaseFragment(), AbacusThemeSelectionsAdapter.OnItemClic
                 }
                 else -> {
                     abacusThemeFreeAdapter.selectedPos(-1)
-                    requireContext().toastS(getString(R.string.txt_setting_hintsound_purchase))
+                    paidPlanDialog()
                 }
             }
             setPreviewTheme(themeType)

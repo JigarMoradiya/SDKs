@@ -1,30 +1,41 @@
 package com.jigar.me.ui.view.confirm_alerts.bottomsheets
 
 import android.app.Activity
-import androidx.databinding.DataBindingUtil
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.InsetDrawable
+import android.view.Gravity
+import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import com.jigar.me.R
-import com.jigar.me.databinding.BottomSheetNumberSequencCompleteBinding
 import com.jigar.me.databinding.BottomSheetsFreeVsPaidBinding
-import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.onClick
-import com.jigar.me.utils.extensions.setBottomSheetDialogAttr
 
 object PurchaseInfoBottomSheetDialog {
-
+    var alertdialog: AlertDialog? = null
     fun showPopup(activity: Activity) {
-        val bottomSheetDialog = BottomSheetDialog(activity, R.style.BottomSheetDialog)
-        val sheetBinding: BottomSheetsFreeVsPaidBinding = BottomSheetsFreeVsPaidBinding.inflate(activity.layoutInflater)
+        val alertLayout = BottomSheetsFreeVsPaidBinding.inflate(activity.layoutInflater,null,false)
+        val alertBuilder = AlertDialog.Builder(activity)
+        alertBuilder.setView(alertLayout.root)
 
-        bottomSheetDialog.setContentView(sheetBinding.root)
-        bottomSheetDialog.setCancelable(true)
-        bottomSheetDialog.setCanceledOnTouchOutside(true)
-
-        sheetBinding.tvClose.onClick {
-            bottomSheetDialog.dismiss()
+        alertLayout.tvClose.onClick {
+            alertdialog?.dismiss()
         }
-        activity.setBottomSheetDialogAttr(bottomSheetDialog, Constants.bottomSheetWidthBaseOnRatio10)
-        bottomSheetDialog.show()
+        alertBuilder.setCancelable(false)
+        alertdialog = alertBuilder.show()
+        val windows = alertdialog?.window
+        val colorD = ColorDrawable(Color.TRANSPARENT)
+        val insetD = InsetDrawable(colorD, 150, 50, 150, 10)
+        windows?.setBackgroundDrawable(insetD)
+        // Setting Animation for Appearing from Center
+        windows?.attributes?.windowAnimations = R.style.DialogAppearFromCenter
+        // Positioning it in Bottom Right
+        val wlp = windows?.attributes
+        wlp?.width = WindowManager.LayoutParams.MATCH_PARENT
+        wlp?.height = WindowManager.LayoutParams.WRAP_CONTENT
+        wlp?.gravity = Gravity.CENTER
+        windows?.attributes = wlp
+        alertdialog?.show()
     }
 
 }

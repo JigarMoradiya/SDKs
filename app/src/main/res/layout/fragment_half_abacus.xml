@@ -145,8 +145,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/activity_padding6"
                 android:paddingHorizontal="@dimen/icons_margin2"
-                tools:text="@string/app_name"
                 android:visibility="gone"
+                tools:text="@string/app_name"
                 tools:visibility="visible" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -154,14 +154,14 @@
                 style="@style/mainTitleSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:layout_marginHorizontal="@dimen/activity_padding6"
                 android:layout_marginBottom="@dimen/activity_padding8"
+                android:gravity="center"
                 android:text="@{isLeftHand?@string/use_left_hand_to_move_beads:@string/use_right_hand_to_move_beads}"
                 android:textColor="@color/black"
                 android:visibility="gone"
-                tools:visibility="visible"
-                tools:text="Use your left hand" />
+                tools:text="Use your left hand"
+                tools:visibility="visible" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardTable"
@@ -189,13 +189,76 @@
                 android:layout_height="match_parent"
                 android:layout_above="@+id/adView"
                 android:visibility="gone"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <FrameLayout
                     android:id="@+id/flAbacus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true" />
+                    android:layout_centerVertical="true"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/linearYourAbacusTools"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="@dimen/activity_padding12"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgAbacusToolsTop"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        app:srcCompat="@drawable/ic_abacus_tool" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_padding10"
+                        android:gravity="center"
+                        android:id="@+id/txtUseAbacusToolsTitle"
+                        android:includeFontPadding="false"
+                        android:text="@string/use_your_abacus_tool_msg1"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSizeRegular"
+                        app:fontFamily="@font/font_extra_bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_2sdp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/use_your_abacus_tool_msg2"
+                        android:textColor="@color/black"
+                        android:alpha="0.7"
+                        android:textSize="@dimen/textSizeMedium"
+                        app:fontFamily="@font/font_bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/note_once_go_to_next_abacus_can_t_go_previous_abacus"
+                        android:textColor="@color/black_light"
+                        android:textSize="@dimen/textSizeSmall" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnNextAbacus"
+                        style="@style/btnExtraSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_marginTop="@dimen/activity_padding8"
+                        android:text="@string/go_to_next_abacus"
+                        android:textAllCaps="false" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
 
             </RelativeLayout>
@@ -221,7 +284,7 @@
                     android:layout_marginHorizontal="@dimen/activity_padding8"
                     android:orientation="vertical"
                     android:visibility="gone"
-                    tools:visibility="visible">
+                    tools:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:layout_width="@dimen/_225sdp"
@@ -312,8 +375,19 @@
                     android:id="@+id/cardAbacusQue"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
                     android:visibility="gone"
                     tools:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgLeftAbacusTools"
+                        android:layout_width="@dimen/_95sdp"
+                        android:layout_height="@dimen/_160sdp"
+                        android:layout_marginEnd="@dimen/activity_padding6"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_kid_standup_left"
+                        tools:visibility="visible" />
 
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/cardQuestions"
@@ -371,6 +445,15 @@
                                 android:textSize="@dimen/_20sdp" />
                         </androidx.appcompat.widget.LinearLayoutCompat>
                     </com.google.android.material.card.MaterialCardView>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/imgRightAbacusTools"
+                        android:layout_width="@dimen/_95sdp"
+                        android:layout_height="@dimen/_160sdp"
+                        android:layout_marginStart="@dimen/activity_padding6"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_kid_standup_right"
+                        tools:visibility="visible" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
             </RelativeLayout>
@@ -380,7 +463,6 @@
                 android:id="@+id/relative_table"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:background="@color/transparent"
                 android:visibility="gone"
                 tools:visibility="visible">

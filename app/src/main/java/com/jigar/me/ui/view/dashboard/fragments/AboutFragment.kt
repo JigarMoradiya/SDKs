@@ -42,8 +42,16 @@ class AboutFragment : BaseFragment(), OtherAppAdapter.OnItemClickListener {
         } catch (e: PackageManager.NameNotFoundException) {
             e.printStackTrace()
         }
-        otherAppAdapter = OtherAppAdapter(DataProvider.getOtherAppList(),this)
-        binding.recyclerviewOtherApps.adapter = otherAppAdapter
+        binding.recyclerviewOtherApps.post {
+            val height = binding.recyclerviewOtherApps.height
+            val width = binding.recyclerviewOtherApps.width / 2
+            otherAppAdapter = if (width > height){
+                OtherAppAdapter(DataProvider.getOtherAppList(),this,height)
+            }else{
+                OtherAppAdapter(DataProvider.getOtherAppList(),this,width)
+            }
+            binding.recyclerviewOtherApps.adapter = otherAppAdapter
+        }
     }
 
     override fun onItemOtherAppClick(data: OtherApps) {

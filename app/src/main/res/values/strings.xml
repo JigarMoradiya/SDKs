@@ -96,6 +96,8 @@
     <!--  Full abacus  -->
     <string name="txt_Toddler_Range">Toddler Range</string>
     <string name="txt_From">From</string>
+    <string name="txt_From_to">From %1$d To %2$d</string>
+    <string name="txt_set_only">Set %1$d</string>
     <string name="error_range_from">Range from is empty</string>
     <string name="error_range_to">Range to is empty</string>
     <string name="error_range">Minimum 50 toddler is needed</string>
@@ -156,14 +158,10 @@
     <string name="no_thanks_continue_later">No, thanks continue later</string>
     <!--  Settings  -->
     <string name="txt_setting_title">Application Setting</string>
-
-    <string name="txt_setting_hintsound_purchase">For this feature you need to buy paid plan from purchase store.</string>
     <string name="txt_setting_display_abacus_number">Display abacus number</string>
     <string name="txt_setting_display_help_message">Display help message</string>
     <string name="txt_setting_hide_table">Hide table</string>
     <string name="txt_setting_left_hand">Left handed</string>
-    <string name="txt_setting_step_by_step">Step by Step</string>
-    <string name="txt_setting_final_answer">Final Answer</string>
     <string name="txt_setting_sound">Abacus sound</string>
     <string name="txt_setting_hintsound">Abacus hint sound</string>
 
@@ -208,13 +206,13 @@
     <string name="txt_free2">Abacus Hint</string>
     <string name="txt_free3">Advertisement</string>
 
-    <string name="txt_purchase1">Unlimited Abacus</string>
+    <string name="txt_purchase1"><font color='#FF0000'>Unlimited Abacus</font></string>
     <string name="txt_purchase2">Abacus Hint + Hint Sound</string>
-    <string name="txt_purchase3">No Advertisement</string>
+    <string name="txt_purchase3"><font color='#FF0000'>No Advertisement</font></string>
     <string name="txt_purchase6">Reset Page Progress</string>
     <string name="txt_purchase5">Abacus Theme</string>
-    <string name="txt_purchase8">Nursery and Maths Printable Practice Material</string>
-    <string name="txt_purchase7">Random Number in Abacus Full Mode</string>
+    <string name="txt_purchase8">Nursery and Maths <font color='#FF0000'>Printable Practice Material</font></string>
+    <string name="txt_purchase7"><font color='#FF0000'>Random Number</font> in Abacus Full Mode</string>
 
 
     <!--  About Us  -->
@@ -503,4 +501,14 @@
 
     <string name="speak_divide_by">%1$s divide by %2$s</string>
     <string name="speak_multiply_by">%1$s multiply %2$s</string>
+
+    <string name="need_paid_plan_msg">Sorry, to access this feature you need paid plan.</string>
+    <string name="txt_setting_step_by_step">Give answer <font color='#0000ff'>Step by Step</font></string>
+    <string name="txt_setting_final_answer">Give directly <font color='#0000ff'>Final Answer</font></string>
+    <string name="answer_with_your_abacus_tool">Give answer with your <font color='#0000ff'>Abacus Tool</font></string>
+    <string name="note_once_go_to_next_abacus_can_t_go_previous_abacus"><b><font color='#ff0000'>Note :</font></b> Once go to next abacus can\'t back to previous abacus</string>
+    <string name="use_your_abacus_tool_msg1">Use your Abacus Tool to solve this abacus,</string>
+    <string name="use_your_abacus_tool_msg2">once solve click below button for next abacus.</string>
+    <string name="go_to_next_abacus">Go to Next Abacus</string>
+    <string name="do_practice_with_your_abacus_tools">Do practice with your <font color='#FF0000'>Abacus Tools</font></string>
 </resources>

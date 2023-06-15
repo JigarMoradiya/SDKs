@@ -282,7 +282,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                 binding.txtResetEveryTime.hide()
 
                 binding.txtAbacus.hide()
-                values = -143 // temp
+                values = 0 // temp
                 is1stTime = true
             }else{
                 binding.swRandom.show()
@@ -301,16 +301,14 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                 binding.swReset.isChecked = getCustomParam(AppConstants.Settings.SW_Reset, "") == "Y"
                 random_min = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
                 random_max = getCustomParamInt(AppConstants.Settings.SW_Range_max,101)
-                binding.txtRange.text = requireContext().resources.getString(R.string.txt_From) + " " + random_min + " " + requireContext().resources.getString(
-                    R.string.txt_To
-                ) + " " + (random_max - 1)
+                binding.txtRange.text = String.format(requireContext().getString(R.string.txt_From_to),random_min,(random_max - 1))
                 if (getCustomParam(AppConstants.Settings.SW_Random, "") != "Y") {
                     values = getCustomParamInt(AppConstants.Settings.Toddler_No, random_min)
                 } else if (getCustomParam(AppConstants.Settings.SW_Random,"") == "Y") {
                     values = genrateRandom()
                 }
                 total_count = getCustomParamInt(AppConstants.Settings.Toddler_No_Count,1)
-                binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
+                binding.txtAbacus.text = String.format(requireContext().getString(R.string.txt_set_only),values)
 
                 lifecycleScope.launch {
                     delay(300)
@@ -428,9 +426,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                     } else if (getCustomParam(AppConstants.Settings.SW_Random,"") == "Y") {
                         random_min = getCustomParamInt(AppConstants.Settings.SW_Range_min,1)
                         random_max = getCustomParamInt(AppConstants.Settings.SW_Range_max,101)
-                        binding.txtRange.text = requireContext().resources.getString(R.string.txt_From) + " " + random_min + " " + requireContext().resources.getString(
-                            R.string.txt_To
-                        ) + " " + random_max
+                        binding.txtRange.text = String.format(requireContext().getString(R.string.txt_From_to),random_min,(random_max - 1))
                         values = genrateRandom()
                     }
                     total_count = getCustomParamInt(AppConstants.Settings.Toddler_No_Count,1)
@@ -452,7 +448,7 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
                         }
     //                    speakOut(requireContext().resources.getString(R.string.speech_set) + " " + values)
                     }
-                    binding.txtAbacus.text = requireContext().resources.getString(R.string.set_only) + " " + values
+                    binding.txtAbacus.text = String.format(requireContext().getString(R.string.txt_set_only),values)
     //                ads()
                 } else {
 

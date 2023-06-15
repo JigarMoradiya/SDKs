@@ -68,9 +68,9 @@ class MainDashboardActivity : BaseActivity() {
         initViews()
         initListener()
         initObserver()
-        if (!prefManager.getCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED, false)) {
-            recordReferral()
-        }
+//        if (!prefManager.getCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED, false)) {
+//            recordReferral()
+//        }
     }
 
     private fun initObserver() {
@@ -79,7 +79,7 @@ class MainDashboardActivity : BaseActivity() {
             setPurchase(it)
         }
 //        if (BuildConfig.DEBUG) {
-//            OneSignal.setEmail("jigar@gmail.com")
+////            OneSignal.setEmail("jigar@gmail.com")
 //            binding.viewBG.show()
 //        }
     }
@@ -243,61 +243,61 @@ class MainDashboardActivity : BaseActivity() {
         navController.navigateUp()
     }
 
-    private fun recordReferral() {
-        log("welcome referral")
-        val referrerClient = InstallReferrerClient.newBuilder(this).build()
-        referrerClient.startConnection(object : InstallReferrerStateListener {
-
-            override fun onInstallReferrerSetupFinished(responseCode: Int) {
-                when (responseCode) {
-                    InstallReferrerClient.InstallReferrerResponse.OK -> {
-                        // Connection established.
-                        val response: ReferrerDetails = referrerClient.installReferrer
-                        val referrerUrl = response.installReferrer
-//                        val referrerClickTime: Long = response.referrerClickTimestampSeconds*1000
-//                        val appInstallTime: Long = response.installBeginTimestampSeconds*1000
-
-                        log("referrerUrl : " + referrerUrl)
-//                        if (referrerUrl.contains("utm_source=referral")){
-                        referrerUrl.split("&").forEach { term ->
-                            if (term.contains("=") && term.split("=").size > 1) {
-                                val param = term.split("=")[0]
-                                val value = term.split("=")[1]
-                                when (param) {
-                                    "utm_source" -> {
-                                        log("Found utm_source in Installation and value is $value")
-                                        MyApplication.logEvent(value, null)
-                                        prefManager.setCustomParamBoolean(
-                                            Constants.PREF_IS_REFERRAL_RECORDED,
-                                            true
-                                        )
-                                    }
-                                }
-                            }
-                        }
-//                        }else{
-//                            prefManager.setCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,true)
+//    private fun recordReferral() {
+//        log("welcome referral")
+//        val referrerClient = InstallReferrerClient.newBuilder(this).build()
+//        referrerClient.startConnection(object : InstallReferrerStateListener {
+//
+//            override fun onInstallReferrerSetupFinished(responseCode: Int) {
+//                when (responseCode) {
+//                    InstallReferrerClient.InstallReferrerResponse.OK -> {
+//                        // Connection established.
+//                        val response: ReferrerDetails = referrerClient.installReferrer
+//                        val referrerUrl = response.installReferrer
+////                        val referrerClickTime: Long = response.referrerClickTimestampSeconds*1000
+////                        val appInstallTime: Long = response.installBeginTimestampSeconds*1000
+//
+//                        log("referrerUrl : " + referrerUrl)
+////                        if (referrerUrl.contains("utm_source=referral")){
+//                        referrerUrl.split("&").forEach { term ->
+//                            if (term.contains("=") && term.split("=").size > 1) {
+//                                val param = term.split("=")[0]
+//                                val value = term.split("=")[1]
+//                                when (param) {
+//                                    "utm_source" -> {
+//                                        log("Found utm_source in Installation and value is $value")
+//                                        MyApplication.logEvent(value, null)
+//                                        prefManager.setCustomParamBoolean(
+//                                            Constants.PREF_IS_REFERRAL_RECORDED,
+//                                            true
+//                                        )
+//                                    }
+//                                }
+//                            }
 //                        }
-
-
-                        referrerClient.endConnection()
-                    }
-                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
-                        // API not available on the current Play Store app.
-                        log("Feature Not Supported")
-                    }
-                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
-                        // Connection couldn't be established.
-                        log("Service is Unavailable.")
-                    }
-                }
-            }
-
-            override fun onInstallReferrerServiceDisconnected() {
-                // Try to restart the connection on the next request to
-                // Google Play by calling the startConnection() method.
-                log("Service is disconnected.")
-            }
-        })
-    }
+////                        }else{
+////                            prefManager.setCustomParamBoolean(Constants.PREF_IS_REFERRAL_RECORDED,true)
+////                        }
+//
+//
+//                        referrerClient.endConnection()
+//                    }
+//                    InstallReferrerClient.InstallReferrerResponse.FEATURE_NOT_SUPPORTED -> {
+//                        // API not available on the current Play Store app.
+//                        log("Feature Not Supported")
+//                    }
+//                    InstallReferrerClient.InstallReferrerResponse.SERVICE_UNAVAILABLE -> {
+//                        // Connection couldn't be established.
+//                        log("Service is Unavailable.")
+//                    }
+//                }
+//            }
+//
+//            override fun onInstallReferrerServiceDisconnected() {
+//                // Try to restart the connection on the next request to
+//                // Google Play by calling the startConnection() method.
+//                log("Service is disconnected.")
+//            }
+//        })
+//    }
 }

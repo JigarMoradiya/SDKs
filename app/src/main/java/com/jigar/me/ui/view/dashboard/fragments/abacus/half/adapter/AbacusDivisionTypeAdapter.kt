@@ -5,10 +5,12 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.util.Pair
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusContent
 import com.jigar.me.databinding.RowQuestionLayoutBinding
@@ -65,6 +67,7 @@ class AbacusDivisionTypeAdapter(
         } else {
             holder.binding.tvSymbol.show()
         }
+        holder.binding.conMain.show()
         if (isStepByStep) {
             val highlightPOs = highlightDetail[position]
             if (highlightPOs != null) {

@@ -1,0 +1,501 @@
+<resources>
+
+<!--    <string name="app_name">Abacus child learning application</string>-->
+    <string name="download_folder">Abacus Downloads</string>
+    <string name="share_text_msg">تطبيق تعليم أطفال العداد! n\ سيساعد طبلية تاج أطفالك في التعرف على العداد والأرقام والجمع والطرح والضرب والقسمة. \n\n قم بتنزيل تطبيق طبلية تاج من متجر n\Google Play \uD83D\uDC47\uD83D\uDC47\uD83D\uDC47\uD83D\uDE0D\uD83D\uDE07 </string>
+    <string name="txt_mail">info.brainapptech@gmail.com</string>
+    <string name="material_customization">إذا كنت تريد أي تخصيص على مادة مثل التغيير إلى الشعار وإضافة علامة مائية وما إلى ذلك .. يمكنك الاتصال بنا على info.brainapptech@gmail.com</string>
+    <string name="privacy_policy_text">Here we declare the Privacy Policy for Abacus - Child Learning Application android mobile application.\n\nAbacus - Child Learning Application is a mathematical tools used for calculation. This app will help your children learn about Abacus, Numbers, Addition, Subtraction, Multiplication, Division.\n\nAbacus is suitable for children age 5 and up, who know about numbers and some basic addition and subtraction.\n\n<b>All application data collocting by Brainapptech Team and we are responsible for that if any issue regarding to data. Content not have any violent, sexual or nudity and drugs so all the people can use it and special kids below 9 year.</b>\n\n<b><font color='#FF0000'>Benefits of Abacus - Child Learning Application : </font></b>\n- Boosting the calculation skills making them better and faster.<br />- Sharpens concentration and comprehension.\n- Increases endurance for stress and pressure.<br />- It helps in better reading and writing.\n- Sharpens listening skills.\n- One of major benefits of Abacus program is that it makes mathematics meaningful, useful and fun for the children.\n- Specially this Abacus program is very effective for those who do not like studying math.\n\n<b><font color='#0000EE'>Give exam</font></b> as per your children level and determine result.\n<b><font color='#0000EE'>Download practice material</font></b> available, its not only math your kids can learn all about around us.\n- Kids can <b><font color='#0000EE'>learn about Pets animals, Farm animals, Mammal animals, Sea animals, Wild animals, Birds, Fruits, Vegetables, Shapes,</font></b> etc..\n- <b><font color='#0000EE'>Count the objects, Fill the blank, Less than &amp; Greater than &amp; Equals, Odds &amp; Evens number.</font></b>\n- Know about Abacus, Identify beads of abacus, Draw beads of abacus.\n- Learn about Number, Addition &amp; Subtraction, Multiplication &amp; Division.\n\nApplication contain ads but its not harmfull to child. We contolled ads to showing in application. We blocked all the Sensitive Categories ads which can harmfull to kids.\n\nWe are responsible for all content which are showing in application and we declare in Privacy Policy.\n\nIn application following permission is used.\n1) INTERNET - For data load and ads loading.\n\nBest Regarding,\nBrainapptech Team.</string>
+    <string name="default_notification_channel_id">abacus_public_notification</string>
+
+    <!--  TTS  -->
+    <string name="speech_formula_for">الصيغ لـ s$1% هو</string>
+    <string name="speech_set_minus">تعيين ناقص s$1%</string>
+    <string name="speech_set_plus">تعيين زائد s$1%</string>
+    <string name="speech_set">اضبط الرقم s$1%</string>
+    <string name="random">عشوائي</string>
+    <string name="to_">إلى</string>
+    <string name="numbers">أرقام</string>
+    <string name="minus">ناقص</string>
+    <string name="plus">زائد</string>
+    <string name="equal_to">يساوي</string>
+
+    <string name="app_download_monitor_channel_name">App Download Monitor</string>
+    <string name="app_download_monitor_channel_id">app_download_monitor_service</string>
+    <string name="app_download_monitor_channel_description">Help Users monitor the number of Files Downloading through App.</string>
+    <string name="app_notification_channel_id">app_notification</string>
+
+    <string name="native_ad_unit_id_test">ca-app-pub-5759468493922763/4658789878</string>
+
+    <string name="banner_ad_unit_id_video">ca-app-pub-5759468493922763/9435037042</string>
+    <string name="banner_ad_unit_id_abacus">ca-app-pub-5759468493922763/9552869463</string>
+    <string name="banner_ad_unit_id_practise_material">ca-app-pub-5759468493922763/7125661457</string>
+    <string name="banner_ad_unit_id_exam">ca-app-pub-5759468493922763/8179760812</string>
+    <string name="banner_ad_unit_id_exam_result">ca-app-pub-5759468493922763/3513719503</string>
+    <string name="banner_ad_unit_id_sudoku">ca-app-pub-5759468493922763/7314067633</string>
+    <string name="banner_ad_unit_id_number_puzzle">ca-app-pub-5759468493922763/4809269700</string>
+    <string name="banner_ad_unit_id_exercise">ca-app-pub-5759468493922763/8230392936</string>
+
+    <string name="interstitial_ad_unit_id_exam_complete_show_result">ca-app-pub-5759468493922763/2660158056</string>
+    <string name="interstitial_ad_unit_id_exam_complete_close">ca-app-pub-5759468493922763/6703027611</string>
+    <string name="interstitial_ad_unit_id_exam_leave">ca-app-pub-5759468493922763/9329190959</string>
+    <string name="interstitial_ad_unit_id_abacus_full_screen">ca-app-pub-5759468493922763/4787310717</string>
+    <string name="interstitial_ad_unit_id_abacus_half_screen">ca-app-pub-5759468493922763/7616616046</string>
+    <string name="interstitial_ad_unit_id_sudoku">ca-app-pub-5759468493922763/1552149652</string>
+    <string name="interstitial_ad_unit_id_number_puzzle_step">ca-app-pub-5759468493922763/9842104535</string>
+    <string name="interstitial_ad_unit_id_number_puzzle_complete">ca-app-pub-5759468493922763/8865980504</string>
+    <string name="interstitial_ad_unit_id_exercise">ca-app-pub-5759468493922763/3939794135</string>
+
+    <integer-array name="bead_top">
+        <item>@drawable/egg0</item>
+
+    </integer-array>
+    <integer-array name="big_bottom">
+        <item>@drawable/egg1</item>
+        <item>@drawable/egg4</item>
+        <item>@drawable/egg2</item>
+        <item>@drawable/egg3</item>
+    </integer-array>
+
+    <!--Error messages-->
+    <string name="no_internet">يرجى التحقق من اتصال الشبكة الخاص بك.</string>
+    <string name="no_internet_working">الإنترنت الخاص بك لا يعمل</string>
+    <string name="for_offline_support_msg">للحصول على الدعم في وضع عدم الاتصال ، تحتاج إلى شراء خطة مدفوعة.</string>
+    <string name="some_thing_wrong">حدث خطأ ما ، يرجى المحاولة مرة أخرى بعد قليل.</string>
+
+    <!--  Tour page  -->
+    <string name="SKIP">يتخطى</string>
+    <string name="DONE">مطهو إلى حد كاف</string>
+    <string name="done_">مطهو إلى حد كاف</string>
+    <string name="PrivacyPolicy">سياسة الخصوصية</string>
+    <string name="PrivacyPolicy_"><font color='#0000EE'><u>سياسة الخصوصية</u></font></string>
+    <!--  Comman  -->
+    <string name="txtOk">تمام</string>
+    <string name="txtYES">نعم</string>
+    <string name="txtCancel">ألغى</string>
+    <string name="txtNo">لا</string>
+    <string name="notification">تنبيه الإخطار</string>
+
+    <!--  Home Page  -->
+    <string name="page_title_Number">صفحات الرقم</string>
+    <string name="page_title_Addition">صفحة الإضافة</string>
+    <string name="page_title_AdditionSubtraction">صفحات الجمع والطرح</string>
+    <string name="page_title_Multiplication">صفحات الضرب</string>
+    <string name="page_title_Division">صفحات التقسيم</string>
+
+    <string name="Number">عدد</string>
+    <string name="Addition">إضافة</string>
+    <string name="AdditionSubtraction">جمع وطرح</string>
+    <string name="Multiplication">عمليه الضرب</string>
+    <string name="Division">شعبة الرياضيات</string>
+    <string name="title_purchase">متجر شراء التطبيق</string>
+    <string name="leave_exam_alert">ترك الامتحان</string>
+    <string name="leave_exercise_alert">اترك التمرين</string>
+    <string name="downloadMaterial">مواد الممارسة</string>
+
+    <!--  Full abacus  -->
+    <string name="txt_Toddler_Range">نطاق العدد</string>
+    <string name="txt_From">من</string>
+    <string name="error_range_from">النطاق من فارغ</string>
+    <string name="error_range_to">النطاق إلى فارغ</string>
+    <string name="error_range">مطلوب 50 رقم كحد أدنى</string>
+    <string name="txt_To">ل</string>
+    <string name="txt_Random">عشوائي</string>
+    <string name="txt_Reset_when_start">إعادة تعيين كل مرة؟</string>
+    <string name="txt_start_with_1">ابدأ بـ 1؟</string>
+    <string name="txt_Range">يتراوح</string>
+    <string name="set_only">تعيينها</string>
+
+    <!--  Abacus  -->
+    <string name="language_not_supported">هذه اللغة غير مدعومة!</string>
+    <string name="ResettoContinue">إعادة تعيين للمتابعة</string>
+    <string name="txt_reset_now">إبدأ من جديد</string>
+    <string name="txt_purchase">شىء مشترى</string>
+    <string name="txt_purchased">تم شراؤها بالفعل</string>
+    <string name="txt_purchase_Now">شراء الآن</string>
+    <string name="txt_subscribed">مشترك بالفعل</string>
+    <string name="txt_subscribe_Now">إشترك الآن</string>
+
+    <string name="txt_page_full_abacus_not_purchased">آسف لا يمكنك الوصول إلى هذه الميزة. إذا كنت تريد استخدام هذه الميزة ، فأنت بحاجة إلى شراء خطة مدفوعة.</string>
+    <string name="txt_page_practise_material_not_purchased">آسف لا يمكنك تحميل هذه المواد الممارسة. إذا كنت تريد تنزيل هذه المادة ، فأنت بحاجة إلى شراء خطة مدفوعة.</string>
+
+    <!--  not purchased and reset dialog click  -->
+    <string name="txt_purchase_alert">تنبيه الشراء</string>
+    <string name="txt_page_reset_not">آسف لا يمكنك بدء هذه الصفحة مرة أخرى. إذا كنت ترغب في بدء هذه الصفحة مرة أخرى ، فأنت بحاجة إلى شراء خطة مدفوعة.</string>
+
+    <!--  purchased and reset page progress click  -->
+    <string name="txt_reset_page">إعادة تعيين تقدم الصفحة</string>
+    <string name="txt_reset_page_alert">هل أنت متأكد من أنك تريد إعادة تعيين تقدم هذه الصفحة والبدء من جديد؟</string>
+
+    <string name="leave_exam_msg">هل أنت متأكد من أنك تريد ترك هذا الاختبار بدون استكماله؟</string>
+    <string name="leave_exercise_msg">هل أنت متأكد من أنك تريد ترك هذا التمرين بدون استكمال؟</string>
+
+    <!--  purchased and page already completed  -->
+    <string name="txt_page_complete">اكتملت الصفحة</string>
+    <string name="txt_page_completed_already_purchased">لقد أكملت هذه الصفحة بالفعل ، إذا كنت تريد يمكنك بدء هذه الصفحة مرة أخرى.</string>
+
+    <!--  purchased and page completed  -->
+    <string name="txt_page_completed_msg">مبروك لقد أكملت هذه الصفحة. إذا كنت تريد يمكنك بدء هذه الصفحة مرة أخرى.</string>
+
+    <!--  not purchased and page already complete  -->
+    <string name="txt_page_completed_already">لقد أكملت بالفعل هذه الصفحة. إذا كنت تريد المزيد من العداد ، فأنت بحاجة إلى شراء خطة شراء مدفوعة.</string>
+    <string name="txt_page_completed_free">إذا كنت تريد المزيد من العداد ، فأنت بحاجة إلى شراء خطة شراء.</string>
+
+    <string name="new_version_msg">نسخة جديدة متاحة في playstore. للمتابعة ، يرجى تحديث التطبيق.</string>
+    <string name="app_update">تحديث جديد!</string>
+
+    <string name="yes_i_want_to_start">نعم ، أريد أن أبدأ</string>
+    <string name="yes_i_m_sure">نعم أنا متأكد</string>
+    <string name="okay">تمام</string>
+    <string name="give_later">أعط في المرة القادمة</string>
+    <string name="yes_i_want_to_purchase">نعم ، أريد الشراء</string>
+    <string name="yes_i_want_to_update">نعم ، أريد التحديث</string>
+    <string name="no_purchase_later">لا ، سأشتري لاحقًا</string>
+    <string name="no_thanks">ًلا شكرا</string>
+    <string name="no_please_continue">لا ، الرجاء المتابعة</string>
+    <string name="no_thanks_continue_later">لا ، شكرا استمر لاحقا</string>
+    <!--  Settings  -->
+    <string name="txt_setting_title">اعدادات التطبيق</string>
+    <string name="txt_setting_display_abacus_number">عرض رقم العداد</string>
+    <string name="txt_setting_display_help_message">عرض رسالة المساعدة</string>
+    <string name="txt_setting_hide_table">إخفاء الجدول</string>
+    <string name="txt_setting_left_hand">عسراء</string>
+    <string name="txt_setting_sound">صوت العداد</string>
+    <string name="txt_setting_hintsound">صوت تلميح العداد</string>
+
+    <!--  Daily Exam  -->
+    <string name="testResult">نتيجة الامتحان</string>
+    <string name="child_level">حدد مستوى الامتحان حسب قدرة الطفل</string>
+    <string name="TapCorrectAns">انقر فوق إجابة صحيحة</string>
+    <string name="Time">وقت</string>
+    <string name="TotalTakeTime">الوقت الكلي</string>
+    <string name="checkResult">تحقق نتيجة</string>
+    <string name="give_exam_again">إعطاء الامتحان مرة أخرى</string>
+    <string name="YourAnswer">إجابتك</string>
+    <string name="correctAnswer">اجابة صحيحة</string>
+    <string name="SKipped">تم تخطي</string>
+    <string name="TotalTime">الوقت الكلي</string>
+    <string name="TotalQue">مجموع السؤال</string>
+    <string name="SkipQue">تخطي السؤال</string>
+    <string name="WrongQue">إجابة خاطئة</string>
+    <string name="RightQue">الإجابة الصحيحة</string>
+
+    <!--  Download material  -->
+    <string name="download_now">تحميل</string>
+    <string name="worksheet">ورقة عمل</string>
+    <string name="downloading">جارى التحميل..</string>
+    <string name="download_txt1">- تنزيل المواد وطباعة نفسها وممارسة التمارين في أي وقت.</string>
+    <string name="download_txt2">- هذه ليست الرياضيات فقط ، يمكن لأطفالك تعلم كل شيء من حولنا.</string>
+    <string name="download_txt3">- عد الكائنات ، واملأ الفراغ ، وأقل من وأكبر من ويساوي ، وعدد الصعاب والصلب.</string>
+    <string name="download_txt4">- التعرف على العداد ، التعرف على خرز العداد ، رسم خرز العداد.</string>
+    <string name="download_txt5">- يمكن للأطفال التعرف على حيوانات الحيوانات الأليفة ، وحيوانات المزرعة ، وحيوانات الثدييات ، وحيوانات البحر ، والحيوانات البرية ، والطيور ، والفواكه ، والخضروات ، والأشكال ، إلخ.</string>
+    <string name="download_txt6">- تعرف على العدد والجمع والطرح والضرب والقسمة.</string>
+    <string name="download_txt7">المزيد من مواد التدريب قريبًا ...</string>
+
+    <string name="rate_now">قيم الآن</string>
+    <string name="play_store_not_found">تطبيق Playstore غير موجود في الجهاز.</string>
+    <string name="gmail_not_found">لم يتم تثبيت تطبيق gmail في الجهاز.</string>
+
+    <!--  Purchase Info  -->
+    <string name="txt_free">حر</string>
+    <string name="txt_free1">كل درس به 20 عداد</string>
+    <string name="txt_free2">تلميح العداد</string>
+    <string name="txt_free3">إعلان</string>
+
+    <string name="txt_purchase1">العداد غير المحدود</string>
+    <string name="txt_purchase2">تلميح العداد + تلميح الصوت</string>
+    <string name="txt_purchase3">لا اعلانات</string>
+    <string name="txt_purchase6">إعادة تعيين تقدم الصفحة</string>
+    <string name="txt_purchase5">موضوع طبلية تاج</string>
+    <string name="txt_purchase8">مواد قابلة للطباعة الحضانة والرياضيات</string>
+    <string name="txt_purchase7">رقم عشوائي في وضع العداد الكامل</string>
+
+
+    <!--  About Us  -->
+    <string name="about_desc">كل شيء يتعلمه الطفل وينمو عقله</string>
+    <string name="need_help">تحتاج مساعدة؟</string>
+    <string name="txt_about1">تصميم وتطوير فريق Brain Apptech</string>
+
+    <string name="abacus">طبلية تاج</string>
+    <string name="child_learning_application">تطبيق التعلم للأطفال</string>
+    <string name="version">نسخة التطبيق</string>
+
+    <string name="signPlus">+</string>
+    <string name="signMinus">-</string>
+    <string name="select_correct_answers">حدد الإجابات الصحيحة</string>
+    <string name="right_answer">الإجابة الصحيحة</string>
+    <string name="wrong_answer">إجابة خاطئة</string>
+    <string name="start_again">إبدأ من جديد</string>
+    <string name="result">نتائج الامتحان</string>
+    <string name="let_s_start_exam">حان وقت الامتحان</string>
+    <string name="let_s_start">لنبدأ</string>
+    <string name="let_s_play">هيّا بنا لنلعب</string>
+    <string name="exam_history">سجلات تاريخ الامتحان</string>
+    <string name="history_of">سجلات التاريخ من</string>
+    <string name="no_exam_giving_yet">لا يوجد امتحان حتى الآن</string>
+    <string name="check_result">تحقق نتيجة</string>
+    <string name="count_the">عد من</string>
+    <string name="additions_of">إضافة من</string>
+    <string name="subtraction_of">طرح من</string>
+    <string name="auto_reset">إعادة تعيين العداد التلقائي؟</string>
+    <string name="join_now">انضم الآن<b> → </b></string>
+    <string name="share_now">شارك الآن<b> → </b></string>
+    <string name="share_now_">شارك الآن</string>
+    <string name="share">شارك الآن</string>
+    <string name="suitable_to_age_5_and_up">مناسبة لعمر 5 سنوات فما فوق</string>
+    <string name="suitable_to_age_4_5">مناسب لعمر 4 و 5 سنوات</string>
+    <string name="maths_material">مادة ممارسة الرياضيات</string>
+    <string name="maths_material_desc">• حجم A4 والمواد القابلة للطباعة \n\n • تعرف على معلومات حول عد الكائنات ، واملأ الفراغ ، وأقل من وأكبر من ويساوي ، وأرقام الاحتمالات والصلب. \n\n • التعرف على العداد ، وتحديد الخرز في العداد ، ورسم الخرز من المعداد. \n\n • تعرف على معلومات حول العدد ، والجمع والطرح ، والضرب والقسمة والمزيد .. \n\n • بمجرد الدفع ، يمكنك التنزيل في أي وقت.</string>
+    <string name="nursery_material_desc">• حجم A4 ومواد قابلة للطباعة \n\n • اربط النقاط بخطوط دائمة وخطوط سكون وأقطار وقوس ودائرة وخطوط وأشكال متعرجة \n\n • اربط النقاط بأحرف كبيرة وصغيرة لاحقة من ABCD ، 1- 10 عدد مع صور متعددة المرئيات. \n\n • بمجرد الدفع ، يمكنك التنزيل في أي وقت.</string>
+    <string name="view_material">شاهد مواد التدريب</string>
+    <string name="nursery_class_material">مادة ممارسة فئة الحضانة</string>
+    <string name="recommended">مُستَحسَن</string>
+    <string name="popular">شعبي</string>
+    <string name="useful">مفيد</string>
+    <string name="favourite">مفضل</string>
+    <string name="hot">حار</string>
+    <string name="new_">جديد</string>
+
+    <string name="notes">ملحوظات</string>
+    <string name="hint">تَلمِيح</string>
+    <string name="completed">مكتمل</string>
+    <string name="continue_">واصل</string>
+    <string name="close">يغلق</string>
+
+    <string name="_24_number_puzzle">24 عدد اللغز</string>
+    <string name="_15_number_puzzle">15 عدد اللغز</string>
+    <string name="_8_number_puzzle">8 عدد اللغز</string>
+    <string name="score">النتيجة هي</string>
+    <string name="bestScore">أفضل النتيجة</string>
+    <string name="number_sequences_puzzle">ألغاز تسلسل الأرقام</string>
+    <string name="_3_x_3_puzzle">3 x 3 لغز</string>
+    <string name="_4_x_4_puzzle">4 x 4 لغز</string>
+    <string name="_5_x_5_puzzle">لغز 5 × 5</string>
+    <string name="select_the_puzzle_dashboard">حدد لوحة معلومات اللغز</string>
+    <string name="arrange_all_the_numbers_of_puzzle_in_ascending_order">ترتيب جميع أرقام اللغز بترتيب تصاعدي</string>
+    <string name="current_moves">التحركات الحالية</string>
+    <string name="best_moves">أفضل تحركات</string>
+    <string name="start_new">ابدأ لعبة جديدة</string>
+    <string name="volume_on">قم بتشغيل وحدة التخزين</string>
+    <string name="volume_off">قم بإيقاف تشغيل مستوى الصوت</string>
+    <string name="number_sequences_puzzle_volume">حجم ألغاز تسلسل الأرقام</string>
+
+    <string name="continue_to_play_game">استمر في اللعب</string>
+    <string name="no_i_want_to_close">لا ، أريد الإغلاق</string>
+    <string name="you_completed_this_puzzle_in_moves">لقد أكملت هذا اللغز في %1$s من الحركات</string>
+    <string name="this_is_your_best_moves_in_puzzle">هذه أفضل حركاتك في %1$s</string>
+    <string name="but_your_best_moves_in_puzzle_is">لكن أفضل حركاتك في %1$s هي %2$s</string>
+
+    <string name="no">لا</string>
+    <string name="yes">نعم</string>
+    <string name="yes_i_want_to_close">نعم ، أريد إغلاق هذا</string>
+    <string name="no_i_don_t_want">لا ، لا أريد</string>
+    <string name="please_close">من فضلك أغلق</string>
+    <string name="submit">تمام</string>
+
+    <string name="select_your_exercise">حدد التمرين الخاص بك</string>
+    <string name="clear_each_exercise_to_get_80_of_3_times_in_a_row">لمسح كل تمرين ، احصل على 80٪ من 3 مرات متتالية.</string>
+    <string name="start_exercise">ابدأ التمرين</string>
+    <string name="next">تالي</string>
+    <string name="answer">إجابة :</string>
+    <string name="result_of_exercise">نتيجة التمرين</string>
+    <string name="fail_to_got_80">فشل في الحصول على 80٪ لتوضيح هذا التمرين.</string>
+    <string name="better_luck_for_next_time">حظ أفضل في المرة القادمة ..</string>
+    <string name="congratulations">تهانينا…</string>
+    <string name="unstoppable_great_job">لا يمكن إيقافه! عمل عظيم</string>
+    <string name="you_are_so_intelligent">أنت ذكي جدا</string>
+    <string name="you_are_so_genius">أنت عبقري جدا</string>
+    <string name="you_are_brilliant">أنت رائع</string>
+    <string name="you_are_glorious">أنت مجيد</string>
+    <string name="you_are_clever">انت ذكي</string>
+    <string name="you_are_on_the_right_track">كنت على الطريق الصحيح</string>
+    <string name="good_job">أحسنتم عملاً يا</string>
+    <string name="not_bad">ليس سيئا ، يمكنك أن تفعل الخليط من هذا</string>
+
+    <string name="other_app_s_by_brainapptech_team">تطبيق آخر من قبل فريقنا</string>
+    <string name="offline_not_supported">غير متصل غير مدعوم</string>
+    <string name="now_offline_support_">الدعم دون اتصال للوضع الحر والرقم والإضافة والطرح والضرب والقسمة والتمرين والامتحان.</string>
+    <string name="check_other_application_by_us">تحقق من التطبيق الآخر من قبلنا.</string>
+
+    <string name="notification_permission_msg">إذن الإخطار مطلوب للحصول على تنبيه يتعلق بالتطبيق!</string>
+    <string name="permission_alert">تنبيه الإذن</string>
+    <string name="free_abacus_theme">موضوعات حرة</string>
+    <string name="paid_abacus_themes">مواضيع مدفوعة</string>
+    <string name="preview_of_theme">معاينة الموضوع</string>
+    <string name="welcome_to_abacus_application">مرحبا بكم في التطبيق</string>
+    <string name="please_choose_your_anonymous_name_and_avatar">الرجاء اختيار اسم الطفل المجهول و الصورة الرمزية</string>
+    <string name="choose_child_avatar">اختر الصورة الرمزية للطفل</string>
+    <string name="please_select_avatar">الرجاء تحديد الصورة الرمزية</string>
+    <string name="please_enter_anonymously_name">الرجاء إدخال اسم مجهول</string>
+    <string name="enter_child_s_name">أدخل اسم الطفل</string>
+    <string name="select_abacus_bead_theme_nbase_on_your_favourite_color">حدد موضوع طبلية تاج بناءً على اللون المفضل للأطفال</string>
+    <string name="okay_let_s_start">حسنًا ، لنبدأ</string>
+    <string name="will_select_later_from_settings">سوف يتغير لاحقًا من الإعدادات</string>
+    <string name="free_mode">وضع حر؟</string>
+    <string name="video_tutorials">دروس الفيديو</string>
+    <string name="use_left_hand_to_move_beads">استخدم يدك اليسرى لتحريك الخرز</string>
+    <string name="use_right_hand_to_move_beads">استخدم يدك اليمنى لتحريك الخرز</string>
+
+    <string name="ten_crores">عشرة كرور</string>
+    <string name="crores">كرور</string>
+    <string name="ten_lakhs">عشرة كهس</string>
+    <string name="lakhs">كهس</string>
+    <string name="ten_nthousands">عشرة آلاف</string>
+    <string name="thousands">الآلاف</string>
+    <string name="hundreds">المئات</string>
+    <string name="tens">عشرات</string>
+    <string name="ones">واحد</string>
+    <string name="Hundred">مائة</string>
+    <string name="Thousand">ألف</string>
+    <string name="Lakh">لكح</string>
+    <string name="Crore">الكرور عشرة ملا يين</string>
+    <string name="Minus">ناقص</string>
+    <string name="One">واحد</string>
+    <string name="Two">اثنين</string>
+    <string name="Three">ثلاثة</string>
+    <string name="Four">أربعة</string>
+    <string name="Five">خمسة</string>
+    <string name="Six">ستة</string>
+    <string name="Seven">سبعة</string>
+    <string name="Eight">ثمانية</string>
+    <string name="Nine">تسع</string>
+    <string name="Ten">عشرة</string>
+    <string name="Eleven">أحد عشر</string>
+    <string name="Twelve">اثني عشر</string>
+    <string name="Thirteen">ثلاثة عشر</string>
+    <string name="Fourteen">أربعة عشرة</string>
+    <string name="Fifteen">خمسة عشر</string>
+    <string name="Sixteen">السادس عشر</string>
+    <string name="Seventeen">سبعة عشر</string>
+    <string name="Eighteen">الثامنة عشر</string>
+    <string name="Nineteen">تسعة عشر</string>
+    <string name="Twenty">عشرين</string>
+    <string name="Thirty">ثلاثون</string>
+    <string name="Forty">أربعين</string>
+    <string name="Fifty">خمسون</string>
+    <string name="Sixty">ستين</string>
+    <string name="Seventy">سبعون</string>
+    <string name="Eighty">ثمانون</string>
+    <string name="Ninety">تسعين</string>
+    <string name="click_here_to_watch_nvideo_tutorial_of_abacus">انقر هنا لمشاهدة فيديو تعليمي لـ طبلية تاج</string>
+    <string name="enable_free_mode">تمكين الوضع الحر</string>
+    <string name="to_know_about_abacus">لمعرفة طبلية تاج</string>
+    <string name="rod_s_bead_value">قيمة حبة رود</string>
+    <string name="take_exam_of_your_kid_s_to_check_ability_with_different_type">خذ نوعًا مختلفًا من الامتحانات للتحقق من قدرة طفلك</string>
+    <string name="select_different_type_of_exercise_nto_improve_kid_s_performance">حدد نوعًا مختلفًا من التمارين لتحسين أداء طفلك</string>
+    <string name="maths_with_fun">الرياضيات مع المرح</string>
+    <string name="help_your_child_to_keep_nactive_always">ساعد طفلك على الحفاظ على النشاط دائمًا</string>
+    <string name="on_1st_rod">على قضيب الأول (مرة واحدة العمود)</string>
+    <string name="on_2nd_rod">على قضيب الثاني (عمود عشرات)</string>
+    <string name="on_3rd_rod">على القضيب الثالث (عمود مئات)</string>
+    <string name="light_rod1_text">كل قيمة حبة أقل هي 1 وقيمة حبة العليا هي 5</string>
+    <string name="light_rod2_text">كل قيمة حبة أقل هي 10 وقيمة حبة العليا هي 50</string>
+    <string name="light_rod3_text">كل قيمة حبة أقل هي 100 وقيمة حبة العليا هي 500 ، لذلك على</string>
+    <string name="this_all_are_upper_bead">كل هذه الخرز العليا</string>
+    <string name="this_all_are_bottom_beads">كل هذه الخرزات السفلية</string>
+    <string name="click_here_to_show_nabacus_tour">انقر هنا لإظهار رسالة المساعدة</string>
+    <string name="click_here_to_reset_abacus">انقر هنا لإعادة التعيين طبلية تاج</string>
+    <string name="now_can_also_subscribe_nweekly_at_low_cost">الآن ، يمكن أيضًا الاشتراك أسبوعيًا بتكلفة منخفضة</string>
+    <string name="represent_the_value_of_0_9">يمكن أن تمثل قيمة 0-9</string>
+    <string name="represent_the_value_of_0_99">يمكن أن تمثل قيمة 0-99</string>
+    <string name="represent_the_value_of_0_999">يمكن أن تمثل قيمة 0-999</string>
+    <string name="one_column">عمود واحد</string>
+    <string name="two_column">عمود اثنين</string>
+    <string name="three_column">ثلاثة أعمدة</string>
+    <string name="good_morning">صباح الخير</string>
+    <string name="good_afternoon">مساء الخير</string>
+    <string name="good_evening">مساء الخير</string>
+    <string name="abacus_no">رقم العداد: %1$d</string>
+
+    <string name="number_1_50">1 إلى 50 أرقام</string>
+    <string name="number_51_100">51 إلى 100 أرقام</string>
+    <string name="number_101_200">101 إلى 200 أرقام</string>
+    <string name="random_numbers">أرقام عشوائية</string>
+    <string name="number_201_300">201 إلى 300 أرقام</string>
+    <string name="number_301_500">301 إلى 500 أرقام</string>
+    <string name="number_501_1000">500 إلى 1000 أرقام</string>
+
+    <string name="multiplications_2d_1d">2D x 1D الضرب</string>
+    <string name="multiplications_3d_1d">3D x 1D الضرب</string>
+    <string name="multiplications_2d_2d">2D x 2D الضرب</string>
+    <string name="multiplications_3d_2d">3D x 2D الضرب</string>
+
+    <string name="Multiplicationpage1">ضرب 2 برقمين</string>
+    <string name="Multiplicationpage2">ضرب 3 برقمين</string>
+    <string name="Multiplicationpage3">ضرب 4 برقمين</string>
+    <string name="Multiplicationpage4">ضرب 2،3،4 برقمين</string>
+    <string name="Multiplicationpage5">ضرب 5 برقمين</string>
+    <string name="Multiplicationpage6">ضرب 6 برقمين</string>
+    <string name="Multiplicationpage7">ضرب 7 برقمين</string>
+    <string name="Multiplicationpage8">ضرب 5،6،7 برقمين</string>
+    <string name="Multiplicationpage9">ضرب 8 برقمين</string>
+    <string name="Multiplicationpage10">ضرب 9 برقمين</string>
+    <string name="Multiplicationpage11">ضرب 8،9 برقمين</string>
+    <string name="Multiplicationpage12">الضرب العشوائي برقمين</string>
+
+    <string name="Multiplicationpage13">ضرب 2 بثلاثة أرقام</string>
+    <string name="Multiplicationpage14">ضرب 3 بثلاثة أرقام</string>
+    <string name="Multiplicationpage15">ضرب 4 بثلاثة أرقام</string>
+    <string name="Multiplicationpage16">ضرب 2،3،4 بثلاثة أرقام</string>
+    <string name="Multiplicationpage17">ضرب 5 بثلاثة أرقام</string>
+    <string name="Multiplicationpage18">ضرب 6 بثلاثة أرقام</string>
+    <string name="Multiplicationpage19">ضرب 7 بثلاثة أرقام</string>
+    <string name="Multiplicationpage20">ضرب 5،6،7 بثلاثة أرقام</string>
+    <string name="Multiplicationpage21">ضرب 8 بثلاثة أرقام</string>
+    <string name="Multiplicationpage22">ضرب 9 بثلاثة أرقام</string>
+    <string name="Multiplicationpage23">ضرب 8،9 بثلاثة أرقام</string>
+    <string name="Multiplicationpage24">الضرب العشوائي بثلاثة أرقام</string>
+
+    <string name="Multiplicationpage25">مضاعفة رقمين في نهاية 2</string>
+    <string name="Multiplicationpage26">مضاعفة رقمين في نهاية 3</string>
+    <string name="Multiplicationpage27">مضاعفة رقمين في نهاية 4</string>
+    <string name="Multiplicationpage28">مضاعفة رقمين في نهاية 5</string>
+    <string name="Multiplicationpage29">مضاعفة رقمين في نهاية 6</string>
+    <string name="Multiplicationpage30">مضاعفة رقمين في نهاية 7</string>
+    <string name="Multiplicationpage31">مضاعفة رقمين في نهاية 8</string>
+    <string name="Multiplicationpage32">مضاعفة رقمين في نهاية 9</string>
+    <string name="Multiplicationpage33">الضرب من رقمين برقمين</string>
+
+    <string name="Multiplicationpage34">ضرب ثلاثة أرقام في نهاية 2</string>
+    <string name="Multiplicationpage35">ضرب ثلاثة أرقام في نهاية 3</string>
+    <string name="Multiplicationpage36">ضرب ثلاثة أرقام في نهاية 4</string>
+    <string name="Multiplicationpage37">ضرب ثلاثة أرقام في نهاية 5</string>
+    <string name="Multiplicationpage38">ضرب ثلاثة أرقام في نهاية 6</string>
+    <string name="Multiplicationpage39">ضرب ثلاثة أرقام في نهاية 7</string>
+    <string name="Multiplicationpage40">ضرب ثلاثة أرقام في نهاية 8</string>
+    <string name="Multiplicationpage41">ضرب ثلاثة أرقام في نهاية 9</string>
+    <string name="Multiplicationpage42">الضرب بثلاثة أرقام مع رقمين</string>
+
+    <string name="divide_by_single_digit">اقسم على رقم واحد</string>
+    <string name="divide_by_two_digit">اقسم على رقمين</string>
+    <string name="Devidepage1">اقسم على 2</string>
+    <string name="Devidepage2">اقسم على 3</string>
+    <string name="Devidepage3">اقسم على 4</string>
+    <string name="Devidepage4">اقسم على 2،3،4</string>
+    <string name="Devidepage5">اقسم على 5</string>
+    <string name="Devidepage6">اقسم على 6</string>
+    <string name="Devidepage7">اقسم على 7</string>
+    <string name="Devidepage8">اقسم على 5،6،7</string>
+    <string name="Devidepage9">اقسم على 8</string>
+    <string name="Devidepage10">اقسم على 9</string>
+    <string name="Devidepage11">اقسم على 8،9</string>
+    <string name="Devidepage12">اقسم على رقم عشوائي</string>
+    <string name="Devidepage22">اقسم على النهاية بـ 0</string>
+    <string name="Devidepage23">اقسم على النهاية بـ 1</string>
+    <string name="Devidepage13">اقسم على النهاية بـ 2</string>
+    <string name="Devidepage14">اقسم على النهاية بـ 3</string>
+    <string name="Devidepage15">اقسم على النهاية بـ 4</string>
+    <string name="Devidepage16">اقسم على النهاية بـ 5</string>
+    <string name="Devidepage17">اقسم على النهاية بـ 6</string>
+    <string name="Devidepage18">اقسم على النهاية بـ 7</string>
+    <string name="Devidepage19">اقسم على النهاية بـ 8</string>
+    <string name="Devidepage20">اقسم على النهاية بـ 9</string>
+    <string name="Devidepage21">اقسم على رقم عشوائي</string>
+
+    <string name="we_need_your_help">نحن نحتاج مساعدتك!</string>
+    <string name="kindly_support_us_by_rating_an_application">يرجى دعمنا من خلال <font color = '#4BB6EF'> تصنيف تطبيق </font> على متجر جوجل بلاى.</string>
+    <string name="kindly_support_us_by_sharing_an_application">يرجى دعمنا من خلال <font color = '#4BB6EF'> مشاركة تطبيق </font> مع أصدقائك وعائلتك.</string>
+
+    <string name="speak_divide_by">s$قسمة على %2 s$1%</string>
+    <string name="speak_multiply_by">s$تتضاعف %2 s$1%</string>
+</resources>

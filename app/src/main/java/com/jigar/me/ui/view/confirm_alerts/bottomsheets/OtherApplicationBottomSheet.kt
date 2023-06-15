@@ -19,13 +19,22 @@ object OtherApplicationBottomSheet {
         bottomSheetDialog.setCancelable(true)
         bottomSheetDialog.setCanceledOnTouchOutside(true)
         with(sheetBinding){
-            val otherAppAdapter = OtherAppAdapter(DataProvider.getOtherAppList(),object  : OtherAppAdapter.OnItemClickListener{
-                override fun onItemOtherAppClick(data: OtherApps) {
-                    bottomSheetDialog.dismiss()
-                    activity.openURL(data.url)
+            recyclerviewOtherApps.post {
+                val height = recyclerviewOtherApps.height
+                val width = recyclerviewOtherApps.width / 2
+                val dimentions = if (width > height){
+                    height
+                }else{
+                    width
                 }
-            })
-            recyclerviewOtherApps.adapter = otherAppAdapter
+                val otherAppAdapter = OtherAppAdapter(DataProvider.getOtherAppList(),object  : OtherAppAdapter.OnItemClickListener{
+                    override fun onItemOtherAppClick(data: OtherApps) {
+                        bottomSheetDialog.dismiss()
+                        activity.openURL(data.url)
+                    }
+                },dimentions)
+                recyclerviewOtherApps.adapter = otherAppAdapter
+            }
             tvNo.onClick {
                 bottomSheetDialog.dismiss()
             }

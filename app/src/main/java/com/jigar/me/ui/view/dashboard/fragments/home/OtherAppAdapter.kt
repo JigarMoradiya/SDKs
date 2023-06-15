@@ -9,7 +9,7 @@ import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
 
 class OtherAppAdapter(
-    private var listData: List<OtherApps>,private val mListener: OnItemClickListener
+    private var listData: List<OtherApps>,private val mListener: OnItemClickListener,val dimension: Int
 ) : RecyclerView.Adapter<OtherAppAdapter.FormViewHolder>() {
     interface OnItemClickListener {
         fun onItemOtherAppClick(data: OtherApps)
@@ -22,6 +22,8 @@ class OtherAppAdapter(
     }
 
     override fun onBindViewHolder(holder: FormViewHolder, position: Int) {
+        holder.binding.conMain.layoutParams.width = dimension
+        holder.binding.conMain.layoutParams.height = dimension
         val data = listData[position]
         holder.binding.imgMenu.setImageResource(data.image)
         holder.binding.root.onClick {

@@ -55,6 +55,23 @@ import java.util.*
      Toast.makeText(this, message, Toast.LENGTH_LONG).show()
  }
 
+ fun Context.setLocale(lan: String) {
+     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+         val myLocale = Locale(lan)
+         val res: Resources = resources
+         val dm: DisplayMetrics = res.displayMetrics
+         val conf: Configuration = res.configuration
+         conf.locale = myLocale
+         res.updateConfiguration(conf, dm)
+     } else {
+         val locale = Locale(lan)
+         Locale.setDefault(locale)
+         val configuration: Configuration = resources.configuration
+         configuration.setLocale(locale)
+         createConfigurationContext(configuration)
+     }
+ }
+
  fun Context.hideKeyboard(view: View) {
      val imm: InputMethodManager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
      imm.hideSoftInputFromWindow(view.windowToken, 0)

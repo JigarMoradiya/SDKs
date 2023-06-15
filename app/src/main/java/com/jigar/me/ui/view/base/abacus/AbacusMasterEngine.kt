@@ -76,7 +76,7 @@ class AbacusMasterEngine(
 
     fun setSelectedPositions(selectedPosition: ArrayList<Int>) {
         selectedPositions = selectedPosition
-        for (i in selectedPositions.indices) {
+        for (i in 0 until selectedPositions.size) {
             val rowPosition = Point()
             rowPosition.x = position!!.x + i * beadWidth
             rowPosition.y = position!!.y

@@ -102,6 +102,7 @@ object AppConstants {
             var Setting_answer = "Setting_answer"
             const val Setting_answer_Step = "Step"
             const val Setting_answer_Final = "Final"
+            const val Setting_answer_with_tools = "tools"
 
             var abacus_colorful = "abacus_colorful"
 

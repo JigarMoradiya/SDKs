@@ -8,32 +8,29 @@
         android:layout_height="wrap_content"
         android:id="@+id/conMain">
 
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/cardMenu"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/home_menu_margin"
-            app:cardBackgroundColor="@color/home_menu_icon_bg"
-            app:cardCornerRadius="@dimen/home_menu_corner"
-            app:cardElevation="@dimen/home_menu_elevation"
-            app:layout_constraintDimensionRatio="H,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgMenu"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:srcCompat="@drawable/home_menu_number" />
+                android:layout_margin="@dimen/home_menu_margin"
+                app:cardBackgroundColor="@color/home_menu_icon_bg"
+                app:cardCornerRadius="@dimen/home_menu_corner"
+                app:cardElevation="@dimen/home_menu_elevation">
 
-        </com.google.android.material.card.MaterialCardView>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imgMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:srcCompat="@drawable/home_menu_number" />
 
-        <androidx.legacy.widget.Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/home_menu_margin"
-            app:layout_constraintTop_toBottomOf="@+id/cardMenu" />
+            </com.google.android.material.card.MaterialCardView>
 
+        </androidx.appcompat.widget.LinearLayoutCompat>
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/txtTag"
             android:layout_width="wrap_content"
