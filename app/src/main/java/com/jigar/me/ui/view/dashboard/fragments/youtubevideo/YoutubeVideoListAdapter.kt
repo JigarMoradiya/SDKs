@@ -1,18 +1,9 @@
 package com.jigar.me.ui.view.dashboard.fragments.youtubevideo
 
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.jigar.me.R
 import com.jigar.me.data.model.VideoData
-import com.jigar.me.data.model.pages.SingleDigitCategory
-import com.jigar.me.data.model.pages.SingleDigitPages
-import com.jigar.me.databinding.RawPagelistChildBinding
-import com.jigar.me.databinding.RawPagelistParentBinding
 import com.jigar.me.databinding.RawVideoDataBinding
-import com.jigar.me.utils.CommonUtils
-import com.jigar.me.utils.CommonUtils.getCurrentSumFromPref
-import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.onClick
 

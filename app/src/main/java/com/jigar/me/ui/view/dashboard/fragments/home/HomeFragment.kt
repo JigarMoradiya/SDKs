@@ -308,7 +308,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
 
         }
     }
-    private fun checkPurchase() {
+//    private fun checkPurchase() {
 //        appViewModel.getInAppPurchase().observe(viewLifecycleOwner) { listData ->
 //            if (listData.isNullOrEmpty()) {
 //                if (::bannerPagerAdapter.isInitialized){
@@ -316,7 +316,7 @@ class HomeFragment : BaseFragment(), BannerPagerAdapter.OnItemClickListener,
 //                }
 //            }
 //        }
-    }
+//    }
 
     private fun autoScrollBanner() {
         /*After setting the adapter use the timer */

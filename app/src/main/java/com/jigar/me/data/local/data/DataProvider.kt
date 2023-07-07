@@ -155,7 +155,7 @@ object DataProvider {
     fun getHomeMenuList(context: Context) : ArrayList<HomeMenu>{
         val list = ArrayList<HomeMenu>()
         with(list){
-            add(HomeMenu(AppConstants.HomeClicks.Menu_Starter,R.drawable.home_menu_starter,context.getString(R.string.new_)))
+            add(HomeMenu(AppConstants.HomeClicks.Menu_Starter,R.drawable.home_menu_starter,context.getString(R.string.beginner)))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Number,R.drawable.home_menu_number))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Addition,R.drawable.home_menu_addition))
             add(HomeMenu(AppConstants.HomeClicks.Menu_Addition_Subtraction,R.drawable.home_menu_subtraction))
@@ -697,160 +697,160 @@ object DataProvider {
         return color
     }
     // TODO SingleDigit Pages
-    fun getSingleDigitPages(context: Context): MutableList<SingleDigitCategory>{
-        val listCategory: MutableList<SingleDigitCategory> = arrayListOf()
-        listCategory.add(SingleDigitCategory(context.getString(R.string.number_1_50),
-            listOf(SingleDigitPages("1",1, 10, false),
-                SingleDigitPages("2",11, 20, false),
-                SingleDigitPages("3",21, 30, false),
-                SingleDigitPages("4",31, 40, false),
-                SingleDigitPages("5",41, 50, false),
-                SingleDigitPages("6",1, 50, true,context.getString(R.string.random))
+    fun getSingleDigitPages(context: Context): MutableList<CategoryPages>{
+        val listCategory: MutableList<CategoryPages> = arrayListOf()
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.number_1_50),
+            pages = listOf(Pages("1", from = 1, to = 10),
+                Pages("2",from = 11, to = 20),
+                Pages("3",from = 21, to = 30),
+                Pages("4",from = 31, to = 40),
+                Pages("5",from = 41, to = 50),
+                Pages("6",from = 1, to = 50, type_random = true, page_name = context.getString(R.string.random))
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.number_51_100),
-            listOf(SingleDigitPages("7",51, 60, false),
-                SingleDigitPages("8",61, 70, false),
-                SingleDigitPages("9",71, 80, false),
-                SingleDigitPages("10",81, 90, false),
-                SingleDigitPages("11",91, 100, false),
-                SingleDigitPages("12",51, 100, true,context.getString(R.string.random))
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.number_51_100),
+            pages = listOf(Pages("7",from = 51, to = 60),
+                Pages("8",from = 61, to = 70),
+                Pages("9",from = 71, to = 80),
+                Pages("10",from = 81,to = 90),
+                Pages("11",from = 91, to = 100),
+                Pages("12",from = 51, to = 100, type_random = true, page_name = context.getString(R.string.random))
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.number_101_200),
-            listOf(SingleDigitPages("14",101, 150, false),
-                SingleDigitPages("15",151, 200, false),
-                SingleDigitPages("37",101, 200, true,context.getString(R.string.random)) // new
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.number_101_200),
+            pages = listOf(Pages("14",from = 101, to = 150),
+                Pages("15",from = 151, to = 200),
+                Pages("37",from = 101, to = 200, type_random = true,page_name = context.getString(R.string.random)) // new
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.random_numbers),
-            listOf(SingleDigitPages("13",1, 100, true),
-                SingleDigitPages("38",101, 200, true), // new
-                SingleDigitPages("16",1, 200, true)
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.random_numbers),
+            pages = listOf(Pages("13",from = 1, to = 100, type_random = true),
+                Pages("38",from = 101, to = 200, type_random = true), // new
+                Pages("16",from = 1, to = 200, type_random = true)
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.number_201_300),
-            listOf(SingleDigitPages("17",201, 250, false),
-                SingleDigitPages("18",251, 300, false),
-                SingleDigitPages("39",201, 300, true,context.getString(R.string.random)), // new
-                SingleDigitPages("19",101, 300, true,context.getString(R.string.random))
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.number_201_300),
+            pages = listOf(Pages("17",from = 201, to = 250),
+                Pages("18",from = 251, to = 300),
+                Pages("39",from = 201, to = 300, type_random = true,page_name = context.getString(R.string.random)), // new
+                Pages("19",from = 101, to = 300, type_random = true,page_name = context.getString(R.string.random))
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.number_301_500),
-            listOf(SingleDigitPages("20",301, 350, false),
-                SingleDigitPages("21",351, 400, false),
-                SingleDigitPages("22",401, 450, false),
-                SingleDigitPages("23",451, 500, false)
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.number_301_500),
+            pages = listOf(Pages("20",from = 301, to = 350),
+                Pages("21",from = 351, to = 400),
+                Pages("22",from = 401, to = 450),
+                Pages("23",from = 451, to = 500)
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.random_numbers),
-            listOf(SingleDigitPages("24",301, 500, true),
-                SingleDigitPages("25",101, 500, true),
-                SingleDigitPages("26",1, 500, true)
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.random_numbers),
+            pages = listOf(Pages("24",from = 301, to = 500, type_random = true),
+                Pages("25",from = 101, to = 500, type_random = true),
+                Pages("26",from = 1, to = 500, type_random = true)
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.number_501_1000),
-            listOf(SingleDigitPages("27",501, 600, false),
-                SingleDigitPages("28",601, 700, false),
-                SingleDigitPages("29",701, 800, false),
-                SingleDigitPages("30",501, 800, true,context.getString(R.string.random)),
-                SingleDigitPages("31",801, 900, false),
-                SingleDigitPages("32",901, 1000, false)
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.number_501_1000),
+            pages = listOf(Pages("27",from = 501, to = 600),
+                Pages("28",from = 601, to = 700),
+                Pages("29",from = 701, to = 800),
+                Pages("30",from = 501, to = 800, type_random = true, page_name = context.getString(R.string.random)),
+                Pages("31",from = 801, to = 900),
+                Pages("32",from = 901, to = 1000)
             )))
-        listCategory.add(SingleDigitCategory(context.getString(R.string.random_numbers),
-            listOf(SingleDigitPages("33",501, 700, true),
-                SingleDigitPages("34",701, 900, true),
-                SingleDigitPages("40",801, 1000, true),
-                SingleDigitPages("35",501, 1000, true),
-                SingleDigitPages("41",301, 800, true),
-                SingleDigitPages("36",1, 1000, true)
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.random_numbers),
+            pages = listOf(Pages("33",from = 501, to = 700, type_random = true),
+                Pages("34",from = 701, to = 900, type_random = true),
+                Pages("40",from = 801, to = 1000, type_random = true),
+                Pages("35",from = 501, to = 1000, type_random = true),
+                Pages("41",from = 301, to = 800, type_random = true),
+                Pages("36",from = 1, to = 1000, type_random = true)
             )))
         return listCategory
     }
     // TODO Multiplication Pages
-    fun getMultiplicationPages(context: Context): MutableList<MultiplicationCategory>{
-        val listCategory: MutableList<MultiplicationCategory> = arrayListOf()
-        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_2d_1d),
-            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage1), "2", "", 2,"1"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage2), "3", "", 2,"2"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage3), "4", "", 2,"3"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage4), "", "234", 2,"4"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage5), "5", "", 2,"5"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage6), "6", "", 2,"6"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage7), "7", "", 2,"7"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage8), "", "567", 2,"8"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage9), "8", "", 2,"9"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage10), "9", "", 2,"10"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage11), "", "89", 2,"11"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage12), "", "1..9", 2,"12")
+    fun getMultiplicationPages(context: Context): MutableList<CategoryPages>{
+        val listCategory: MutableList<CategoryPages> = arrayListOf()
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.multiplications_2d_1d),
+            pages = listOf(Pages(page_name = context.getString(R.string.Multiplicationpage1), que2_str = "2", que2_type = "", que1_digit_type = 2, page_id = "1"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage2), que2_str = "3", que2_type = "", que1_digit_type = 2,page_id = "2"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage3), que2_str = "4", que2_type = "", que1_digit_type = 2,page_id = "3"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage4), que2_str = "", que2_type = "234", que1_digit_type = 2,page_id = "4"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage5), que2_str = "5", que2_type = "", que1_digit_type = 2,page_id = "5"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage6), que2_str = "6", que2_type = "", que1_digit_type = 2,page_id = "6"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage7), que2_str = "7", que2_type = "", que1_digit_type = 2,page_id = "7"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage8), que2_str = "", que2_type = "567", que1_digit_type = 2,page_id = "8"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage9), que2_str = "8", que2_type = "", que1_digit_type = 2,page_id = "9"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage10), que2_str = "9", que2_type = "", que1_digit_type = 2,page_id = "10"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage11),que2_str =  "", que2_type = "89", que1_digit_type = 2,page_id = "11"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage12), que2_str = "", que2_type = "1..9", que1_digit_type = 2,page_id = "12")
             )))
 
-        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_3d_1d),
-            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage13), "2", "", 3,"13"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage14), "3", "", 3,"14"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage15), "4", "", 3,"15"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage16), "", "234", 3,"16"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage17), "5", "", 3,"17"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage18), "6", "", 3,"18"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage19), "7", "", 3,"19"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage20), "", "567", 3,"20"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage21), "8", "", 3,"21"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage22), "9", "", 3,"22"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage23), "", "89", 3,"23"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage24), "", "1..9", 3,"24")
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.multiplications_3d_1d),
+            pages = listOf(Pages(page_name = context.getString(R.string.Multiplicationpage13), que2_str = "2", que2_type = "", que1_digit_type = 3, page_id = "13"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage14), que2_str = "3", que2_type = "", que1_digit_type = 3,page_id = "14"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage15), que2_str = "4", que2_type = "", que1_digit_type = 3,page_id = "15"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage16), que2_str = "", que2_type = "234", que1_digit_type = 3,page_id = "16"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage17), que2_str = "5", que2_type = "", que1_digit_type = 3,page_id = "17"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage18), que2_str = "6", que2_type = "", que1_digit_type = 3,page_id = "18"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage19), que2_str = "7", que2_type = "", que1_digit_type = 3,page_id = "19"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage20), que2_str = "", que2_type = "567", que1_digit_type = 3,page_id = "20"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage21), que2_str = "8", que2_type = "", que1_digit_type = 3,page_id = "21"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage22), que2_str = "9", que2_type = "", que1_digit_type = 3,page_id = "22"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage23), que2_str = "", que2_type = "89", que1_digit_type = 3,page_id = "23"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage24), que2_str = "", que2_type = "1..9", que1_digit_type = 3,page_id = "24")
             )))
 
-        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_2d_2d),
-            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage25), "", "02", 2,"25"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage26), "", "03", 2,"26"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage27), "", "04", 2,"27"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage28), "", "05", 2,"28"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage29), "", "06", 2,"29"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage30), "", "07", 2,"30"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage31), "", "08", 2,"31"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage32), "", "09", 2,"32"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage33), "ran2", "", 2,"33")
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.multiplications_2d_2d),
+            pages = listOf(Pages(page_name = context.getString(R.string.Multiplicationpage25), que2_str = "", que2_type = "02", que1_digit_type = 2,page_id = "25"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage26), que2_str = "", que2_type = "03", que1_digit_type = 2,page_id = "26"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage27), que2_str = "", que2_type = "04", que1_digit_type = 2,page_id = "27"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage28), que2_str = "", que2_type = "05", que1_digit_type = 2,page_id = "28"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage29), que2_str = "", que2_type = "06", que1_digit_type = 2,page_id = "29"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage30), que2_str = "", que2_type = "07", que1_digit_type = 2,page_id = "30"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage31), que2_str = "", que2_type = "08", que1_digit_type = 2,page_id = "31"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage32), que2_str = "", que2_type = "09", que1_digit_type = 2,page_id = "32"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage33), que2_str = "ran2", que2_type = "", que1_digit_type = 2,page_id = "33")
             )))
 
-        listCategory.add(MultiplicationCategory(context.getString(R.string.multiplications_3d_2d),
-            listOf(MultiplicationPages(context.getString(R.string.Multiplicationpage34), "", "02", 3,"34"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage35), "", "03", 3,"35"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage36), "", "04", 3,"36"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage37), "", "05", 3,"37"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage38), "", "06", 3,"38"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage39), "", "07", 3,"39"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage40), "", "08", 3,"40"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage41), "", "09", 3,"41"),
-                MultiplicationPages(context.getString(R.string.Multiplicationpage42), "ran2", "", 3,"42")
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.multiplications_3d_2d),
+            pages = listOf(Pages(page_name = context.getString(R.string.Multiplicationpage34), que2_str = "", que2_type = "02", que1_digit_type = 3,page_id = "34"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage35), que2_str = "", que2_type = "03", que1_digit_type = 3,page_id = "35"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage36), que2_str = "", que2_type = "04", que1_digit_type = 3,page_id = "36"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage37), que2_str = "", que2_type = "05", que1_digit_type = 3,page_id = "37"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage38), que2_str = "", que2_type = "06", que1_digit_type = 3,page_id = "38"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage39), que2_str = "", que2_type = "07", que1_digit_type = 3,page_id = "39"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage40), que2_str = "", que2_type = "08", que1_digit_type = 3,page_id = "40"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage41), que2_str = "", que2_type = "09", que1_digit_type = 3,page_id = "41"),
+                Pages(page_name = context.getString(R.string.Multiplicationpage42), que2_str = "ran2", que2_type = "", que1_digit_type = 3,page_id = "42")
             )))
 
         return listCategory
     }
     // TODO Division Pages
-    fun getDivisionPages(context: Context): MutableList<DivisionCategory>{
-        val listCategory: MutableList<DivisionCategory> = arrayListOf()
-        listCategory.add(DivisionCategory(context.getString(R.string.divide_by_single_digit),
-            listOf(DivisionPages(context.getString(R.string.Devidepage1), "2", "","1"),
-                DivisionPages(context.getString(R.string.Devidepage2), "3", "","2"),
-                DivisionPages(context.getString(R.string.Devidepage3), "4", "","3"),
-                DivisionPages(context.getString(R.string.Devidepage4), "", "234","4"),
-                DivisionPages(context.getString(R.string.Devidepage5), "5", "","5"),
-                DivisionPages(context.getString(R.string.Devidepage6), "6", "","6"),
-                DivisionPages(context.getString(R.string.Devidepage7), "7", "","7"),
-                DivisionPages(context.getString(R.string.Devidepage8), "", "567","8"),
-                DivisionPages(context.getString(R.string.Devidepage9), "8", "","9"),
-                DivisionPages(context.getString(R.string.Devidepage10), "9", "","10"),
-                DivisionPages(context.getString(R.string.Devidepage11), "", "89","11"),
-                DivisionPages(context.getString(R.string.Devidepage12), "", "1..9","12")
+    fun getDivisionPages(context: Context): MutableList<CategoryPages>{
+        val listCategory: MutableList<CategoryPages> = arrayListOf()
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.divide_by_single_digit),
+            pages = listOf(Pages(page_name = context.getString(R.string.Devidepage1), que2_str = "2", que2_type = "", page_id = "1"),
+                Pages(page_name = context.getString(R.string.Devidepage2), que2_str = "3", que2_type = "",page_id = "2"),
+                Pages(page_name = context.getString(R.string.Devidepage3), que2_str = "4", que2_type = "",page_id = "3"),
+                Pages(page_name = context.getString(R.string.Devidepage4), que2_str = "", que2_type = "234",page_id = "4"),
+                Pages(page_name = context.getString(R.string.Devidepage5), que2_str = "5", que2_type = "",page_id = "5"),
+                Pages(page_name = context.getString(R.string.Devidepage6), que2_str = "6", que2_type = "",page_id = "6"),
+                Pages(page_name = context.getString(R.string.Devidepage7), que2_str = "7", que2_type = "",page_id = "7"),
+                Pages(page_name = context.getString(R.string.Devidepage8), que2_str = "", que2_type = "567",page_id = "8"),
+                Pages(page_name = context.getString(R.string.Devidepage9), que2_str = "8", que2_type = "",page_id = "9"),
+                Pages(page_name = context.getString(R.string.Devidepage10), que2_str = "9", que2_type = "",page_id = "10"),
+                Pages(page_name = context.getString(R.string.Devidepage11), que2_str = "", que2_type = "89",page_id = "11"),
+                Pages(page_name = context.getString(R.string.Devidepage12), que2_str = "", que2_type = "1..9",page_id = "12")
             )))
 
-        listCategory.add(DivisionCategory(context.getString(R.string.divide_by_two_digit),
-            listOf(
-                DivisionPages(context.getString(R.string.Devidepage22), "", "00","22"),
-                DivisionPages(context.getString(R.string.Devidepage23), "", "01","23"),
-                DivisionPages(context.getString(R.string.Devidepage13), "", "02","13"),
-                DivisionPages(context.getString(R.string.Devidepage14), "", "03","14"),
-                DivisionPages(context.getString(R.string.Devidepage15), "", "04","15"),
-                DivisionPages(context.getString(R.string.Devidepage16), "", "05","16"),
-                DivisionPages(context.getString(R.string.Devidepage17), "", "06","17"),
-                DivisionPages(context.getString(R.string.Devidepage18), "", "07","18"),
-                DivisionPages(context.getString(R.string.Devidepage19), "", "08","19"),
-                DivisionPages(context.getString(R.string.Devidepage20), "", "09","20"),
-                DivisionPages(context.getString(R.string.Devidepage21), "ran2", "","21"),
-                DivisionPages(context.getString(R.string.Devidepage21), "ran2_1", "","24"),
+        listCategory.add(CategoryPages(category_name = context.getString(R.string.divide_by_two_digit),
+            pages = listOf(
+                Pages(page_name = context.getString(R.string.Devidepage22), que2_str = "", que2_type = "00",page_id = "22"),
+                Pages(page_name = context.getString(R.string.Devidepage23), que2_str = "", que2_type = "01",page_id = "23"),
+                Pages(page_name = context.getString(R.string.Devidepage13), que2_str = "", que2_type = "02",page_id = "13"),
+                Pages(page_name = context.getString(R.string.Devidepage14), que2_str = "", que2_type = "03",page_id = "14"),
+                Pages(page_name = context.getString(R.string.Devidepage15), que2_str = "", que2_type = "04",page_id = "15"),
+                Pages(page_name = context.getString(R.string.Devidepage16), que2_str = "", que2_type = "05",page_id = "16"),
+                Pages(page_name = context.getString(R.string.Devidepage17), que2_str = "", que2_type = "06",page_id = "17"),
+                Pages(page_name = context.getString(R.string.Devidepage18), que2_str = "", que2_type = "07",page_id = "18"),
+                Pages(page_name = context.getString(R.string.Devidepage19), que2_str = "", que2_type = "08",page_id = "19"),
+                Pages(page_name = context.getString(R.string.Devidepage20), que2_str = "", que2_type = "09",page_id = "20"),
+                Pages(page_name = context.getString(R.string.Devidepage21), que2_str = "ran2", que2_type = "",page_id = "21"),
+                Pages(page_name = context.getString(R.string.Devidepage21), que2_str = "ran2_1", que2_type = "",page_id = "24"),
             )))
 
         return listCategory

@@ -11,6 +11,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.jigar.me.BuildConfig
 import com.jigar.me.R
 import com.jigar.me.data.local.data.AbacusBeadType
 import com.jigar.me.data.local.data.AbacusContent
@@ -94,6 +95,14 @@ class FullAbacusFragment : BaseFragment(), ToddlerRangeDialog.ToddlerRangeDialog
         binding.cardSettingTop.onClick { goToSetting() }
         binding.cardYoutube.onClick { requireContext().openYoutube() }
         binding.cardPurchase.onClick { goToPurchase()  }
+//        binding.txtAbacus.onClick {
+//            if (BuildConfig.DEBUG){
+//                abacusBinding?.imgKidLeft?.invisible()
+//                abacusBinding?.imgKidHandLeft?.invisible()
+//                abacusBinding?.tvCurrentVal?.invisible()
+//                abacusBinding?.rlAbacus?.invisible()
+//            }
+//        }
     }
 
     private fun goToPurchase() {

@@ -7,38 +7,38 @@
     "pages": [
       {
         "page_id": "51",
-        "PageName": "Page 1",
-        "PageName_ar": "صفحة 1",
-        "SortDesc": "Starting of Addition",
-        "SortDesc_ar": "بداية الإضافة"
+        "page_name": "Page 1",
+        "page_name_ar": "صفحة 1",
+        "descriptions": "Starting of Addition",
+        "descriptions_ar": "بداية الإضافة"
       },
       {
         "page_id": "52",
-        "PageName": "Page 2",
-        "PageName_ar": "صفحة 2",
-        "SortDesc": "Addtion of 2 Digits - Max 29",
-        "SortDesc_ar": "إضافة رقمين - حد أقصى 29"
+        "page_name": "Page 2",
+        "page_name_ar": "صفحة 2",
+        "descriptions": "Addition of 2 Digits - Max 29",
+        "descriptions_ar": "إضافة رقمين - حد أقصى 29"
       },
       {
         "page_id": "53",
-        "PageName": "Page 3",
-        "PageName_ar": "صفحة 3",
-        "SortDesc": "Addition of 2 Digits - Max 49",
-        "SortDesc_ar": "إضافة رقمين - حد أقصى 49"
+        "page_name": "Page 3",
+        "page_name_ar": "صفحة 3",
+        "descriptions": "Addition of 2 Digits - Max 49",
+        "descriptions_ar": "إضافة رقمين - حد أقصى 49"
       },
       {
         "page_id": "54",
-        "PageName": "Page 4",
-        "PageName_ar": "صفحة 4",
-        "SortDesc": "Addition of 2 Digits - 50 to 99 Answer",
-        "SortDesc_ar": "إضافة رقمين - 50 إلى 99 إجابة"
+        "page_name": "Page 4",
+        "page_name_ar": "صفحة 4",
+        "descriptions": "Addition of 2 Digits - 50 to 99 Answer",
+        "descriptions_ar": "إضافة رقمين - 50 إلى 99 إجابة"
       },
       {
         "page_id": "55",
-        "PageName": "Page 5",
-        "PageName_ar": "صفحة 5",
-        "SortDesc": "Random addition from 1 to 99",
-        "SortDesc_ar": "إضافة عشوائية من 1 إلى 99"
+        "page_name": "Page 5",
+        "page_name_ar": "صفحة 5",
+        "descriptions": "Random addition from 1 to 99",
+        "descriptions_ar": "إضافة عشوائية من 1 إلى 99"
       }
     ]
   },
@@ -50,52 +50,52 @@
     "pages": [
       {
         "page_id": "56",
-        "PageName": "Basic",
-        "PageName_ar": "أساسي",
-        "SortDesc": "Starting of Subtraction",
-        "SortDesc_ar": "بداية الطرح"
+        "page_name": "Basic",
+        "page_name_ar": "أساسي",
+        "descriptions": "Starting of Subtraction",
+        "descriptions_ar": "بداية الطرح"
       },
       {
         "page_id": "57",
-        "PageName": "+-5",
-        "PageName_ar": "5-+",
-        "SortDesc": "Subtraction of Single Digit for +-5",
-        "SortDesc_ar": "طرح رقم واحد لـ +-5"
+        "page_name": "+-5",
+        "page_name_ar": "5-+",
+        "descriptions": "Subtraction of Single Digit for +-5",
+        "descriptions_ar": "طرح رقم واحد لـ +-5"
       },
       {
         "page_id": "58",
-        "PageName": "+-6",
-        "PageName_ar": "6-+",
-        "SortDesc": "Subtraction of Single Digit for +-6",
-        "SortDesc_ar": "طرح رقم واحد لـ +-6"
+        "page_name": "+-6",
+        "page_name_ar": "6-+",
+        "descriptions": "Subtraction of Single Digit for +-6",
+        "descriptions_ar": "طرح رقم واحد لـ +-6"
       },
       {
         "page_id": "59",
-        "PageName": "+-7",
-        "PageName_ar": "7-+",
-        "SortDesc": "Subtraction of Single Digit for +-7",
-        "SortDesc_ar": "طرح رقم واحد لـ +-7"
+        "page_name": "+-7",
+        "page_name_ar": "7-+",
+        "descriptions": "Subtraction of Single Digit for +-7",
+        "descriptions_ar": "طرح رقم واحد لـ +-7"
       },
       {
         "page_id": "60",
-        "PageName": "+-8",
-        "PageName_ar": "8-+",
-        "SortDesc": "Subtraction of Single Digit for +-8",
-        "SortDesc_ar": "طرح رقم واحد لـ +-8"
+        "page_name": "+-8",
+        "page_name_ar": "8-+",
+        "descriptions": "Subtraction of Single Digit for +-8",
+        "descriptions_ar": "طرح رقم واحد لـ +-8"
       },
       {
         "page_id": "61",
-        "PageName": "+-9",
-        "PageName_ar": "9-+",
-        "SortDesc": "Subtraction of Single Digit +-9",
-        "SortDesc_ar": "طرح رقم واحد لـ +-9"
+        "page_name": "+-9",
+        "page_name_ar": "9-+",
+        "descriptions": "Subtraction of Single Digit +-9",
+        "descriptions_ar": "طرح رقم واحد لـ +-9"
       },
       {
         "page_id": "62",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Random +-123456789",
-        "SortDesc_ar": "عشوائي +123456789"
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Random +-123456789",
+        "descriptions_ar": "عشوائي +123456789"
       }
     ]
   },
@@ -107,17 +107,17 @@
     "pages": [
       {
         "page_id": "65",
-        "PageName": "Page 6",
-        "PageName_ar": "صفحة 6",
-        "SortDesc": "Addition of 3 Digits",
-        "SortDesc_ar": "الجمع الأساسي المكون من 3 أرقام"
+        "page_name": "Page 6",
+        "page_name_ar": "صفحة 6",
+        "descriptions": "Addition of 3 Digits",
+        "descriptions_ar": "الجمع الأساسي المكون من 3 أرقام"
       },
       {
         "page_id": "66",
-        "PageName": "Page 7",
-        "PageName_ar": "صفحة 7",
-        "SortDesc": "Addition of 3 Digits",
-        "SortDesc_ar": "الجمع الأساسي المكون من 3 أرقام"
+        "page_name": "Page 7",
+        "page_name_ar": "صفحة 7",
+        "descriptions": "Addition of 3 Digits",
+        "descriptions_ar": "الجمع الأساسي المكون من 3 أرقام"
       }
     ]
   },
@@ -129,31 +129,31 @@
     "pages": [
       {
         "page_id": "63",
-        "PageName": "Basic",
-        "PageName_ar": "أساسي",
-        "SortDesc": "Subtraction of Two Digits",
-        "SortDesc_ar": "طرح رقمين"
+        "page_name": "Basic",
+        "page_name_ar": "أساسي",
+        "descriptions": "Subtraction of Two Digits",
+        "descriptions_ar": "طرح رقمين"
       },
       {
         "page_id": "64",
-        "PageName": "Funny",
-        "PageName_ar": "مضحك",
-        "SortDesc": "Fun with Number",
-        "SortDesc_ar": "المرح مع الرقم"
+        "page_name": "Funny",
+        "page_name_ar": "مضحك",
+        "descriptions": "Fun with Number",
+        "descriptions_ar": "المرح مع الرقم"
       },
       {
         "page_id": "72",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Addition/Subtraction",
-        "SortDesc_ar": "جمع وطرح"
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Addition/Subtraction",
+        "descriptions_ar": "جمع وطرح"
       },
       {
         "page_id": "73",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Addition/Subtraction",
-        "SortDesc_ar": "جمع وطرح"
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Addition/Subtraction",
+        "descriptions_ar": "جمع وطرح"
       }
     ]
   },
@@ -165,38 +165,38 @@
     "pages": [
       {
         "page_id": "95",
-        "PageName": "+4=-1+5",
-        "PageName_ar": "+4=-1+5",
-        "SortDesc": "Twist of +5 with -1",
-        "SortDesc_ar": "+5 مع -1"
+        "page_name": "+4=-1+5",
+        "page_name_ar": "+4=-1+5",
+        "descriptions": "Twist of +5 with -1",
+        "descriptions_ar": "+5 مع -1"
       },
       {
         "page_id": "96",
-        "PageName": "+3=-2+5",
-        "PageName_ar": "+3=-2+5",
-        "SortDesc": "Twist of +5 with -2",
-        "SortDesc_ar": "+5 مع -2"
+        "page_name": "+3=-2+5",
+        "page_name_ar": "+3=-2+5",
+        "descriptions": "Twist of +5 with -2",
+        "descriptions_ar": "+5 مع -2"
       },
       {
         "page_id": "97",
-        "PageName": "+2=-3+5",
-        "PageName_ar": "+2=-3+5",
-        "SortDesc": "Twist of +5 with -3",
-        "SortDesc_ar": "+5 مع -3"
+        "page_name": "+2=-3+5",
+        "page_name_ar": "+2=-3+5",
+        "descriptions": "Twist of +5 with -3",
+        "descriptions_ar": "+5 مع -3"
       },
       {
         "page_id": "98",
-        "PageName": "+1=-4+5",
-        "PageName_ar": "+1=-4+5",
-        "SortDesc": "Twist of +5 with -4",
-        "SortDesc_ar": "+5 مع -4"
+        "page_name": "+1=-4+5",
+        "page_name_ar": "+1=-4+5",
+        "descriptions": "Twist of +5 with -4",
+        "descriptions_ar": "+5 مع -4"
       },
       {
         "page_id": "111",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Random of +5",
-        "SortDesc_ar": "عشوائية +5",
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Random of +5",
+        "descriptions_ar": "عشوائية +5",
         "hint": "+4 = -1+5<br/>+3 = -2+5<br/>+2 = -3+5<br/>+1 = -4+5",
         "file": "abacus_new.json"
       }
@@ -210,38 +210,38 @@
     "pages": [
       {
         "page_id": "99",
-        "PageName": "-4=-5+1",
-        "PageName_ar": "-4=-5+1",
-        "SortDesc": "Twist of -5 with +1",
-        "SortDesc_ar": "-5 مع +1"
+        "page_name": "-4=-5+1",
+        "page_name_ar": "-4=-5+1",
+        "descriptions": "Twist of -5 with +1",
+        "descriptions_ar": "-5 مع +1"
       },
       {
         "page_id": "100",
-        "PageName": "-3=-5+2",
-        "PageName_ar": "-3=-5+2",
-        "SortDesc": "Twist of -5 with +2",
-        "SortDesc_ar": "-5 مع +2"
+        "page_name": "-3=-5+2",
+        "page_name_ar": "-3=-5+2",
+        "descriptions": "Twist of -5 with +2",
+        "descriptions_ar": "-5 مع +2"
       },
       {
         "page_id": "101",
-        "PageName": "-2=-5+3",
-        "PageName_ar": "-2=-5+3",
-        "SortDesc": "Twist of -5 with +3",
-        "SortDesc_ar": "-5 مع +3"
+        "page_name": "-2=-5+3",
+        "page_name_ar": "-2=-5+3",
+        "descriptions": "Twist of -5 with +3",
+        "descriptions_ar": "-5 مع +3"
       },
       {
         "page_id": "102",
-        "PageName": "-1=-5+4",
-        "PageName_ar": "-1=-5+4",
-        "SortDesc": "Twist of -5 with +4",
-        "SortDesc_ar": "-5 مع +4"
+        "page_name": "-1=-5+4",
+        "page_name_ar": "-1=-5+4",
+        "descriptions": "Twist of -5 with +4",
+        "descriptions_ar": "-5 مع +4"
       },
       {
         "page_id": "112",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Random of -5",
-        "SortDesc_ar": "عشوائي من -5",
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Random of -5",
+        "descriptions_ar": "عشوائي من -5",
         "hint": "-4 = -5+1<br/>-3 = -5+2<br/>-2 = -5+3<br/>-1 = -5+4",
         "file": "abacus_new.json"
       }
@@ -255,73 +255,73 @@
     "pages": [
       {
         "page_id": "77",
-        "PageName": "+9=-1+10",
-        "PageName_ar": "+9=-1+10",
-        "SortDesc": "Twist of +10 with -1",
-        "SortDesc_ar": "+10 مع -1"
+        "page_name": "+9=-1+10",
+        "page_name_ar": "+9=-1+10",
+        "descriptions": "Twist of +10 with -1",
+        "descriptions_ar": "+10 مع -1"
       },
       {
         "page_id": "78",
-        "PageName": "+8=-2+10",
-        "PageName_ar": "+8=-2+10",
-        "SortDesc": "Twist of +10 with -2",
-        "SortDesc_ar": "+10 مع -2"
+        "page_name": "+8=-2+10",
+        "page_name_ar": "+8=-2+10",
+        "descriptions": "Twist of +10 with -2",
+        "descriptions_ar": "+10 مع -2"
       },
       {
         "page_id": "79",
-        "PageName": "+7=-3+10",
-        "PageName_ar": "+7=-3+10",
-        "SortDesc": "Twist of +10 with -3",
-        "SortDesc_ar": "+10 مع -3"
+        "page_name": "+7=-3+10",
+        "page_name_ar": "+7=-3+10",
+        "descriptions": "Twist of +10 with -3",
+        "descriptions_ar": "+10 مع -3"
       },
       {
         "page_id": "83",
-        "PageName": "+6=-4+10",
-        "PageName_ar": "+6=-4+10",
-        "SortDesc": "Twist of +10 with -4",
-        "SortDesc_ar": "+10 مع -4"
+        "page_name": "+6=-4+10",
+        "page_name_ar": "+6=-4+10",
+        "descriptions": "Twist of +10 with -4",
+        "descriptions_ar": "+10 مع -4"
       },
       {
         "page_id": "84",
-        "PageName": "+5=-5+10",
-        "PageName_ar": "+5=-5+10",
-        "SortDesc": "Twist of +10 with -5",
-        "SortDesc_ar": "+10 مع -5"
+        "page_name": "+5=-5+10",
+        "page_name_ar": "+5=-5+10",
+        "descriptions": "Twist of +10 with -5",
+        "descriptions_ar": "+10 مع -5"
       },
       {
         "page_id": "85",
-        "PageName": "+4=-6+10",
-        "PageName_ar": "+4=-6+10",
-        "SortDesc": "Twist of +10 with -6",
-        "SortDesc_ar": "+10 مع -6"
+        "page_name": "+4=-6+10",
+        "page_name_ar": "+4=-6+10",
+        "descriptions": "Twist of +10 with -6",
+        "descriptions_ar": "+10 مع -6"
       },
       {
         "page_id": "89",
-        "PageName": "+3=-7+10",
-        "PageName_ar": "+3=-7+10",
-        "SortDesc": "Twist of +10 with -7",
-        "SortDesc_ar": "+10 مع -7"
+        "page_name": "+3=-7+10",
+        "page_name_ar": "+3=-7+10",
+        "descriptions": "Twist of +10 with -7",
+        "descriptions_ar": "+10 مع -7"
       },
       {
         "page_id": "90",
-        "PageName": "+2=-8+10",
-        "PageName_ar": "+2=-8+10",
-        "SortDesc": "Twist of +10 with -8",
-        "SortDesc_ar": "+10 مع -8"
+        "page_name": "+2=-8+10",
+        "page_name_ar": "+2=-8+10",
+        "descriptions": "Twist of +10 with -8",
+        "descriptions_ar": "+10 مع -8"
       },
       {
         "page_id": "91",
-        "PageName": "+1=-9+10",
-        "PageName_ar": "+1=-9+10",
-        "SortDesc": "Twist of +10 with -9",
-        "SortDesc_ar": "+10 مع -9"
+        "page_name": "+1=-9+10",
+        "page_name_ar": "+1=-9+10",
+        "descriptions": "Twist of +10 with -9",
+        "descriptions_ar": "+10 مع -9"
       },
       {
         "page_id": "113",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Random of +10",
-        "SortDesc_ar": "عشوائية +10",
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Random of +10",
+        "descriptions_ar": "عشوائية +10",
         "hint": "+9 = -1+10<br/>+8 = -2+10<br/>+7 = -3+10<br/>+6 = -4+10<br/>+5 = -5+10<br/>+4 = -6+10<br/>+3 = -7+10<br/>+2 = -8+10<br/>+1 = -9+10",
         "file": "abacus_new.json"
       }
@@ -335,38 +335,38 @@
     "pages": [
       {
         "page_id": "103",
-        "PageName": "+9=+4-5+10",
-        "PageName_ar": "+9=+4-5+10",
-        "SortDesc": "Twist of -5 and +10 with +4",
-        "SortDesc_ar": "-5 و +10 مع +4"
+        "page_name": "+9=+4-5+10",
+        "page_name_ar": "+9=+4-5+10",
+        "descriptions": "Twist of -5 and +10 with +4",
+        "descriptions_ar": "-5 و +10 مع +4"
       },
       {
         "page_id": "104",
-        "PageName": "+8=+3-5+10",
-        "PageName_ar": "+8=+3-5+10",
-        "SortDesc": "Twist of -5 and +10 with +3",
-        "SortDesc_ar": "-5 و +10 مع +3"
+        "page_name": "+8=+3-5+10",
+        "page_name_ar": "+8=+3-5+10",
+        "descriptions": "Twist of -5 and +10 with +3",
+        "descriptions_ar": "-5 و +10 مع +3"
       },
       {
         "page_id": "105",
-        "PageName": "+7=+2-5+10",
-        "PageName_ar": "+7=+2-5+10",
-        "SortDesc": "Twist of -5 and +10 with +2",
-        "SortDesc_ar": "-5 و +10 مع +2"
+        "page_name": "+7=+2-5+10",
+        "page_name_ar": "+7=+2-5+10",
+        "descriptions": "Twist of -5 and +10 with +2",
+        "descriptions_ar": "-5 و +10 مع +2"
       },
       {
         "page_id": "106",
-        "PageName": "+6=+1-5+10",
-        "PageName_ar": "+6=+1-5+10",
-        "SortDesc": "Twist of -5 and +10 with +1",
-        "SortDesc_ar": "-5 و +10 مع +1"
+        "page_name": "+6=+1-5+10",
+        "page_name_ar": "+6=+1-5+10",
+        "descriptions": "Twist of -5 and +10 with +1",
+        "descriptions_ar": "-5 و +10 مع +1"
       },
       {
         "page_id": "114",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Random of -5+10",
-        "SortDesc_ar": "عشوائي من -5+10",
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Random of -5+10",
+        "descriptions_ar": "عشوائي من -5+10",
         "hint": "+9 = +4-5+10<br/>+8 = +3-5+10<br/>+7 = +2-5+10<br/>+6 = +1-5+10",
         "file": "abacus_new.json"
       }
@@ -380,73 +380,73 @@
     "pages": [
       {
         "page_id": "80",
-        "PageName": "-9=-10+1",
-        "PageName_ar": "-9=-10+1",
-        "SortDesc": "Twist of -10 with +1",
-        "SortDesc_ar": "-10 مع +1"
+        "page_name": "-9=-10+1",
+        "page_name_ar": "-9=-10+1",
+        "descriptions": "Twist of -10 with +1",
+        "descriptions_ar": "-10 مع +1"
       },
       {
         "page_id": "81",
-        "PageName": "-8=-10+2",
-        "PageName_ar": "-8=-10+2",
-        "SortDesc": "Twist of -10 with +2",
-        "SortDesc_ar": "-10 مع +2"
+        "page_name": "-8=-10+2",
+        "page_name_ar": "-8=-10+2",
+        "descriptions": "Twist of -10 with +2",
+        "descriptions_ar": "-10 مع +2"
       },
       {
         "page_id": "82",
-        "PageName": "-7=-10+3",
-        "PageName_ar": "-7=-10+3",
-        "SortDesc": "Twist of -10 with +3",
-        "SortDesc_ar": "-10 مع +3"
+        "page_name": "-7=-10+3",
+        "page_name_ar": "-7=-10+3",
+        "descriptions": "Twist of -10 with +3",
+        "descriptions_ar": "-10 مع +3"
       },
       {
         "page_id": "86",
-        "PageName": "-6=-10+4",
-        "PageName_ar": "-6=-10+4",
-        "SortDesc": "Twist of -10 with +4",
-        "SortDesc_ar": "-10 مع +4"
+        "page_name": "-6=-10+4",
+        "page_name_ar": "-6=-10+4",
+        "descriptions": "Twist of -10 with +4",
+        "descriptions_ar": "-10 مع +4"
       },
       {
         "page_id": "87",
-        "PageName": "-5=-10+5",
-        "PageName_ar": "-5=-10+5",
-        "SortDesc": "Twist of -10 with +5",
-        "SortDesc_ar": "-10 مع +5"
+        "page_name": "-5=-10+5",
+        "page_name_ar": "-5=-10+5",
+        "descriptions": "Twist of -10 with +5",
+        "descriptions_ar": "-10 مع +5"
       },
       {
         "page_id": "88",
-        "PageName": "-4=-10+6",
-        "PageName_ar": "-4=-10+6",
-        "SortDesc": "Twist of -10 with +6",
-        "SortDesc_ar": "-10 مع +6"
+        "page_name": "-4=-10+6",
+        "page_name_ar": "-4=-10+6",
+        "descriptions": "Twist of -10 with +6",
+        "descriptions_ar": "-10 مع +6"
       },
       {
         "page_id": "92",
-        "PageName": "-3=-10+7",
-        "PageName_ar": "-3=-10+7",
-        "SortDesc": "Twist of -10 with +7",
-        "SortDesc_ar": "-10 مع +7"
+        "page_name": "-3=-10+7",
+        "page_name_ar": "-3=-10+7",
+        "descriptions": "Twist of -10 with +7",
+        "descriptions_ar": "-10 مع +7"
       },
       {
         "page_id": "93",
-        "PageName": "-2=-10+8",
-        "PageName_ar": "-2=-10+8",
-        "SortDesc": "Twist of -10 with +8",
-        "SortDesc_ar": "-10 مع +8"
+        "page_name": "-2=-10+8",
+        "page_name_ar": "-2=-10+8",
+        "descriptions": "Twist of -10 with +8",
+        "descriptions_ar": "-10 مع +8"
       },
       {
         "page_id": "94",
-        "PageName": "-1=-10+9",
-        "PageName_ar": "-1=-10+9",
-        "SortDesc": "Twist of -10 with +9",
-        "SortDesc_ar": "-10 مع +9"
+        "page_name": "-1=-10+9",
+        "page_name_ar": "-1=-10+9",
+        "descriptions": "Twist of -10 with +9",
+        "descriptions_ar": "-10 مع +9"
       },
       {
         "page_id": "115",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Random of -10",
-        "SortDesc_ar": "عشوائي من -10",
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Random of -10",
+        "descriptions_ar": "عشوائي من -10",
         "hint": "-9 = -10+1<br/>-8 = -10+2<br/>-7 = -10+3<br/>-6 = -10+4<br/>-5 = -10+5<br/>-4 = -10+6<br/>-3 = -10+7<br/>-2 = -10+8<br/>-1 = -10+9",
         "file": "abacus_new.json"
       }
@@ -460,38 +460,38 @@
     "pages": [
       {
         "page_id": "107",
-        "PageName": "-9=-10+5-4",
-        "PageName_ar": "-9=-10+5-4",
-        "SortDesc": "Twist of -10 and +5 with -4",
-        "SortDesc_ar": "-10 و +5 مع -4"
+        "page_name": "-9=-10+5-4",
+        "page_name_ar": "-9=-10+5-4",
+        "descriptions": "Twist of -10 and +5 with -4",
+        "descriptions_ar": "-10 و +5 مع -4"
       },
       {
         "page_id": "108",
-        "PageName": "-8=-10+5-3",
-        "PageName_ar": "-8=-10+5-3",
-        "SortDesc": "Twist of -10 and +5 with -3",
-        "SortDesc_ar": "-10 و +5 مع -3"
+        "page_name": "-8=-10+5-3",
+        "page_name_ar": "-8=-10+5-3",
+        "descriptions": "Twist of -10 and +5 with -3",
+        "descriptions_ar": "-10 و +5 مع -3"
       },
       {
         "page_id": "109",
-        "PageName": "-7=-10+5-2",
-        "PageName_ar": "-7=-10+5-2",
-        "SortDesc": "Twist of -10 and +5 with -2",
-        "SortDesc_ar": "-10 و +5 مع -2"
+        "page_name": "-7=-10+5-2",
+        "page_name_ar": "-7=-10+5-2",
+        "descriptions": "Twist of -10 and +5 with -2",
+        "descriptions_ar": "-10 و +5 مع -2"
       },
       {
         "page_id": "110",
-        "PageName": "-6=-10+5-1",
-        "PageName_ar": "-6=-10+5-1",
-        "SortDesc": "Twist of -10 and +5 with -1",
-        "SortDesc_ar": "-10 و +5 مع -1"
+        "page_name": "-6=-10+5-1",
+        "page_name_ar": "-6=-10+5-1",
+        "descriptions": "Twist of -10 and +5 with -1",
+        "descriptions_ar": "-10 و +5 مع -1"
       },
       {
         "page_id": "116",
-        "PageName": "Random",
-        "PageName_ar": "عشوائي",
-        "SortDesc": "Random of -10+5",
-        "SortDesc_ar": "عشوائي من -10+5",
+        "page_name": "Random",
+        "page_name_ar": "عشوائي",
+        "descriptions": "Random of -10+5",
+        "descriptions_ar": "عشوائي من -10+5",
         "hint": "-9=-10+5-4<br/>-8=-10+5-3<br/>-7=-10+5-2<br/>-6=-10+5-1",
         "file": "abacus_new.json"
       }

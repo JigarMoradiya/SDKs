@@ -511,4 +511,5 @@
     <string name="use_your_abacus_tool_msg2">once solve click below button for next abacus.</string>
     <string name="go_to_next_abacus">Go to Next Abacus</string>
     <string name="do_practice_with_your_abacus_tools">Do practice with your <font color='#FF0000'>Abacus Tools</font></string>
+    <string name="beginner">Beginner</string>
 </resources>
