@@ -6,10 +6,6 @@ import androidx.room.TypeConverters
 import com.jigar.me.data.local.db.exam.ExamHistoryDao
 import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDao
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDao
-import com.jigar.me.data.local.db.sudoku.SudukoAnswerStatusDao
-import com.jigar.me.data.local.db.sudoku.SudukoDao
-import com.jigar.me.data.local.db.sudoku.SudukoLevelDao
-import com.jigar.me.data.local.db.sudoku.SudukoPlayDao
 import com.jigar.me.data.model.dbtable.exam.ExamHistory
 import com.jigar.me.data.model.dbtable.inapp.InAppPurchaseDetails
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
@@ -31,8 +27,4 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun inAppSKUDao(): InAppSKUDao
     abstract fun inAppPurchaseDao(): InAppPurchaseDao
     abstract fun examHistoryDao(): ExamHistoryDao
-    abstract fun sudokuDao(): SudukoDao
-    abstract fun sudokuLevelDao(): SudukoLevelDao
-    abstract fun sudokuPlayDao(): SudukoPlayDao
-    abstract fun sudokuAnswerStatusDao(): SudukoAnswerStatusDao
 }

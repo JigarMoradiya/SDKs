@@ -2,15 +2,11 @@ package com.jigar.me.data.local.data
 
 import android.content.Context
 import android.graphics.Color
-import android.util.Log
 import com.jigar.me.R
 import com.jigar.me.data.model.pages.*
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.Constants
-import com.jigar.me.utils.sudoku.SudokuConst4
-import com.jigar.me.utils.sudoku.SudokuConst6
-import com.jigar.me.utils.sudoku.SudukoConst
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.random.Random.Default.nextInt
@@ -262,122 +258,6 @@ object DataProvider {
         }
         return list
     }
-    /* sudoku */
-    fun getGridList() : ArrayList<String>{
-        val list_grid = ArrayList<String>()
-        with(list_grid) {
-            add(SudukoConst.str_Grid0)
-            add(SudukoConst.str_Grid1)
-            add(SudukoConst.str_Grid2)
-            add(SudukoConst.str_Grid3)
-            add(SudukoConst.str_Grid4)
-            add(SudukoConst.str_Grid5)
-            add(SudukoConst.str_Grid6)
-            add(SudukoConst.str_Grid7)
-            add(SudukoConst.str_Grid8)
-        }
-        return list_grid
-    }
-    fun getColumnList() : ArrayList<String>{
-        val list_column = ArrayList<String>()
-        with(list_column) {
-            add(SudukoConst.str_Column0)
-            add(SudukoConst.str_Column1)
-            add(SudukoConst.str_Column2)
-            add(SudukoConst.str_Column3)
-            add(SudukoConst.str_Column4)
-            add(SudukoConst.str_Column5)
-            add(SudukoConst.str_Column6)
-            add(SudukoConst.str_Column7)
-            add(SudukoConst.str_Column8)
-        }
-        return list_column
-    }
-    fun getRowList() : ArrayList<String>{
-        val list_row = ArrayList<String>()
-        with(list_row) {
-            add(SudukoConst.str_Row0)
-            add(SudukoConst.str_Row1)
-            add(SudukoConst.str_Row2)
-            add(SudukoConst.str_Row3)
-            add(SudukoConst.str_Row4)
-            add(SudukoConst.str_Row5)
-            add(SudukoConst.str_Row6)
-            add(SudukoConst.str_Row7)
-            add(SudukoConst.str_Row8)
-        }
-        return list_row
-    }
-
-    fun getGridList_ForSudoku4() : ArrayList<String>{
-        val list_grid = ArrayList<String>()
-        with(list_grid) {
-            add(SudokuConst4.str_Grid0)
-            add(SudokuConst4.str_Grid1)
-            add(SudokuConst4.str_Grid2)
-            add(SudokuConst4.str_Grid3)
-        }
-        return list_grid
-    }
-    fun getColumnList_ForSudoku4() : ArrayList<String>{
-        val list_column = ArrayList<String>()
-        with(list_column) {
-            add(SudokuConst4.str_Column0)
-            add(SudokuConst4.str_Column1)
-            add(SudokuConst4.str_Column2)
-            add(SudokuConst4.str_Column3)
-        }
-        return list_column
-    }
-    fun getRowList_ForSudoku4() : ArrayList<String>{
-        val list_row = ArrayList<String>()
-        with(list_row) {
-            add(SudokuConst4.str_Row0)
-            add(SudokuConst4.str_Row1)
-            add(SudokuConst4.str_Row2)
-            add(SudokuConst4.str_Row3)
-        }
-        return list_row
-    }
-
-    fun getGridList_ForSudoku6() : ArrayList<String>{
-        val list_grid = ArrayList<String>()
-        with(list_grid) {
-            add(SudokuConst6.str_Grid0)
-            add(SudokuConst6.str_Grid1)
-            add(SudokuConst6.str_Grid2)
-            add(SudokuConst6.str_Grid3)
-            add(SudokuConst6.str_Grid4)
-            add(SudokuConst6.str_Grid5)
-        }
-        return list_grid
-    }
-    fun getColumnList_ForSudoku6() : ArrayList<String>{
-        val list_column = ArrayList<String>()
-        with(list_column) {
-            add(SudokuConst6.str_Column0)
-            add(SudokuConst6.str_Column1)
-            add(SudokuConst6.str_Column2)
-            add(SudokuConst6.str_Column3)
-            add(SudokuConst6.str_Column4)
-            add(SudokuConst6.str_Column5)
-        }
-        return list_column
-    }
-    fun getRowList_ForSudoku6() : ArrayList<String>{
-        val list_row = ArrayList<String>()
-        with(list_row) {
-            add(SudokuConst6.str_Row0)
-            add(SudokuConst6.str_Row1)
-            add(SudokuConst6.str_Row2)
-            add(SudokuConst6.str_Row3)
-            add(SudokuConst6.str_Row4)
-            add(SudokuConst6.str_Row5)
-        }
-        return list_row
-    }
-    /* end sudoku */
-
 
     fun getDataObjectsList(): MutableList<ImagesDataObjects>{
         val listDataObjects = addDataObjectsList()
