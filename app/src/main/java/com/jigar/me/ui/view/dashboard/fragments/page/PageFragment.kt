@@ -35,7 +35,7 @@ class PageFragment : BaseFragment(), CategoryPageListAdapter.OnItemClickListener
 
     private var from = 0
     private var listCategory: List<CategoryPages> = arrayListOf()
-//    private lateinit var pageListAdapter: PageListAdapterOld
+    private var listPageData: ArrayList<Pages> = arrayListOf()
 
     private var themeContent : AbacusContent? = null
     private lateinit var categoryPageListAdapter: CategoryPageListAdapter
@@ -116,6 +116,10 @@ class PageFragment : BaseFragment(), CategoryPageListAdapter.OnItemClickListener
     private fun fillCategory() {
         categoryPageListAdapter = CategoryPageListAdapter(listCategory, this,themeContent)
         binding.recyclerviewCategory.adapter = categoryPageListAdapter
+
+        pageListAdapter = PageListAdapter(listPageData, this,prefManager,from)
+        binding.recyclerviewPage.adapter = pageListAdapter
+
         if (listCategory.isNotNullOrEmpty()){
             onCategoryItemClick(listCategory.first())
         }
@@ -161,8 +165,9 @@ class PageFragment : BaseFragment(), CategoryPageListAdapter.OnItemClickListener
     }
 
     override fun onCategoryItemClick(data: CategoryPages) {
-        pageListAdapter = PageListAdapter(data.pages, this,prefManager,from)
-        binding.recyclerviewPage.adapter = pageListAdapter
+        listPageData.clear()
+        listPageData.addAll(data.pages)
+        pageListAdapter.notifyDataSetChanged()
     }
 
     override fun onPageItemClick(data: Pages,pageId : String) {

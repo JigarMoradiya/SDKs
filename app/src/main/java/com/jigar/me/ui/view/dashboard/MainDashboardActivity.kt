@@ -150,11 +150,18 @@ class MainDashboardActivity : BaseActivity() {
                         BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Weekly_Test1,
                         BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Weekly,
                         BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month1,
-                        BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3 -> {
+                        BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3,
+                        BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month6,
+                        BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Year1 -> {
                             setCustomParam(AppConstants.Purchase.Purchase_Ads, "Y")
                             setCustomParam(AppConstants.Purchase.Purchase_Toddler_Single_digit_level1,"Y")
                             setCustomParam(AppConstants.Purchase.Purchase_Add_Sub_level2, "Y")
                             setCustomParam(AppConstants.Purchase.Purchase_Mul_Div_level3, "Y")
+                            if (it.sku == BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Year1 || it.sku == BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month6) {
+                                setCustomParam(AppConstants.Purchase.Purchase_Material_Maths, "Y")
+                                setCustomParam(AppConstants.Purchase.Purchase_Material_Nursery, "Y")
+                            }
+
                         }
                     }
                 }

@@ -12,7 +12,6 @@ import com.jigar.me.data.local.db.inapp.purchase.InAppPurchaseDB
 import com.jigar.me.data.local.db.inapp.sku.InAppSKUDB
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.data.pref.AppPreferencesHelper
-import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productList
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.productListSubscription
 import com.jigar.me.utils.AppConstants
@@ -346,6 +345,8 @@ class BillingRepository @Inject constructor(
         const val PRODUCT_ID_Subscription_Weekly = "com.abacus.puzzle.week"
         const val PRODUCT_ID_Subscription_Month1 = "com.abacus.puzzle.1month"
         const val PRODUCT_ID_Subscription_Month3 = "com.abacus.puzzle.3month"
+        const val PRODUCT_ID_Subscription_Month6 = "com.abacus.puzzle.6month"
+        const val PRODUCT_ID_Subscription_Year1 = "com.abacus.puzzle.1year"
 
         val productList: ArrayList<QueryProductDetailsParams.Product> = arrayListOf(
             QueryProductDetailsParams.Product.newBuilder()
@@ -366,30 +367,7 @@ class BillingRepository @Inject constructor(
                 .build())
 
 
-        val productListSubscription: ArrayList<QueryProductDetailsParams.Product> = if (BuildConfig.DEBUG){
-            arrayListOf(
-//                QueryProductDetailsParams.Product.newBuilder()
-//                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test1)
-//                    .setProductType(BillingClient.ProductType.SUBS)
-//                    .build(),
-//                QueryProductDetailsParams.Product.newBuilder()
-//                    .setProductId(PRODUCT_ID_Subscription_Weekly_Test2)
-//                    .setProductType(BillingClient.ProductType.SUBS)
-//                    .build(),
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(PRODUCT_ID_Subscription_Weekly)
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build(),
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(PRODUCT_ID_Subscription_Month1)
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build(),
-                QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(PRODUCT_ID_Subscription_Month3)
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build()
-            )
-        }else{
+        val productListSubscription: ArrayList<QueryProductDetailsParams.Product> =
             arrayListOf(
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(PRODUCT_ID_Subscription_Weekly)
@@ -402,9 +380,16 @@ class BillingRepository @Inject constructor(
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(PRODUCT_ID_Subscription_Month3)
                     .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Month6)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build(),
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(PRODUCT_ID_Subscription_Year1)
+                    .setProductType(BillingClient.ProductType.SUBS)
                     .build()
             )
-        }
 
     }
 

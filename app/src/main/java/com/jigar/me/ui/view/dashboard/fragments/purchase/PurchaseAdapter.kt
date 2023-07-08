@@ -2,30 +2,25 @@ package com.jigar.me.ui.view.dashboard.fragments.purchase
 
 import android.content.res.ColorStateList
 import android.graphics.Paint
-import android.util.Log
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.ProductDetails
-import com.google.gson.Gson
 import com.jigar.me.R
 import com.jigar.me.data.local.data.DataProvider
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.data.pref.AppPreferencesHelper
-import com.jigar.me.databinding.RawPagelistChildBinding
 import com.jigar.me.databinding.RawPurchaseBinding
-import com.jigar.me.ui.view.base.inapp.BillingRepository
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month1
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month3
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Month6
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Weekly
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_Subscription_Year1
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_level1_lifetime
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_level2_lifetime
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_material_maths
 import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_material_nursery
-import com.jigar.me.utils.AppConstants
 import com.jigar.me.utils.extensions.hide
 import com.jigar.me.utils.extensions.layoutInflater
 import com.jigar.me.utils.extensions.show
@@ -73,26 +68,35 @@ class PurchaseAdapter(
                 binding.txtPrice.text = data.price
             }
             when (data.sku) {
+                //                PRODUCT_ID_level2_lifetime -> {
+//                    binding.btnRecommended.text = context.getString(R.string.favourite)
+//                }
+//                PRODUCT_ID_level1_lifetime -> {
+//                    binding.btnRecommended.text = context.getString(R.string.hot)
+//                }
+//                PRODUCT_ID_Subscription_Weekly -> {
+//                    binding.btnRecommended.text = context.getString(R.string.popular)
+//                }
+//                PRODUCT_ID_Subscription_Month1 -> {
+//                    binding.btnRecommended.text = context.getString(R.string.favourite)
+//                }
                 PRODUCT_ID_Subscription_Month3 -> {
-                    binding.btnRecommended.text = context.getString(R.string.popular)
-                }
-                PRODUCT_ID_Subscription_Weekly-> {
-                    binding.btnRecommended.text = context.getString(R.string.hot)
-                }
-                PRODUCT_ID_Subscription_Month1 -> {
-                    binding.btnRecommended.text = context.getString(R.string.new_)
-                }
-                PRODUCT_ID_All_lifetime -> {
-                    binding.btnRecommended.text = context.getString(R.string.recommended)
-                }
-                PRODUCT_ID_level2_lifetime -> {
                     binding.btnRecommended.text = context.getString(R.string.favourite)
                 }
-                PRODUCT_ID_level1_lifetime -> {
+                PRODUCT_ID_Subscription_Month6-> {
+                    binding.btnRecommended.text = context.getString(R.string.popular)
+                }
+                PRODUCT_ID_Subscription_Year1 -> {
+                    binding.btnRecommended.text = context.getString(R.string.recommended)
+                }
+                PRODUCT_ID_All_lifetime -> {
                     binding.btnRecommended.text = context.getString(R.string.hot)
                 }
                 PRODUCT_ID_material_nursery -> {
-                    binding.btnRecommended.text = context.getString(R.string.hot)
+                    binding.btnRecommended.text = context.getString(R.string.popular)
+                }
+                PRODUCT_ID_material_maths -> {
+                    binding.btnRecommended.text = context.getString(R.string.favourite)
                 }
                 else -> {
                     binding.btnRecommended.hide()

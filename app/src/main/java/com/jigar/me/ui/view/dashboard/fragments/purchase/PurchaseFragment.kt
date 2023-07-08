@@ -12,6 +12,7 @@ import com.jigar.me.R
 import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 import com.jigar.me.databinding.FragmentPurchaseBinding
 import com.jigar.me.ui.view.base.BaseFragment
+import com.jigar.me.ui.view.base.inapp.BillingRepository.AbacusSku.PRODUCT_ID_All_lifetime
 import com.jigar.me.ui.view.confirm_alerts.bottomsheets.PurchaseInfoBottomSheetDialog
 import com.jigar.me.ui.viewmodel.AppViewModel
 import com.jigar.me.ui.viewmodel.InAppViewModel
@@ -20,6 +21,7 @@ import com.jigar.me.utils.extensions.isNotNullOrEmpty
 import com.jigar.me.utils.extensions.onClick
 import com.jigar.me.utils.extensions.toastS
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class PurchaseFragment : BaseFragment(), PurchaseAdapter.OnItemClickListener {
@@ -59,6 +61,12 @@ class PurchaseFragment : BaseFragment(), PurchaseAdapter.OnItemClickListener {
     private fun setSKU(listData: List<InAppSkuDetails>) {
         listSKU.clear()
         listSKU.addAll(listData)
+        val find = listSKU.indexOfFirst { it.sku.lowercase(Locale.getDefault()) == PRODUCT_ID_All_lifetime }
+        if (find > -1) {
+            val changingData = listSKU[find]
+            listSKU.removeAt(find)
+            listSKU.add(0, changingData)
+        }
         skuListAdapter.notifyItemRangeChanged(0,listSKU.size)
     }
 

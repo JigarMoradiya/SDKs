@@ -10,7 +10,6 @@ import com.jigar.me.data.model.dbtable.inapp.InAppSkuDetails
 
 @Dao
 interface InAppSKUDao {
-//    @Query("SELECT SKU.*,CASE WHEN (P.orderId IS NULL) THEN 0 ELSE 1 END as isPurchase,CASE WHEN (P.orderId IS NULL) THEN '' ELSE P.orderId END as orderId,P.purchaseTime FROM tableInAppSKU as SKU LEFT JOIN tableInAppPurchase as P ON (SKU.sku = P.sku AND P.purchaseState = 1) WHERE SKU.type = '${BillingClient.ProductType.INAPP}'  ORDER BY SKU.price_amount_micros DESC")
     @Query("SELECT SKU.*,CASE WHEN (P.orderId IS NULL) THEN 0 ELSE 1 END as isPurchase,CASE WHEN (P.orderId IS NULL) THEN '' ELSE P.orderId END as orderId,P.purchaseTime FROM tableInAppSKU as SKU LEFT JOIN tableInAppPurchase as P ON (SKU.sku = P.sku AND P.purchaseState = 1) ORDER BY SKU.type DESC, SKU.price_amount_micros DESC")
     fun getInAppSku(): LiveData<List<InAppSkuDetails>>
 

@@ -2,7 +2,6 @@ package com.jigar.me.ui.view.base
 
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -15,18 +14,12 @@ import com.google.android.gms.ads.admanager.AdManagerInterstitialAd
 import com.google.android.gms.ads.admanager.AdManagerInterstitialAdLoadCallback
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.google.android.gms.ads.nativead.NativeAd
-import com.google.android.gms.ads.nativead.NativeAdOptions
-import com.google.gson.Gson
 import com.jigar.me.R
 import com.jigar.me.data.pref.AppPreferencesHelper
 import com.jigar.me.utils.AppConstants
-import com.jigar.me.utils.Constants
 import com.jigar.me.utils.extensions.hide
-import com.jigar.me.utils.extensions.setLocale
 import com.jigar.me.utils.extensions.show
 import com.jigar.me.utils.extensions.toastS
-import com.jigar.me.utils.native_ad.TemplateView
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
