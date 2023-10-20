@@ -78,7 +78,7 @@ android {
             mavenJava(MavenPublication) {
                 artifactId = 'sdk'
                 groupId = 'org.gradle.sample'
-                version = '1.0'
+                version = '1.0.2'
 //                from components.java
 //                versionMapping {
 //                    usage('java-api') {
