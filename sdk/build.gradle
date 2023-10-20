@@ -1,0 +1,104 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-parcelize'
+
+
+    id 'maven-publish'
+}
+
+android {
+    namespace 'com.sdk'
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 34
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        buildTypes {
+            debug {
+                debuggable true
+                minifyEnabled false
+                shrinkResources false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        flavorDimensions "version"
+        productFlavors {
+            dev {
+                buildConfigField("String", "BASE_URL", "\"https://api.connectedminds.ai/dev_sdk/\"")
+                buildConfigField("String", "CONSTANT_KEY", "\"TnUzSTdMelVHR1NqMkRhS1NSY01SRExwd1Y5VjZ3ZUU=\"")
+
+                buildConfigField("String", "CERTIFICATE_URL", "\"https://connectlab-certificate.s3.eu-west-2.amazonaws.com/certificate.crt\"")
+            }
+
+            restest {
+                buildConfigField("String", "BASE_URL", "\"https://api.connectedminds.ai/test_sdk/\"")
+                buildConfigField("String", "CONSTANT_KEY", "\"VkVZN3FSSFI3WGNtWVhmamFzQUJqaFhjd05pelJlZXI=\"")
+
+                buildConfigField("String", "CERTIFICATE_URL", "\"https://connectlab-certificate.s3.eu-west-2.amazonaws.com/certificate.crt\"")
+            }
+
+            prod {
+                buildConfigField("String", "BASE_URL", "\"https://api.connectedminds.ai/prod_sdk/\"")
+                    buildConfigField("String", "CONSTANT_KEY", "\"VFM5SlhyOGVSRk1EQVdrVVdXRGVYSHdGQ2xkdlVXOVA=\"")
+
+                buildConfigField("String", "CERTIFICATE_URL", "\"https://connectlab-certificate.s3.eu-west-2.amazonaws.com/certificate.crt\"")
+            }
+        }
+
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+    dataBinding {
+        enabled = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.retrofit2:converter-gson:2.9.0"
+    implementation "com.squareup.retrofit2:converter-scalars:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.3"
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.1'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.1', 'io.jsonwebtoken:jjwt-gson:0.11.1'
+
+    implementation 'com.google.code.gson:gson:2.10.1'
+    //Get unicode of emojis
+    implementation 'org.apache.commons:commons-text:1.9'
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+}

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="data"
+            type="com.sdk.data.Article" />
+        <import type="com.sdk.utils.CustomFunctions"/>
+        <import type="android.view.View"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="150dp"
+        android:layout_height="195dp"
+        android:layout_marginStart="15dp"
+        android:backgroundTint="#16AAA9A9"
+        android:elevation="0dp"
+        android:orientation="vertical"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_picture"
+            app:imgUrl="@{data.cover_image.image_url}"
+            app:placeHolder="@{@drawable/ic_image_placeholder}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/expandedImageShadow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:src="@drawable/bg_article_shadow_gradient" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_gravity="bottom">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_article_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/font_bold"
+                android:lineSpacingExtra="4sp"
+                android:maxLines="2"
+                android:text="@{CustomFunctions.decodeMessage(data.title)}"
+                android:textColor="#ffffff"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="Meditation tips to help you relax and meditate" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_article_author_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_article_name"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/font_regular"
+                android:textColor="#ffffff"
+                android:textSize="10sp"
+                android:textStyle="normal"
+                tools:text="By Joseph Ran" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_article_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_article_author_name"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/font_regular"
+                android:textColor="#ffffff"
+                android:textSize="9sp"
+                android:textStyle="normal"
+                tools:text="May 25, 2020" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+</layout>

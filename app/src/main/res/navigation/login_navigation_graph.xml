@@ -2,9 +2,17 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/reg_navigation_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/homeFragment">
     <fragment
-        android:id="@+id/splashFragment"
-        android:name="com.jigar.me.ui.view.login.fragments.SplashFragment"/>
+        android:id="@+id/homeFragment"
+        android:name="com.connectedminds.sdks.ui.view.home.fragments.HomeFragment"/>
+    <action
+        android:id="@+id/toResultFragment"
+        app:destination="@id/resultFragment" />
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.connectedminds.sdks.ui.view.home.fragments.ResultFragment">
+
+    </fragment>
 
 </navigation>
