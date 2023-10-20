@@ -76,16 +76,18 @@ android {
     publishing {
         publications {
             mavenJava(MavenPublication) {
-                artifactId = 'com.sdk'
+                artifactId = 'sdk'
+                groupId = 'org.gradle.sample'
+                version = '1.0'
 //                from components.java
-                versionMapping {
-                    usage('java-api') {
-                        fromResolutionOf('runtimeClasspath')
-                    }
-                    usage('java-runtime') {
-                        fromResolutionResult()
-                    }
-                }
+//                versionMapping {
+//                    usage('java-api') {
+//                        fromResolutionOf('runtimeClasspath')
+//                    }
+//                    usage('java-runtime') {
+//                        fromResolutionResult()
+//                    }
+//                }
                 pom {
                     name = 'sdk sample'
                     description = 'sdk sample for trual'
