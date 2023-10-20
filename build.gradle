@@ -1,5 +1,6 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         jcenter()
@@ -8,7 +9,18 @@ buildscript {
         maven {
             url "https://plugins.gradle.org/m2/"
         }
+        maven {
+            url 'https://jitpack.io'
+        }
+
     }
+//    dependencyResolutionManagement {
+//        repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+//        repositories {
+//            mavenCentral()
+//            maven { url 'https://jitpack.io' }
+//        }
+//    }
     dependencies {
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
         classpath 'com.android.tools.build:gradle:4.2.2'
@@ -44,3 +56,4 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
