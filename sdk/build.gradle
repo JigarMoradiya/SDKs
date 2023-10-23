@@ -9,6 +9,9 @@ plugins {
     id 'maven-publish'
 }
 
+//group = 'com.github.jitpack'
+//version = '1.0.3'
+
 android {
     namespace 'com.sdk'
     compileSdkVersion 34
@@ -16,6 +19,9 @@ android {
     defaultConfig {
         minSdkVersion 23
         targetSdkVersion 34
+
+        versionCode 5
+        versionName "1.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -73,48 +79,75 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    publishing {
-        publications {
-            mavenJava(MavenPublication) {
-                artifactId = 'sdk'
-                groupId = 'org.gradle.sample'
-                version = '1.0.2'
-//                from components.java
-//                versionMapping {
-//                    usage('java-api') {
-//                        fromResolutionOf('runtimeClasspath')
-//                    }
-//                    usage('java-runtime') {
-//                        fromResolutionResult()
-//                    }
-//                }
-                pom {
-                    name = 'sdk sample'
-                    description = 'sdk sample for trual'
-                    licenses {
-                        license {
-                            name = 'The Apache License, Version 2.0'
-                            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    subprojects {
+        apply plugin: 'maven-publish'
+
+        afterEvaluate {
+            // To avoid publishing of the applications inside the project ..
+            if (!plugins.hasPlugin("android")) {
+                publishing {
+                    publications {
+                        mavenAar(MavenPublication) {
+                            groupId = 'com.github.JigarMoradiya'
+                            artifactId = 'sdk'
+                            version = '1.0.5'
+                            from components.release
                         }
                     }
-                    developers {
-                        developer {
-                            id = 'JigarMoradiya'
-                            name = 'Jigar Moradiya'
-                            email = 'jigar2596moradiya@gmail.com'
-                        }
+                    repositories {
+
                     }
                 }
             }
         }
-        repositories {
-            maven {
-                def releasesRepoUrl = layout.buildDirectory.dir('repos/releases')
-                def snapshotsRepoUrl = layout.buildDirectory.dir('repos/snapshots')
-                url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
-            }
-        }
     }
+//    afterEvaluate{
+//        publishing{
+//            publications{
+//                release(MavenPublication){
+//                    from components.release
+//
+//                    groupId = 'com.github.JigarMoradiya'
+//                    artifactId = 'sdk'
+//                    version = '1.0.5'
+//                }
+//            }
+//        }
+//    }
+
+//    publishing {
+//        publications {
+//            it.create("ReleaseAar",MavenPublication){
+//                it.groupId = "conn-sdk"
+//                it.artifactId = "com.conn-sdk"
+//                it.version = "1.0.4"
+//                afterEvaluate {
+//                    artifact(tasks.getByName("bundleReleaseAar"))
+//                }
+//            }
+//            it.register("release",MavenPublication){
+//                it.setArtifactId("conn-sdk")
+//                it.setGroupId("com.conn-sdk")
+//                it.setVersion("1.0.4")
+//
+//                afterEvaluate {components.getAt("release")}
+//
+////                afterEvaluate {
+////                    from(components["release"])
+////                }
+//            }
+
+//            it.register<MavenPublication>("release") {
+//                groupId = "com.conn-sdk"
+//                artifactId = "conn-sdk"
+//                version = "1.0.4"
+//
+//                afterEvaluate {
+//                    from(components["release"])
+//                }
+//            }
+//        }
+//    }
 }
 
 dependencies {

@@ -120,7 +120,8 @@ android {
 
 //    implementation 'com.github.JigarMoradiya:SDKs:b9d66e64aa'
 //        implementation 'com.github.JigarMoradiya:SDKs:5be0b2c'
-//        implementation 'com.github.JigarMoradiya:SDKs:1.0.1'
+//        implementation 'com.github.JigarMoradiya:SDKs:76b91ca'
+//        implementation 'com.github.JigarMoradiya:SDKs:1.0.2'
 //    implementation 'com.github.Anju1415:BlinkEffect-library:0.1.0'
     }
 
