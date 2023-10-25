@@ -9,8 +9,45 @@ plugins {
     id 'maven-publish'
 }
 
-//group = 'com.github.jitpack'
-//version = '1.0.3'
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties"))) //Set env variable GPR_USER & GPR_API_KEY if not adding a properties file
+
+def getVersionName = { ->
+    return "1.0.6" // Replace with version Name
+}
+
+def getArtificatId = { ->
+    return "sdk" // Replace with library name ID
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.sdk' // Replace with group ID
+            artifactId getArtificatId()
+            version getVersionName()
+            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
+        }
+    }
+
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /** Configure path of your package repository on Github
+             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
+             */
+            url = uri("https://maven.pkg.github.com/JigarMoradiya/SDKs")
+
+            credentials {
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+//                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+//                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+                username = "JigarMoradiya"
+                password = "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"
+            }
+        }
+    }
+}
 
 android {
     namespace 'com.sdk'
@@ -20,8 +57,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 34
 
-        versionCode 5
-        versionName "1.0.5"
+        versionCode 6
+        versionName "1.0.6"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -79,75 +116,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    subprojects {
-        apply plugin: 'maven-publish'
 
-        afterEvaluate {
-            // To avoid publishing of the applications inside the project ..
-            if (!plugins.hasPlugin("android")) {
-                publishing {
-                    publications {
-                        mavenAar(MavenPublication) {
-                            groupId = 'com.github.JigarMoradiya'
-                            artifactId = 'sdk'
-                            version = '1.0.5'
-                            from components.release
-                        }
-                    }
-                    repositories {
-
-                    }
-                }
-            }
-        }
-    }
-//    afterEvaluate{
-//        publishing{
-//            publications{
-//                release(MavenPublication){
-//                    from components.release
-//
-//                    groupId = 'com.github.JigarMoradiya'
-//                    artifactId = 'sdk'
-//                    version = '1.0.5'
-//                }
-//            }
-//        }
-//    }
-
-//    publishing {
-//        publications {
-//            it.create("ReleaseAar",MavenPublication){
-//                it.groupId = "conn-sdk"
-//                it.artifactId = "com.conn-sdk"
-//                it.version = "1.0.4"
-//                afterEvaluate {
-//                    artifact(tasks.getByName("bundleReleaseAar"))
-//                }
-//            }
-//            it.register("release",MavenPublication){
-//                it.setArtifactId("conn-sdk")
-//                it.setGroupId("com.conn-sdk")
-//                it.setVersion("1.0.4")
-//
-//                afterEvaluate {components.getAt("release")}
-//
-////                afterEvaluate {
-////                    from(components["release"])
-////                }
-//            }
-
-//            it.register<MavenPublication>("release") {
-//                groupId = "com.conn-sdk"
-//                artifactId = "conn-sdk"
-//                version = "1.0.4"
-//
-//                afterEvaluate {
-//                    from(components["release"])
-//                }
-//            }
-//        }
-//    }
 }
 
 dependencies {
