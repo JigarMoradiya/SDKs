@@ -141,8 +141,9 @@ android {
         implementation 'com.google.code.gson:gson:2.8.9'
 
             implementation project(':sdk')
-//                implementation 'com.sdk:SDKs:1.0.6'
-//        implementation 'com.github.JigarMoradiya:SDKs:1.0.6'
+//                implementation 'com.sdk:SDKs:1.0.7'
+//        implementation 'com.github.JigarMoradiya:SDKs:1.0.7'
+//        implementation 'com.github.JigarMoradiya:SDKs:8b1f1340c3'
 
 //    implementation 'com.github.jitpack:gradle-simple:master-SNAPSHOT'
 //    implementation 'com.github.JigarMoradiya:SDKs:1.0.0'
