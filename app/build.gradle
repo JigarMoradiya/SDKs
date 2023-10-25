@@ -141,12 +141,14 @@ android {
         implementation 'com.google.code.gson:gson:2.8.9'
 
             implementation project(':sdk')
+//                implementation 'com.sdk:SDKs:1.0.6'
+//        implementation 'com.github.JigarMoradiya:SDKs:1.0.6'
 
 //    implementation 'com.github.jitpack:gradle-simple:master-SNAPSHOT'
 //    implementation 'com.github.JigarMoradiya:SDKs:1.0.0'
 
 
-//    implementation 'com.github.JigarMoradiya:SDKs:b9d66e64aa'
+//    implementation 'com.github.JigaarMoradiya:SDKs:b9d66e64aa'
 //        implementation 'com.github.JigarMoradiya:SDKs:5be0b2c'
 //        implementation 'com.github.JigarMoradiya:SDKs:76b91ca'
 //        implementation 'com.github.JigarMoradiya:SDKs:8a53f77'
