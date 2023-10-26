@@ -142,7 +142,7 @@ android {
 
             implementation project(':sdk')
 //                implementation 'com.sdk:SDKs:1.0.7'
-//        implementation 'com.github.JigarMoradiya:SDKs:1.0.7'
+//        implementation 'com.github.JigarMoradiya:SDKs:1.0.8'
 //        implementation 'com.github.JigarMoradiya:SDKs:8b1f1340c3'
 
 //    implementation 'com.github.jitpack:gradle-simple:master-SNAPSHOT'
