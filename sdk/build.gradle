@@ -13,7 +13,7 @@ def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(rootProject.file("github.properties"))) //Set env variable GPR_USER & GPR_API_KEY if not adding a properties file
 
 def getVersionName = { ->
-    return "1.0.9" // Replace with version Name
+    return "1.0.10" // Replace with version Name
 }
 
 def getArtificatId = { ->
@@ -29,8 +29,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 34
 
-        versionCode 9
-        versionName "1.0.9"
+        versionCode 10
+        versionName "1.0.10"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
