@@ -5,21 +5,8 @@ plugins {
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
 
-
     id 'maven-publish'
 }
-
-def githubProperties = new Properties()
-githubProperties.load(new FileInputStream(rootProject.file("github.properties"))) //Set env variable GPR_USER & GPR_API_KEY if not adding a properties file
-
-def getVersionName = { ->
-    return "1.0.10" // Replace with version Name
-}
-
-def getArtificatId = { ->
-    return "sdk" // Replace with library name ID
-}
-
 
 android {
     namespace 'com.sdk'
@@ -29,8 +16,8 @@ android {
         minSdkVersion 23
         targetSdkVersion 34
 
-        versionCode 10
-        versionName "1.0.10"
+        versionCode 12
+        versionName "1.0.12"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -89,35 +76,47 @@ android {
         jvmTarget = '1.8'
     }
 
-    publishing {
-        publications {
-            bar(MavenPublication) {
-                groupId 'com.sdk' // Replace with group ID
-                artifactId getArtificatId()
-                version getVersionName()
-                artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
-            }
-        }
+}
 
-        repositories {
-            maven {
-                name = "GitHubPackages"
-                /** Configure path of your package repository on Github
-                 *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
-                 */
-                url = uri("https://maven.pkg.github.com/JigarMoradiya/SDKs")
+/**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+def githubProperties = new Properties()
+githubProperties.load(new FileInputStream(rootProject.file("github.properties")))
 
-                credentials {
-                    /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
-//                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-//                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-                    username = "JigarMoradiya"
-                    password = "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"
-                }
-            }
+
+def getVersionName = { ->
+    return "1.0.12" // Replace with version Name
+}
+
+def getArtificatId = { ->
+    return "sdk" // Replace with library name ID
+}
+
+publishing {
+    publications {
+        bar(MavenPublication) {
+            groupId 'com.sdk'
+            artifactId getArtificatId()
+            version getVersionName()
+            artifact("$buildDir/outputs/aar/${getArtificatId()}-release.aar")
         }
     }
 
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /** Configure path of your package repository on Github
+             *  Replace GITHUB_USERID with your/organisation Github userID and REPOSITORY with the repository name on GitHub
+             */
+//            url = uri("https://maven.pkg.github.com/GITHUB_USERID/REPOSITORY")
+            url = uri("https://maven.pkg.github.com/JigarMoradiya/SDKs")
+
+            credentials {
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
+                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
+                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
+            }
+        }
+    }
 }
 
 dependencies {
@@ -146,20 +145,5 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
-}
-
-afterEvaluate {
-    publishing {
-        publications {
-// Creates a Maven publication called "release".
-            release(MavenPublication) {
-                from components.findByName('release')
-
-                groupId = 'com.sdk'
-                artifactId = getArtificatId()
-                version = getVersionName()
-            }
-        }
-    }
 }
 

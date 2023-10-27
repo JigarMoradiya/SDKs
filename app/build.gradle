@@ -9,10 +9,12 @@ plugins {
 
     id 'com.google.gms.google-services'
 }
+
 /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
 def githubPropertiesFile = rootProject.file("github.properties");
 def githubProperties = new Properties()
 githubProperties.load(new FileInputStream(githubPropertiesFile))
+
 
 android {
     compileSdkVersion 34
@@ -68,6 +70,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     /****GitHubPackages Path and credentials***/
     repositories {
         maven {
@@ -80,14 +83,13 @@ android {
             url = uri("https://maven.pkg.github.com/JigarMoradiya/SDKs")
 
             credentials {
-                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key=PERSONAL_ACCESS_TOKEN**/
-//                username = githubProperties['gpr.usr'] ?: System.getenv("GPR_USER")
-//                password = githubProperties['gpr.key'] ?: System.getenv("GPR_API_KEY")
-                username = "JigarMoradiya"
-                password = "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"
+                /**Create github.properties in root project folder file with gpr.usr=GITHUB_USER_ID  & gpr.key =PERSONAL_ACCESS_TOKEN**/
+                username = System.getenv("GPR_USER") ?: githubProperties['gpr.usr']
+                password = System.getenv("GPR_API_KEY") ?: githubProperties['gpr.key']
             }
         }
     }
+
     dependencies {
         implementation 'androidx.appcompat:appcompat:1.5.1'
         implementation 'com.google.android.material:material:1.4.0'
@@ -144,17 +146,6 @@ android {
 //                implementation 'com.sdk:SDKs:1.0.7'
 //        implementation 'com.github.JigarMoradiya:SDKs:1.0.9'
 //        implementation 'com.github.JigarMoradiya:SDKs:8b1f1340c3'
-
-//    implementation 'com.github.jitpack:gradle-simple:master-SNAPSHOT'
-//    implementation 'com.github.JigarMoradiya:SDKs:1.0.0'
-
-
-//    implementation 'com.github.JigaarMoradiya:SDKs:b9d66e64aa'
-//        implementation 'com.github.JigarMoradiya:SDKs:5be0b2c'
-//        implementation 'com.github.JigarMoradiya:SDKs:76b91ca'
-//        implementation 'com.github.JigarMoradiya:SDKs:8a53f77'
-//        implementation 'com.github.JigarMoradiya:SDKs:1.0.5'
-//    implementation 'com.github.Anju1415:BlinkEffect-library:0.1.0'
     }
 
 }
