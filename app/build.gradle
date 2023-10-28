@@ -40,7 +40,7 @@ android {
             enabled = true
         }
         kotlinOptions {
-            jvmTarget = JavaVersion.VERSION_1_8.toString()
+            jvmTarget = JavaVersion.VERSION_11.toString()
         }
 
         flavorDimensions "version"
@@ -91,6 +91,8 @@ android {
     }
 
     dependencies {
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+
         implementation 'androidx.appcompat:appcompat:1.5.1'
         implementation 'com.google.android.material:material:1.4.0'
         implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -143,10 +145,17 @@ android {
         implementation 'com.google.code.gson:gson:2.8.9'
 
             implementation project(':sdk')
-//                implementation 'com.sdk:SDKs:1.0.7'
-//        implementation 'com.github.JigarMoradiya:SDKs:1.0.9'
-//        implementation 'com.github.JigarMoradiya:SDKs:8b1f1340c3'
+//                implementation 'com.sdk:sdk:1.0.12'
+//                implementation 'com.sdk:SDKs:1.0.12'
+//        implementation 'com.github.JigarMoradiya:SDKs:1.0.12'
+//        implementation 'com.github.JigarMoradiya:SDKs:32b948b'
     }
 
 }
+
+//dependencies {
+//    implementation project(path: ':sdk')
+//    implementation 'com.sdk:sdk:1.0.12'
+//    implementation 'com.github.JigarMoradiya:SDKs:1.0.12'
+//}
 
