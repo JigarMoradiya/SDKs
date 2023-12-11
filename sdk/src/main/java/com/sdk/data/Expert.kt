@@ -62,7 +62,7 @@ class Expert(
         }
     }
 
-    fun fullName() = first_name+" "+last_name
+    fun fullName() = ("$first_name $last_name").trim()
     val created: Long
         get() = if (created_at != null) created_at * 1000 else 0
     fun getDesignation(): String {

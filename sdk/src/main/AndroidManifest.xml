@@ -4,12 +4,13 @@
 
     <application>
         <activity
-            android:name=".MainActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:name=".ui.pages.ArticleDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.pages.PodcastDetailActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

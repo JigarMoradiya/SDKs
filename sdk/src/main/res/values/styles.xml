@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomCardViewBottomCornerStyle" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay_card_bottom_corners</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay_card_bottom_corners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeBottomLeft">@dimen/card_corner_radius20</item>
+        <item name="cornerSizeBottomRight">@dimen/card_corner_radius20</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">0dp</item>
+    </style>
+
+    <style name="ThinnerChip" parent="Widget.MaterialComponents.Chip.Action">
+        <item name="chipCornerRadius">12dp</item>
+        <item name="chipMinHeight">20dp</item>
+        <item name="android:textAppearance">@style/SmallerText</item>
+    </style>
+
+    <style name="SmallerText" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MyApp.Button.Circle" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+</resources>

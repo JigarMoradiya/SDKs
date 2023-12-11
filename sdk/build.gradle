@@ -10,11 +10,11 @@ plugins {
 
 android {
     namespace 'com.sdk'
-    compileSdkVersion 34
+    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 23
-        targetSdkVersion 34
+        targetSdkVersion 33
 
         versionCode 14
         versionName "1.0.14"
@@ -93,6 +93,7 @@ def getArtificatId = { ->
 
 publishing {
     publications {
+
         bar(MavenPublication) {
             groupId 'com.sdk'
             artifactId getArtificatId()
@@ -145,5 +146,11 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.16.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0'
+
+    // circle imageview
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    // article editor
+    implementation 'jp.wasabeef:richeditor-android:2.0.0'
 }
+
 

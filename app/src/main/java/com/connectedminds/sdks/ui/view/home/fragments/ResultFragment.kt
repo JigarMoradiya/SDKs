@@ -20,6 +20,8 @@ import com.sdk.network.CallApi
 import com.sdk.ui.interfaces.ArticleClickListener
 import com.sdk.ui.interfaces.ClipClickListener
 import com.sdk.ui.interfaces.PodcastClickListener
+import com.sdk.ui.pages.ArticleDetailActivity
+import com.sdk.ui.pages.PodcastDetailActivity
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.HashMap
 
@@ -44,7 +46,7 @@ class ResultFragment : BaseFragment(), ApiResponsesListener, PodcastClickListene
                 CallApi.login("sahil003","Test@123",this@ResultFragment, "login")
             }
             "getTrendingFeed" -> {
-                CallApi.getTrendingFeed(listOf("article","podcast","clips"),listener = this@ResultFragment, apiName = "getTrendingFeed")
+                CallApi.getTrendingFeed(listOf("article","podcast","clip"),listener = this@ResultFragment, apiName = "getTrendingFeed")
             }
             "getAllPodcast" -> {
                 CallApi.getAllPodcast(this@ResultFragment, "getAllPodcast")
@@ -128,11 +130,13 @@ class ResultFragment : BaseFragment(), ApiResponsesListener, PodcastClickListene
     override fun onPodcastClicked(position: Int, podcast: Podcast) {
         Log.e("jigarLogs","position = "+position)
         Log.e("jigarLogs","podcast = "+Gson().toJson(podcast))
+        podcast.id?.let { PodcastDetailActivity.getInstance(requireContext(), it) }
     }
 
     override fun onArticleClicked(position: Int, article: Article) {
         Log.e("jigarLogs","position = "+position)
         Log.e("jigarLogs","article = "+Gson().toJson(article))
+        article.article_id?.let { ArticleDetailActivity.getInstance(requireContext(), it) }
     }
 
     override fun onClipClicked(position: Int, clip: HealingClip) {

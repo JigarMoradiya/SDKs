@@ -1,4 +1,7 @@
 <resources>
     <string name="by_connectedminds">By connectedminds</string>
     <string name="combine_two_strings_by_dot">%1$s &#160;•&#160; %2$s</string>
+    <string name="read_out_text">Listen</string>
+    <string name="about_podcast">About Podcast</string>
+    <string name="follow">Follow</string>
 </resources>

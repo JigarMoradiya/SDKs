@@ -54,7 +54,7 @@
                 android:lineSpacingExtra="4sp"
                 android:maxLines="2"
                 android:text="@{CustomFunctions.decodeMessage(data.title)}"
-                android:textColor="#ffffff"
+                android:textColor="@android:color/white"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 tools:text="Meditation tips to help you relax and meditate" />

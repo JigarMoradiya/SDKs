@@ -1,0 +1,5 @@
+<resources>
+
+    <dimen name="card_corner_radius20">20dp</dimen>
+    <dimen name="screen_margin">16dp</dimen>
+</resources>

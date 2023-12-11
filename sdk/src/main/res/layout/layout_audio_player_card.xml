@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.sdk.data.Podcast" />
+
+        <import type="android.view.View" />
+
+        <import type="com.sdk.utils.CustomFunctions" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="280dp"
+        android:layout_height="300dp"
+        android:layout_margin="10dp"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardCornerRadius="20dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:imgUrl="@{data.cover_image.image_url}"
+            app:placeHolder="@{@drawable/ic_image_placeholder}"
+            android:src="@drawable/ic_image_placeholder" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/iv_play"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:elevation="50dp"
+            android:insetLeft="3dp"
+            android:insetTop="3dp"
+            android:insetRight="3dp"
+            android:insetBottom="3dp"
+            android:stateListAnimator="@null"
+            app:elevation="50dp"
+            app:icon="@drawable/ic_play"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp"
+            app:iconSize="17dp"
+            app:iconTint="@color/colorAccent"
+            app:rippleColor="@color/white"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.MyApp.Button.Circle" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_connected_mind_expert"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_gravity="end|bottom"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:src="@drawable/ic_connectedmind_expert_blue"
+            android:visibility="gone" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgConnectedMindLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="18dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitEnd"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_login_logo"
+            tools:visibility="visible" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgByConnectedMind"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="15dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_tag_by_connectedmind"
+            tools:visibility="visible" />
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

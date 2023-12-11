@@ -20,6 +20,9 @@ object Constants {
     const val ARTICLE = "Article"
     const val HEALING_CLIP = "Clip"
 
+    const val ARTICLE_ID = "articleId"
+    const val PODCAST_ID = "podcastId"
+
     const val POPULAR_PODCAST = "Popular Podcasts"
     const val OTHERS = "Others"
 }

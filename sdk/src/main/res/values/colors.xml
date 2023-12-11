@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <color name="colorAccent">#825ffc</color>
+    <color name="card_bg_article">#31FFFFFF</color>
+    <color name="btn_tint_bg">#E1131B46</color>
+    <color name="color_primary_dark">#131b46</color>
+    <color name="white">#ffffff</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="pending_bg">#ffeeb5</color>
+    <color name="pending_text">#d3a008</color>
+    <color name="pending_border">#afd3a008</color>
+</resources>
